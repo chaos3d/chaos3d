@@ -1,0 +1,121 @@
+/* cHaos3D
+ *
+ * Copyright (C) 2009-2010 reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the license in the license sub-directory.
+ *
+ */
+
+#include "script/ScriptState.h"
+
+#include "core/core.h"
+#include "script/dispatcher.h"
+#include "script/ScriptData.h"
+#include "script/LuaType.h"
+#include "script/ScriptManager.h"
+
+//using namespace chaos;
+
+///----------------------------------------------------------------
+///----------------------------------------------------------------
+template void* ScriptState::getValue<void>(int index) const;
+
+void* ScriptState::getObject(int index) const{
+	if( lua_isnoneornil( mL, index))
+		return 0;
+
+	ScriptData *data = (ScriptData*)lua_touserdata(mL,index);
+#if defined(DEBUG)
+	if( data == 0 ){
+		LOG( "Not a userdata type at index %d (%s)", index, ScriptManager::getInstance()->currentInfo().c_str());
+	}else if( data->dataType != ScriptData::Instance )
+		LOG( "Not an instance type at index %d (%s)", index, ScriptManager::getInstance()->currentInfo().c_str());
+	else
+#endif
+		if( data != 0 )
+		return data->obj;
+	return 0;
+}
+
+/*
+template<>
+ReferencedCount* const& chaos::ScriptState::getValue<ReferencedCount>(int index){
+	return *(ReferencedCount*const*)&getValue<void>(index);
+}
+*/
+template<>
+void ScriptState::pushValue<void*>(void* obj, Type* type, bool gc) const{
+	if( obj == 0 ){
+		lua_pushnil(mL);
+		return;
+	};
+
+	ScriptData *data = (ScriptData*)lua_newuserdata(mL, sizeof(ScriptData));
+	data->dataType = ScriptData::Instance;
+	data->type = type;
+	data->obj = obj;
+
+	if( gc )
+		native_instgc_meta( mL );
+	else
+		native_inst_meta( mL );
+
+	lua_setmetatable( mL, -2 );
+}
+
+void ScriptState::pushObject(void* obj, Type* type, bool gc) const{
+	if( obj == 0 ){
+		lua_pushnil(mL);
+		return;
+	};
+
+	ScriptData *data = (ScriptData*)lua_newuserdata(mL, sizeof(ScriptData));
+	data->dataType = ScriptData::Instance;
+	data->type = type;
+	data->obj = obj;
+
+	/*if( type != 0 && type->isDerived(TYPE(ReferencedCount)) ){
+		ReferencedCount* obj((ReferencedCount*)data->obj);
+		data->type = obj->getClassType();
+		data->obj = obj;
+		obj->retain();
+
+		native_instref_meta( mL );
+	}else*/ if( gc )
+		native_instgc_meta( mL );
+	else
+		native_inst_meta( mL );
+
+	lua_setmetatable( mL, -2 );
+}
+
+// ref count pointer as a native type
+template<>
+ReferencedPtr ScriptState::getNativeValue<ReferencedPtr>(int index) const{
+	//static void* zero = 0;
+	ScriptData *data = (ScriptData*)lua_touserdata(mL,index);
+	if( data == 0 ){
+		LOG( "Not a userdata type at index %d", index);
+	}else if( data->dataType != ScriptData::Instance )
+		LOG( "Not an instance type at index %d", index);
+	else
+		return ReferencedPtr((ReferencedCount*)data->obj);	//todo: type checking, ref count
+	return ReferencedPtr(0);
+}
+
+template<>
+void ScriptState::pushValue<ReferencedCount*>(ReferencedCount* obj, Type* type, bool gc) const{
+	if( obj == 0 ){
+		lua_pushnil(mL);
+	}else{
+		ScriptData *data = (ScriptData*)lua_newuserdata(mL, sizeof(ScriptData));
+		data->dataType = ScriptData::Instance;
+		data->type = type;//obj->getClassType();
+		data->obj = obj;
+		obj->retain();
+
+		native_instref_meta( mL );
+		lua_setmetatable( mL, -2 );
+	}
+}
