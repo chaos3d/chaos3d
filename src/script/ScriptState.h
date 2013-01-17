@@ -22,7 +22,6 @@
 _CHAOS_BEGIN
 
 class ScriptManager;
-class Mutex;
 
 /*
 a running state of a specific script code
@@ -120,8 +119,6 @@ public:
 
 private:
 	lua_State* mL;
-	Mutex* mLock;
-
 };
 
 //template<> ReferencedCount* const& ScriptState::getValue<ReferencedCount>(int index);
