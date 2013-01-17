@@ -18,6 +18,12 @@
 
 _CHAOS_BEGIN
 
+/**
+ * This is a wrapper of the state in a 'thread'.
+ * it basically provides API to communicate between
+ * threads(states) using messaging, and maintains
+ * coroutines to simplify the run loop.
+ */
 /*
  * A script thread is a thread that runs Lua script.
  * it'll handle coroutines (every code runs as a 
@@ -115,6 +121,22 @@ public:
 	virtual void	retain();
 #endif
 
+	/**
+	 * run/resume the script
+	 * false if the thread needs to be re-added to the list to run
+	 * true can be an non-recoverable error in the script
+	 *
+	 * if the script yields:
+	 * a function(c/lua): it will test if the return is the true once a time
+	 * a coroutine: it will try to run the coroutine until it finishes
+	 * nil/none/false: it will be yielded until readded by others
+	 * true value: it will re-add to the list
+	 *
+	 * if the script yields multiple returns, it'll wait until
+	 * all conditions satisify; and they need to be either functions
+	 * or coroutines
+	 */
+	bool resume();
 
 	explicit ScriptThread( lua_State* L )
 		:ScriptState(L),  mStatus(None){
@@ -187,6 +209,9 @@ public:
 		ScriptState::push_<T> (val) ;
 		return this;
 	};
+
+private:
+	ScriptState mState;
 };
 
 TYPE_RET_REF( ScriptThread );

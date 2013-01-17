@@ -36,6 +36,12 @@ class DataSource;
 class Timer;
 class Sequence;
 
+/**
+ * this will be a new manager, equivalent to the workers manager in luaproc
+ * it will spawn the native threads and assign each thread(worker) to run
+ * the script
+ */
+
 /*
 to handle dispatches between coroutines and other scripting issues.
 */

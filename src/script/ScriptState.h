@@ -49,28 +49,41 @@ public:
 	template<class T> struct GetUnwind;
 	template<class T> struct PushUnwind;
 
-protected:
-	lua_State*		mL;
-
 public:
 	explicit ScriptState( lua_State* L )
 		:mL(L)
 	{};
 
-	inline
-	bool	operator ==(ScriptState const& rhs){
+	static ScriptState* newState();
+
+	ScriptState(ScriptState const&c) : mL(c.mL)
+	{};
+
+	ScriptState& operator =(ScriptState const& rhs){
+		mL = c.mL;
+	};
+
+	inline bool	operator ==(ScriptState const& rhs){
 		return mL == rhs.mL;
 	};
 
-	inline
-	bool	operator !=(ScriptState const& rhs){
+	inline bool	operator !=(ScriptState const& rhs){
 		return mL != rhs.mL;
 	};
 
-	inline
-	lua_State*	getState() const{
+	inline lua_State* getState() const{
 		return mL;
 	}
+
+	/**
+	 * copy the n objects from another lua state 
+	 * and push it to the top of the stack
+	 * it could be from a different state (which
+	 * is its purpose) or from the same state
+	 * (coroutine to coroutine where it will 'copy'
+	 * all objects too) 
+	 */
+	bool copy(ScriptState const& from, int n);
 
 	// to check if obj at index is the same as type1
 	// or if it is derived from type
@@ -117,6 +130,8 @@ public:
 	template<class T>
 	inline void	push_(T val) const;
 
+private:
+	lua_State* mL;
 };
 
 //template<> ReferencedCount* const& ScriptState::getValue<ReferencedCount>(int index);

@@ -38,6 +38,27 @@ void ScriptThread::retain(){
 }
 #endif
 
+bool ScriptThread::resume(){
+	if(mStatus == Created) {	// a new thread?
+		int ret = mState.resume(/*args?*/);
+		if(ret == 0){	// finished
+			mStatus = Terminated;
+			return true;
+		}else if(ret != LUA_YIELD){ // error?
+			// todo: trace back and error
+			mStatus = Terminated;
+			return true;
+		}// will fall back to deal with yields
+		mStatus = Yielded;
+	}
+	
+	if(mStatus == Yielded) {
+		for(int i=mState.top(); i>0; --i){
+		}
+	}
+	return false;
+}
+
 ScriptThread* ScriptThread::thread(TypeLua const& lua){
 	if( lua.getRef() < 0 )
 		return 0;
