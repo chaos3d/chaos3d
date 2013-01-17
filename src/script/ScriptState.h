@@ -29,6 +29,19 @@ a running state of a specific script code
 class CHAOS_API ScriptState{
 public:
 
+	/**
+	 * Decouple IO for reading/writing from/to the source
+	 */
+	class SourceReader{
+	public:
+        size_t read(char const* buf, size_t buf_size);
+	};
+    
+    class SourceWriter{
+    public:
+        size_t write(char* buf, size_t buf_size);
+    };
+    
 	// Unwind the pointer and the reference
 	// so we only need to implement the push pointer value for general class type
 	// because c++ doesn't support partial specification of function template

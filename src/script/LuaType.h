@@ -19,6 +19,7 @@ struct lua_State;
 _CHAOS_BEGIN
 
 struct CHAOS_API TypeVoid{};
+class ScriptThread;
 
 /**
  * Object that is in lua is being exported out to CPP
@@ -26,7 +27,8 @@ struct CHAOS_API TypeVoid{};
  */
 class CHAOS_API TypeLua{
 	int ref;
-
+    ScriptThread* mHost;
+    
 public:
 	explicit TypeLua(int r = -1):ref(r){};
 	explicit TypeLua(lua_State*);

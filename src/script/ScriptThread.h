@@ -19,10 +19,20 @@
 _CHAOS_BEGIN
 
 /*
-a running state of a specific script code
-*/
-DECLARE_CLASS(ScriptThread, Triggerable);
-class CHAOS_API ScriptThread : public Triggerable, public ScriptState{
+ * A script thread is a thread that runs Lua script.
+ * it'll handle coroutines (every code runs as a 
+ * coroutine) and polling (yielding will poll the
+ * state). it should be an independent virtual
+ * machine, and communication between script threads
+ * is by piping/messaging (see LuaLanes). when an
+ * object is being passed, it'll look for the meta
+ * method '__retain' (the internal object, i.e. 
+ * table can't be retained but copied because it
+ * can't be shared among different vm's.
+ */
+
+DECLARE_CLASS(ScriptThread, NilParent);
+class CHAOS_API ScriptThread{
 	friend class ScriptManager;
 	//DYNAMIC_CLASS;
 
@@ -48,6 +58,7 @@ public:
 #endif
 
 protected:
+    ScriptState mState; // todo: need to lock
 	TypeLua		mRef;			// the reference to the thread
 	TypeLua		mThis;
 	int			mStatus;
@@ -67,6 +78,38 @@ protected:
 	virtual ~ScriptThread();
 
 public:
+    /**
+     * send message to the thread, non-blocking if queued
+     */
+    bool send(TypeLua const& msg, bool queued = true);
+    
+    /**
+     * receive message from the thread
+     * blocked until there is something if the return 
+     * won't allow to be nil
+     * to access the lua ref, the hosted thread should be locked
+     */
+    TypeLua receive(bool couldBeNil = true);
+    
+    /**
+     * load the source
+     */
+    bool load(ScriptState::SourceReader& reader);
+    
+    /**
+     * run the vm
+     * return false if every coroutine has been done
+     * and the vm can be reloaded and resued
+     * this should only be called in the same thread as
+     * it's being intialized.
+     */
+    bool run();
+    
+    /**
+     *
+     */
+    ScriptThread* spawn(ScriptState::SourceReader& reader);
+    
 #ifdef DEBUG
 	virtual void	release();
 	virtual void	retain();
