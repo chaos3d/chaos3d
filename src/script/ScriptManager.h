@@ -37,9 +37,9 @@ class Timer;
 class Sequence;
 
 /**
- * this will be a new manager, equivalent to the workers manager in luaproc
- * it will spawn the native threads and assign each thread(worker) to run
- * the script
+ * this will be the same manager as before except it won't be
+ * a singleton and it is thread-based. esentially, it manages
+ * coroutines per state per thread.
  */
 
 /*
