@@ -29,7 +29,8 @@ public:
 	};
 
 public:
-	ScriptCoroutine(ScriptState const&, int numArg);
+	// construct the wrapper from the state
+	ScriptCoroutine(ScriptState const&);
 	~ScriptCoroutine();
 
 	/**
@@ -40,12 +41,13 @@ public:
 	 * if the script yields:
 	 * a function(c/lua): it will test if the return is the true once a time
 	 * a coroutine: it will try to run the coroutine until it finishes
+	 * a userdata: it will call meta __block
 	 * none: it will be yielded until readded by others
 	 * any value: it will re-add to the list
 	 *
 	 * if the script yields multiple returns, it'll wait until
 	 * all conditions satisify; and they need to be either functions
-	 * or coroutines
+	 * or coroutines or userdata with meta __block
 	 */
 	bool resume();
 
@@ -53,22 +55,21 @@ public:
 	// is at top 
 	bool isYielded();
 	
+	bool isDone();
+
 	// test if the coroutine is the main thread in the state
 	bool isMain();
 
-	// test if all events are over
-	bool isReady();
-
 	int numReturn();
+
 private:
 	void setYielded(int n);
 
 	// poll all the events and may clear the guard
 	int pollAndClear();
-	void pollEvt(int num, int cur, int flag, bool flat);
 
 	ScriptState _state;	// coroutine is a dependent state
-	int _numArg;
+	int _top, _numArg;
 
 	static int GuardReturn, GuardYield;
 };
