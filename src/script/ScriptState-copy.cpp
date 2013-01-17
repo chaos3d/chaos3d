@@ -221,6 +221,7 @@ static bool inter_copy_func(lua_State* from, lua_State* to, int cache, int i){
 
 static bool inter_copy_userdata(lua_State* from, lua_State* to, int cache, int i){
 	// todo
+	lua_pushnil(to);
 	return true;
 }
 
