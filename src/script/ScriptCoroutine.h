@@ -69,7 +69,15 @@ public:
 	~ScriptCoroutine();
 
 	/**
-	 * run/resume the script
+	 * run the coroutine if it is in a normal state
+	 * and it has the function at the bottom of the 
+	 * stack 
+	 *
+	 * resume the coroutine if it is yielded and
+	 * all the values in the stack are cleared
+	 *
+	 *
+	 * ==========
 	 * false if the thread needs to be re-added to the list to run
 	 * true can be an non-recoverable error in the script
 	 *
@@ -93,6 +101,7 @@ public:
 	// is at top 
 	bool hasStarted();
 	
+	// if the state is not yielded
 	bool isDone();
 
 	// test if the coroutine is the main thread in the state
@@ -117,7 +126,6 @@ private:
 	int pollAndClear();
 
 	ScriptState _state;	// coroutine is a dependent state
-	int _top, _numArg;
 
 	//
 	// yield guard

@@ -34,21 +34,35 @@ struct YieldGuard {
 	bool startedSignature() const { return signature == (int)&YieldGuard::startedSignature; }
 };
 
-ScriptCoroutine::ScriptCoroutine(ScriptState const&ss) : _state(ss), _numArg(0){
-	if(!isGuarded()){ // a fresh state: nothing at the top
-		_top = _state.top();
-		return;
-	}
-
-	// cache to local
-	YieldGuard const& guard = _state.get<YieldGuard>(-1);
-	_top = guard.top;
-	_numArg = guard.numOfArg;
+ScriptCoroutine::ScriptCoroutine(ScriptState const&ss) : _state(ss){
 }
 
 bool ScriptCoroutine::resume() {
-	if(isDone())
-		return true;
+	lua_State *L = _state.getState();
+	int status = lua_status(L);
+
+	if(status == 0) { // a normal state
+		// expect a function at the bottom
+		//  it won't make sense if there is
+		//  extra values under the function
+		//  because after resume, the stack
+		//  will be cleared out and only re-
+		//  return values are kept
+		if(!_state.isFunction(1))	// can't resume, drop it
+			return true;
+		int ret = lua_resume(L, lua_gettop(L) - 1);
+		if(ret == 0) {	// the coroutine is finished, leave the stack intact
+			return true;
+		}else if(ret == LUA_YIELD){
+			return false;	// evaluate in the next loop?
+		}else{
+			// todo: error trace back
+			return true;
+		}
+	}
+
+	if(status == LUA_YIELD) {
+	}
 
 	int num = _numArg;
 	bool started = hasStarted();
@@ -91,8 +105,8 @@ bool ScriptCoroutine::isGuarded(){
 }
 
 bool ScriptCoroutine::isDone(){
-	return _state.isUserdata(-1) &&
-		_state.get<YieldGuard>(-1).doneSignature();
+	int status = lua_status(_state);
+
 }
 
 bool ScriptCoroutine::hasStarted(){
@@ -114,69 +128,45 @@ void ScriptCoroutine::setDone(int n){
 int ScriptCoroutine::pollAndClear() {
 	ASSERT(hasStarted());
 
-	YieldGuard& guard = _state.get<YieldGuard>(-1);
-	int num = guard.numOfArg;
-	int top = _state.top();
-	int firstEvt = top - 1 - num;
-#if 0
-	// todo: unpack all returns for one event
-	if(num == 1){
-	}else
-#endif
-	for(int i=0;i<num;++i){
-		int cur = firstEvnt + i;
-		if(guard.test(i))
-			continue;
-			
+	// evaluate every value in the stack
+	for(int cur=_state.top(); cur>0; --cur){
 		if(_state.isFunction(cur)){	// function as a polling method
-			int ret = _state.call(cur, 0);
-			if(ret > 0)
-				if(!_state.get<bool>(-ret)){ // check the first one
+			_state.push(cur);		// push the function
+			int ret = _state.call(0);
+			if(ret > 0){
+				if(!_state.get<bool>(-ret)){// check the first one
 					_state.pop(ret);
 					continue;
 				}else{	// a 'true' value
-					guard.set(i);
-					_state.pop(ret - 1);	// only save one return
-					_state.insert(cur);
-					_state.remove(cur+1);	// remove the function
+					_state.pop(ret);		// pop all results
+					_state.remove(cur);		// remove the function
 				}
 			}else if(ret == 0){
 				// nothing returns, ignore and keep waiting
+			}else{ // error?
+				// todo: trace back
+				_state.pop(1);		// pop the error
+				_state.remove(cur);	// remove the function
 			}
 		}else if(_state.isCoroutine(cur)){	// wait until coroutine is finished
 			ScriptCoroutine sc = _state.get<ScriptCoroutine>(cur);
 			if(sc.isDone()){
-				guard.set(i);
-				int ret = sc.numReturn();
-				if(ret > 0){
-					_state.pop(ret - 1);	// only save the first return
-				}else{
-					_state.pushnil();		// if coroutine returns nothing, push nil placeholder
-				}
-				_state.insert(cur);
-				_state.remove(cur+1);		// remove the coroutine
+				_state.remove(cur);			// remove the coroutine
 			}
-		}else if(_state.isUserdata(cur)){ // call metamethod __block if any, or push nil and resume
+		}else if(_state.isUserdata(cur)){ 	// call metamethod __block if any
 			int ret = _state.callmeta(cur, "__block");
-			if(ret <= 0) { // no meta table or meta method found or no return
-				guard.set(i);
-			} else {
-				if(!_state.get<bool>(-ret)){ // should not block?
-					guard.set(i);
-				}
-				_state.pop(-ret);
+			if(ret <= 0 ||  // no meta table or meta method found or no return
+				!_state.get<bool>(-ret)){ // should not block?
+				_state.remove(cur);
 			}
+			if(ret > 0) //todo: error handle?
+				_state.pop(ret); // remove any return
 		}else{ // for any other value, simply return it
-			guard.set(i);
+			_state.remove(cur);
 		}
 	}
 
-	if(guard.isClear()){
-		_state.pop(1); // pop the stack info
-		return num;
-	}else{
-		return 0;
-	}
+	return _state.top() == 0;
 }
 
 template<> ScriptState::push_<ScriptCoroutine>(){
