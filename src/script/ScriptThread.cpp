@@ -39,7 +39,7 @@ void ScriptThread::retain(){
 #endif
 
 bool ScriptThread::resume(){
-	if(mStatus == Created) {	// a new thread?
+	if(mStatus == Created || mState.top() == 0) {	// a new thread? or ready to resume(all yields are satisfied)
 		int ret = mState.resume(/*args?*/);
 		if(ret == 0){	// finished
 			mStatus = Terminated;
@@ -54,6 +54,18 @@ bool ScriptThread::resume(){
 	
 	if(mStatus == Yielded) {
 		for(int i=mState.top(); i>0; --i){
+			if(mState.isFunction(i)){
+				mState.call(i);
+				if(mState.get<bool>(-1))
+					mState.remove(i);
+				mState.remove(-1);
+			}else if(mState.isCoroutine(i)){
+			}else if(mState.get<bool>(i)){ // remove any true value (will cause the thread to readd
+				mState.remove(i);
+			}else{ // false, nil or none
+				// todo: fix
+				return true;	// thread is yielded and won't add to the worker list 
+			}
 		}
 	}
 	return false;

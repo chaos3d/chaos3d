@@ -54,8 +54,6 @@ public:
 		:mL(L)
 	{};
 
-	static ScriptState* newState();
-
 	ScriptState(ScriptState const&c) : mL(c.mL)
 	{};
 
@@ -115,6 +113,7 @@ public:
 	template<class T>
 	inline T	get_( int index ) const;
 
+
 	// specialize this to cast any native type to lua type
 	template<class T>
 	void	pushValue(T val, Type* type, bool gc) const;
@@ -130,8 +129,11 @@ public:
 	template<class T>
 	inline void	push_(T val) const;
 
+	// push a new T into the stack
+	template<class T> void push_() const;
+
 private:
-	lua_State* mL;
+	lua_State* _L;
 };
 
 //template<> ReferencedCount* const& ScriptState::getValue<ReferencedCount>(int index);

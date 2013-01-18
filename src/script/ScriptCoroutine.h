@@ -19,6 +19,41 @@ _CHAOS_BEGIN
  * a coroutine wrapper that manages the yields
  * stack so it can be communicated with the host
  * by yielding
+ *
+ * this makes some assumptions for how the co-
+ * routine should yield and interact. Only guarded 
+ * coroutines will follow the rules. So there
+ * are the ways to guard a coroutine:
+ * 1. coroutine.spawn(func)
+ * 2. yield a coroutine in a guarded one
+ * 	(any coroutine is yielded from a guarded one
+ * 	will run in the guarded mode.
+ * 3. spawn from native c++ and schedule to the
+ * 	thread
+ * 
+ * basically, the guarded coroutine will run in
+ * a thread where it handles how to yield and
+ * resume. any coroutine can turn into guarded
+ * mode, but a guarded coroutine that if yielded 
+ * will be resumed in the non-guarded mode will
+ * cause the system vulnerable because the yielded/
+ * suspended guarded coroutine is added in the
+ * waiting/polling list, and thus will be resumed
+ * again
+ *
+ * --------
+ * The first thought was to have the returns from
+ * the "polling functions", which will make asum-
+ * ptions on the stack. This will cause inconsit-
+ * ensy with the native coroutines, and thus lose 
+ * compatibility. So, the coroutine wrapper could
+ * presumably wrap any coroutine (either yielded
+ * one or a new one), the only thing it'll do is
+ * to frequently check trueness of the yielded 
+ * values and resume the coroutine. If the coroutine
+ * is resumed not by the scheduler, it's fine and
+ * it'll be automatically removed from the scheduler
+ *
  */
 class ScriptCoroutine {
 public:
@@ -48,12 +83,15 @@ public:
 	 * if the script yields multiple returns, it'll wait until
 	 * all conditions satisify; and they need to be either functions
 	 * or coroutines or userdata with meta __block
+	 *
+	 * once the stack is cleared, the coroutine will be automatically
+	 * resumed by the scheduler(ScriptThread)
 	 */
 	bool resume();
 
-	// in the stack of a coroutine, a guard of light userdata 
+	// in the stack of a coroutine, a guard of userdata 
 	// is at top 
-	bool isYielded();
+	bool hasStarted();
 	
 	bool isDone();
 
@@ -62,8 +100,18 @@ public:
 
 	int numReturn();
 
+	ScriptState& getState() { 
+		return _state; 
+	}
+
+	ScriptState const& getState() const { 
+		return _state; 
+	}
+
 private:
+	bool isGuarded();
 	void setYielded(int n);
+	void setDone(int n);
 
 	// poll all the events and may clear the guard
 	int pollAndClear();
@@ -71,8 +119,16 @@ private:
 	ScriptState _state;	// coroutine is a dependent state
 	int _top, _numArg;
 
+	//
+	// yield guard
+	// var args <-- num arg
+	// (func)
+	// ...		<-- _top
+	// stack
 	static int GuardReturn, GuardYield;
 };
+
+template<> ScriptState::push_<ScriptCoroutine>();
 
 _CHAOS_END
 #endif
