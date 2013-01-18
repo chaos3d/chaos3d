@@ -76,8 +76,7 @@ public:
 	 * resume the coroutine if it is yielded and
 	 * all the values in the stack are cleared
 	 *
-	 *
-	 * ==========
+	 * returns:
 	 * false if the thread needs to be re-added to the list to run
 	 * true can be an non-recoverable error in the script
 	 *
@@ -94,20 +93,21 @@ public:
 	 *
 	 * once the stack is cleared, the coroutine will be automatically
 	 * resumed by the scheduler(ScriptThread)
+	 *
+	 * when the coroutine is ended normally, the stack will
+	 * get cleared out.
 	 */
 	bool resume();
 
-	// in the stack of a coroutine, a guard of userdata 
-	// is at top 
-	bool hasStarted();
-	
-	// if the state is not yielded
+	/**
+	 * the coroutine is done if 
+	 *  - it's not yielded and
+	 *  - the stack is empty
+	 */
 	bool isDone();
 
 	// test if the coroutine is the main thread in the state
 	bool isMain();
-
-	int numReturn();
 
 	ScriptState& getState() { 
 		return _state; 
@@ -118,22 +118,12 @@ public:
 	}
 
 private:
-	bool isGuarded();
-	void setYielded(int n);
-	void setDone(int n);
 
 	// poll all the events and may clear the guard
-	int pollAndClear();
+	bool pollAndClear();
 
 	ScriptState _state;	// coroutine is a dependent state
 
-	//
-	// yield guard
-	// var args <-- num arg
-	// (func)
-	// ...		<-- _top
-	// stack
-	static int GuardReturn, GuardYield;
 };
 
 template<> ScriptState::push_<ScriptCoroutine>();

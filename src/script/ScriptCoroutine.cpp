@@ -10,30 +10,6 @@
 #include "ScriptCoroutine.h"
 #include "lua.h"
 
-int ScriptCoroutine::GuardYield = 0;
-int ScriptCoroutine::GuardReturn = 1;
-
-struct YieldGuard {
-	int signature;
-	int numOfArg;
-	int mask;
-	int top;
-
-	YieldGuard(int n, int t, bool s) : numOfArg(n), mask(0), top(t)
-	{
-		signature = s ? (int)&YieldGuard::startedSignature :
-			(int)&YieldGuard::doneSignature;;
-		for(int i=0;i<n;++i)
-			mask = mask | (1<<i);
-	};
-	bool test(int n) const { return mask & (1<<n) == 0; };
-	void set(n) { mask = mask & (~(1<<n)); }
-	bool isClear() const { return mask == 0; }
-	bool isValid() const { return doneSignature() || startedSignature(); }
-	bool doneSignature() const { return signature == (int)&YieldGuard::doneSignature; }
-	bool startedSignature() const { return signature == (int)&YieldGuard::startedSignature; }
-};
-
 ScriptCoroutine::ScriptCoroutine(ScriptState const&ss) : _state(ss){
 }
 
@@ -41,95 +17,43 @@ bool ScriptCoroutine::resume() {
 	lua_State *L = _state.getState();
 	int status = lua_status(L);
 
-	if(status == 0) { // a normal state
-		// expect a function at the bottom
-		//  it won't make sense if there is
-		//  extra values under the function
-		//  because after resume, the stack
-		//  will be cleared out and only re-
-		//  return values are kept
-		if(!_state.isFunction(1))	// can't resume, drop it
-			return true;
-		int ret = lua_resume(L, lua_gettop(L) - 1);
-		if(ret == 0) {	// the coroutine is finished, leave the stack intact
+	if(status == 0 && !lua_isfunction(_state, 1))
+		return true;	// expect a funciont on a regular coroutine
+						// drop it
+	else if(status == 0 ||	// about to start
+			(status == LUA_YIELD && pollAndClear())){ // yielded but all events are cleared
+		// function at the bottom for the first time
+		int ret = lua_resume(L, lua_gettop(L) - (status == 0 ? 1 : 0));
+		if(ret == 0) {	
+			// the coroutine is finished and
+			// clear the stack because they 
+			// won't go anywhere and an indicator
+			// that it is finished
+			lua_settop(0);
 			return true;
 		}else if(ret == LUA_YIELD){
 			return false;	// evaluate in the next loop?
 		}else{
 			// todo: error trace back
-			return true;
 		}
 	}
-
-	if(status == LUA_YIELD) {
-	}
-
-	int num = _numArg;
-	bool started = hasStarted();
-	ASSERT(started || 
-			(_state.isFunction(_top + 1) && 
-			 _state.top() - _numArg == _top + 1)
-			); // fresh run needs a function
-
-	if(!started || (num = pollAndClear()) > 0) {
-		// 1. for a fresh state, ... func, varargs
-		// 2. for a resuming state, ... events
-		int top = _state.top();
-		int ret = _state.resume(num); // either fresh start or resume
-		if(ret == 0){
-			setDone(_state.top() - _top);
-			return true;
-		}else if(ret == LUA_YIELD){ 
-			int n = _state.top() - _top; 
-			if(n == 0) // yield return none
-				return true; // leave it alone
-			else
-				setYielded(n);
-		}else{
-			// todo: track back and error 
-			setDone(_state.top() - _top);
-			return true; // ditch the error coroutine
-		}
-	}
-	
-	return false;
-}
-
-int ScriptCoroutine::numReturn(){
-	return isDone() ? _state.top() - _top : -1;
-}
-
-bool ScriptCoroutine::isGuarded(){
-	return _state.isUserdata(-1) &&
-		_state.get<YieldGuard>(-1).isValid();
+	// error? drop it
+	return true;	
 }
 
 bool ScriptCoroutine::isDone(){
-	int status = lua_status(_state);
-
+	int st = lua_status(_state);
+	if(st == LUA_YIELD)
+		return false;
+	else if(st == 0)
+		return lua_gettop(_state) == 0;
+	else
+		return true;	// todo: error?
 }
 
-bool ScriptCoroutine::hasStarted(){
-	return _state.isUserdata(-1) &&
-		_state.get<YieldGuard>(-1).startedSignature();
-}
-
-void ScriptCoroutine::setYielded(int n){
-	ASSERT(n>0);
-	ASSERT(!hasStarted());
-	_state.push<YieldGuard>(YieldGuard(n, _top, true));		// push the stack info
-}
-
-void ScriptCoroutine::setDone(int n){
-	ASSERT(n>=0);
-	_state.push<YieldGuard>(YieldGuard(n, _top, false));	// push the stack info
-}
-
-int ScriptCoroutine::pollAndClear() {
-	ASSERT(hasStarted());
-
+bool ScriptCoroutine::pollAndClear() {
 	// evaluate every value in the stack
-	for(int cur=_state.top(); cur>0; --cur){
+	for(int cur = lua_gettop(_state); cur>0; --cur){
 		if(_state.isFunction(cur)){	// function as a polling method
 			_state.push(cur);		// push the function
 			int ret = _state.call(0);
@@ -159,8 +83,9 @@ int ScriptCoroutine::pollAndClear() {
 				!_state.get<bool>(-ret)){ // should not block?
 				_state.remove(cur);
 			}
-			if(ret > 0) //todo: error handle?
+			if(ret > 0)
 				_state.pop(ret); // remove any return
+			//todo: error handle?
 		}else{ // for any other value, simply return it
 			_state.remove(cur);
 		}

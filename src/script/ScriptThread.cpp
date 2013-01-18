@@ -38,6 +38,43 @@ void ScriptThread::retain(){
 }
 #endif
 
+void ScriptThread::schedule(ScriptCoroutine const&sc){
+	lua_pushlightuserdata((void*)&ScriptThread::loop);
+	lua_rawget(_state, LUA_REGISTRYINDEX);
+	ASSERT(lua_istable(_state, -1));
+	lua_pushthread(sc.getState());
+	lua_pushboolean(_state, 1);
+	lua_rawset(_state, -3);
+	lua_pop(_state, -1);
+}
+
+bool ScriptThread::loop(){
+	lua_pushlightuserdata((void*)&ScriptThread::loop);
+	lua_rawget(_state, LUA_REGISTRYINDEX);
+	ASSERT(lua_istable(_state, -1));
+	int t = lua_gettop(_state);
+
+	lua_pushnil(_state);
+	while(lua_next(_state, t)){
+		ScriptCoroutine sc = _state.get<ScriptCoroutine>(-2);
+		if(sc.resume()){
+			lua_pushvalue(_state, -2);	// table, ..., cr, value, cr
+			lua_insert(_state, t+1);	// table, cr, .., cr, value
+		}
+		lua_pop(_state, 1);
+	}
+	lua_pop(_state, 1); // pop nil
+
+	bool any = true;
+	// table, cr, ..., cr
+	while(!lua_istable(_state,-1)){
+		any = false;
+		lua_pushnil(_state);
+		lua_rawset(_state, t);
+	}
+	return any;
+}
+
 bool ScriptThread::resume(){
 	if(mStatus == Created || mState.top() == 0) {	// a new thread? or ready to resume(all yields are satisfied)
 		int ret = mState.resume(/*args?*/);

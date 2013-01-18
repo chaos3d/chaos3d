@@ -164,7 +164,7 @@ public:
 	*	true, if ends or errors
 	*	false, if yields
 	*/
-	bool	run( bool immediate );
+	bool	run(bool immediate);
 
 	/**
 	* dispose a thread
@@ -193,8 +193,29 @@ public:
 		return this;
 	};
 
+	/**
+	 * schedule the coroutines
+	 * returns true if all the coroutines are finished
+	 *
+	 * the guarded coroutines are saved in registry table
+	 */
+	bool loop();
+
+	/**
+	 * add the coroutine to the list so it'll run
+	 * in next loop
+	 */
+	void schedule(ScriptCoroutine const&);
+	void spawn(char const*); // spawn from the source
+
+	// todo
+	// - coroutine.resume (remove from the waiting list)
+	// - coroutine.spawn
+	// - coroutine.schedule
+	// - threaded states
+	static ScriptThread* newThread(char const* script);
 private:
-	ScriptState mState;
+	ScriptState _state;
 };
 
 TYPE_RET_REF( ScriptThread );
