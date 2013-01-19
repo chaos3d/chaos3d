@@ -50,17 +50,12 @@ public:
 
 public:
 	ScriptState();
-	ScriptState(lua_State* L);
+	ScriptState(lua_State* L); // this one might not be public
 	ScriptState(ScriptState const&ss);
 	ScriptState& operator =(ScriptState const& rhs);
 
-	bool operator ==(ScriptState const& rhs){
-		return mL == rhs.mL;	// todo: check the main thread
-	};
-
-	bool operator !=(ScriptState const& rhs){
-		return mL != rhs.mL;
-	};
+	bool operator==(ScriptState const& rhs) const;
+	bool operator!=(ScriptState const& rhs) const;
 
 	inline lua_State* getState() const{
 		return mL;
@@ -136,6 +131,7 @@ public:
 	// push a new T into the stack
 	template<class T> void push_() const;
 
+	void* signature() const;
 private:
 	int increseRef(int delta);
 

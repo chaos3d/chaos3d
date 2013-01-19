@@ -23,6 +23,9 @@ template void* ScriptState::getValue<void>(int index) const;
 
 ScriptState::ScriptState(){
 	_L = lua_open();
+	lua_pushlightuserdata(_L, (void*)&ScriptState::ScriptState);
+	lua_pushthread(_L);
+	lua_rawset(_L, LUA_REGISTRYINDEX);
 	increseRef(1);
 }
 
@@ -34,18 +37,42 @@ ScriptState::ScriptState(ScriptState const&ss):_L(ss._L){
 	increseRef(1);
 }
 
-ScriptState& ScriptState::operator =(ScriptState const& rhs){
-	_L == rhs._L;
-	increseRef(1);
+ScriptState& ScriptState::operator=(ScriptState const& rhs){
+	if(*this == rhs)
+		_L = rhs._L;
+	else{
+		increseRef(-1);
+		_L = rhs._L;
+		increseRef(1);
+	}
 }
 
+bool ScriptState::operator==(ScriptState const& rhs) const{
+	return signature() == rhs.signature();
+};
+
+bool ScriptState::operator!=(ScriptState const& rhs) const{
+	return signature() != rhs.signature();
+};
+
 ~ScriptState::ScriptState(){
-	if(increseRef(-1) == 0)
-		lua_close(_L);
+	if(increseRef(-1) == 0){
+		lua_pushlightuserdata(_L, (void*)&ScriptState::ScriptState);
+		lua_rawget(_L, LUA_REGISTRYINDEX);
+		lua_State *mainL = lua_tothread(_L, -1);
+		lua_close(mainL);
+	}
+}
+
+void* ScriptState::signature() const {
+	lua_pushvalue(_L, LUA_GLOBALSINDEX);
+	void* s = lua_topointer(_L, -1);
+	lua_pop(_L, 1);
+	return s;
 }
 
 int ScriptState::increseRef(int delta){
-	lua_pushlightuserdata(_L, (void*)&ScriptState::ScriptState());
+	lua_pushlightuserdata(_L, (void*)&ScriptState::increseRef);
 	lua_pushvalue(_L, -1);
 	lua_rawget(_L, LUA_REGISTRYINDEX);
 	int refc = lua_tonumber(_L, -1) + delta;
