@@ -21,25 +21,24 @@
 
 _CHAOS_BEGIN
 
-class ScriptManager;
-
-/*
-a running state of a specific script code
-*/
+/**
+ * a wrapper for lua state
+ * and simplify to manipulate the state
+ */
 class CHAOS_API ScriptState{
 public:
-
 	/**
 	 * Decouple IO for reading/writing from/to the source
 	 */
 	class SourceReader{
 	public:
-        size_t read(char const* buf, size_t buf_size);
+		virtual char const* source() { return NULL; };
+        virtual size_t read(char const* buf, size_t buf_size) = 0;
 	};
     
     class SourceWriter{
     public:
-        size_t write(char* buf, size_t buf_size);
+        virtual size_t write(char* buf, size_t buf_size) = 0;
     };
     
 	// Unwind the pointer and the reference
@@ -50,26 +49,24 @@ public:
 	template<class T> struct PushUnwind;
 
 public:
-	explicit ScriptState( lua_State* L )
-		:mL(L)
-	{};
+	ScriptState();
+	ScriptState(lua_State* L);
+	ScriptState(ScriptState const&ss);
+	ScriptState& operator =(ScriptState const& rhs);
 
-	ScriptState(ScriptState const&c) : mL(c.mL)
-	{};
-
-	ScriptState& operator =(ScriptState const& rhs){
-		mL = c.mL;
+	bool operator ==(ScriptState const& rhs){
+		return mL == rhs.mL;	// todo: check the main thread
 	};
 
-	inline bool	operator ==(ScriptState const& rhs){
-		return mL == rhs.mL;
-	};
-
-	inline bool	operator !=(ScriptState const& rhs){
+	bool operator !=(ScriptState const& rhs){
 		return mL != rhs.mL;
 	};
 
 	inline lua_State* getState() const{
+		return mL;
+	}
+
+	operator lua_State* () const{
 		return mL;
 	}
 
@@ -126,19 +123,30 @@ public:
 	inline void	wrapType(){
 	}
 
+	/**
+	 * push a T into the stack
+	 * 
+	 * this doesn't have a default impl, however
+	 * for each particular type, it has a specialized
+	 * version
+	 */
 	template<class T>
-	inline void	push_(T val) const;
+	void push_(T val) const;
 
 	// push a new T into the stack
 	template<class T> void push_() const;
 
 private:
+	int increseRef(int delta);
+
 	lua_State* _L;
 };
 
 //template<> ReferencedCount* const& ScriptState::getValue<ReferencedCount>(int index);
 template<> void ScriptState::pushValue<void*>(void* obj, Type* type, bool gc) const;
 template<> void ScriptState::pushValue<ReferencedCount*>(ReferencedCount* obj, Type* type, bool gc) const;
+
+template<> void ScriptState::push_<SourceReader>(SourceReader);
 
 #include "ScriptState.inl"
 

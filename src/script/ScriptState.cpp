@@ -21,6 +21,40 @@
 ///----------------------------------------------------------------
 template void* ScriptState::getValue<void>(int index) const;
 
+ScriptState::ScriptState(){
+	_L = lua_open();
+	increseRef(1);
+}
+
+ScriptState::ScriptState(lua_State* L):_L(L){
+	increseRef(1);
+}
+
+ScriptState::ScriptState(ScriptState const&ss):_L(ss._L){
+	increseRef(1);
+}
+
+ScriptState& ScriptState::operator =(ScriptState const& rhs){
+	_L == rhs._L;
+	increseRef(1);
+}
+
+~ScriptState::ScriptState(){
+	if(increseRef(-1) == 0)
+		lua_close(_L);
+}
+
+int ScriptState::increseRef(int delta){
+	lua_pushlightuserdata(_L, (void*)&ScriptState::ScriptState());
+	lua_pushvalue(_L, -1);
+	lua_rawget(_L, LUA_REGISTRYINDEX);
+	int refc = lua_tonumber(_L, -1) + delta;
+	lua_pop(L, 1);
+
+	lua_pushnumber(_L, refc);
+	lua_rawset(_L, LUA_REGISTRYINDEX);
+}
+
 void* ScriptState::getObject(int index) const{
 	if( lua_isnoneornil( mL, index))
 		return 0;
@@ -36,6 +70,20 @@ void* ScriptState::getObject(int index) const{
 		if( data != 0 )
 		return data->obj;
 	return 0;
+}
+
+static const char *streamReader (lua_State *L, void *data, size_t *size){
+	static char buffer[1024];
+	SourceReader* ds = (SourceReader*)data;
+
+	*size = ds->read(buffer, 1024);
+	return buffer;
+}
+
+template<> 
+void ScriptState::push_<SourceReader*>(SourceReader* sr){
+	lua_load(mL, streamReader, (void*)sr, sr->source());
+	// todo: error check
 }
 
 /*
