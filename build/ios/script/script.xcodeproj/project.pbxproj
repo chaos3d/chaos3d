@@ -1,0 +1,361 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		8803C56616A2252700777678 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8803C56516A2252700777678 /* Foundation.framework */; };
+		8803C65216A2962600777678 /* liblua.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8803C65116A2962600777678 /* liblua.a */; };
+		8803C68416A2965C00777678 /* DebugServer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8803C65516A2965C00777678 /* DebugServer.cpp */; };
+		8803C68616A2965C00777678 /* function_call.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8803C65A16A2965C00777678 /* function_call.cpp */; };
+		8803C68716A2965C00777678 /* LuaFunctor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8803C66016A2965C00777678 /* LuaFunctor.cpp */; };
+		8803C68816A2965C00777678 /* LuaType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8803C66C16A2965C00777678 /* LuaType.cpp */; };
+		8803C68916A2965C00777678 /* meta_call.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8803C66E16A2965C00777678 /* meta_call.cpp */; };
+		8803C68A16A2965C00777678 /* meta_gc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8803C66F16A2965C00777678 /* meta_gc.cpp */; };
+		8803C68B16A2965C00777678 /* meta_index.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8803C67016A2965C00777678 /* meta_index.cpp */; };
+		8803C68C16A2965C00777678 /* meta_util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8803C67116A2965C00777678 /* meta_util.cpp */; };
+		8803C68D16A2965C00777678 /* metatables.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8803C67216A2965C00777678 /* metatables.cpp */; };
+		8803C68F16A2965C00777678 /* script_decl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8803C67516A2965C00777678 /* script_decl.cpp */; };
+		8803C69016A2965C00777678 /* script_import.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8803C67616A2965C00777678 /* script_import.cpp */; };
+		8803C69116A2965C00777678 /* ScriptData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8803C67716A2965C00777678 /* ScriptData.cpp */; };
+		8803C69216A2965C00777678 /* ScriptFunction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8803C67916A2965C00777678 /* ScriptFunction.cpp */; };
+		8803C69316A2965C00777678 /* ScriptManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8803C67B16A2965C00777678 /* ScriptManager.cpp */; };
+		8803C69416A2965C00777678 /* ScriptState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8803C67D16A2965C00777678 /* ScriptState.cpp */; };
+		8803C69516A2965C00777678 /* ScriptThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8803C68016A2965C00777678 /* ScriptThread.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		8803C56016A2252700777678 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/${PRODUCT_NAME}";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		8803C56216A2252700777678 /* libscript.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libscript.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		8803C56516A2252700777678 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		8803C56916A2252700777678 /* script-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "script-Prefix.pch"; path = "script/script-Prefix.pch"; sourceTree = "<group>"; };
+		8803C65116A2962600777678 /* liblua.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = liblua.a; path = "../external/build/Debug-iphoneos/liblua.a"; sourceTree = "<group>"; };
+		8803C65416A2965C00777678 /* bind.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bind.h; sourceTree = "<group>"; };
+		8803C65516A2965C00777678 /* DebugServer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DebugServer.cpp; sourceTree = "<group>"; };
+		8803C65616A2965C00777678 /* DebugServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DebugServer.h; sourceTree = "<group>"; };
+		8803C65916A2965C00777678 /* dispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dispatcher.h; sourceTree = "<group>"; };
+		8803C65A16A2965C00777678 /* function_call.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = function_call.cpp; sourceTree = "<group>"; };
+		8803C65B16A2965C00777678 /* FunctionDeduce.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FunctionDeduce.h; sourceTree = "<group>"; };
+		8803C65C16A2965C00777678 /* Import.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Import.h; sourceTree = "<group>"; };
+		8803C65D16A2965C00777678 /* lua.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lua.h; sourceTree = "<group>"; };
+		8803C65E16A2965C00777678 /* LuaAccessor.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LuaAccessor.inl; sourceTree = "<group>"; };
+		8803C65F16A2965C00777678 /* LuaFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LuaFactory.h; sourceTree = "<group>"; };
+		8803C66016A2965C00777678 /* LuaFunctor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LuaFunctor.cpp; sourceTree = "<group>"; };
+		8803C66116A2965C00777678 /* LuaFunctor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LuaFunctor.h; sourceTree = "<group>"; };
+		8803C66216A2965C00777678 /* LuaFunctor1-oc.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "LuaFunctor1-oc.inl"; sourceTree = "<group>"; };
+		8803C66316A2965C00777678 /* LuaFunctor1.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LuaFunctor1.inl; sourceTree = "<group>"; };
+		8803C66416A2965C00777678 /* LuaFunctor2-oc.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "LuaFunctor2-oc.inl"; sourceTree = "<group>"; };
+		8803C66516A2965C00777678 /* LuaFunctor2.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LuaFunctor2.inl; sourceTree = "<group>"; };
+		8803C66616A2965C00777678 /* LuaFunctor3.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LuaFunctor3.inl; sourceTree = "<group>"; };
+		8803C66716A2965C00777678 /* LuaFunctor4.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LuaFunctor4.inl; sourceTree = "<group>"; };
+		8803C66816A2965C00777678 /* LuaFunctor5.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LuaFunctor5.inl; sourceTree = "<group>"; };
+		8803C66916A2965C00777678 /* LuaFunctor6.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LuaFunctor6.inl; sourceTree = "<group>"; };
+		8803C66A16A2965C00777678 /* LuaFunctor7.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LuaFunctor7.inl; sourceTree = "<group>"; };
+		8803C66B16A2965C00777678 /* LuaFunctor8.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LuaFunctor8.inl; sourceTree = "<group>"; };
+		8803C66C16A2965C00777678 /* LuaType.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LuaType.cpp; sourceTree = "<group>"; };
+		8803C66D16A2965C00777678 /* LuaType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LuaType.h; sourceTree = "<group>"; };
+		8803C66E16A2965C00777678 /* meta_call.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = meta_call.cpp; sourceTree = "<group>"; };
+		8803C66F16A2965C00777678 /* meta_gc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = meta_gc.cpp; sourceTree = "<group>"; };
+		8803C67016A2965C00777678 /* meta_index.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = meta_index.cpp; sourceTree = "<group>"; };
+		8803C67116A2965C00777678 /* meta_util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = meta_util.cpp; sourceTree = "<group>"; };
+		8803C67216A2965C00777678 /* metatables.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = metatables.cpp; sourceTree = "<group>"; };
+		8803C67516A2965C00777678 /* script_decl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = script_decl.cpp; sourceTree = "<group>"; };
+		8803C67616A2965C00777678 /* script_import.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = script_import.cpp; sourceTree = "<group>"; };
+		8803C67716A2965C00777678 /* ScriptData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ScriptData.cpp; sourceTree = "<group>"; };
+		8803C67816A2965C00777678 /* ScriptData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptData.h; sourceTree = "<group>"; };
+		8803C67916A2965C00777678 /* ScriptFunction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ScriptFunction.cpp; sourceTree = "<group>"; };
+		8803C67A16A2965C00777678 /* scripting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = scripting.h; sourceTree = "<group>"; };
+		8803C67B16A2965C00777678 /* ScriptManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ScriptManager.cpp; sourceTree = "<group>"; };
+		8803C67C16A2965C00777678 /* ScriptManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptManager.h; sourceTree = "<group>"; };
+		8803C67D16A2965C00777678 /* ScriptState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ScriptState.cpp; sourceTree = "<group>"; };
+		8803C67E16A2965C00777678 /* ScriptState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptState.h; sourceTree = "<group>"; };
+		8803C67F16A2965C00777678 /* ScriptState.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ScriptState.inl; sourceTree = "<group>"; };
+		8803C68016A2965C00777678 /* ScriptThread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ScriptThread.cpp; sourceTree = "<group>"; };
+		8803C68116A2965C00777678 /* ScriptThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptThread.h; sourceTree = "<group>"; };
+		8803C68216A2965C00777678 /* traits.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = traits.h; sourceTree = "<group>"; };
+		8803C68316A2965C00777678 /* unwind.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unwind.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8803C55F16A2252700777678 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8803C65216A2962600777678 /* liblua.a in Frameworks */,
+				8803C56616A2252700777678 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		8803C55716A2252700777678 = {
+			isa = PBXGroup;
+			children = (
+				8803C65316A2965C00777678 /* script */,
+				8803C65116A2962600777678 /* liblua.a */,
+				8803C56916A2252700777678 /* script-Prefix.pch */,
+				8803C56416A2252700777678 /* Frameworks */,
+				8803C56316A2252700777678 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		8803C56316A2252700777678 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8803C56216A2252700777678 /* libscript.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		8803C56416A2252700777678 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				8803C56516A2252700777678 /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		8803C65316A2965C00777678 /* script */ = {
+			isa = PBXGroup;
+			children = (
+				8803C65416A2965C00777678 /* bind.h */,
+				8803C65516A2965C00777678 /* DebugServer.cpp */,
+				8803C65616A2965C00777678 /* DebugServer.h */,
+				8803C65916A2965C00777678 /* dispatcher.h */,
+				8803C65A16A2965C00777678 /* function_call.cpp */,
+				8803C65B16A2965C00777678 /* FunctionDeduce.h */,
+				8803C65C16A2965C00777678 /* Import.h */,
+				8803C65D16A2965C00777678 /* lua.h */,
+				8803C65E16A2965C00777678 /* LuaAccessor.inl */,
+				8803C65F16A2965C00777678 /* LuaFactory.h */,
+				8803C66016A2965C00777678 /* LuaFunctor.cpp */,
+				8803C66116A2965C00777678 /* LuaFunctor.h */,
+				8803C66216A2965C00777678 /* LuaFunctor1-oc.inl */,
+				8803C66316A2965C00777678 /* LuaFunctor1.inl */,
+				8803C66416A2965C00777678 /* LuaFunctor2-oc.inl */,
+				8803C66516A2965C00777678 /* LuaFunctor2.inl */,
+				8803C66616A2965C00777678 /* LuaFunctor3.inl */,
+				8803C66716A2965C00777678 /* LuaFunctor4.inl */,
+				8803C66816A2965C00777678 /* LuaFunctor5.inl */,
+				8803C66916A2965C00777678 /* LuaFunctor6.inl */,
+				8803C66A16A2965C00777678 /* LuaFunctor7.inl */,
+				8803C66B16A2965C00777678 /* LuaFunctor8.inl */,
+				8803C66C16A2965C00777678 /* LuaType.cpp */,
+				8803C66D16A2965C00777678 /* LuaType.h */,
+				8803C66E16A2965C00777678 /* meta_call.cpp */,
+				8803C66F16A2965C00777678 /* meta_gc.cpp */,
+				8803C67016A2965C00777678 /* meta_index.cpp */,
+				8803C67116A2965C00777678 /* meta_util.cpp */,
+				8803C67216A2965C00777678 /* metatables.cpp */,
+				8803C67516A2965C00777678 /* script_decl.cpp */,
+				8803C67616A2965C00777678 /* script_import.cpp */,
+				8803C67716A2965C00777678 /* ScriptData.cpp */,
+				8803C67816A2965C00777678 /* ScriptData.h */,
+				8803C67916A2965C00777678 /* ScriptFunction.cpp */,
+				8803C67A16A2965C00777678 /* scripting.h */,
+				8803C67B16A2965C00777678 /* ScriptManager.cpp */,
+				8803C67C16A2965C00777678 /* ScriptManager.h */,
+				8803C67D16A2965C00777678 /* ScriptState.cpp */,
+				8803C67E16A2965C00777678 /* ScriptState.h */,
+				8803C67F16A2965C00777678 /* ScriptState.inl */,
+				8803C68016A2965C00777678 /* ScriptThread.cpp */,
+				8803C68116A2965C00777678 /* ScriptThread.h */,
+				8803C68216A2965C00777678 /* traits.h */,
+				8803C68316A2965C00777678 /* unwind.h */,
+			);
+			name = script;
+			path = ../../../src/script;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8803C56116A2252700777678 /* script */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8803C57016A2252700777678 /* Build configuration list for PBXNativeTarget "script" */;
+			buildPhases = (
+				8803C55E16A2252700777678 /* Sources */,
+				8803C55F16A2252700777678 /* Frameworks */,
+				8803C56016A2252700777678 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = script;
+			productName = script;
+			productReference = 8803C56216A2252700777678 /* libscript.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		8803C55916A2252700777678 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0450;
+				ORGANIZATIONNAME = cHaos3D;
+			};
+			buildConfigurationList = 8803C55C16A2252700777678 /* Build configuration list for PBXProject "script" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 8803C55716A2252700777678;
+			productRefGroup = 8803C56316A2252700777678 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8803C56116A2252700777678 /* script */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8803C55E16A2252700777678 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8803C68416A2965C00777678 /* DebugServer.cpp in Sources */,
+				8803C68616A2965C00777678 /* function_call.cpp in Sources */,
+				8803C68716A2965C00777678 /* LuaFunctor.cpp in Sources */,
+				8803C68816A2965C00777678 /* LuaType.cpp in Sources */,
+				8803C68916A2965C00777678 /* meta_call.cpp in Sources */,
+				8803C68A16A2965C00777678 /* meta_gc.cpp in Sources */,
+				8803C68B16A2965C00777678 /* meta_index.cpp in Sources */,
+				8803C68C16A2965C00777678 /* meta_util.cpp in Sources */,
+				8803C68D16A2965C00777678 /* metatables.cpp in Sources */,
+				8803C68F16A2965C00777678 /* script_decl.cpp in Sources */,
+				8803C69016A2965C00777678 /* script_import.cpp in Sources */,
+				8803C69116A2965C00777678 /* ScriptData.cpp in Sources */,
+				8803C69216A2965C00777678 /* ScriptFunction.cpp in Sources */,
+				8803C69316A2965C00777678 /* ScriptManager.cpp in Sources */,
+				8803C69416A2965C00777678 /* ScriptState.cpp in Sources */,
+				8803C69516A2965C00777678 /* ScriptThread.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		8803C56E16A2252700777678 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		8803C56F16A2252700777678 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		8803C57116A2252700777678 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/script.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "script/script-Prefix.pch";
+				HEADER_SEARCH_PATHS = ../../../src/;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../external/build/Debug-iphoneos\"",
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		8803C57216A2252700777678 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/script.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "script/script-Prefix.pch";
+				HEADER_SEARCH_PATHS = ../../../src/;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../external/build/Debug-iphoneos\"",
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		8803C55C16A2252700777678 /* Build configuration list for PBXProject "script" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8803C56E16A2252700777678 /* Debug */,
+				8803C56F16A2252700777678 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8803C57016A2252700777678 /* Build configuration list for PBXNativeTarget "script" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8803C57116A2252700777678 /* Debug */,
+				8803C57216A2252700777678 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 8803C55916A2252700777678 /* Project object */;
+}
