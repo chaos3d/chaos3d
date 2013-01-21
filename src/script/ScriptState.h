@@ -48,6 +48,7 @@ public:
 	ScriptState(lua_State* L); // this one might not be public
 	ScriptState(ScriptState const&ss);
 	ScriptState& operator =(ScriptState const& rhs);
+	~ScriptState();
 
 	bool operator==(ScriptState const& rhs) const;
 	bool operator!=(ScriptState const& rhs) const;
@@ -85,10 +86,14 @@ public:
 	template<class T> void push_(T* val);		// push a pointer
 	template<class T> void push_();				// push a new T into the stack
 
-	template<class T>
-	inline T	get_( int index ) const;
+	template<class T> T	get_(int index) const;
 
-	void* signature() const;
+    void pop(int n);
+    int top() const;
+    
+    // address to global table as the signature to
+    // distinguish the lua state
+	const void* signature() const;
     
 private:
 	int increseRef(int delta);
@@ -97,7 +102,7 @@ private:
 };
 
 // load a script and push the function to the stack
-template<> void ScriptState::push_<ScriptState::SourceReader>(ScriptState::SourceReader const&);
+template<> void ScriptState::push_<ScriptState::SourceReader>(ScriptState::SourceReader *);
 
 // todo: move this to .inl
 template<> void ScriptState::push_<bool>(bool);
@@ -107,7 +112,7 @@ template<> void ScriptState::push_<float>(float);
 template<> void ScriptState::push_<double>(double);
 template<> void ScriptState::push_<char const*>(char const*);
 
-#include "ScriptState.inl"
+//#include "ScriptState.inl"
 
 /*
 template<class T>

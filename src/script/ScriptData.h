@@ -10,7 +10,7 @@
 #ifndef	_CHAOS_SCRIPTDATA_H
 #define	_CHAOS_SCRIPTDATA_H
 
-#include "chaos_config.h"
+#include "common.h"
 
 _CHAOS_BEGIN
 

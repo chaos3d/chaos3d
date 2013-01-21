@@ -29,7 +29,7 @@ bool ScriptCoroutine::resume() {
 			// clear the stack because they 
 			// won't go anywhere and an indicator
 			// that it is finished
-			lua_settop(0);
+			lua_settop(L, 0);
 			return true;
 		}else if(ret == LUA_YIELD){
 			return false;	// evaluate in the next loop?
@@ -54,47 +54,47 @@ bool ScriptCoroutine::isDone(){
 bool ScriptCoroutine::pollAndClear() {
 	// evaluate every value in the stack
 	for(int cur = lua_gettop(_state); cur>0; --cur){
-		if(_state.isFunction(cur)){	// function as a polling method
-			_state.push(cur);		// push the function
-			int ret = _state.call(0);
+		if(lua_isfunction(_state, cur)){	// function as a polling method
+			lua_pushvalue(_state, cur);		// push the function
+			int ret = lua_pcall(_state, 0, LUA_MULTRET, 0); // TODO: error check
 			if(ret > 0){
-				if(!_state.get<bool>(-ret)){// check the first one
+				if(!_state.get_<bool>(-ret)){// check the first one
 					_state.pop(ret);
 					continue;
 				}else{	// a 'true' value
 					_state.pop(ret);		// pop all results
-					_state.remove(cur);		// remove the function
+					lua_remove(_state, cur);		// remove the function
 				}
 			}else if(ret == 0){
 				// nothing returns, ignore and keep waiting
 			}else{ // error?
 				// todo: trace back
 				_state.pop(1);		// pop the error
-				_state.remove(cur);	// remove the function
+				lua_remove(_state, cur);	// remove the function
 			}
-		}else if(_state.isCoroutine(cur)){	// wait until coroutine is finished
-			ScriptCoroutine sc = _state.get<ScriptCoroutine>(cur);
+		}else if(lua_isthread(_state, cur)){	// wait until coroutine is finished
+			ScriptCoroutine sc = _state.get_<ScriptCoroutine>(cur);
 			if(sc.isDone()){
-				_state.remove(cur);			// remove the coroutine
+				lua_remove(_state, cur);			// remove the coroutine
 			}
-		}else if(_state.isUserdata(cur)){ 	// call metamethod __block if any
-			int ret = _state.callmeta(cur, "__block");
+		}else if(lua_isuserdata(_state, cur)){ 	// call metamethod __block if any
+			int ret = luaL_callmeta(_state, cur, "__block");
 			if(ret <= 0 ||  // no meta table or meta method found or no return
-				!_state.get<bool>(-ret)){ // should not block?
-				_state.remove(cur);
+				!_state.get_<bool>(-ret)){ // should not block?
+				lua_remove(_state, cur);
 			}
 			if(ret > 0)
 				_state.pop(ret); // remove any return
 			//todo: error handle?
 		}else{ // for any other value, simply return it
-			_state.remove(cur);
+			lua_remove(_state, cur);
 		}
 	}
 
 	return _state.top() == 0;
 }
 
-template<> ScriptState::push_<ScriptCoroutine>(){
+template<> void ScriptState::push_<ScriptCoroutine>(){
 	lua_newthread(_L);
 }
 

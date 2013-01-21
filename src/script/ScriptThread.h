@@ -11,6 +11,7 @@
 #define	_CHAOS_SCRIPTTHREAD_H
 
 #include "common.h"
+#include "LuaType.h"
 #include "ScriptState.h"
 #include "ScriptCoroutine.h"
 
@@ -46,6 +47,8 @@ public:
 	static ScriptState	NilState;
 
 public:
+    ~ScriptThread();
+    
     /**
      * send message to the thread, non-blocking if queued
      */
@@ -91,7 +94,7 @@ private:
 	ScriptState _state;
 };
 
-TYPE_RET_REF( ScriptThread );
+//TYPE_RET_REF( ScriptThread );
 
 _CHAOS_END
 

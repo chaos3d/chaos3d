@@ -10,9 +10,9 @@
 #ifndef	_CHAOS_SCRIPTMANAGER_H
 #define	_CHAOS_SCRIPTMANAGER_H
 
-#include "chaos_config.h"
-#include "core/core.h"
-#include "core/RTTI.h"
+#include "common.h"
+//#include "core/core.h"
+//#include "core/RTTI.h"
 
 #include "LuaType.h"
 

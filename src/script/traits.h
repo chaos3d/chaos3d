@@ -10,7 +10,7 @@
 #ifndef	_CHAOS_TRAITS_H
 #define	_CHAOS_TRAITS_H
 
-#include "chaos_config.h"
+#include "common.h"
 
 _CHAOS_BEGIN
 

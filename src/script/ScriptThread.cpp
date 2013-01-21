@@ -14,8 +14,10 @@
 ///----------------------------------------------------------------
 ///----------------------------------------------------------------
 
+static int _thread_schedule_sig = 0;
+
 void ScriptThread::schedule(ScriptCoroutine const&sc){
-	lua_pushlightuserdata((void*)&ScriptThread::loop);
+	lua_pushlightuserdata(_state, (void*)&_thread_schedule_sig);
 	lua_rawget(_state, LUA_REGISTRYINDEX);
 	ASSERT(lua_istable(_state, -1));
 	lua_pushthread(sc.getState());
@@ -25,14 +27,14 @@ void ScriptThread::schedule(ScriptCoroutine const&sc){
 }
 
 bool ScriptThread::loop(){
-	lua_pushlightuserdata((void*)&ScriptThread::loop);
+	lua_pushlightuserdata(_state, (void*)&_thread_schedule_sig);
 	lua_rawget(_state, LUA_REGISTRYINDEX);
 	ASSERT(lua_istable(_state, -1));
 	int t = lua_gettop(_state);
 
 	lua_pushnil(_state);
 	while(lua_next(_state, t)){
-		ScriptCoroutine sc = _state.get<ScriptCoroutine>(-2);
+		ScriptCoroutine sc = _state.get_<ScriptCoroutine>(-2);
 		if(sc.resume()){
 			lua_pushvalue(_state, -2);	// table, ..., cr, value, cr
 			lua_insert(_state, t+1);	// table, cr, .., cr, value

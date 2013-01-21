@@ -10,9 +10,8 @@
 #ifndef _CHAOS_LUAOBJECT_H
 #define _CHAOS_LUAOBJECT_H
 
-#include "chaos_config.h"
-#include "traits.h"
-#include "core/ReferencedCount.h"
+#include "common.h"
+//#include "traits.h"
 
 struct lua_State;
 
@@ -50,28 +49,7 @@ public:
 	lua_State* getL() const;
 };
 
-TYPE_NATIVE(TypeLua);
-
-/**
- * A bridge class between objects in lua and objects in CPP
- * so that it's possible to export lua object out of CPP and
- * being referenced as a pointer
- *
- * this class is a helper class where objects when exporting
- * from lua implicitly by types (like function parameters) can
- * be seen identically to native classes. client should not
- * care about this
- */
-class CHAOS_API LuaObject: public ReferencedCount{
-	DECLARE_NOTCOPYABLE(LuaObject);
-	DECLARE_NOTASSIGNABLE(LuaObject);
-	
-protected:
-	TypeLua		mLua;
-	
-public:
-	LuaObject(TypeLua const&);
-};
+//TYPE_NATIVE(TypeLua);
 
 // todo:
 // LuaTable and LuaFunction helper classes or just integrate into TypeLua

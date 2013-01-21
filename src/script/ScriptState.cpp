@@ -13,11 +13,11 @@
 
 ///----------------------------------------------------------------
 ///----------------------------------------------------------------
-template void* ScriptState::getValue<void>(int index) const;
+//template void* ScriptState::getValue<void>(int index) const;
 
 ScriptState::ScriptState(){
 	_L = lua_open();
-	lua_pushlightuserdata(_L, (void*)&ScriptState::ScriptState);
+	lua_pushlightuserdata(_L, (void*)signature());
 	lua_pushthread(_L);
 	lua_rawset(_L, LUA_REGISTRYINDEX);
 	increseRef(1);
@@ -39,6 +39,7 @@ ScriptState& ScriptState::operator=(ScriptState const& rhs){
 		_L = rhs._L;
 		increseRef(1);
 	}
+    return *this;
 }
 
 bool ScriptState::operator==(ScriptState const& rhs) const{
@@ -49,142 +50,53 @@ bool ScriptState::operator!=(ScriptState const& rhs) const{
 	return signature() != rhs.signature();
 };
 
-~ScriptState::ScriptState(){
+ScriptState::~ScriptState(){
 	if(increseRef(-1) == 0){
-		lua_pushlightuserdata(_L, (void*)&ScriptState::ScriptState);
+		lua_pushlightuserdata(_L, (void*)signature());
 		lua_rawget(_L, LUA_REGISTRYINDEX);
 		lua_State *mainL = lua_tothread(_L, -1);
 		lua_close(mainL);
 	}
 }
 
-void* ScriptState::signature() const {
+const void* ScriptState::signature() const {
 	lua_pushvalue(_L, LUA_GLOBALSINDEX);
-	void* s = lua_topointer(_L, -1);
+	const void* s = lua_topointer(_L, -1);
 	lua_pop(_L, 1);
 	return s;
 }
 
+void ScriptState::pop(int n) {
+    lua_pop(_L, n);
+}
+
+int ScriptState::top() const {
+    return lua_gettop(_L);
+}
+
 int ScriptState::increseRef(int delta){
-	lua_pushlightuserdata(_L, (void*)&ScriptState::increseRef);
+    static int _increase_sig = 0;
+	lua_pushlightuserdata(_L, (void*)&_increase_sig);
 	lua_pushvalue(_L, -1);
 	lua_rawget(_L, LUA_REGISTRYINDEX);
 	int refc = lua_tonumber(_L, -1) + delta;
-	lua_pop(L, 1);
+	lua_pop(_L, 1);
 
 	lua_pushnumber(_L, refc);
 	lua_rawset(_L, LUA_REGISTRYINDEX);
-}
-
-void* ScriptState::getObject(int index) const{
-	if( lua_isnoneornil( mL, index))
-		return 0;
-
-	ScriptData *data = (ScriptData*)lua_touserdata(mL,index);
-#if defined(DEBUG)
-	if( data == 0 ){
-		LOG( "Not a userdata type at index %d (%s)", index, ScriptManager::getInstance()->currentInfo().c_str());
-	}else if( data->dataType != ScriptData::Instance )
-		LOG( "Not an instance type at index %d (%s)", index, ScriptManager::getInstance()->currentInfo().c_str());
-	else
-#endif
-		if( data != 0 )
-		return data->obj;
-	return 0;
+    return refc;
 }
 
 static const char *streamReader (lua_State *L, void *data, size_t *size){
 	static char buffer[1024];
-	SourceReader* ds = (SourceReader*)data;
+    ScriptState::SourceReader* ds = (ScriptState::SourceReader*)data;
 
 	*size = ds->read(buffer, 1024);
 	return buffer;
 }
 
 template<> 
-void ScriptState::push_<SourceReader*>(SourceReader* sr){
-	lua_load(mL, streamReader, (void*)sr, sr->source());
+void ScriptState::push_<ScriptState::SourceReader>(ScriptState::SourceReader * sr){
+	lua_load(_L, streamReader, (void*)sr, sr->source());
 	// todo: error check
-}
-
-/*
-template<>
-ReferencedCount* const& chaos::ScriptState::getValue<ReferencedCount>(int index){
-	return *(ReferencedCount*const*)&getValue<void>(index);
-}
-*/
-template<>
-void ScriptState::pushValue<void*>(void* obj, Type* type, bool gc) const{
-	if( obj == 0 ){
-		lua_pushnil(mL);
-		return;
-	};
-
-	ScriptData *data = (ScriptData*)lua_newuserdata(mL, sizeof(ScriptData));
-	data->dataType = ScriptData::Instance;
-	data->type = type;
-	data->obj = obj;
-
-	if( gc )
-		native_instgc_meta( mL );
-	else
-		native_inst_meta( mL );
-
-	lua_setmetatable( mL, -2 );
-}
-
-void ScriptState::pushObject(void* obj, Type* type, bool gc) const{
-	if( obj == 0 ){
-		lua_pushnil(mL);
-		return;
-	};
-
-	ScriptData *data = (ScriptData*)lua_newuserdata(mL, sizeof(ScriptData));
-	data->dataType = ScriptData::Instance;
-	data->type = type;
-	data->obj = obj;
-
-	/*if( type != 0 && type->isDerived(TYPE(ReferencedCount)) ){
-		ReferencedCount* obj((ReferencedCount*)data->obj);
-		data->type = obj->getClassType();
-		data->obj = obj;
-		obj->retain();
-
-		native_instref_meta( mL );
-	}else*/ if( gc )
-		native_instgc_meta( mL );
-	else
-		native_inst_meta( mL );
-
-	lua_setmetatable( mL, -2 );
-}
-
-// ref count pointer as a native type
-template<>
-ReferencedPtr ScriptState::getNativeValue<ReferencedPtr>(int index) const{
-	//static void* zero = 0;
-	ScriptData *data = (ScriptData*)lua_touserdata(mL,index);
-	if( data == 0 ){
-		LOG( "Not a userdata type at index %d", index);
-	}else if( data->dataType != ScriptData::Instance )
-		LOG( "Not an instance type at index %d", index);
-	else
-		return ReferencedPtr((ReferencedCount*)data->obj);	//todo: type checking, ref count
-	return ReferencedPtr(0);
-}
-
-template<>
-void ScriptState::pushValue<ReferencedCount*>(ReferencedCount* obj, Type* type, bool gc) const{
-	if( obj == 0 ){
-		lua_pushnil(mL);
-	}else{
-		ScriptData *data = (ScriptData*)lua_newuserdata(mL, sizeof(ScriptData));
-		data->dataType = ScriptData::Instance;
-		data->type = type;//obj->getClassType();
-		data->obj = obj;
-		obj->retain();
-
-		native_instref_meta( mL );
-		lua_setmetatable( mL, -2 );
-	}
 }

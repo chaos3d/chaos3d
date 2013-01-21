@@ -10,7 +10,7 @@
 #ifndef _CHAOS_SCRIPT_DISPATCHER_H
 #define _CHAOS_SCRIPT_DISPATCHER_H
 
-#include "chaos_config.h"
+#include "common.h"
 
 struct lua_State;
 

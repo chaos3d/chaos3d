@@ -38,7 +38,7 @@ static bool inter_copy_one(lua_State* from, lua_State* to, int cache, int i){
 		case LUA_TBOOLEAN:
 			lua_pushboolean(to, lua_toboolean(from, i));
 			break;
-		case LUA_TLIGHTUSERDAT:
+		case LUA_TLIGHTUSERDATA:
 			lua_pushlightuserdata(to, lua_touserdata(from, i));
 			break;
 		case LUA_TNUMBER:
@@ -76,7 +76,7 @@ static bool push_cache_table(lua_State* from, lua_State* to, int cache, int i){
 	ASSERT(lua_istable(to, cache));
 	bool ret = true;
 
-	lua_pushlightuserdata(to, lua_topointer(from, i));
+	lua_pushlightuserdata(to, (void*)lua_topointer(from, i));
 	lua_pushvalue(to, -1);		// ...cache... id(key), id(key)
 	lua_rawget(to, cache);
 
@@ -135,7 +135,7 @@ static bool inter_copy_table(lua_State* from, lua_State* to, int cache, int i){
 // or nil if func not able to be casted (JITed?)
 static bool push_cached_func(lua_State* from, lua_State* to, int cache, int i){
 	ASSERT(lua_istable(to, cache));
-	void* key = lua_topointer(to, i);
+	void* key = (void*)lua_topointer(to, i);
 	if(key == NULL) { // nil? todo: error output 
 		lua_pushnil(to);
 		return false;
@@ -144,7 +144,7 @@ static bool push_cached_func(lua_State* from, lua_State* to, int cache, int i){
 	lua_pushvalue(to, -1);
 	lua_rawget(to, cache);
 	if(lua_isnil(to, -1)) {
-		lua_pop(L, 1);
+		lua_pop(to, 1);
 		return false;
 	}
 	ASSERT(lua_isfunction(to, -1));
@@ -200,7 +200,7 @@ static bool inter_copy_func(lua_State* from, lua_State* to, int cache, int i){
 	int j = 0;
 	for(;ret && lua_getupvalue(from, i, j+1) != NULL; ++j) {
 		ret = inter_copy_one(from, to, cache, lua_gettop(from));
-		lua_pop(L, 1);
+		lua_pop(from, 1);
 	}
 
 	if(ret == false){
@@ -208,7 +208,7 @@ static bool inter_copy_func(lua_State* from, lua_State* to, int cache, int i){
 	}
 
 	if(cfunc != NULL){
-		lua_pushclosure(to, cfunc, j);
+		lua_pushcclosure(to, cfunc, j);
 	}else{
 		for(;j>0;--j){
 			lua_setupvalue(to, to_top + 1, j);
@@ -226,25 +226,23 @@ static bool inter_copy_userdata(lua_State* from, lua_State* to, int cache, int i
 }
 
 bool ScriptState::copy(ScriptState const& from, int n){
-	lua_State *L1 = from.mL;
-	lua_State *L2 = mL;
-	if(lua_checkstack(L2, n + 1) != 1) // n objects + cache table
+	if(lua_checkstack(_L, n + 1) != 1) // n objects + cache table
 		return false;
 
 	bool ret = true;
-	int top1 = lua_gettop(L1), top2 = lua_gettop(L2);
+	int top1 = from.top(), top2 = top();
 
-	lua_newtable(L2);
+	lua_newtable(_L);
 	for(int i = 0;i < n; ++i){
-		if(!inter_copy_one(L1, L2, top2+1, top1+i)){
+		if(!inter_copy_one(from, _L, top2+1, top1+i)){
 			ret = false;
 			break;
 		}
 	}
 	if(ret){
-		lua_remove(to, top2+1); // remove cache table
+		lua_remove(_L, top2+1); // remove cache table
 	}else{
-		lua_settop(to, top2); // pop everything on errors
+		lua_settop(_L, top2); // pop everything on errors
 	}
 	return ret;
 }

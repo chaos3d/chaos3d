@@ -25,4 +25,10 @@
 
 #endif	// __GNU_C__
 
+#if defined(DEBUG) && !defined(NDEBUG)
+#define ASSERT(x)
+#else
+#define ASSERT(x)
+#endif
+
 #endif

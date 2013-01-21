@@ -10,7 +10,7 @@
 #ifndef	_CHAOS_LUAFUNCTOR_H
 #define	_CHAOS_LUAFUNCTOR_H
 
-#include "chaos_config.h"
+#include "common.h"
 
 #if defined(__OBJC__)
 #include <objc/message.h>

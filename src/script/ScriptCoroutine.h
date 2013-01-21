@@ -126,7 +126,7 @@ private:
 
 };
 
-template<> ScriptState::push_<ScriptCoroutine>();
+template<> void ScriptState::push_<ScriptCoroutine>();
 
 _CHAOS_END
 #endif

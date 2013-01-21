@@ -10,7 +10,7 @@
 #ifndef _CHAOS_DEBUGSERVER_H
 #define _CHAOS_DEBUGSERVER_H
 
-#include "chaos_config.h"
+#include "common.h"
 #include "ScriptManager.h"
 #include <set>
 #include <stack>
