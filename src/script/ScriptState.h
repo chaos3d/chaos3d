@@ -80,9 +80,10 @@ public:
 	 * those functions.
 	 */
 
-	template<class T> void push_(T const& val); // push a value
-	template<class T> void push_(T* val); // push a pointer
-	template<class T> void push_();	// push a new T into the stack
+	template<class T> void push_(T const& val);	// push a value
+	template<class T> void push_(T val); 		// push a value
+	template<class T> void push_(T* val);		// push a pointer
+	template<class T> void push_();				// push a new T into the stack
 
 	template<class T>
 	inline T	get_( int index ) const;
@@ -95,7 +96,16 @@ private:
 	lua_State* _L;
 };
 
+// load a script and push the function to the stack
 template<> void ScriptState::push_<ScriptState::SourceReader>(ScriptState::SourceReader const&);
+
+// todo: move this to .inl
+template<> void ScriptState::push_<bool>(bool);
+template<> void ScriptState::push_<int>(int);
+template<> void ScriptState::push_<long>(long);
+template<> void ScriptState::push_<float>(float);
+template<> void ScriptState::push_<double>(double);
+template<> void ScriptState::push_<char const*>(char const*);
 
 #include "ScriptState.inl"
 
