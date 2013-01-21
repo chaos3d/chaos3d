@@ -11,9 +11,9 @@
 #define _CHAOS_SCRIPT_LUA_H
 
 extern "C"{
-#include "../../external/luajit/lua.h"
-#include "../../external/luajit/lauxlib.h"
-#include "../../external/luajit/lualib.h"
+#include "../../external/lua/lua.h"
+#include "../../external/lua/lauxlib.h"
+#include "../../external/lua/lualib.h"
 }
 
 // helper marco for popping values

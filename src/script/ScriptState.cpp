@@ -7,13 +7,7 @@
  *
  */
 
-#include "script/ScriptState.h"
-
-#include "core/core.h"
-#include "script/dispatcher.h"
-#include "script/ScriptData.h"
-#include "script/LuaType.h"
-#include "script/ScriptManager.h"
+#include "ScriptState.h"
 
 //using namespace chaos;
 
