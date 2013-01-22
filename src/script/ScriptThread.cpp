@@ -50,6 +50,8 @@ bool ScriptThread::loop(){
 		lua_pushnil(_state);
 		lua_rawset(_state, t);
 	}
+    
+    lua_gc(_state, LUA_GCSTEP, 2);
 	return any;
 }
 
@@ -58,3 +60,4 @@ void ScriptThread::dispose(){
 
 ScriptThread::~ScriptThread(){
 }
+

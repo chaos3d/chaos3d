@@ -79,7 +79,21 @@ public:
 	 * object inside lua (how to use UserData or not
 	 * at all). To 'extend' the class by specialize
 	 * those functions.
+	 *
+	 * the template function depends on how the type
+	 * will be imported into the script, not all the
+	 * template functions need to be implemented,
+	 * although it can be all. the semantic will come
+	 * from the end-users.
 	 */
+    
+    // use for binding
+	template<class T> static void push_(lua_State*, T const& val);
+	template<class T> static void push_(lua_State*, T val);
+	template<class T> static void push_(lua_State*, T* val);
+	template<class T> static void push_(lua_State*);
+    
+	template<class T> static T get_(lua_State*, int index);
 
 	template<class T> void push_(T const& val);	// push a value
 	template<class T> void push_(T val); 		// push a value
@@ -88,6 +102,11 @@ public:
 
 	template<class T> T	get_(int index) const;
 
+    // useful wrapper functions
+    void pushMetatable(void*);  // simpler meta id
+    void pushUD(void* obj, void* meta);
+    void* getUD(int n) const;
+    
     void pop(int n);
     int top() const;
     

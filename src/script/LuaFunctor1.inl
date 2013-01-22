@@ -1,37 +1,23 @@
 ////////////////
 // c function
-template<class R, class A1>
+template<class R, class A1, R (*TFnPtr)(A1)>
 class CHAOS_API ApplierRA1 : public LuaFunctor{
-protected:
+public:
 	typedef		R (*TFnPtr)(A1);
 	typedef		ApplierRA1<R,A1> SELF;
-	TFnPtr		mPtr;
 
-public:
-	ApplierRA1( TFnPtr ptr ): LuaFunctor(SELF::lua_call), mPtr(ptr){
-	};
-
-#if defined(__LUA_CALL)
 	static int lua_call(lua_State* _L){
-		ScriptState L(_L);
-		SELF*		thiz((SELF*)lua_touserdata(_L,lua_upvalueindex(2)));
-#else
-	virtual	void call(ScriptState const& L){
-#endif
 		typedef typename TypeTraits<typename TypeUnwind<R>::Type>::Type WrapType;
 		typedef typename TypeDecider<typename TypeUnwind<R>::Type>::TYPE	RetType;
 
-
 		ScriptState::PushUnwind<R>::push(
 			L,
-			(thiz->mPtr)(
+			(TFnPtr)(
 				ScriptState::GetUnwind<A1>::get( L, 1 )
 			),
 			TYPE_FROM_NAME( WrapType )
 			);
-#if defined(__LUA_CALL)
-		return ScriptManager::getInstance()->return_(1);
-#endif
+		return 1;
 	}
 
 	virtual std::string	description(){

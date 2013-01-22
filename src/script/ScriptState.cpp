@@ -66,6 +66,14 @@ const void* ScriptState::signature() const {
 	return s;
 }
 
+void ScriptState::pushUD(void* obj, void* meta){
+    void** ptr = (void**)lua_newuserdata(_L, sizeof(void*));
+    *ptr = obj;
+    
+    pushMetatable(meta);
+    lua_setmetatable(_L, -2);
+}
+
 void ScriptState::pop(int n) {
     lua_pop(_L, n);
 }

@@ -15,5 +15,24 @@
 #include "FunctionDeduce.h"
 #include "LuaFactory.h"
 
+class Bind {
+public:
+    
+    static void loadmeta(lua_State *L) {
+        static luaL_Reg[] entries = {
+            {NULL, NULL},
+        };
+        
+        newmetatable(&entries);
+        __index,
+    }
+};
+
+ScriptState::push_<Clz>(Clz* A){
+    A->retain();
+    lua_pushuserdata(L, A);
+    loadmeta();
+    lua_setmetatable();
+}
 #endif
 
