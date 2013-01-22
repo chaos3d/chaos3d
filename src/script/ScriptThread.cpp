@@ -21,19 +21,25 @@ void ScriptThread::schedule(ScriptCoroutine const&sc){
 	lua_rawget(_state, LUA_REGISTRYINDEX);
 	ASSERT(lua_istable(_state, -1));
 	lua_pushthread(sc.getState());
+    lua_xmove(sc.getState(), _state, 1);
 	lua_pushboolean(_state, 1);
 	lua_rawset(_state, -3);
-	lua_pop(_state, -1);
+	_state.pop(1);
 }
 
 bool ScriptThread::loop(){
 	lua_pushlightuserdata(_state, (void*)&_thread_schedule_sig);
 	lua_rawget(_state, LUA_REGISTRYINDEX);
-	ASSERT(lua_istable(_state, -1));
+	//ASSERT(lua_istable(_state, -1));
+    if(!lua_istable(_state, -1)){
+        lua_pop(_state, 1);
+        return true;
+    }
+    
 	int t = lua_gettop(_state);
 
 	lua_pushnil(_state);
-	while(lua_next(_state, t)){
+	while(lua_next(_state, t) != 0){
 		ScriptCoroutine sc = _state.get_<ScriptCoroutine>(-2);
 		if(sc.resume()){
 			lua_pushvalue(_state, -2);	// table, ..., cr, value, cr
@@ -41,7 +47,6 @@ bool ScriptThread::loop(){
 		}
 		lua_pop(_state, 1);
 	}
-	lua_pop(_state, 1); // pop nil
 
 	bool any = true;
 	// table, cr, ..., cr
@@ -51,11 +56,29 @@ bool ScriptThread::loop(){
 		lua_rawset(_state, t);
 	}
     
+    _state.pop(1); // pop the table
     lua_gc(_state, LUA_GCSTEP, 2);
 	return any;
 }
 
 void ScriptThread::dispose(){
+}
+
+void ScriptThread::setupState(){
+	lua_pushlightuserdata(_state, (void*)&_thread_schedule_sig);
+	lua_rawget(_state, LUA_REGISTRYINDEX);
+	if(!lua_istable(_state, -1)){
+        lua_pop(_state, 1);
+        lua_pushlightuserdata(_state, (void*)&_thread_schedule_sig);
+        lua_newtable(_state);
+        lua_rawset(_state, LUA_REGISTRYINDEX);
+    }
+    
+    luaL_openlibs(_state);  // todo: only load a certain libs
+}
+
+ScriptThread::ScriptThread(){
+    setupState();
 }
 
 ScriptThread::~ScriptThread(){

@@ -8,6 +8,7 @@
  */
 
 #include "ScriptState.h"
+#include <cstring>
 
 //using namespace chaos;
 
@@ -74,6 +75,10 @@ void ScriptState::pushUD(void* obj, void* meta){
     lua_setmetatable(_L, -2);
 }
 
+void ScriptState::pushMetatable(void*){
+    
+}
+
 void ScriptState::pop(int n) {
     lua_pop(_L, n);
 }
@@ -103,8 +108,29 @@ static const char *streamReader (lua_State *L, void *data, size_t *size){
 	return buffer;
 }
 
+ScriptState::StringReader::StringReader(char const* str):_strbuf(str), _curpos(0){
+    _bufsize = strlen(str);
+}
+
+size_t ScriptState::StringReader::read(char *buf, size_t buf_size){
+    if(_bufsize - _curpos < buf_size)
+        buf_size = _bufsize - _curpos;
+    memcpy(buf, _strbuf + _curpos, buf_size);
+    _curpos += buf_size;
+    return buf_size;
+}
+
 template<> 
-void ScriptState::push_<ScriptState::SourceReader>(ScriptState::SourceReader * sr){
-	lua_load(_L, streamReader, (void*)sr, sr->source());
+void ScriptState::push_<ScriptState::SourceReader>(lua_State * L, ScriptState::SourceReader * sr){
+	lua_load(L, streamReader, (void*)sr, sr->source());
 	// todo: error check
 }
+
+template<> bool ScriptState::get_<bool>(lua_State *L, int idx){
+    return lua_toboolean(L, idx) == 1;
+}
+
+template<> void ScriptState::push_<bool>(lua_State *L, bool v){
+    lua_pushboolean(L, v ? 1 : 0);
+}
+

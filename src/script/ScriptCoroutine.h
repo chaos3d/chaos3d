@@ -126,7 +126,8 @@ private:
 
 };
 
-template<> void ScriptState::push_<ScriptCoroutine>();
+template<> void ScriptState::push_<ScriptCoroutine>(lua_State*);
+template<> ScriptCoroutine ScriptState::get_<ScriptCoroutine>(lua_State*, int idx);
 
 _CHAOS_END
 #endif

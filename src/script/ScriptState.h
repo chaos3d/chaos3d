@@ -27,12 +27,23 @@ public:
 	class SourceReader{
 	public:
 		virtual char const* source() { return NULL; };
-        virtual size_t read(char const* buf, size_t buf_size) = 0;
+        virtual size_t read(char* buf, size_t buf_size) = 0;
 	};
     
     class SourceWriter{
     public:
-        virtual size_t write(char* buf, size_t buf_size) = 0;
+        virtual size_t write(const char* buf, size_t buf_size) = 0;
+    };
+    
+    class StringReader : public SourceReader{
+    public:
+        StringReader(char const* buf);
+        virtual size_t read(char* buf, size_t buf_size);
+        
+    private:
+        char const* _strbuf;
+        size_t _bufsize;
+        long _curpos;
     };
     
 	// to be deleted
@@ -95,12 +106,19 @@ public:
     
 	template<class T> static T get_(lua_State*, int index);
 
-	template<class T> void push_(T const& val);	// push a value
-	template<class T> void push_(T val); 		// push a value
-	template<class T> void push_(T* val);		// push a pointer
-	template<class T> void push_();				// push a new T into the stack
+	template<class T> void push_(T const& val)	// push a value
+    { push_<T>(_L, val); }
+	template<class T> void push_(T val) 		// push a value
+    { push_<T>(_L, val); }
+	template<class T> void push_(T* val)		// push a pointer
+    { push_<T>(_L, val); }
+	template<class T> void push_()				// push a new T into the stack
+    { push_<T>(_L); }
 
-	template<class T> T	get_(int index) const;
+
+	template<class T> T	get_(int index) const{
+        return get_<T>(_L, index);
+    }
 
     // useful wrapper functions
     void pushMetatable(void*);  // simpler meta id
@@ -121,15 +139,17 @@ private:
 };
 
 // load a script and push the function to the stack
-template<> void ScriptState::push_<ScriptState::SourceReader>(ScriptState::SourceReader *);
+template<> void ScriptState::push_<ScriptState::SourceReader>(lua_State *, ScriptState::SourceReader *);
 
 // todo: move this to .inl
-template<> void ScriptState::push_<bool>(bool);
+template<> void ScriptState::push_<bool>(lua_State *, bool);
 template<> void ScriptState::push_<int>(int);
 template<> void ScriptState::push_<long>(long);
 template<> void ScriptState::push_<float>(float);
 template<> void ScriptState::push_<double>(double);
 template<> void ScriptState::push_<char const*>(char const*);
+
+template<> bool ScriptState::get_<bool>(lua_State *, int);
 
 //#include "ScriptState.inl"
 

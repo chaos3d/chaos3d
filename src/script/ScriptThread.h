@@ -47,6 +47,8 @@ public:
 	static ScriptState	NilState;
 
 public:
+    ScriptThread();
+    ScriptThread(ScriptState const&);
     ~ScriptThread();
     
     /**
@@ -90,7 +92,11 @@ public:
 	// - threaded states
 	static ScriptThread* newThread(char const* script);
 
+    ScriptState& getState() { return _state; }
+    
 private:
+    void setupState();
+    
 	ScriptState _state;
 };
 

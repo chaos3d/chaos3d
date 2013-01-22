@@ -25,7 +25,7 @@ static bool inter_copy_table(lua_State* from, lua_State* to, int cache, int i);
 static bool inter_copy_func(lua_State* from, lua_State* to, int cache, int i);
 static bool inter_copy_userdata(lua_State* from, lua_State* to, int cache, int i);
 static bool inter_copy_one(lua_State* from, lua_State* to, int cache, int i){
-	int top_to = lua_gettop(to);
+	//int top_to = lua_gettop(to);
 	ASSERT(lua_istable(to, cache));
 	if(lua_checkstack(to, 2) != 1)
 		return false; // todo: output errors
@@ -95,7 +95,7 @@ static bool push_cache_table(lua_State* from, lua_State* to, int cache, int i){
 }
 
 static bool inter_copy_table(lua_State* from, lua_State* to, int cache, int i){
-	int from_top = lua_gettop(from);
+	//int from_top = lua_gettop(from);
 
 	ASSERT(lua_istable(from, i)); // sanity check
 	if(push_cache_table(from, to, cache, i)){

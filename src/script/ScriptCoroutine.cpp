@@ -9,8 +9,12 @@
 
 #include "ScriptCoroutine.h"
 #include "lua.h"
+#include <cstdio>
 
 ScriptCoroutine::ScriptCoroutine(ScriptState const&ss) : _state(ss){
+}
+
+ScriptCoroutine::~ScriptCoroutine(){
 }
 
 bool ScriptCoroutine::resume() {
@@ -35,10 +39,11 @@ bool ScriptCoroutine::resume() {
 			return false;	// evaluate in the next loop?
 		}else{
 			// todo: error trace back
+            printf("%s", lua_tostring(L, -1));
+            return true;
 		}
-	}
-	// error? drop it
-	return true;	
+	}else
+        return false;   // polling&waiting
 }
 
 bool ScriptCoroutine::isDone(){
@@ -53,16 +58,18 @@ bool ScriptCoroutine::isDone(){
 
 bool ScriptCoroutine::pollAndClear() {
 	// evaluate every value in the stack
-	for(int cur = lua_gettop(_state); cur>0; --cur){
+	for(int cur = _state.top(); cur>0; --cur){
 		if(lua_isfunction(_state, cur)){	// function as a polling method
 			lua_pushvalue(_state, cur);		// push the function
+            int base = _state.top() - 1;    // minus func
 			int ret = lua_pcall(_state, 0, LUA_MULTRET, 0); // TODO: error check
-			if(ret > 0){
-				if(!_state.get_<bool>(-ret)){// check the first one
-					_state.pop(ret);
+            int na = _state.top() - base;
+			if(ret == 0 && na > 0){
+				if(!_state.get_<bool>(-na)){// check the first one
+					_state.pop(na);
 					continue;
 				}else{	// a 'true' value
-					_state.pop(ret);		// pop all results
+					_state.pop(na);		// pop all results
 					lua_remove(_state, cur);		// remove the function
 				}
 			}else if(ret == 0){
@@ -94,7 +101,12 @@ bool ScriptCoroutine::pollAndClear() {
 	return _state.top() == 0;
 }
 
-template<> void ScriptState::push_<ScriptCoroutine>(){
-	lua_newthread(_L);
+template<> void ScriptState::push_<ScriptCoroutine>(lua_State*L){
+	lua_newthread(L);
+}
+
+template<> ScriptCoroutine ScriptState::get_<ScriptCoroutine>(lua_State*L, int idx){
+    lua_State* nL = lua_tothread(L, idx);
+    return ScriptCoroutine(nL);
 }
 
