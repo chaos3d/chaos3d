@@ -12,6 +12,7 @@
 
 #include "common.h"
 #include "ScriptState.h"
+#include "LuaType.h"
 
 _CHAOS_BEGIN
 
@@ -123,7 +124,7 @@ private:
 	bool pollAndClear();
 
 	ScriptState _state;	// coroutine is a dependent state
-
+    LuaType _thread;    // ref to the thread
 };
 
 template<> void ScriptState::push_<ScriptCoroutine>(lua_State*);

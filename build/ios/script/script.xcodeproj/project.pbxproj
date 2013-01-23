@@ -12,6 +12,7 @@
 		8803C69516A2965C00777678 /* ScriptThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8803C68016A2965C00777678 /* ScriptThread.cpp */; };
 		88FB24F316AE3FA300499FFF /* ScriptCoroutine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88FB24F016AE3FA300499FFF /* ScriptCoroutine.cpp */; };
 		88FB24F416AE3FA300499FFF /* ScriptState-copy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88FB24F216AE3FA300499FFF /* ScriptState-copy.cpp */; };
+		88FB278C16AFDE8300499FFF /* LuaType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8803C66C16A2965C00777678 /* LuaType.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -227,6 +228,7 @@
 				8803C69516A2965C00777678 /* ScriptThread.cpp in Sources */,
 				88FB24F316AE3FA300499FFF /* ScriptCoroutine.cpp in Sources */,
 				88FB24F416AE3FA300499FFF /* ScriptState-copy.cpp in Sources */,
+				88FB278C16AFDE8300499FFF /* LuaType.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

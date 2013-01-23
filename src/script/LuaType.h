@@ -7,11 +7,12 @@
  *
  */
 
-#ifndef _CHAOS_LUAOBJECT_H
-#define _CHAOS_LUAOBJECT_H
+#ifndef _CHAOS_LUATYPE_H
+#define _CHAOS_LUATYPE_H
 
 #include "common.h"
 //#include "traits.h"
+#include "ScriptState.h"
 
 struct lua_State;
 
@@ -24,19 +25,15 @@ class ScriptThread;
  * Object that is in lua is being exported out to CPP
  * The object is saved and referenced as an object (instance)
  */
-class CHAOS_API TypeLua{
-	int ref;
-    ScriptThread* mHost;
-    
+class CHAOS_API LuaType{
 public:
-	explicit TypeLua(int r = -1):ref(r){};
-	explicit TypeLua(lua_State*);
-	TypeLua(TypeLua const&);
-	TypeLua& operator=(TypeLua const&);
-	~TypeLua();
+	LuaType(ScriptState const&, bool top = true);
+	LuaType(LuaType const&);
+	LuaType& operator=(LuaType const&);
+	~LuaType();
 
 	// test if ref is valid
-	bool valid() const { return ref != -1; };
+	bool valid() const { return _ref != -1; };
 	
 	/**
 	* push the reference onto the stack
@@ -45,11 +42,18 @@ public:
 	*/
 	void get(lua_State* l) const;
 
-	int getRef() const { return ref;};
-	lua_State* getL() const;
+	int getRef() const { return _ref;};
+	ScriptState const& getHost() const {return _host;};
+	ScriptState& getHost() {return _host;};
+    
+private:
+	int _ref;
+    ScriptState _host;
 };
 
 //TYPE_NATIVE(TypeLua);
+template<> void ScriptState::push_<LuaType>(lua_State *, const LuaType &val);
+template<> LuaType ScriptState::get_<LuaType>(lua_State *, int idx);
 
 // todo:
 // LuaTable and LuaFunction helper classes or just integrate into TypeLua

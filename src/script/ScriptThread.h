@@ -54,7 +54,7 @@ public:
     /**
      * send message to the thread, non-blocking if queued
      */
-    bool send(TypeLua const& msg, bool queued = true);
+    bool send(LuaType const& msg, bool queued = true);
     
     /**
      * receive message from the thread
@@ -62,7 +62,7 @@ public:
      * won't allow to be nil
      * to access the lua ref, the hosted thread should be locked
      */
-    TypeLua receive(bool couldBeNil = true);
+    LuaType receive(bool couldBeNil = true);
     
 	/**
 	* dispose a thread

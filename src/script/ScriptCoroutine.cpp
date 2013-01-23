@@ -11,7 +11,9 @@
 #include "lua.h"
 #include <cstdio>
 
-ScriptCoroutine::ScriptCoroutine(ScriptState const&ss) : _state(ss){
+ScriptCoroutine::ScriptCoroutine(ScriptState const&ss) : _state(ss), _thread(ss, false){
+    lua_pushthread(ss);
+    _thread = LuaType(ss);
 }
 
 ScriptCoroutine::~ScriptCoroutine(){
