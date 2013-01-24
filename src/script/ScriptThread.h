@@ -84,6 +84,7 @@ public:
 	 * a.k.a spawn
 	 */
 	void schedule(ScriptCoroutine const&);
+    ScriptCoroutine schedule(ScriptState::SourceReader const&);
 
 	// todo
 	// - coroutine.resume (remove from the waiting list)
@@ -98,6 +99,7 @@ private:
     void setupState();
     
 	ScriptState _state;
+    //LuaType _coresume;  // coroutine.resume
 };
 
 //TYPE_RET_REF( ScriptThread );

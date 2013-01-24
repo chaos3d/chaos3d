@@ -15,8 +15,12 @@
 ///----------------------------------------------------------------
 
 static int _thread_schedule_sig = 0;
+static int _thread_schedule_coresume = 0;
 
 static int coresume(lua_State* L){
+    luaL_checktype(L, 1, LUA_TTHREAD);
+	lua_pushlightuserdata(L, (void*)&_thread_schedule_sig);
+	lua_rawget(L, LUA_REGISTRYINDEX);
     return 0;
 }
 
@@ -32,6 +36,16 @@ static int coschedule(lua_State* L){
 	lua_rawset(L, -3);
 	lua_pop(L, 1);
     return 1;   // returen the coroutine
+}
+
+ScriptCoroutine ScriptThread::schedule(ScriptState::SourceReader const&sr){
+    _state.push_<ScriptCoroutine>();
+    ScriptCoroutine sc = _state.get_<ScriptCoroutine>(-1);
+    _state.pop(1);
+    
+    sc.getState().push_(&sr);
+    schedule(sc);
+    return sc;
 }
 
 void ScriptThread::schedule(ScriptCoroutine const&sc){
@@ -94,7 +108,14 @@ void ScriptThread::setupState(){
     
     luaL_openlibs(_state);  // todo: only load a certain libs
     
-    // todo: load default coroutine.resume and save it
+    // load default coroutine.resume and save it
+    lua_getglobal(_state, "coroutine");
+
+	lua_pushlightuserdata(_state, (void*)&_thread_schedule_coresume); // coroutine, key
+	lua_getfield(_state, -2, "resume");		// coroutine, key, resume
+	lua_rawset(_state, LUA_REGISTRYINDEX);
+	_state.pop(1); // pop the coroutine table
+
     luaL_Reg entris[] = {
         //{"resume", coresume},
         {"schedule", coschedule},

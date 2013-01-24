@@ -104,6 +104,10 @@ public:
 	template<class T> static void push_(lua_State*, T* val);
 	template<class T> static void push_(lua_State*);
     
+    // transforming binding
+	template<class T> static void push_(lua_State* L, T const* val)
+    { push_<T>(L, const_cast<T*>(val)); }
+    
 	template<class T> static T get_(lua_State*, int index);
 
 	template<class T> void push_(T const& val)	// push a value
@@ -115,6 +119,9 @@ public:
 	template<class T> void push_()				// push a new T into the stack
     { push_<T>(_L); }
 
+    // transforming binding
+	template<class T> void push_(T const* val)
+    { push_<T>(_L, const_cast<T*>(val)); }
 
 	template<class T> T	get_(int index) const{
         return get_<T>(_L, index);
