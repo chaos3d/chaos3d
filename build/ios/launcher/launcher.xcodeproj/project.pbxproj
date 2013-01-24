@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		88FB27A016B1236C00499FFF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88FB279F16B1236C00499FFF /* Foundation.framework */; };
+		88FB27B116B1274000499FFF /* LauncherDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 88FB27B016B1274000499FFF /* LauncherDelegate.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +26,8 @@
 /* Begin PBXFileReference section */
 		88FB279C16B1236C00499FFF /* liblauncher.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = liblauncher.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		88FB279F16B1236C00499FFF /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		88FB27AF16B1274000499FFF /* LauncherDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LauncherDelegate.h; sourceTree = "<group>"; };
+		88FB27B016B1274000499FFF /* LauncherDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LauncherDelegate.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,6 +45,7 @@
 		88FB279116B1236C00499FFF = {
 			isa = PBXGroup;
 			children = (
+				88FB27AD16B1274000499FFF /* launcher */,
 				88FB279E16B1236C00499FFF /* Frameworks */,
 				88FB279D16B1236C00499FFF /* Products */,
 			);
@@ -61,6 +65,24 @@
 				88FB279F16B1236C00499FFF /* Foundation.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		88FB27AD16B1274000499FFF /* launcher */ = {
+			isa = PBXGroup;
+			children = (
+				88FB27AE16B1274000499FFF /* ios */,
+			);
+			name = launcher;
+			path = ../../../src/launcher;
+			sourceTree = "<group>";
+		};
+		88FB27AE16B1274000499FFF /* ios */ = {
+			isa = PBXGroup;
+			children = (
+				88FB27AF16B1274000499FFF /* LauncherDelegate.h */,
+				88FB27B016B1274000499FFF /* LauncherDelegate.mm */,
+			);
+			path = ios;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -114,6 +136,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				88FB27B116B1274000499FFF /* LauncherDelegate.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
