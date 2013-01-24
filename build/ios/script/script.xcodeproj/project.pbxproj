@@ -285,8 +285,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DSTROOT = /tmp/script.dst;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "script/script-Prefix.pch";
 				HEADER_SEARCH_PATHS = ../../../src/;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -304,8 +302,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DSTROOT = /tmp/script.dst;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "script/script-Prefix.pch";
 				HEADER_SEARCH_PATHS = ../../../src/;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
