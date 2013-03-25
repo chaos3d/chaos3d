@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <Group
+      location = "container:"
+      name = "Core">
+   </Group>
+   <Group
+      location = "container:"
+      name = "Dependency">
+   </Group>
+   <Group
+      location = "container:"
+      name = "Sample">
+      <FileRef
+         location = "group:SampleBrowser/SampleBrowser.xcodeproj">
+      </FileRef>
+   </Group>
+</Workspace>

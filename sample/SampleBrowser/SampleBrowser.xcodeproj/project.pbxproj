@@ -274,7 +274,7 @@
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SampleBrowser/SampleBrowser-Prefix.pch";
-				INFOPLIST_FILE = "SampleBrowser/SampleBrowser-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/SampleBrowser-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -285,7 +285,7 @@
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SampleBrowser/SampleBrowser-Prefix.pch";
-				INFOPLIST_FILE = "SampleBrowser/SampleBrowser-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/SampleBrowser-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
