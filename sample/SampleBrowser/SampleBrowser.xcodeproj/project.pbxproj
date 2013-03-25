@@ -93,7 +93,7 @@
 				88AE0E7A170023C900634E75 /* ViewController_iPad.xib */,
 				88AE0E63170023C900634E75 /* Supporting Files */,
 			);
-			path = SampleBrowser;
+			name = SampleBrowser;
 			sourceTree = "<group>";
 		};
 		88AE0E63170023C900634E75 /* Supporting Files */ = {
@@ -310,6 +310,7 @@
 				88AE0E81170023C900634E75 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
