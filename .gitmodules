@@ -1,6 +1,3 @@
-[submodule "dependencies"]
-	path = dependencies
-	url = git://github.com/wuhao5/chaos3d-dependencies.git
 [submodule "external/luabind"]
 	path = external/luabind
 	url = https://github.com/wuhao5/luabind.git
