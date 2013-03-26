@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		881D4D561701A232007299A2 /* lua.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 881D4D551701A231007299A2 /* lua.framework */; };
+		881D4D591701A25D007299A2 /* boost.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 881D4D571701A25D007299A2 /* boost.framework */; };
+		881D4D5A1701A25D007299A2 /* lyield.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 881D4D581701A25D007299A2 /* lyield.framework */; };
 		88AE0E5D170023C900634E75 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88AE0E5C170023C900634E75 /* UIKit.framework */; };
 		88AE0E5F170023C900634E75 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88AE0E5E170023C900634E75 /* Foundation.framework */; };
 		88AE0E61170023C900634E75 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88AE0E60170023C900634E75 /* CoreGraphics.framework */; };
@@ -22,6 +25,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		881D4D551701A231007299A2 /* lua.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = lua.framework; path = ../../dependency/ios/lua.framework; sourceTree = "<group>"; };
+		881D4D571701A25D007299A2 /* boost.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = boost.framework; path = ../../dependency/ios/boost.framework; sourceTree = "<group>"; };
+		881D4D581701A25D007299A2 /* lyield.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = lyield.framework; path = ../../dependency/ios/lyield.framework; sourceTree = "<group>"; };
 		88AE0E59170023C900634E75 /* SampleBrowser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SampleBrowser.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		88AE0E5C170023C900634E75 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		88AE0E5E170023C900634E75 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -49,6 +55,9 @@
 				88AE0E5D170023C900634E75 /* UIKit.framework in Frameworks */,
 				88AE0E5F170023C900634E75 /* Foundation.framework in Frameworks */,
 				88AE0E61170023C900634E75 /* CoreGraphics.framework in Frameworks */,
+				881D4D561701A232007299A2 /* lua.framework in Frameworks */,
+				881D4D591701A25D007299A2 /* boost.framework in Frameworks */,
+				881D4D5A1701A25D007299A2 /* lyield.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -75,6 +84,9 @@
 		88AE0E5B170023C900634E75 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				881D4D571701A25D007299A2 /* boost.framework */,
+				881D4D581701A25D007299A2 /* lyield.framework */,
+				881D4D551701A231007299A2 /* lua.framework */,
 				88AE0E5C170023C900634E75 /* UIKit.framework */,
 				88AE0E5E170023C900634E75 /* Foundation.framework */,
 				88AE0E60170023C900634E75 /* CoreGraphics.framework */,
@@ -272,6 +284,10 @@
 		88AE0E80170023C900634E75 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../dependency/ios\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SampleBrowser/SampleBrowser-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/SampleBrowser-Info.plist";
@@ -283,6 +299,10 @@
 		88AE0E81170023C900634E75 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../dependency/ios\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SampleBrowser/SampleBrowser-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/SampleBrowser-Info.plist";
