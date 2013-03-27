@@ -4,6 +4,9 @@
    <Group
       location = "container:"
       name = "Core">
+      <FileRef
+         location = "group:../build/ios/platform-ios.xcodeproj">
+      </FileRef>
    </Group>
    <Group
       location = "container:"
