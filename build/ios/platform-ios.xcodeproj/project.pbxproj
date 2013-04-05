@@ -51,6 +51,7 @@
 		881D4D5B1702E492007299A2 = {
 			isa = PBXGroup;
 			children = (
+				88B24CE8170EC76A00F7C2CC /* backend-gles2 */,
 				881D4D691702E492007299A2 /* ViewController */,
 				881D4D661702E492007299A2 /* Frameworks */,
 				881D4D651702E492007299A2 /* Products */,
@@ -83,6 +84,13 @@
 			);
 			name = ViewController;
 			path = ../../src/platform/ios;
+			sourceTree = "<group>";
+		};
+		88B24CE8170EC76A00F7C2CC /* backend-gles2 */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "backend-gles2";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

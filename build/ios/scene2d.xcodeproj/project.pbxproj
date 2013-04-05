@@ -1,0 +1,356 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		88B24CF6170EC86800F7C2CC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88B24CF5170EC86800F7C2CC /* Foundation.framework */; };
+		88B24D59170ECB9900F7C2CC /* CameraNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88B24D04170ECB9900F7C2CC /* CameraNode.cpp */; };
+		88B24D5B170ECB9900F7C2CC /* DrawingUtil-iPhone.mm in Sources */ = {isa = PBXBuildFile; fileRef = 88B24D08170ECB9900F7C2CC /* DrawingUtil-iPhone.mm */; };
+		88B24D5C170ECB9900F7C2CC /* DrawingUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88B24D09170ECB9900F7C2CC /* DrawingUtil.cpp */; };
+		88B24D5D170ECB9900F7C2CC /* EventUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88B24D0B170ECB9900F7C2CC /* EventUI.cpp */; };
+		88B24D60170ECB9900F7C2CC /* NodeColor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88B24D14170ECB9900F7C2CC /* NodeColor.cpp */; };
+		88B24D61170ECB9900F7C2CC /* NodeComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88B24D16170ECB9900F7C2CC /* NodeComponent.cpp */; };
+		88B24D62170ECB9900F7C2CC /* NodeFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88B24D18170ECB9900F7C2CC /* NodeFrame.cpp */; };
+		88B24D63170ECB9900F7C2CC /* NodeFrameGlobal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88B24D1A170ECB9900F7C2CC /* NodeFrameGlobal.cpp */; };
+		88B24D64170ECB9900F7C2CC /* NodeUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88B24D1C170ECB9900F7C2CC /* NodeUI.cpp */; };
+		88B24D68170ECB9900F7C2CC /* PptCameraNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88B24D24170ECB9900F7C2CC /* PptCameraNode.cpp */; };
+		88B24D6E170ECB9900F7C2CC /* Scene2DHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88B24D38170ECB9900F7C2CC /* Scene2DHandler.cpp */; };
+		88B24D6F170ECB9900F7C2CC /* Scene2DManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88B24D3A170ECB9900F7C2CC /* Scene2DManager.cpp */; };
+		88B24D70170ECB9900F7C2CC /* Scene2DNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88B24D3C170ECB9900F7C2CC /* Scene2DNode.cpp */; };
+		88B24D71170ECB9900F7C2CC /* Scene2DNodeFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88B24D3E170ECB9900F7C2CC /* Scene2DNodeFactory.cpp */; };
+		88B24D76170ECB9900F7C2CC /* Transform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88B24D48170ECB9900F7C2CC /* Transform.cpp */; };
+		88B24D77170ECB9900F7C2CC /* UICheckBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88B24D4A170ECB9900F7C2CC /* UICheckBox.cpp */; };
+		88B24D78170ECB9900F7C2CC /* UIClick.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88B24D4C170ECB9900F7C2CC /* UIClick.cpp */; };
+		88B24D79170ECB9900F7C2CC /* UICounter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88B24D4E170ECB9900F7C2CC /* UICounter.cpp */; };
+		88B24D7A170ECB9900F7C2CC /* UIProgress.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88B24D51170ECB9900F7C2CC /* UIProgress.cpp */; };
+		88B24D7B170ECB9900F7C2CC /* UIRating.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88B24D53170ECB9900F7C2CC /* UIRating.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		88B24CF0170EC86800F7C2CC /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/${PRODUCT_NAME}";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		88B24CF2170EC86800F7C2CC /* libscene2d.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libscene2d.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		88B24CF5170EC86800F7C2CC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		88B24D04170ECB9900F7C2CC /* CameraNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CameraNode.cpp; path = ../../src/scene2d/CameraNode.cpp; sourceTree = "<group>"; };
+		88B24D05170ECB9900F7C2CC /* CameraNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CameraNode.h; path = ../../src/scene2d/CameraNode.h; sourceTree = "<group>"; };
+		88B24D08170ECB9900F7C2CC /* DrawingUtil-iPhone.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "DrawingUtil-iPhone.mm"; path = "../../src/scene2d/DrawingUtil-iPhone.mm"; sourceTree = "<group>"; };
+		88B24D09170ECB9900F7C2CC /* DrawingUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DrawingUtil.cpp; path = ../../src/scene2d/DrawingUtil.cpp; sourceTree = "<group>"; };
+		88B24D0A170ECB9900F7C2CC /* DrawingUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DrawingUtil.h; path = ../../src/scene2d/DrawingUtil.h; sourceTree = "<group>"; };
+		88B24D0B170ECB9900F7C2CC /* EventUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = EventUI.cpp; path = ../../src/scene2d/EventUI.cpp; sourceTree = "<group>"; };
+		88B24D0C170ECB9900F7C2CC /* EventUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EventUI.h; path = ../../src/scene2d/EventUI.h; sourceTree = "<group>"; };
+		88B24D0D170ECB9900F7C2CC /* game2d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = game2d.h; path = ../../src/scene2d/game2d.h; sourceTree = "<group>"; };
+		88B24D13170ECB9900F7C2CC /* NodeApplier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NodeApplier.h; path = ../../src/scene2d/NodeApplier.h; sourceTree = "<group>"; };
+		88B24D14170ECB9900F7C2CC /* NodeColor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = NodeColor.cpp; path = ../../src/scene2d/NodeColor.cpp; sourceTree = "<group>"; };
+		88B24D15170ECB9900F7C2CC /* NodeColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NodeColor.h; path = ../../src/scene2d/NodeColor.h; sourceTree = "<group>"; };
+		88B24D16170ECB9900F7C2CC /* NodeComponent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = NodeComponent.cpp; path = ../../src/scene2d/NodeComponent.cpp; sourceTree = "<group>"; };
+		88B24D17170ECB9900F7C2CC /* NodeComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NodeComponent.h; path = ../../src/scene2d/NodeComponent.h; sourceTree = "<group>"; };
+		88B24D18170ECB9900F7C2CC /* NodeFrame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = NodeFrame.cpp; path = ../../src/scene2d/NodeFrame.cpp; sourceTree = "<group>"; };
+		88B24D19170ECB9900F7C2CC /* NodeFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NodeFrame.h; path = ../../src/scene2d/NodeFrame.h; sourceTree = "<group>"; };
+		88B24D1A170ECB9900F7C2CC /* NodeFrameGlobal.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = NodeFrameGlobal.cpp; path = ../../src/scene2d/NodeFrameGlobal.cpp; sourceTree = "<group>"; };
+		88B24D1B170ECB9900F7C2CC /* NodeFrameGlobal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NodeFrameGlobal.h; path = ../../src/scene2d/NodeFrameGlobal.h; sourceTree = "<group>"; };
+		88B24D1C170ECB9900F7C2CC /* NodeUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = NodeUI.cpp; path = ../../src/scene2d/NodeUI.cpp; sourceTree = "<group>"; };
+		88B24D1D170ECB9900F7C2CC /* NodeUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NodeUI.h; path = ../../src/scene2d/NodeUI.h; sourceTree = "<group>"; };
+		88B24D24170ECB9900F7C2CC /* PptCameraNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PptCameraNode.cpp; path = ../../src/scene2d/PptCameraNode.cpp; sourceTree = "<group>"; };
+		88B24D25170ECB9900F7C2CC /* PptCameraNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PptCameraNode.h; path = ../../src/scene2d/PptCameraNode.h; sourceTree = "<group>"; };
+		88B24D26170ECB9900F7C2CC /* ps2d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ps2d.h; path = ../../src/scene2d/ps2d.h; sourceTree = "<group>"; };
+		88B24D2F170ECB9900F7C2CC /* render.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = render.h; path = ../../src/scene2d/render.h; sourceTree = "<group>"; };
+		88B24D37170ECB9900F7C2CC /* scene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = scene.h; path = ../../src/scene2d/scene.h; sourceTree = "<group>"; };
+		88B24D38170ECB9900F7C2CC /* Scene2DHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Scene2DHandler.cpp; path = ../../src/scene2d/Scene2DHandler.cpp; sourceTree = "<group>"; };
+		88B24D39170ECB9900F7C2CC /* Scene2DHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Scene2DHandler.h; path = ../../src/scene2d/Scene2DHandler.h; sourceTree = "<group>"; };
+		88B24D3A170ECB9900F7C2CC /* Scene2DManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Scene2DManager.cpp; path = ../../src/scene2d/Scene2DManager.cpp; sourceTree = "<group>"; };
+		88B24D3B170ECB9900F7C2CC /* Scene2DManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Scene2DManager.h; path = ../../src/scene2d/Scene2DManager.h; sourceTree = "<group>"; };
+		88B24D3C170ECB9900F7C2CC /* Scene2DNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Scene2DNode.cpp; path = ../../src/scene2d/Scene2DNode.cpp; sourceTree = "<group>"; };
+		88B24D3D170ECB9900F7C2CC /* Scene2DNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Scene2DNode.h; path = ../../src/scene2d/Scene2DNode.h; sourceTree = "<group>"; };
+		88B24D3E170ECB9900F7C2CC /* Scene2DNodeFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Scene2DNodeFactory.cpp; path = ../../src/scene2d/Scene2DNodeFactory.cpp; sourceTree = "<group>"; };
+		88B24D3F170ECB9900F7C2CC /* SceneVisitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SceneVisitor.h; path = ../../src/scene2d/SceneVisitor.h; sourceTree = "<group>"; };
+		88B24D48170ECB9900F7C2CC /* Transform.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Transform.cpp; path = ../../src/scene2d/Transform.cpp; sourceTree = "<group>"; };
+		88B24D49170ECB9900F7C2CC /* Transform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Transform.h; path = ../../src/scene2d/Transform.h; sourceTree = "<group>"; };
+		88B24D4A170ECB9900F7C2CC /* UICheckBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UICheckBox.cpp; path = ../../src/scene2d/UICheckBox.cpp; sourceTree = "<group>"; };
+		88B24D4B170ECB9900F7C2CC /* UICheckBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UICheckBox.h; path = ../../src/scene2d/UICheckBox.h; sourceTree = "<group>"; };
+		88B24D4C170ECB9900F7C2CC /* UIClick.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UIClick.cpp; path = ../../src/scene2d/UIClick.cpp; sourceTree = "<group>"; };
+		88B24D4D170ECB9900F7C2CC /* UIClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIClick.h; path = ../../src/scene2d/UIClick.h; sourceTree = "<group>"; };
+		88B24D4E170ECB9900F7C2CC /* UICounter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UICounter.cpp; path = ../../src/scene2d/UICounter.cpp; sourceTree = "<group>"; };
+		88B24D4F170ECB9900F7C2CC /* UICounter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UICounter.h; path = ../../src/scene2d/UICounter.h; sourceTree = "<group>"; };
+		88B24D50170ECB9900F7C2CC /* uielements.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = uielements.h; path = ../../src/scene2d/uielements.h; sourceTree = "<group>"; };
+		88B24D51170ECB9900F7C2CC /* UIProgress.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UIProgress.cpp; path = ../../src/scene2d/UIProgress.cpp; sourceTree = "<group>"; };
+		88B24D52170ECB9900F7C2CC /* UIProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIProgress.h; path = ../../src/scene2d/UIProgress.h; sourceTree = "<group>"; };
+		88B24D53170ECB9900F7C2CC /* UIRating.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UIRating.cpp; path = ../../src/scene2d/UIRating.cpp; sourceTree = "<group>"; };
+		88B24D54170ECB9900F7C2CC /* UIRating.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIRating.h; path = ../../src/scene2d/UIRating.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		88B24CEF170EC86800F7C2CC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				88B24CF6170EC86800F7C2CC /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		88B24CE9170EC86800F7C2CC = {
+			isa = PBXGroup;
+			children = (
+				88B24D03170ECA6C00F7C2CC /* src */,
+				88B24CF4170EC86800F7C2CC /* Frameworks */,
+				88B24CF3170EC86800F7C2CC /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		88B24CF3170EC86800F7C2CC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				88B24CF2170EC86800F7C2CC /* libscene2d.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		88B24CF4170EC86800F7C2CC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				88B24CF5170EC86800F7C2CC /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		88B24D03170ECA6C00F7C2CC /* src */ = {
+			isa = PBXGroup;
+			children = (
+				88B24D04170ECB9900F7C2CC /* CameraNode.cpp */,
+				88B24D05170ECB9900F7C2CC /* CameraNode.h */,
+				88B24D08170ECB9900F7C2CC /* DrawingUtil-iPhone.mm */,
+				88B24D09170ECB9900F7C2CC /* DrawingUtil.cpp */,
+				88B24D0A170ECB9900F7C2CC /* DrawingUtil.h */,
+				88B24D0B170ECB9900F7C2CC /* EventUI.cpp */,
+				88B24D0C170ECB9900F7C2CC /* EventUI.h */,
+				88B24D0D170ECB9900F7C2CC /* game2d.h */,
+				88B24D13170ECB9900F7C2CC /* NodeApplier.h */,
+				88B24D14170ECB9900F7C2CC /* NodeColor.cpp */,
+				88B24D15170ECB9900F7C2CC /* NodeColor.h */,
+				88B24D16170ECB9900F7C2CC /* NodeComponent.cpp */,
+				88B24D17170ECB9900F7C2CC /* NodeComponent.h */,
+				88B24D18170ECB9900F7C2CC /* NodeFrame.cpp */,
+				88B24D19170ECB9900F7C2CC /* NodeFrame.h */,
+				88B24D1A170ECB9900F7C2CC /* NodeFrameGlobal.cpp */,
+				88B24D1B170ECB9900F7C2CC /* NodeFrameGlobal.h */,
+				88B24D1C170ECB9900F7C2CC /* NodeUI.cpp */,
+				88B24D1D170ECB9900F7C2CC /* NodeUI.h */,
+				88B24D24170ECB9900F7C2CC /* PptCameraNode.cpp */,
+				88B24D25170ECB9900F7C2CC /* PptCameraNode.h */,
+				88B24D26170ECB9900F7C2CC /* ps2d.h */,
+				88B24D2F170ECB9900F7C2CC /* render.h */,
+				88B24D37170ECB9900F7C2CC /* scene.h */,
+				88B24D38170ECB9900F7C2CC /* Scene2DHandler.cpp */,
+				88B24D39170ECB9900F7C2CC /* Scene2DHandler.h */,
+				88B24D3A170ECB9900F7C2CC /* Scene2DManager.cpp */,
+				88B24D3B170ECB9900F7C2CC /* Scene2DManager.h */,
+				88B24D3C170ECB9900F7C2CC /* Scene2DNode.cpp */,
+				88B24D3D170ECB9900F7C2CC /* Scene2DNode.h */,
+				88B24D3E170ECB9900F7C2CC /* Scene2DNodeFactory.cpp */,
+				88B24D3F170ECB9900F7C2CC /* SceneVisitor.h */,
+				88B24D48170ECB9900F7C2CC /* Transform.cpp */,
+				88B24D49170ECB9900F7C2CC /* Transform.h */,
+				88B24D4A170ECB9900F7C2CC /* UICheckBox.cpp */,
+				88B24D4B170ECB9900F7C2CC /* UICheckBox.h */,
+				88B24D4C170ECB9900F7C2CC /* UIClick.cpp */,
+				88B24D4D170ECB9900F7C2CC /* UIClick.h */,
+				88B24D4E170ECB9900F7C2CC /* UICounter.cpp */,
+				88B24D4F170ECB9900F7C2CC /* UICounter.h */,
+				88B24D50170ECB9900F7C2CC /* uielements.h */,
+				88B24D51170ECB9900F7C2CC /* UIProgress.cpp */,
+				88B24D52170ECB9900F7C2CC /* UIProgress.h */,
+				88B24D53170ECB9900F7C2CC /* UIRating.cpp */,
+				88B24D54170ECB9900F7C2CC /* UIRating.h */,
+			);
+			name = src;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		88B24CF1170EC86800F7C2CC /* scene2d */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 88B24D00170EC86800F7C2CC /* Build configuration list for PBXNativeTarget "scene2d" */;
+			buildPhases = (
+				88B24CEE170EC86800F7C2CC /* Sources */,
+				88B24CEF170EC86800F7C2CC /* Frameworks */,
+				88B24CF0170EC86800F7C2CC /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = scene2d;
+			productName = scene2d;
+			productReference = 88B24CF2170EC86800F7C2CC /* libscene2d.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		88B24CEA170EC86800F7C2CC /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = cHaos3D;
+			};
+			buildConfigurationList = 88B24CED170EC86800F7C2CC /* Build configuration list for PBXProject "scene2d" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 88B24CE9170EC86800F7C2CC;
+			productRefGroup = 88B24CF3170EC86800F7C2CC /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				88B24CF1170EC86800F7C2CC /* scene2d */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		88B24CEE170EC86800F7C2CC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				88B24D59170ECB9900F7C2CC /* CameraNode.cpp in Sources */,
+				88B24D5B170ECB9900F7C2CC /* DrawingUtil-iPhone.mm in Sources */,
+				88B24D5C170ECB9900F7C2CC /* DrawingUtil.cpp in Sources */,
+				88B24D5D170ECB9900F7C2CC /* EventUI.cpp in Sources */,
+				88B24D60170ECB9900F7C2CC /* NodeColor.cpp in Sources */,
+				88B24D61170ECB9900F7C2CC /* NodeComponent.cpp in Sources */,
+				88B24D62170ECB9900F7C2CC /* NodeFrame.cpp in Sources */,
+				88B24D63170ECB9900F7C2CC /* NodeFrameGlobal.cpp in Sources */,
+				88B24D64170ECB9900F7C2CC /* NodeUI.cpp in Sources */,
+				88B24D68170ECB9900F7C2CC /* PptCameraNode.cpp in Sources */,
+				88B24D6E170ECB9900F7C2CC /* Scene2DHandler.cpp in Sources */,
+				88B24D6F170ECB9900F7C2CC /* Scene2DManager.cpp in Sources */,
+				88B24D70170ECB9900F7C2CC /* Scene2DNode.cpp in Sources */,
+				88B24D71170ECB9900F7C2CC /* Scene2DNodeFactory.cpp in Sources */,
+				88B24D76170ECB9900F7C2CC /* Transform.cpp in Sources */,
+				88B24D77170ECB9900F7C2CC /* UICheckBox.cpp in Sources */,
+				88B24D78170ECB9900F7C2CC /* UIClick.cpp in Sources */,
+				88B24D79170ECB9900F7C2CC /* UICounter.cpp in Sources */,
+				88B24D7A170ECB9900F7C2CC /* UIProgress.cpp in Sources */,
+				88B24D7B170ECB9900F7C2CC /* UIRating.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		88B24CFE170EC86800F7C2CC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		88B24CFF170EC86800F7C2CC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		88B24D01170EC86800F7C2CC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/scene2d.dst;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		88B24D02170EC86800F7C2CC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/scene2d.dst;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		88B24CED170EC86800F7C2CC /* Build configuration list for PBXProject "scene2d" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				88B24CFE170EC86800F7C2CC /* Debug */,
+				88B24CFF170EC86800F7C2CC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		88B24D00170EC86800F7C2CC /* Build configuration list for PBXNativeTarget "scene2d" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				88B24D01170EC86800F7C2CC /* Debug */,
+				88B24D02170EC86800F7C2CC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 88B24CEA170EC86800F7C2CC /* Project object */;
+}
