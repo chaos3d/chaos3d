@@ -12,7 +12,6 @@
 		881D4D5A1701A25D007299A2 /* lyield.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 881D4D581701A25D007299A2 /* lyield.framework */; };
 		881D4DBC17043D58007299A2 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 881D4DBA17043D47007299A2 /* OpenGLES.framework */; };
 		881D4DBD17043D5D007299A2 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 881D4DB817043D32007299A2 /* GLKit.framework */; };
-		881D4DF2170443AB007299A2 /* libplatform-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 881D4DEF1704439E007299A2 /* libplatform-ios.a */; };
 		88AE0E5D170023C900634E75 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88AE0E5C170023C900634E75 /* UIKit.framework */; };
 		88AE0E5F170023C900634E75 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88AE0E5E170023C900634E75 /* Foundation.framework */; };
 		88AE0E61170023C900634E75 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88AE0E60170023C900634E75 /* CoreGraphics.framework */; };
@@ -27,45 +26,14 @@
 		88AE0E7C170023C900634E75 /* ViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88AE0E7A170023C900634E75 /* ViewController_iPad.xib */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		881D4DE61704438A007299A2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 881D4DE217044389007299A2 /* re.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 881D4DD0170442BF007299A2;
-			remoteInfo = re;
-		};
-		881D4DE817044397007299A2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 881D4DE217044389007299A2 /* re.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 881D4DCF170442BF007299A2;
-			remoteInfo = re;
-		};
-		881D4DEE1704439E007299A2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 881D4DEA1704439E007299A2 /* platform-ios.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 881D4D641702E492007299A2;
-			remoteInfo = "platform-ios";
-		};
-		881D4DF0170443A2007299A2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 881D4DEA1704439E007299A2 /* platform-ios.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 881D4D631702E492007299A2;
-			remoteInfo = "platform-ios";
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
 		881D4D551701A231007299A2 /* lua.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = lua.framework; path = ../../dependency/ios/lua.framework; sourceTree = "<group>"; };
 		881D4D571701A25D007299A2 /* boost.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = boost.framework; path = ../../dependency/ios/boost.framework; sourceTree = "<group>"; };
 		881D4D581701A25D007299A2 /* lyield.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = lyield.framework; path = ../../dependency/ios/lyield.framework; sourceTree = "<group>"; };
 		881D4DB817043D32007299A2 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		881D4DBA17043D47007299A2 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
-		881D4DE217044389007299A2 /* re.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = re.xcodeproj; path = /Users/wuh/github/chaos3d/sample/../build/ios/re.xcodeproj; sourceTree = "<absolute>"; };
-		881D4DEA1704439E007299A2 /* platform-ios.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "platform-ios.xcodeproj"; path = "/Users/wuh/github/chaos3d/sample/../build/ios/platform-ios.xcodeproj"; sourceTree = "<absolute>"; };
+		881D4DE217044389007299A2 /* re.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = re.xcodeproj; path = ../../build/ios/re.xcodeproj; sourceTree = SOURCE_ROOT; };
+		881D4DEA1704439E007299A2 /* platform-ios.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "platform-ios.xcodeproj"; path = "../../build/ios/platform-ios.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		88AE0E59170023C900634E75 /* SampleBrowser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SampleBrowser.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		88AE0E5C170023C900634E75 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		88AE0E5E170023C900634E75 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -90,7 +58,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				881D4DF2170443AB007299A2 /* libplatform-ios.a in Frameworks */,
 				88AE0E5D170023C900634E75 /* UIKit.framework in Frameworks */,
 				88AE0E5F170023C900634E75 /* Foundation.framework in Frameworks */,
 				88AE0E61170023C900634E75 /* CoreGraphics.framework in Frameworks */,
@@ -105,22 +72,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		881D4DE317044389007299A2 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				881D4DE71704438A007299A2 /* libre.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		881D4DEB1704439E007299A2 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				881D4DEF1704439E007299A2 /* libplatform-ios.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		88AE0E50170023C900634E75 = {
 			isa = PBXGroup;
 			children = (
@@ -197,8 +148,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				881D4DF1170443A2007299A2 /* PBXTargetDependency */,
-				881D4DE917044397007299A2 /* PBXTargetDependency */,
 			);
 			name = SampleBrowser;
 			productName = SampleBrowser;
@@ -224,39 +173,12 @@
 			mainGroup = 88AE0E50170023C900634E75;
 			productRefGroup = 88AE0E5A170023C900634E75 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 881D4DEB1704439E007299A2 /* Products */;
-					ProjectRef = 881D4DEA1704439E007299A2 /* platform-ios.xcodeproj */;
-				},
-				{
-					ProductGroup = 881D4DE317044389007299A2 /* Products */;
-					ProjectRef = 881D4DE217044389007299A2 /* re.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				88AE0E58170023C900634E75 /* SampleBrowser */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		881D4DE71704438A007299A2 /* libre.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libre.a;
-			remoteRef = 881D4DE61704438A007299A2 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		881D4DEF1704439E007299A2 /* libplatform-ios.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libplatform-ios.a";
-			remoteRef = 881D4DEE1704439E007299A2 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		88AE0E57170023C900634E75 /* Resources */ = {
@@ -286,19 +208,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		881D4DE917044397007299A2 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = re;
-			targetProxy = 881D4DE817044397007299A2 /* PBXContainerItemProxy */;
-		};
-		881D4DF1170443A2007299A2 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "platform-ios";
-			targetProxy = 881D4DF0170443A2007299A2 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		88AE0E65170023C900634E75 /* InfoPlist.strings */ = {
