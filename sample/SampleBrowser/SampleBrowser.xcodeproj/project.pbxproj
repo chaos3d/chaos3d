@@ -26,6 +26,23 @@
 		88AE0E7C170023C900634E75 /* ViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88AE0E7A170023C900634E75 /* ViewController_iPad.xib */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		88B24CD4170EB2BD00F7C2CC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 881D4DEA1704439E007299A2 /* platform-ios.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 881D4D641702E492007299A2;
+			remoteInfo = "platform-ios";
+		};
+		88B24CD9170EB2BD00F7C2CC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 881D4DE217044389007299A2 /* re.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 881D4DD0170442BF007299A2;
+			remoteInfo = re;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		881D4D551701A231007299A2 /* lua.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = lua.framework; path = ../../dependency/ios/lua.framework; sourceTree = "<group>"; };
 		881D4D571701A25D007299A2 /* boost.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = boost.framework; path = ../../dependency/ios/boost.framework; sourceTree = "<group>"; };
@@ -134,6 +151,22 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		88B24CCE170EB2BD00F7C2CC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				88B24CD5170EB2BD00F7C2CC /* libplatform-ios.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		88B24CD6170EB2BD00F7C2CC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				88B24CDA170EB2BD00F7C2CC /* libre.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -173,12 +206,39 @@
 			mainGroup = 88AE0E50170023C900634E75;
 			productRefGroup = 88AE0E5A170023C900634E75 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 88B24CCE170EB2BD00F7C2CC /* Products */;
+					ProjectRef = 881D4DEA1704439E007299A2 /* platform-ios.xcodeproj */;
+				},
+				{
+					ProductGroup = 88B24CD6170EB2BD00F7C2CC /* Products */;
+					ProjectRef = 881D4DE217044389007299A2 /* re.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				88AE0E58170023C900634E75 /* SampleBrowser */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		88B24CD5170EB2BD00F7C2CC /* libplatform-ios.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libplatform-ios.a";
+			remoteRef = 88B24CD4170EB2BD00F7C2CC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		88B24CDA170EB2BD00F7C2CC /* libre.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libre.a;
+			remoteRef = 88B24CD9170EB2BD00F7C2CC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		88AE0E57170023C900634E75 /* Resources */ = {

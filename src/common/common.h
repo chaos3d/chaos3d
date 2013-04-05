@@ -31,4 +31,6 @@
 #define ASSERT(x)
 #endif
 
+#include <cstdint>
+
 #endif

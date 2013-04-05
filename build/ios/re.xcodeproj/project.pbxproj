@@ -12,6 +12,16 @@
 		881D4DFB1704443C007299A2 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 881D4DF5170443D2007299A2 /* OpenGLES.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		88B24CCA170EB2BA00F7C2CC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 886BF10E170C139100D4DB6F /* wm4-algebra.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 880D86D4170BB8A7009A9EF6;
+			remoteInfo = "wm4-algebra";
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXCopyFilesBuildPhase section */
 		881D4DCE170442BF007299A2 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -27,10 +37,20 @@
 /* Begin PBXFileReference section */
 		881D4DD0170442BF007299A2 /* libre.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libre.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		881D4DD3170442BF007299A2 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		881D4DE117044370007299A2 /* platform-ios.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = "platform-ios.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		881D4DF4170443D2007299A2 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		881D4DF5170443D2007299A2 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		886BF10E170C139100D4DB6F /* wm4-algebra.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "wm4-algebra.xcodeproj"; path = "../../external/wm4-algebra/wm4-algebra.xcodeproj"; sourceTree = SOURCE_ROOT; };
+		88B24CDC170EB85100F7C2CC /* Context.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Context.h; sourceTree = "<group>"; };
+		88B24CDE170EB87700F7C2CC /* Shader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Shader.h; path = ../../src/re/Shader.h; sourceTree = "<group>"; };
+		88B24CDF170EB87700F7C2CC /* Material.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Material.h; path = ../../src/re/Material.h; sourceTree = "<group>"; };
+		88B24CE0170EB87700F7C2CC /* RenderPass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RenderPass.h; path = ../../src/re/RenderPass.h; sourceTree = "<group>"; };
+		88B24CE1170EB87700F7C2CC /* RenderTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RenderTexture.h; path = ../../src/re/RenderTexture.h; sourceTree = "<group>"; };
+		88B24CE2170EB87700F7C2CC /* Texture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Texture.h; path = ../../src/re/Texture.h; sourceTree = "<group>"; };
+		88B24CE3170EB87700F7C2CC /* RenderLoop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RenderLoop.h; path = ../../src/re/RenderLoop.h; sourceTree = "<group>"; };
+		88B24CE4170EB87700F7C2CC /* RenderDriver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RenderDriver.h; path = ../../src/re/RenderDriver.h; sourceTree = "<group>"; };
+		88B24CE5170EB87700F7C2CC /* RenderTarget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RenderTarget.h; path = ../../src/re/RenderTarget.h; sourceTree = "<group>"; };
+		88B24CE6170EB87700F7C2CC /* VertexData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VertexData.h; path = ../../src/re/VertexData.h; sourceTree = "<group>"; };
+		88B24CE7170EB87700F7C2CC /* VertexBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VertexBuffer.h; path = ../../src/re/VertexBuffer.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,7 +71,8 @@
 			isa = PBXGroup;
 			children = (
 				886BF10E170C139100D4DB6F /* wm4-algebra.xcodeproj */,
-				881D4DE117044370007299A2 /* platform-ios.xcodeproj */,
+				88B24CDB170EB85100F7C2CC /* frontend */,
+				88B24CDD170EB85D00F7C2CC /* src */,
 				881D4DD2170442BF007299A2 /* Frameworks */,
 				881D4DD1170442BF007299A2 /* Products */,
 			);
@@ -73,6 +94,40 @@
 				881D4DD3170442BF007299A2 /* Foundation.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		88B24CC7170EB2BA00F7C2CC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				88B24CCB170EB2BA00F7C2CC /* libwm4-algebra.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		88B24CDB170EB85100F7C2CC /* frontend */ = {
+			isa = PBXGroup;
+			children = (
+				88B24CDC170EB85100F7C2CC /* Context.h */,
+			);
+			name = frontend;
+			path = ../../src/re/frontend;
+			sourceTree = "<group>";
+		};
+		88B24CDD170EB85D00F7C2CC /* src */ = {
+			isa = PBXGroup;
+			children = (
+				88B24CDE170EB87700F7C2CC /* Shader.h */,
+				88B24CDF170EB87700F7C2CC /* Material.h */,
+				88B24CE0170EB87700F7C2CC /* RenderPass.h */,
+				88B24CE1170EB87700F7C2CC /* RenderTexture.h */,
+				88B24CE2170EB87700F7C2CC /* Texture.h */,
+				88B24CE3170EB87700F7C2CC /* RenderLoop.h */,
+				88B24CE4170EB87700F7C2CC /* RenderDriver.h */,
+				88B24CE5170EB87700F7C2CC /* RenderTarget.h */,
+				88B24CE6170EB87700F7C2CC /* VertexData.h */,
+				88B24CE7170EB87700F7C2CC /* VertexBuffer.h */,
+			);
+			name = src;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -114,12 +169,28 @@
 			mainGroup = 881D4DC7170442BF007299A2;
 			productRefGroup = 881D4DD1170442BF007299A2 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 88B24CC7170EB2BA00F7C2CC /* Products */;
+					ProjectRef = 886BF10E170C139100D4DB6F /* wm4-algebra.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				881D4DCF170442BF007299A2 /* re */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		88B24CCB170EB2BA00F7C2CC /* libwm4-algebra.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libwm4-algebra.a";
+			remoteRef = 88B24CCA170EB2BA00F7C2CC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXSourcesBuildPhase section */
 		881D4DCC170442BF007299A2 /* Sources */ = {
