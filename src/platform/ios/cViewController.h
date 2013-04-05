@@ -8,6 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
-@interface cViewController : UIViewController
+#if __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_5_0
+#import <GLKit/GLKit.h>
+#endif
+
+@interface cViewController :
+#if __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_5_0
+    GLKViewController
+#else
+    // TODO: support <5.0 later
+    UIViewController
+#endif
 
 @end

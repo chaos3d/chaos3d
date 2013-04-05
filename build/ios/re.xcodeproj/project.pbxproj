@@ -10,7 +10,8 @@
 		881D4DD4170442BF007299A2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 881D4DD3170442BF007299A2 /* Foundation.framework */; };
 		881D4DFA1704443C007299A2 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 881D4DF4170443D2007299A2 /* GLKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		881D4DFB1704443C007299A2 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 881D4DF5170443D2007299A2 /* OpenGLES.framework */; };
-		881D4DFD17044455007299A2 /* libplatform-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 881D4DFC17044455007299A2 /* libplatform-ios.a */; };
+		886BF116170C13AF00D4DB6F /* libwm4-algebra.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 886BF113170C139200D4DB6F /* libwm4-algebra.a */; };
+		886BF117170C13CF00D4DB6F /* libplatform-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 880D8630170444A6009A9EF6 /* libplatform-ios.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,6 +28,20 @@
 			proxyType = 1;
 			remoteGlobalIDString = 881D4D631702E492007299A2;
 			remoteInfo = "platform-ios";
+		};
+		886BF112170C139200D4DB6F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 886BF10E170C139100D4DB6F /* wm4-algebra.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 880D86D4170BB8A7009A9EF6;
+			remoteInfo = "wm4-algebra";
+		};
+		886BF114170C13AB00D4DB6F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 886BF10E170C139100D4DB6F /* wm4-algebra.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 880D86D3170BB8A7009A9EF6;
+			remoteInfo = "wm4-algebra";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -48,7 +63,7 @@
 		881D4DE117044370007299A2 /* platform-ios.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = "platform-ios.xcodeproj"; sourceTree = "<group>"; };
 		881D4DF4170443D2007299A2 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		881D4DF5170443D2007299A2 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
-		881D4DFC17044455007299A2 /* libplatform-ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libplatform-ios.a"; path = "build/Debug-iphoneos/libplatform-ios.a"; sourceTree = "<group>"; };
+		886BF10E170C139100D4DB6F /* wm4-algebra.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "wm4-algebra.xcodeproj"; path = "/Users/wuh/github/chaos3d/sample/../external/wm4-algebra/wm4-algebra.xcodeproj"; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,7 +71,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				881D4DFD17044455007299A2 /* libplatform-ios.a in Frameworks */,
+				886BF117170C13CF00D4DB6F /* libplatform-ios.a in Frameworks */,
+				886BF116170C13AF00D4DB6F /* libwm4-algebra.a in Frameworks */,
 				881D4DD4170442BF007299A2 /* Foundation.framework in Frameworks */,
 				881D4DFA1704443C007299A2 /* GLKit.framework in Frameworks */,
 				881D4DFB1704443C007299A2 /* OpenGLES.framework in Frameworks */,
@@ -77,6 +93,7 @@
 		881D4DC7170442BF007299A2 = {
 			isa = PBXGroup;
 			children = (
+				886BF10E170C139100D4DB6F /* wm4-algebra.xcodeproj */,
 				881D4DE117044370007299A2 /* platform-ios.xcodeproj */,
 				881D4DD2170442BF007299A2 /* Frameworks */,
 				881D4DD1170442BF007299A2 /* Products */,
@@ -94,12 +111,19 @@
 		881D4DD2170442BF007299A2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				881D4DFC17044455007299A2 /* libplatform-ios.a */,
 				881D4DF4170443D2007299A2 /* GLKit.framework */,
 				881D4DF5170443D2007299A2 /* OpenGLES.framework */,
 				881D4DD3170442BF007299A2 /* Foundation.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		886BF10F170C139100D4DB6F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				886BF113170C139200D4DB6F /* libwm4-algebra.a */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -116,6 +140,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				886BF115170C13AB00D4DB6F /* PBXTargetDependency */,
 				880D8632170444DA009A9EF6 /* PBXTargetDependency */,
 			);
 			name = re;
@@ -147,6 +172,10 @@
 					ProductGroup = 880D862C170444A6009A9EF6 /* Products */;
 					ProjectRef = 881D4DE117044370007299A2 /* platform-ios.xcodeproj */;
 				},
+				{
+					ProductGroup = 886BF10F170C139100D4DB6F /* Products */;
+					ProjectRef = 886BF10E170C139100D4DB6F /* wm4-algebra.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
@@ -161,6 +190,13 @@
 			fileType = archive.ar;
 			path = "libplatform-ios.a";
 			remoteRef = 880D862F170444A6009A9EF6 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		886BF113170C139200D4DB6F /* libwm4-algebra.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libwm4-algebra.a";
+			remoteRef = 886BF112170C139200D4DB6F /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -180,6 +216,11 @@
 			isa = PBXTargetDependency;
 			name = "platform-ios";
 			targetProxy = 880D8631170444DA009A9EF6 /* PBXContainerItemProxy */;
+		};
+		886BF115170C13AB00D4DB6F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "wm4-algebra";
+			targetProxy = 886BF114170C13AB00D4DB6F /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		881D4D681702E492007299A2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 881D4D671702E492007299A2 /* Foundation.framework */; };
+		881D4D761702EB41007299A2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 881D4D751702EB41007299A2 /* UIKit.framework */; };
+		881D4D791702EB6E007299A2 /* cViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 881D4D781702EB6E007299A2 /* cViewController.m */; };
+		881D4DB517043C43007299A2 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 881D4DB417043C43007299A2 /* GLKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +28,10 @@
 /* Begin PBXFileReference section */
 		881D4D641702E492007299A2 /* libplatform-ios.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libplatform-ios.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		881D4D671702E492007299A2 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		881D4D751702EB41007299A2 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		881D4D771702EB6E007299A2 /* cViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cViewController.h; sourceTree = "<group>"; };
+		881D4D781702EB6E007299A2 /* cViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = cViewController.m; sourceTree = "<group>"; };
+		881D4DB417043C43007299A2 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -32,6 +39,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				881D4DB517043C43007299A2 /* GLKit.framework in Frameworks */,
+				881D4D761702EB41007299A2 /* UIKit.framework in Frameworks */,
 				881D4D681702E492007299A2 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -59,6 +68,8 @@
 		881D4D661702E492007299A2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				881D4DB417043C43007299A2 /* GLKit.framework */,
+				881D4D751702EB41007299A2 /* UIKit.framework */,
 				881D4D671702E492007299A2 /* Foundation.framework */,
 			);
 			name = Frameworks;
@@ -67,6 +78,8 @@
 		881D4D691702E492007299A2 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				881D4D771702EB6E007299A2 /* cViewController.h */,
+				881D4D781702EB6E007299A2 /* cViewController.m */,
 			);
 			name = ViewController;
 			path = ../../src/platform/ios;
@@ -123,6 +136,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				881D4D791702EB6E007299A2 /* cViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

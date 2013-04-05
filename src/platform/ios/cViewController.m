@@ -23,6 +23,16 @@
     return self;
 }
 
+// TODO: replace with nib
+// Implement loadView to create a view hierarchy programmatically, without using a nib.
+- (void) loadView {
+	// create a full screen view for default
+    // TODO: support <5.0
+	self.view = [[[UIView alloc] initWithFrame: [UIScreen mainScreen].bounds] autorelease];
+	self.view.userInteractionEnabled = YES;
+	self.view.multipleTouchEnabled = YES;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];

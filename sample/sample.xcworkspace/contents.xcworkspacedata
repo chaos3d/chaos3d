@@ -5,12 +5,22 @@
       location = "container:"
       name = "Core">
       <FileRef
+         location = "group:../build/ios/re.xcodeproj">
+      </FileRef>
+      <FileRef
          location = "group:../build/ios/platform-ios.xcodeproj">
       </FileRef>
    </Group>
    <Group
       location = "container:"
       name = "Dependency">
+   </Group>
+   <Group
+      location = "container:"
+      name = "External">
+      <FileRef
+         location = "group:../external/wm4-algebra/wm4-algebra.xcodeproj">
+      </FileRef>
    </Group>
    <Group
       location = "container:"
