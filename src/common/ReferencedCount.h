@@ -14,6 +14,19 @@
 
 _CHAOS_BEGIN
 
+#define SAFE_DELETE0(obj)   if( (obj) != 0 ) { delete (obj); (obj) = 0; }
+#define SAFE_DELETE(obj)    if( (obj) != 0 ) { delete (obj); }
+
+#define SAFE_RELEASE0(obj)  if( (obj) != 0 ) { (obj)->release(); (obj) = 0; }
+#define SAFE_RELEASE(obj)   if( (obj) != 0 ) { (obj)->release(); }
+#define SAFE_RETAIN(obj)    if( (obj) != 0 ) { (obj)->retain(); }
+#define SAFE_ASSIGN(obj, o) do{ if( obj == o) break; if( (obj) != 0 ) { delete (obj); } (obj) = (o); } }while(0)
+#define SAFE_REFAGN(obj, o) do{ if( obj == o) break; if( (obj) != 0 ) { (obj)->release(); } if(((obj) = (o)) != 0) { (obj)->retain(); } }while(0)
+#define SAFE_AUTOREFAGN(obj, o) do{ if( obj == o) break; if( (obj) != 0 ) { (obj)->autorelease(); } if(((obj) = (o)) != 0) { (obj)->retain(); } }while(0)
+
+#define RETAIN(obj)         ((obj)->retain(), obj)
+#define AUTORELEASE(obj)    ((obj)->autorelease(), obj)
+
 /*
 A reference counting object that will delete itself when counting down zero.
 

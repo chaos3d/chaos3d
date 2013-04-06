@@ -10,10 +10,8 @@
 #ifndef	_CHAOS_NODECOLOR_H
 #define	_CHAOS_NODECOLOR_H
 
-#include "chaos_config.h"
-#include "core/math.h"
-#include "core/RTTI.h"
-#include "script/LuaType.h"
+#include "common/common.h"
+#include "wm4-algebra/algebra.h"
 
 _CHAOS_BEGIN
 
@@ -33,29 +31,28 @@ template<class> class NumericAnimation;
 *	color = {1,1,1,1}
 */
 
-DECLARE_CLASS(NodeColor, NilParent);
 class NodeColor{
 
 public:
 	class ColorApplier;
 
 protected:
-	ColorRGBA	mColor;		// global color
-	ColorRGBA	mLocalColor;	// self color
+	Wm4::ColorRGBA	mColor;		// global color
+	Wm4::ColorRGBA	mLocalColor;	// self color
 	Scene2DNode* const	mNode;
 
 public:
 	NodeColor(Scene2DNode*);
-	NodeColor(Scene2DNode*, TypeLua const&);
+//	NodeColor(Scene2DNode*, TypeLua const&);
 
-	ColorRGBA const& getColor() const {return mColor;}
-	void setColor(ColorRGBA const&);
+	Wm4::ColorRGBA const& getColor() const {return mColor;}
+	void setColor(Wm4::ColorRGBA const&);
 	void setColor(float r, float g, float b, float a);
 	void updateColor();
 
 	template<class Applier, class TE>
-	AnimationState*	animation( NumericAnimation<ColorRGBA>* na ){
-		typedef NumericAnimationState<Applier, ColorRGBA, TE> NAS;
+	AnimationState*	animation( NumericAnimation<Wm4::ColorRGBA>* na ){
+		typedef NumericAnimationState<Applier, Wm4::ColorRGBA, TE> NAS;
 		NAS* as = new NAS(na, Applier(this));
 		as->autorelease();
 		return as;

@@ -10,16 +10,9 @@
 #ifndef	_CHAOS_SCENE2DNODE_H
 #define	_CHAOS_SCENE2DNODE_H
 
-#include "chaos_config.h"
-#include "core/RTTI.h"
-#include "core/math.h"
-#include "core/core.h"
-#include "script/LuaType.h"
-#include "script/scripting.h"
-
-#include "NodeFrame.h"
-#include "NodeColor.h"
-#include "Transform.h"
+#include "common/common.h"
+#include "common/ReferencedCount.h"
+#include "wm4-algebra/algebra.h"
 
 #include <string>
 
@@ -29,14 +22,14 @@ class Scene2DManager;
 class AnimationState;
 class Sprite;
 class NodeUI;
+class NodeFrame;
+class Transform;
+class NodeColor;
 
 /*
 scene node
 */
-DECLARE_CLASS(Scene2DNode, NilParent);
 class CHAOS_API Scene2DNode : public ReferencedCount{
-	//DYNAMIC_CLASS;
-
 public:
 	friend class Scene2DManager;
 	/*
@@ -56,6 +49,62 @@ public:
 		D_COLOR = 1<<2,
 		D_ALL = -1,
 	};
+    
+    class iterator{
+        friend class Scene2DNode;
+        
+        iterator(Scene2DNode* node) : _current(node){
+            SAFE_RETAIN(_current);
+        };
+        
+    public:
+        iterator(const iterator& it){
+            _current = it._current;
+            SAFE_RETAIN(_current);
+        }
+        
+        ~iterator(){
+            SAFE_RELEASE0(_current);
+        }
+        
+        iterator& operator=(const iterator& rhs){
+            SAFE_REFAGN(_current, rhs._current);
+            return *this;
+        }
+        
+        iterator& operator++() {
+            assert(_current != NULL);
+            Scene2DNode* cur = _current;
+            _current = _current->nextSibling();
+            cur->release();
+            SAFE_RETAIN(_current);
+            return *this;
+        }
+        
+        iterator& operator--() {
+            assert(_current != NULL);
+            Scene2DNode* cur = _current;
+            _current = _current->preSibling();
+            cur->release();
+            SAFE_RETAIN(_current);
+            return *this;
+        }
+        
+        bool operator==(iterator const& rhs) const {
+            return _current == rhs._current;
+        }
+        
+        Scene2DNode* operator*() const{
+            return _current;
+        }
+        
+        static iterator end() {
+            return iterator(NULL);
+        }
+
+    private:
+        Scene2DNode *_current;
+    };
 
 protected:
 	Scene2DNode		*mParent;			//parent node, weak reference
@@ -69,16 +118,6 @@ protected:
 	NodeUI			*mUI;
 	Sprite			*mSprite;
 	int				mDirtyFlag;
-
-	/**
-	 * updating thread of the script that will be called every frame.
-	 *
-	 * the thread can also be suspended, where it will be no longer
-	 * called until it is activated. So, it will wait for the event
-	 * every frame. 
-	 */
-	TypeLua			mLua;
-	bool			mLuaSuspended;
 
 	std::string const	mTag;
 
@@ -98,7 +137,7 @@ public:
 
 	// script intialisation
 	// arg has to be a Lua Table
-	virtual void parseLua(TypeLua const&);
+	//virtual void parseLua(TypeLua const&);
 
 	// Transform
 	void		setTransform(Transform*);
@@ -117,13 +156,8 @@ public:
 	NodeUI*		getUI() const { return mUI; };
 
 	// Scene tree
-	void		addChildren( TypeLua const& lua, Scene2DNode* after = 0 );
 	void		addChild( Scene2DNode* child, Scene2DNode* after = 0 );
-	TypeLua		getChildren() const;	// script helper
-	//deprecated: use removeSelf instead
-	//bool		removeChild( Scene2DNode* child );
 	void		removeAllChildren( );
-	void		removeChildren( TypeLua const& lua );
 	void		removeSelf();
 	void		relocateTo(Scene2DNode* parent, Scene2DNode* after = 0);
 	void		moveUpward();
@@ -132,6 +166,10 @@ public:
 	void		moveBottom();
 	void		moveAfterward(Scene2DNode*);
 	void		removeWhenDone(void *);
+	iterator	getChildren() const { return iterator(mFirstChild); };
+
+	//void		addChildren( TypeLua const& lua, Scene2DNode* after = 0 );
+	//void		removeChildren( TypeLua const& lua ); // this can be easily done by removeSelf
 
 	template<class F>
 	void		sort(F const& compare);
@@ -152,16 +190,14 @@ public:
 	Sprite*		getSprite() const { return mSprite; };
 
 	// script
-	TypeLua const& getLua() { return mLua; };
-	void setLua(TypeLua const&lua) { mLua = lua; };
+	//TypeLua const& getLua() { return mLua; };
+	//void setLua(TypeLua const&lua) { mLua = lua; };
 
 	virtual void		update();
 	virtual void		postUpdate(){};
 
 };
 
-TYPE_RET_REF(Scene2DNode);
-//TYPE_RET_DYN(Scene2DNode);
 /*
 class Scene2DNode::TranslateApplier{
 private:

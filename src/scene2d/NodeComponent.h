@@ -14,12 +14,6 @@
 #include "core/RTTI.h"
 #include "script/LuaFactory.h"
 
-struct lua_State;
-
-#define	NODEFACTORY_OP		("__nodefactory")
-#define IMPLEMENT_NODE(facClass)	\
-	chaos::Type::constructorType( new facClass() ),
-
 _CHAOS_BEGIN
 
 class Scene2DNode;

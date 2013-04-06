@@ -10,10 +10,8 @@
 #ifndef	_CHAOS_NODEFRAME_H
 #define	_CHAOS_NODEFRAME_H
 
-#include "chaos_config.h"
-#include "core/math.h"
-#include "core/RTTI.h"
-#include "script/LuaType.h"
+#include "common/common.h"
+#include "wm4-algebra/algebra.h"
 
 _CHAOS_BEGIN
 
@@ -41,8 +39,6 @@ class Scene2DNode;
 *	frame = {0,0,160,240}
 */
 
-DECLARE_CLASS(NodeFrame, NilParent);
-
 class NodeFrame{
 protected:
 	Scene2DNode	*mNode;
@@ -60,7 +56,7 @@ protected:
 
 public:
 	NodeFrame(Scene2DNode *n) : mNode(n){};
-	NodeFrame(Scene2DNode*, TypeLua const&);
+//	NodeFrame(Scene2DNode*, TypeLua const&);
 
 	void setFrame(float x, float y, float hW, float hH );
 	void setFrameFromeSprite();
@@ -70,10 +66,10 @@ public:
 
 	// test if the ray intersects across the boundary
 	// R(t) = p + t*d, where p and d are in the global space
-	bool test(Vector3f const& p, Vector3f const& d) const;
-	int	testIntersect( Vector3f const& p, Vector3f const& d, Vector3f& q, Vector2f const& extra = Vector2f(0.f,0.f)) const;
-	void intersect( Vector3f const& p, Vector3f const& d, Vector3f& q) const;
-	virtual Scene2DNode* pick( Vector3f const& p, Vector3f const& d, Vector3f& q, int& ret);
+	bool test(Wm4::Vector3f const& p, Wm4::Vector3f const& d) const;
+	int	testIntersect(Wm4::Vector3f const& p, Wm4::Vector3f const& d, Wm4::Vector3f& q, Wm4::Vector2f const& extra = Wm4::Vector2f(0.f,0.f)) const;
+	void intersect( Wm4::Vector3f const& p, Wm4::Vector3f const& d, Wm4::Vector3f& q) const;
+	virtual Scene2DNode* pick( Wm4::Vector3f const& p, Wm4::Vector3f const& d, Wm4::Vector3f& q, int& ret);
 };
 
 _CHAOS_END

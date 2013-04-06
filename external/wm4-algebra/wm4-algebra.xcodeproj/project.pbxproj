@@ -70,6 +70,7 @@
 		880D8707170BB92F009A9EF6 /* Vector4.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Vector4.cpp; sourceTree = "<group>"; };
 		880D8708170BB92F009A9EF6 /* Vector4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vector4.h; sourceTree = "<group>"; };
 		880D8709170BB92F009A9EF6 /* Vector4.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Vector4.inl; sourceTree = "<group>"; };
+		88B24D7D1710018600F7C2CC /* algebra.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = algebra.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +113,7 @@
 		880D8715170BB936009A9EF6 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				88B24D7D1710018600F7C2CC /* algebra.h */,
 				880D86E5170BB92E009A9EF6 /* ColorRGB.cpp */,
 				880D86E6170BB92F009A9EF6 /* ColorRGB.h */,
 				880D86E7170BB92F009A9EF6 /* ColorRGB.inl */,

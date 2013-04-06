@@ -1,13 +1,14 @@
-#include "2d/Scene2DNode.h"
+#include "Scene2DNode.h"
 
-#include "anim/anim.h"
-#include "script/lua.h"
-#include "script/bind.h"
-#include "2d/render.h"
-#include "2d/NodeUI.h"
+//#include "anim/anim.h"
+#include "Transform.h"
+#include "NodeUI.h"
+#include "NodeFrame.h"
+#include "NodeColor.h"
 
 //using namespace chaos;
 
+/*
 IMPLEMENT_CLASS(Scene2DNode, LIB_DOMAIN)
 IMPLEMENT_FUNC(childByTag, &Scene2DNode::childByTag )
 IMPLEMENT_FUNC(childByIndex, &Scene2DNode::childByIndex )
@@ -30,7 +31,7 @@ IMPLEMENT_PROP(ui, 0, &Scene2DNode::getUI)
 IMPLEMENT_PROP(tag, 0, &Scene2DNode::getTag)
 IMPLEMENT_PROP(parent, 0, &Scene2DNode::getParent)
 IMPLEMENT_PROP(children, 0, &Scene2DNode::getChildren)
-IMPLEMENT_END;
+IMPLEMENT_END;*/
 
 static void mutexCallback(void*, void *ud){
 	if( ((Scene2DNode*)ud)->getParent() != 0 )
@@ -40,7 +41,7 @@ static void mutexCallback(void*, void *ud){
 Scene2DNode::Scene2DNode(std::string const& tag):mDirtyFlag(D_CLEAR),
 	mTransform(0), mColor(0), mFrame(0), mSprite(0),
 	mParent(0), mFirstChild(0), mNextSibling(0),mPreSibling(0),
-	mTag(tag), mUI(0), mLuaSuspended(false)
+	mTag(tag), mUI(0)//, mLuaSuspended(false)
 {
 }
 
@@ -61,9 +62,9 @@ Scene2DNode::~Scene2DNode(){
 	SAFE_DELETE0(mColor);
 	SAFE_DELETE0(mFrame);
 	SAFE_DELETE0(mUI);
-	SAFE_DELETE0(mSprite);
+	//SAFE_DELETE0(mSprite);
 #if defined(DEBUG)
-	LOG("Scene2D node is destroyed (%s: %08x)", mTag.c_str(), this);
+	//LOG("Scene2D node is destroyed (%s: %08x)", mTag.c_str(), this);
 #endif
 	mFirstChild = 0;
 };
@@ -75,6 +76,7 @@ Scene2DNode* Scene2DNode::lastChild() const{
 	return node;
 }
 
+/*
 TypeLua Scene2DNode::getChildren() const{
     lua_State *L = ScriptManager::getInstance()->getState();
     ScriptState ss(L);
@@ -88,7 +90,9 @@ TypeLua Scene2DNode::getChildren() const{
     }
     lua_settop(L,n);
     return TypeLua(L);
-}
+}*/
+
+#if 0
 
 void Scene2DNode::addChildren( TypeLua const& lua, Scene2DNode* after){
 	lua_State *L(lua.getL());
@@ -144,6 +148,8 @@ void Scene2DNode::removeChildren( TypeLua const& lua ){
 	};
 	lua_settop(L,n);
 }
+
+#endif
 /*
 
 void Scene2DNode::addChild( Scene2DNode* child, Scene2DNode* after ){
@@ -210,6 +216,8 @@ void Scene2DNode::addChild( Scene2DNode* child, Scene2DNode* after ){
 	return;
 }
 
+#if 0
+
 void Scene2DNode::removeWhenDone(void *mutex){
 	class RemoveTriggerable : public Triggerable {
 		Scene2DNode *mNode;
@@ -229,36 +237,7 @@ void Scene2DNode::removeWhenDone(void *mutex){
 	( (Triggerable*)(new RemoveTriggerable(this))->autorelease() )->wait4( mutex );
 	//ScriptManager::getInstance()->wait(mutex, mutexCallback, this );
 }
-
-/*
- use removeSelf instead
-bool Scene2DNode::removeChild( Scene2DNode* child ){
-	if( child == 0 )
-		return false;
-
-	Scene2DNode* found =  child;
-	
-//	while( found != 0 && found != child )
-//		found = found->mNextSibling;
-//
-//	if( found != child )
-//		return false;
-	if( found->mParent != this )
-		return false;
-
-	if( found->mNextSibling != 0 )
-		found->mNextSibling->mPreSibling = found->mPreSibling;
-	if( found->mPreSibling != 0 )
-		found->mPreSibling->mNextSibling = found->mNextSibling;
-
-	if( mFirstChild == found )
-		mFirstChild = found->mNextSibling;
-
-	found->mParent = found->mNextSibling = found->mPreSibling = 0;
-	found->release();
-	return true;
-}
-*/
+#endif
 
 void Scene2DNode::removeSelf( ){
 	if( mParent == 0 )
@@ -383,8 +362,8 @@ Scene2DNode* Scene2DNode::childByIndex( int idx) const{
 }
 
 void Scene2DNode::setSprite(Sprite* spr){
-	if( mSprite != 0 )
-		delete mSprite;
+	//if( mSprite != 0 )
+	//	delete mSprite;
 	
 	mSprite = spr;
 }
@@ -414,6 +393,7 @@ void Scene2DNode::setUI( NodeUI* ui ){
 }
 
 void Scene2DNode::update(){
+#if 0
 	// run script first in case it updates transform or color
 	if( !mLuaSuspended && mLua.valid() ){
 		ScriptThread* thread(ScriptThread::thread(mLua));
@@ -437,15 +417,16 @@ void Scene2DNode::update(){
 			( (Triggerable*)(new SuspendedTriggerable(this))->autorelease() )->wait4( thread );
 		}
 	}
-	
+#endif
+    
 	// propagate dirty flag from parent node
 	if( mParent != 0 )
 		dirtyFlag() |= mParent->dirtyFlag();
 	
 	if( mTransform != 0 && transformFlag() ){
 		mTransform->updateTransform( );
-		if( mSprite != 0 )
-			mSprite->updateRegion(mSprite->getFrame());
+		//if( mSprite != 0 )
+		//	mSprite->updateRegion(mSprite->getFrame());
 	}
 	
 	if( mColor != 0 && colorFlag() ){
