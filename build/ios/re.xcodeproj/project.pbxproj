@@ -12,16 +12,6 @@
 		881D4DFB1704443C007299A2 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 881D4DF5170443D2007299A2 /* OpenGLES.framework */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		88B24CCA170EB2BA00F7C2CC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 886BF10E170C139100D4DB6F /* wm4-algebra.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 880D86D4170BB8A7009A9EF6;
-			remoteInfo = "wm4-algebra";
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXCopyFilesBuildPhase section */
 		881D4DCE170442BF007299A2 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -39,7 +29,6 @@
 		881D4DD3170442BF007299A2 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		881D4DF4170443D2007299A2 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		881D4DF5170443D2007299A2 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
-		886BF10E170C139100D4DB6F /* wm4-algebra.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "wm4-algebra.xcodeproj"; path = "../../external/wm4-algebra/wm4-algebra.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		88B24CDC170EB85100F7C2CC /* Context.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Context.h; sourceTree = "<group>"; };
 		88B24CDE170EB87700F7C2CC /* Shader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Shader.h; path = ../../src/re/Shader.h; sourceTree = "<group>"; };
 		88B24CDF170EB87700F7C2CC /* Material.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Material.h; path = ../../src/re/Material.h; sourceTree = "<group>"; };
@@ -70,7 +59,6 @@
 		881D4DC7170442BF007299A2 = {
 			isa = PBXGroup;
 			children = (
-				886BF10E170C139100D4DB6F /* wm4-algebra.xcodeproj */,
 				88B24CDB170EB85100F7C2CC /* frontend */,
 				88B24CDD170EB85D00F7C2CC /* src */,
 				881D4DD2170442BF007299A2 /* Frameworks */,
@@ -94,14 +82,6 @@
 				881D4DD3170442BF007299A2 /* Foundation.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		88B24CC7170EB2BA00F7C2CC /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				88B24CCB170EB2BA00F7C2CC /* libwm4-algebra.a */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		88B24CDB170EB85100F7C2CC /* frontend */ = {
@@ -169,28 +149,12 @@
 			mainGroup = 881D4DC7170442BF007299A2;
 			productRefGroup = 881D4DD1170442BF007299A2 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 88B24CC7170EB2BA00F7C2CC /* Products */;
-					ProjectRef = 886BF10E170C139100D4DB6F /* wm4-algebra.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				881D4DCF170442BF007299A2 /* re */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		88B24CCB170EB2BA00F7C2CC /* libwm4-algebra.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libwm4-algebra.a";
-			remoteRef = 88B24CCA170EB2BA00F7C2CC /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXSourcesBuildPhase section */
 		881D4DCC170442BF007299A2 /* Sources */ = {

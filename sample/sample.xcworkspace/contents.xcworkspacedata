@@ -10,6 +10,13 @@
       <FileRef
          location = "group:../build/ios/platform-ios.xcodeproj">
       </FileRef>
+   </Group>
+   <Group
+      location = "container:"
+      name = "Engine2D">
+      <FileRef
+         location = "group:../build/ios/engine2d.xcodeproj">
+      </FileRef>
       <FileRef
          location = "group:../build/ios/scene2d.xcodeproj">
       </FileRef>

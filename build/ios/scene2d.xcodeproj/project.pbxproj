@@ -28,6 +28,14 @@
 		88B24D79170ECB9900F7C2CC /* UICounter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88B24D4E170ECB9900F7C2CC /* UICounter.cpp */; };
 		88B24D7A170ECB9900F7C2CC /* UIProgress.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88B24D51170ECB9900F7C2CC /* UIProgress.cpp */; };
 		88B24D7B170ECB9900F7C2CC /* UIRating.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88B24D53170ECB9900F7C2CC /* UIRating.cpp */; };
+		88B24D90171028D100F7C2CC /* MapTiledSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88B24D7F171028D100F7C2CC /* MapTiledSprite.cpp */; };
+		88B24D91171028D100F7C2CC /* MultiSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88B24D81171028D100F7C2CC /* MultiSprite.cpp */; };
+		88B24D92171028D100F7C2CC /* PartialCircleSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88B24D83171028D100F7C2CC /* PartialCircleSprite.cpp */; };
+		88B24D93171028D100F7C2CC /* PartialRevSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88B24D85171028D100F7C2CC /* PartialRevSprite.cpp */; };
+		88B24D94171028D100F7C2CC /* PartialSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88B24D87171028D100F7C2CC /* PartialSprite.cpp */; };
+		88B24D95171028D100F7C2CC /* PSSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88B24D89171028D100F7C2CC /* PSSprite.cpp */; };
+		88B24D96171028D100F7C2CC /* Sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88B24D8C171028D100F7C2CC /* Sprite.cpp */; };
+		88B24D97171028D100F7C2CC /* TiledSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88B24D8E171028D100F7C2CC /* TiledSprite.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -90,6 +98,22 @@
 		88B24D52170ECB9900F7C2CC /* UIProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIProgress.h; path = ../../src/scene2d/UIProgress.h; sourceTree = "<group>"; };
 		88B24D53170ECB9900F7C2CC /* UIRating.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UIRating.cpp; path = ../../src/scene2d/UIRating.cpp; sourceTree = "<group>"; };
 		88B24D54170ECB9900F7C2CC /* UIRating.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIRating.h; path = ../../src/scene2d/UIRating.h; sourceTree = "<group>"; };
+		88B24D7F171028D100F7C2CC /* MapTiledSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MapTiledSprite.cpp; sourceTree = "<group>"; };
+		88B24D80171028D100F7C2CC /* MapTiledSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapTiledSprite.h; sourceTree = "<group>"; };
+		88B24D81171028D100F7C2CC /* MultiSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MultiSprite.cpp; sourceTree = "<group>"; };
+		88B24D82171028D100F7C2CC /* MultiSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiSprite.h; sourceTree = "<group>"; };
+		88B24D83171028D100F7C2CC /* PartialCircleSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PartialCircleSprite.cpp; sourceTree = "<group>"; };
+		88B24D84171028D100F7C2CC /* PartialCircleSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PartialCircleSprite.h; sourceTree = "<group>"; };
+		88B24D85171028D100F7C2CC /* PartialRevSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PartialRevSprite.cpp; sourceTree = "<group>"; };
+		88B24D86171028D100F7C2CC /* PartialRevSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PartialRevSprite.h; sourceTree = "<group>"; };
+		88B24D87171028D100F7C2CC /* PartialSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PartialSprite.cpp; sourceTree = "<group>"; };
+		88B24D88171028D100F7C2CC /* PartialSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PartialSprite.h; sourceTree = "<group>"; };
+		88B24D89171028D100F7C2CC /* PSSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PSSprite.cpp; sourceTree = "<group>"; };
+		88B24D8A171028D100F7C2CC /* PSSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSSprite.h; sourceTree = "<group>"; };
+		88B24D8C171028D100F7C2CC /* Sprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Sprite.cpp; sourceTree = "<group>"; };
+		88B24D8D171028D100F7C2CC /* Sprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Sprite.h; sourceTree = "<group>"; };
+		88B24D8E171028D100F7C2CC /* TiledSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TiledSprite.cpp; sourceTree = "<group>"; };
+		88B24D8F171028D100F7C2CC /* TiledSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TiledSprite.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +131,7 @@
 		88B24CE9170EC86800F7C2CC = {
 			isa = PBXGroup;
 			children = (
+				88B24D7E171028D100F7C2CC /* sprite2d */,
 				88B24D03170ECA6C00F7C2CC /* src */,
 				88B24CF4170EC86800F7C2CC /* Frameworks */,
 				88B24CF3170EC86800F7C2CC /* Products */,
@@ -181,6 +206,30 @@
 			name = src;
 			sourceTree = "<group>";
 		};
+		88B24D7E171028D100F7C2CC /* sprite2d */ = {
+			isa = PBXGroup;
+			children = (
+				88B24D7F171028D100F7C2CC /* MapTiledSprite.cpp */,
+				88B24D80171028D100F7C2CC /* MapTiledSprite.h */,
+				88B24D81171028D100F7C2CC /* MultiSprite.cpp */,
+				88B24D82171028D100F7C2CC /* MultiSprite.h */,
+				88B24D83171028D100F7C2CC /* PartialCircleSprite.cpp */,
+				88B24D84171028D100F7C2CC /* PartialCircleSprite.h */,
+				88B24D85171028D100F7C2CC /* PartialRevSprite.cpp */,
+				88B24D86171028D100F7C2CC /* PartialRevSprite.h */,
+				88B24D87171028D100F7C2CC /* PartialSprite.cpp */,
+				88B24D88171028D100F7C2CC /* PartialSprite.h */,
+				88B24D89171028D100F7C2CC /* PSSprite.cpp */,
+				88B24D8A171028D100F7C2CC /* PSSprite.h */,
+				88B24D8C171028D100F7C2CC /* Sprite.cpp */,
+				88B24D8D171028D100F7C2CC /* Sprite.h */,
+				88B24D8E171028D100F7C2CC /* TiledSprite.cpp */,
+				88B24D8F171028D100F7C2CC /* TiledSprite.h */,
+			);
+			name = sprite2d;
+			path = ../../src/sprite2d;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -252,6 +301,14 @@
 				88B24D79170ECB9900F7C2CC /* UICounter.cpp in Sources */,
 				88B24D7A170ECB9900F7C2CC /* UIProgress.cpp in Sources */,
 				88B24D7B170ECB9900F7C2CC /* UIRating.cpp in Sources */,
+				88B24D90171028D100F7C2CC /* MapTiledSprite.cpp in Sources */,
+				88B24D91171028D100F7C2CC /* MultiSprite.cpp in Sources */,
+				88B24D92171028D100F7C2CC /* PartialCircleSprite.cpp in Sources */,
+				88B24D93171028D100F7C2CC /* PartialRevSprite.cpp in Sources */,
+				88B24D94171028D100F7C2CC /* PartialSprite.cpp in Sources */,
+				88B24D95171028D100F7C2CC /* PSSprite.cpp in Sources */,
+				88B24D96171028D100F7C2CC /* Sprite.cpp in Sources */,
+				88B24D97171028D100F7C2CC /* TiledSprite.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

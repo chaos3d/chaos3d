@@ -12,6 +12,8 @@
 		881D4D5A1701A25D007299A2 /* lyield.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 881D4D581701A25D007299A2 /* lyield.framework */; };
 		881D4DBC17043D58007299A2 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 881D4DBA17043D47007299A2 /* OpenGLES.framework */; };
 		881D4DBD17043D5D007299A2 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 881D4DB817043D32007299A2 /* GLKit.framework */; };
+		882D747717121836002E1BBD /* libengine2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 882D7462171216ED002E1BBD /* libengine2d.a */; };
+		882D747817121836002E1BBD /* libplatform-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 88B24CD5170EB2BD00F7C2CC /* libplatform-ios.a */; };
 		88AE0E5D170023C900634E75 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88AE0E5C170023C900634E75 /* UIKit.framework */; };
 		88AE0E5F170023C900634E75 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88AE0E5E170023C900634E75 /* Foundation.framework */; };
 		88AE0E61170023C900634E75 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88AE0E60170023C900634E75 /* CoreGraphics.framework */; };
@@ -27,19 +29,33 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		882D7461171216ED002E1BBD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88477F281712169E0046A97C /* engine2d.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 88B24DA11711FBF400F7C2CC;
+			remoteInfo = engine2d;
+		};
+		882D74731712181E002E1BBD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88477F281712169E0046A97C /* engine2d.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 88B24DA01711FBF400F7C2CC;
+			remoteInfo = engine2d;
+		};
+		882D74751712181E002E1BBD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 881D4DEA1704439E007299A2 /* platform-ios.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 881D4D631702E492007299A2;
+			remoteInfo = "platform-ios";
+		};
 		88B24CD4170EB2BD00F7C2CC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 881D4DEA1704439E007299A2 /* platform-ios.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 881D4D641702E492007299A2;
 			remoteInfo = "platform-ios";
-		};
-		88B24CD9170EB2BD00F7C2CC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 881D4DE217044389007299A2 /* re.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 881D4DD0170442BF007299A2;
-			remoteInfo = re;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -49,8 +65,8 @@
 		881D4D581701A25D007299A2 /* lyield.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = lyield.framework; path = ../../dependency/ios/lyield.framework; sourceTree = "<group>"; };
 		881D4DB817043D32007299A2 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		881D4DBA17043D47007299A2 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
-		881D4DE217044389007299A2 /* re.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = re.xcodeproj; path = ../../build/ios/re.xcodeproj; sourceTree = SOURCE_ROOT; };
 		881D4DEA1704439E007299A2 /* platform-ios.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "platform-ios.xcodeproj"; path = "../../build/ios/platform-ios.xcodeproj"; sourceTree = SOURCE_ROOT; };
+		88477F281712169E0046A97C /* engine2d.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = engine2d.xcodeproj; path = ../../build/ios/engine2d.xcodeproj; sourceTree = SOURCE_ROOT; };
 		88AE0E59170023C900634E75 /* SampleBrowser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SampleBrowser.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		88AE0E5C170023C900634E75 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		88AE0E5E170023C900634E75 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -75,6 +91,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				882D747717121836002E1BBD /* libengine2d.a in Frameworks */,
+				882D747817121836002E1BBD /* libplatform-ios.a in Frameworks */,
 				88AE0E5D170023C900634E75 /* UIKit.framework in Frameworks */,
 				88AE0E5F170023C900634E75 /* Foundation.framework in Frameworks */,
 				88AE0E61170023C900634E75 /* CoreGraphics.framework in Frameworks */,
@@ -89,11 +107,27 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		882D745E171216ED002E1BBD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				882D7462171216ED002E1BBD /* libengine2d.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		882D748717124B47002E1BBD /* chaos */ = {
+			isa = PBXGroup;
+			children = (
+				881D4DEA1704439E007299A2 /* platform-ios.xcodeproj */,
+				88477F281712169E0046A97C /* engine2d.xcodeproj */,
+			);
+			name = chaos;
+			sourceTree = "<group>";
+		};
 		88AE0E50170023C900634E75 = {
 			isa = PBXGroup;
 			children = (
-				881D4DE217044389007299A2 /* re.xcodeproj */,
-				881D4DEA1704439E007299A2 /* platform-ios.xcodeproj */,
+				882D748717124B47002E1BBD /* chaos */,
 				88AE0E62170023C900634E75 /* SampleBrowser */,
 				88AE0E5B170023C900634E75 /* Frameworks */,
 				88AE0E5A170023C900634E75 /* Products */,
@@ -159,14 +193,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		88B24CD6170EB2BD00F7C2CC /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				88B24CDA170EB2BD00F7C2CC /* libre.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -181,6 +207,8 @@
 			buildRules = (
 			);
 			dependencies = (
+				882D74741712181E002E1BBD /* PBXTargetDependency */,
+				882D74761712181E002E1BBD /* PBXTargetDependency */,
 			);
 			name = SampleBrowser;
 			productName = SampleBrowser;
@@ -208,12 +236,12 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 88B24CCE170EB2BD00F7C2CC /* Products */;
-					ProjectRef = 881D4DEA1704439E007299A2 /* platform-ios.xcodeproj */;
+					ProductGroup = 882D745E171216ED002E1BBD /* Products */;
+					ProjectRef = 88477F281712169E0046A97C /* engine2d.xcodeproj */;
 				},
 				{
-					ProductGroup = 88B24CD6170EB2BD00F7C2CC /* Products */;
-					ProjectRef = 881D4DE217044389007299A2 /* re.xcodeproj */;
+					ProductGroup = 88B24CCE170EB2BD00F7C2CC /* Products */;
+					ProjectRef = 881D4DEA1704439E007299A2 /* platform-ios.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -224,18 +252,18 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		882D7462171216ED002E1BBD /* libengine2d.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libengine2d.a;
+			remoteRef = 882D7461171216ED002E1BBD /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		88B24CD5170EB2BD00F7C2CC /* libplatform-ios.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = "libplatform-ios.a";
 			remoteRef = 88B24CD4170EB2BD00F7C2CC /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		88B24CDA170EB2BD00F7C2CC /* libre.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libre.a;
-			remoteRef = 88B24CD9170EB2BD00F7C2CC /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -268,6 +296,19 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		882D74741712181E002E1BBD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = engine2d;
+			targetProxy = 882D74731712181E002E1BBD /* PBXContainerItemProxy */;
+		};
+		882D74761712181E002E1BBD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "platform-ios";
+			targetProxy = 882D74751712181E002E1BBD /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		88AE0E65170023C900634E75 /* InfoPlist.strings */ = {
