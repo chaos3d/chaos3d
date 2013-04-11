@@ -1,6 +1,5 @@
-#include "2d/Scene2DHandler.h"
-#include "2d/scene.h"
-#include "2d/NodeUI.h"
+#include "Scene2DHandler.h"
+#include "NodeUI.h"
 
 //using namespace chaos;
 

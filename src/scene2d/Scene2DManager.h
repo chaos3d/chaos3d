@@ -62,6 +62,7 @@ public:
 	virtual void update();
 	virtual void renderScene();
 
+    // it should be a converter tunnel that convert lua object to native object in a separate class 
 	virtual Scene2DNode* createNode( TypeLua const& lua );
 	virtual Scene2DNode* createNode( char const* name, char const* type );
 

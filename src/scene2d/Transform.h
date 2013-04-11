@@ -16,9 +16,6 @@
 _CHAOS_BEGIN
 
 class Scene2DNode;
-class AnimationState;
-template<class, class, class> class NumericAnimationState;
-template<class> class NumericAnimation;
 
 /*
 * Definition ext:
@@ -41,11 +38,11 @@ protected:
     Wm4::Matrix4f		mGlobal;	// todo: reduce to matrix4x3
 
 	// Local
-	Wm4::Quaternionf		mRotate;
+	Wm4::Quaternionf	mRotate;
 	Wm4::Vector3f		mTranslate;
 	Wm4::Vector3f		mScale;
 
-	Scene2DNode* const mNode;
+	Scene2DNode* const mNode;       // this is a weak reference
 
 public:
 	Transform(Scene2DNode *n)
@@ -53,6 +50,8 @@ public:
 		mNode(n)
 	{};
 
+    Transform(Transform const&);
+    
 	//Transform(Scene2DNode *, TypeLua const&);
 
 	void updateTransform();
@@ -80,6 +79,7 @@ public:
 	// but under a different parent node
 	void relocate(Transform* );
 	
+#if 0
 	// Animation
 	AnimationState*		translate(Wm4::Vector3f const& pos){
 		return translate( pos[0], pos[1], pos[2]);
@@ -95,6 +95,7 @@ public:
 		as->autorelease();
 		return as;
 	}
+#endif
 
 	Scene2DNode* getNode() const { return mNode; };
 };

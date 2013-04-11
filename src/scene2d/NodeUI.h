@@ -18,7 +18,7 @@ _CHAOS_BEGIN
 
 class Scene2DNode;
 
-class NodeUI /*: public NodeComponent*/{
+class NodeUI{
 protected:
 //	static ScriptState*	sRunningState;
 //	TypeLua	mHandler;

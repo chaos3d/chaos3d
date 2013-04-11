@@ -1,13 +1,9 @@
-#include "2d/Transform.h"
-#include "2d/Scene2DNode.h"
-#include "2d/NodeApplier.h"
+#include "Transform.h"
+#include "Scene2DNode.h"
 
-#include "script/bind.h"
-#include "script/lua.h"
-#include "anim/anim.h"
-
+using namespace Wm4;
 //using namespace chaos;
-
+#if 0
 IMPLEMENT_CLASS(Transform, LIB_DOMAIN )
 IMPLEMENT_FUNC(relocate, &Transform::relocate )
 IMPLEMENT_FUNC(update, &Transform::forceUpdate )
@@ -36,6 +32,7 @@ IMPLEMENT_FUNC( cubicScale, (&Transform::animation<Transform::ScaleApplier, Cubi
 //IMPLEMENT_FUNC( nodeScale3, (&Transform::animation<ScaleApplierWrapper, CubicTiming>) )
 
 IMPLEMENT_END;
+
 
 Transform::Transform(Scene2DNode *n, TypeLua const& lua)
 : mRotate(1.f,0.f,0.f,0.f),mScale(1.f,1.f,1.f),mTranslate(0.f,0.f,0.f),
@@ -81,6 +78,7 @@ Transform::Transform(Scene2DNode *n, TypeLua const& lua)
 
 	lua_settop(L,top);
 }
+#endif
 
 void Transform::relocate(Transform* ot){
 	Matrix4f global = ot->getMatrix().Inverse() * mGlobal;
@@ -176,6 +174,7 @@ void Transform::setScale(float x,float y,float z){
 	mScale = Vector3f(x,y,z);
 }
 
+#if 0
 AnimationState* Transform::translate(float x, float y, float z){
 	Vector3fAnimation* anim = new Vector3fAnimation();
 	Vector3fAnimation::TKFList& kfs = anim->getKeyFrames();
@@ -201,3 +200,4 @@ AnimationState* Transform::rotate(float x, float y, float z){
 	anim->release();
 	return as;
 }
+#endif

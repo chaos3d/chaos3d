@@ -10,15 +10,8 @@
 #ifndef	_CHAOS_SPRITE_H
 #define	_CHAOS_SPRITE_H
 
-#include "chaos_config.h"
-#include "core/core.h"
-#include "core/math.h"
-#include "anim/anim.h"
-#include "script/scripting.h"
-#include "NodeComponent.h"
-#include "Scene2DNode.h"
-
-struct lua_State;
+#include "common/common.h"
+#include "scene2d/Scene2DNode.h"
 
 _CHAOS_BEGIN
 
@@ -56,9 +49,7 @@ struct SpriteLayout{
 *	sprite = {canvas, {0,0,320,480}}
 */
 
-DECLARE_CLASS(Sprite, NilParent);
-class Sprite : public NodeComponent{
-	DYNAMIC_CLASS(Sprite);
+class Sprite/* : public NodeComponent*/{
 public:
 	class SpriteApplier;
 	
@@ -84,16 +75,16 @@ protected:
 		short index[MAX_CACHE*6];
 	} sData;
 
-	Rectanglef		mBound;			// rect in the canvas/texture
-	Rectanglef		mFrame;			// frame of the sprite, 
-	Rectangle3f		mRegion;		// the rectangle on the screen
+    Wm4::Rectanglef		mBound;			// rect in the canvas/texture
+	Wm4::Rectanglef		mFrame;			// frame of the sprite,
+	Wm4::Rectangle3f		mRegion;		// the rectangle on the screen
 	Canvas*			mCanvas;
 
-	virtual void parseElement(lua_State* L);
+	//virtual void parseElement(lua_State* L);
 
 public:
 	Sprite(Scene2DNode *node);
-	Sprite(Scene2DNode *, TypeLua const&);
+	//Sprite(Scene2DNode *, TypeLua const&);
 
 	Canvas* getCanvas() const { return mCanvas; };
 	void setCanvas(Canvas* cav) { mCanvas = cav; };
@@ -112,20 +103,21 @@ public:
 	/**
 	* update the region data, which may depend on the scene node
 	*/
-	void updateRegion(Rectanglef const&);
+	void updateRegion(Wm4::Rectanglef const&);
 	void forceUpdate();	// force update the region, it should be called after setFrame
 
 	void setBound(float x, float y, float width, float height);
 	void setFrame(float x, float y, float width, float height);
 	
-	TypeLua getBoundLua() const;
-	TypeLua getFrameLua() const;
+	//TypeLua getBoundLua() const;
+	//TypeLua getFrameLua() const;
 
-	Rectanglef const& getFrame() const {return mFrame;};
-	Rectanglef getBound() const;
+	Wm4::Rectanglef const& getFrame() const {return mFrame;};
+	Wm4::Rectanglef getBound() const;
 
-	static Sprite* createSprite(Scene2DNode *, TypeLua const&);
+	//static Sprite* createSprite(Scene2DNode *, TypeLua const&);
 
+#if 0
 	template<class Applier, class TE>
 	AnimationState*	animation( SpriteAnimation* sa ){
 		typedef ConcreteAnimationState<Applier, SpriteValue, TE> CAS;
@@ -133,10 +125,12 @@ public:
 		as->autorelease();
 		return as;
 	}
+#endif
 };
 
-TYPE_RET_DYN(Sprite);
+//TYPE_RET_DYN(Sprite);
 
+#if 0
 class Sprite::SpriteApplier{
 private:
 	Sprite	*mSprite;
@@ -192,7 +186,7 @@ public:
 	SpriteAnimation(TypeLua const& lua);
 
 };
-
+#endif
 
 _CHAOS_END
 

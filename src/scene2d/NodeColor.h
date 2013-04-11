@@ -16,9 +16,6 @@
 _CHAOS_BEGIN
 
 class Scene2DNode;
-class AnimationState;
-template<class, class, class> class NumericAnimationState;
-template<class> class NumericAnimation;
 
 /*
 * Definition ext:
@@ -50,13 +47,14 @@ public:
 	void setColor(float r, float g, float b, float a);
 	void updateColor();
 
+    /*
 	template<class Applier, class TE>
 	AnimationState*	animation( NumericAnimation<Wm4::ColorRGBA>* na ){
 		typedef NumericAnimationState<Applier, Wm4::ColorRGBA, TE> NAS;
 		NAS* as = new NAS(na, Applier(this));
 		as->autorelease();
 		return as;
-	};
+	};*/
 
 	Scene2DNode* getNode() const { return mNode; };
 };

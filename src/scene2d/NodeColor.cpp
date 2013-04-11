@@ -1,21 +1,15 @@
-#include "2d/NodeColor.h"
-#include "script/lua.h"
-#include "script/bind.h"
-#include "anim/anim.h"
-#include "2d/Scene2DNode.h"
-#include "2d/NodeApplier.h"
+#include "NodeColor.h"
+#include "Scene2DNode.h"
 
 //using namespace chaos;
+using namespace Wm4;
 
+#if 0
 IMPLEMENT_CLASS(NodeColor, LIB_DOMAIN )
 IMPLEMENT_FUNC(set, (void (NodeColor::*) (float,float,float,float))&NodeColor::setColor)
 IMPLEMENT_FUNC(linearAnimation, (&NodeColor::animation<NodeColor::ColorApplier, LinearTiming>) )
 IMPLEMENT_FUNC(cubicAnimation, (&NodeColor::animation<NodeColor::ColorApplier, CubicTiming>) )
 IMPLEMENT_END;
-
-NodeColor::NodeColor(Scene2DNode* n) : mNode(n){
-	ASSERT( n != 0 );
-}
 
 NodeColor::NodeColor(Scene2DNode* n, TypeLua const& lua) : mNode(n){
 	ASSERT( n != 0 );
@@ -31,6 +25,11 @@ NodeColor::NodeColor(Scene2DNode* n, TypeLua const& lua) : mNode(n){
 	mLocalColor[3] = (float)lua_tonumber(L,-1);
 
 	lua_settop(L,top);
+}
+#endif
+
+NodeColor::NodeColor(Scene2DNode* n) : mNode(n){
+	ASSERT( n != 0 );
 }
 
 void NodeColor::updateColor(){

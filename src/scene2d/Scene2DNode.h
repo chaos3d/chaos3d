@@ -15,11 +15,11 @@
 #include "wm4-algebra/algebra.h"
 
 #include <string>
+#include <stack>
 
 _CHAOS_BEGIN
 
 class Scene2DManager;
-class AnimationState;
 class Sprite;
 class NodeUI;
 class NodeFrame;
@@ -29,18 +29,14 @@ class NodeColor;
 /*
 scene node
 */
+
+// TODO:
+// * component as a list of template variables
+// * copy create component
+// * manages the hierachy of the scene tree and update status for each component (dirty flag)
 class CHAOS_API Scene2DNode : public ReferencedCount{
 public:
 	friend class Scene2DManager;
-	/*
-	class TranslateApplier;
-	class RotateApplier;
-	class ScaleApplier;
-
-	friend class TransformApplier;
-	friend class RotationApplier;
-	friend class ScaleApplier;
-	*/
 
 	enum{	// dirty flag
 		D_CLEAR = 0,
@@ -139,7 +135,14 @@ public:
 	// arg has to be a Lua Table
 	//virtual void parseLua(TypeLua const&);
 
+    // TODO: copy construction for components
+    template<typename C>
+    C* create(C const& comp){
+        return NULL;
+    };
+    
 	// Transform
+    Transform*  createTransform(Transform const&);
 	void		setTransform(Transform*);
 	Transform*	getTransform() const { return mTransform; };
 
@@ -166,7 +169,7 @@ public:
 	void		moveBottom();
 	void		moveAfterward(Scene2DNode*);
 	void		removeWhenDone(void *);
-	iterator	getChildren() const { return iterator(mFirstChild); };
+	iterator	childIterator() const { return iterator(mFirstChild); };
 
 	//void		addChildren( TypeLua const& lua, Scene2DNode* after = 0 );
 	//void		removeChildren( TypeLua const& lua ); // this can be easily done by removeSelf
@@ -184,7 +187,10 @@ public:
 	Scene2DNode*&	firstChild() { return mFirstChild; };
 	Scene2DNode*&	nextSibling() { return mNextSibling; };
 	Scene2DNode*&	preSibling() { return mPreSibling; };
-	
+
+	// pre-order transverse taking the current node as root
+	template<class Visitor> void visit(Visitor&);
+    
 	// Rendering
 	void		setSprite(Sprite*);
 	Sprite*		getSprite() const { return mSprite; };
@@ -282,6 +288,31 @@ void Scene2DNode::sort(F const& less){
 	}
 }
 
+template<class Visitor>
+void Scene2DNode::visit(Visitor& visitor) {
+    std::stack<Scene2DNode*> nodes;
+	nodes.push( this );
+    
+	Scene2DNode* node = nodes.top();
+    
+	do{
+		visitor( node );
+        
+		nodes.pop();
+		if( node->nextSibling() != 0 )
+			nodes.push( node->nextSibling() );
+            
+        if( node->firstChild() != 0 )
+            nodes.push( node->firstChild() );
+            
+        if( nodes.empty() )
+            break;
+        else
+            node = nodes.top();
+        
+    }while(1);
+}
+    
 _CHAOS_END
 
 #endif

@@ -1,12 +1,12 @@
-#include "2d/NodeFrame.h"
-#include "2d/Transform.h"
-#include "2d/Scene2DNode.h"
-#include "2d/Sprite.h"
-#include "script/lua.h"
-#include "script/bind.h"
+#include "NodeFrame.h"
+#include "Scene2DNode.h"
+#include "Sprite.h"
+#include "Transform.h"
 
+using namespace Wm4;
 //using namespace chaos;
 
+#if 0
 IMPLEMENT_CLASS(NodeFrame, LIB_DOMAIN)
 IMPLEMENT_FUNC(intersect, &NodeFrame::intersect)
 IMPLEMENT_FUNC(test, &NodeFrame::test)
@@ -27,6 +27,7 @@ NodeFrame::NodeFrame(Scene2DNode* n, TypeLua const& lua) : mNode(n){
 
 	lua_settop(L,top);
 }
+#endif
 
 void NodeFrame::setFrame(float x, float y, float hW, float hH ){
 	mCenter[0] = x;

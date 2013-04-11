@@ -10,7 +10,7 @@
 #ifndef	_CHAOS_NODEFRAMEGLOBAL_H
 #define	_CHAOS_NODEFRAMEGLOBAL_H
 
-#include "chaos_config.h"
+#include "common/common.h"
 #include "NodeFrame.h"
 
 _CHAOS_BEGIN
@@ -18,8 +18,8 @@ _CHAOS_BEGIN
 class NodeFrameGlobal : public NodeFrame{
 public:
 	NodeFrameGlobal(Scene2DNode *n) : NodeFrame(n){};
-	NodeFrameGlobal(Scene2DNode *n, TypeLua const& lua) : NodeFrame(n,lua){};
-	virtual Scene2DNode* pick( Vector3f const& p, Vector3f const& d, Vector3f& q, int& ret);
+	//NodeFrameGlobal(Scene2DNode *n, TypeLua const& lua) : NodeFrame(n,lua){};
+	virtual Scene2DNode* pick( Wm4::Vector3f const& p, Wm4::Vector3f const& d, Wm4::Vector3f& q, int& ret);
 };
 
 _CHAOS_END

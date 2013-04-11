@@ -1,16 +1,16 @@
-#include "2d/NodeUI.h"
-#include "2d/Scene2DManager.h"
-#include "2d/Scene2DNode.h"
-#include "script/bind.h"
-#include "script/lua.h"
-#include "2d/uielements.h"
-#include "2d/NodeComponent.h"
+#include "NodeUI.h"
+#include "Scene2DManager.h"
+#include "Scene2DNode.h"
+
+#include "uielements.h"
 
 #include <cstring>
 
 //using namespace chaos;
 using namespace ui;
+using namespace Wm4;
 
+#if 0
 IMPLEMENT_CLASS(NodeUI, LIB_DOMAIN)
 IMPLEMENT_PROP(handler, &NodeUI::setHandler, &NodeUI::getHandler)
 IMPLEMENT_PROP(event, &NodeUI::setEventScpt, &NodeUI::getEventScpt)
@@ -18,6 +18,7 @@ IMPLEMENT_PROP(enabled, &NodeUI::setEnabled, &NodeUI::getEnabled)
 IMPLEMENT_FUNC(intersect, &NodeUI::intersect)
 IMPLEMENT_FUNC(test, &NodeUI::test)
 IMPLEMENT_END;
+#endif
 
 ScriptState* NodeUI::sRunningState(0);
 

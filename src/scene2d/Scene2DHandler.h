@@ -10,9 +10,9 @@
 #ifndef	_CHAOS_SCENE2DHANDLER_H
 #define	_CHAOS_SCENE2DHANDLER_H
 
-#include "chaos_config.h"
-#include "core/core.h"
-#include "event/evt.h"
+#include "common/common.h"
+#include "event/EventHandler.h"
+#include "event/Event.h"
 #include <map>
 
 _CHAOS_BEGIN

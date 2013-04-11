@@ -7,35 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		882D74FC17167851002E1BBD /* Scene2DNode-Animation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D74FA17167851002E1BBD /* Scene2DNode-Animation.cpp */; };
 		88B24CF6170EC86800F7C2CC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88B24CF5170EC86800F7C2CC /* Foundation.framework */; };
-		88B24D59170ECB9900F7C2CC /* CameraNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88B24D04170ECB9900F7C2CC /* CameraNode.cpp */; };
-		88B24D5B170ECB9900F7C2CC /* DrawingUtil-iPhone.mm in Sources */ = {isa = PBXBuildFile; fileRef = 88B24D08170ECB9900F7C2CC /* DrawingUtil-iPhone.mm */; };
-		88B24D5C170ECB9900F7C2CC /* DrawingUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88B24D09170ECB9900F7C2CC /* DrawingUtil.cpp */; };
-		88B24D5D170ECB9900F7C2CC /* EventUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88B24D0B170ECB9900F7C2CC /* EventUI.cpp */; };
 		88B24D60170ECB9900F7C2CC /* NodeColor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88B24D14170ECB9900F7C2CC /* NodeColor.cpp */; };
-		88B24D61170ECB9900F7C2CC /* NodeComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88B24D16170ECB9900F7C2CC /* NodeComponent.cpp */; };
 		88B24D62170ECB9900F7C2CC /* NodeFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88B24D18170ECB9900F7C2CC /* NodeFrame.cpp */; };
 		88B24D63170ECB9900F7C2CC /* NodeFrameGlobal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88B24D1A170ECB9900F7C2CC /* NodeFrameGlobal.cpp */; };
-		88B24D64170ECB9900F7C2CC /* NodeUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88B24D1C170ECB9900F7C2CC /* NodeUI.cpp */; };
-		88B24D68170ECB9900F7C2CC /* PptCameraNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88B24D24170ECB9900F7C2CC /* PptCameraNode.cpp */; };
-		88B24D6E170ECB9900F7C2CC /* Scene2DHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88B24D38170ECB9900F7C2CC /* Scene2DHandler.cpp */; };
-		88B24D6F170ECB9900F7C2CC /* Scene2DManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88B24D3A170ECB9900F7C2CC /* Scene2DManager.cpp */; };
 		88B24D70170ECB9900F7C2CC /* Scene2DNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88B24D3C170ECB9900F7C2CC /* Scene2DNode.cpp */; };
-		88B24D71170ECB9900F7C2CC /* Scene2DNodeFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88B24D3E170ECB9900F7C2CC /* Scene2DNodeFactory.cpp */; };
 		88B24D76170ECB9900F7C2CC /* Transform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88B24D48170ECB9900F7C2CC /* Transform.cpp */; };
-		88B24D77170ECB9900F7C2CC /* UICheckBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88B24D4A170ECB9900F7C2CC /* UICheckBox.cpp */; };
-		88B24D78170ECB9900F7C2CC /* UIClick.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88B24D4C170ECB9900F7C2CC /* UIClick.cpp */; };
-		88B24D79170ECB9900F7C2CC /* UICounter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88B24D4E170ECB9900F7C2CC /* UICounter.cpp */; };
-		88B24D7A170ECB9900F7C2CC /* UIProgress.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88B24D51170ECB9900F7C2CC /* UIProgress.cpp */; };
-		88B24D7B170ECB9900F7C2CC /* UIRating.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88B24D53170ECB9900F7C2CC /* UIRating.cpp */; };
-		88B24D90171028D100F7C2CC /* MapTiledSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88B24D7F171028D100F7C2CC /* MapTiledSprite.cpp */; };
-		88B24D91171028D100F7C2CC /* MultiSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88B24D81171028D100F7C2CC /* MultiSprite.cpp */; };
-		88B24D92171028D100F7C2CC /* PartialCircleSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88B24D83171028D100F7C2CC /* PartialCircleSprite.cpp */; };
-		88B24D93171028D100F7C2CC /* PartialRevSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88B24D85171028D100F7C2CC /* PartialRevSprite.cpp */; };
-		88B24D94171028D100F7C2CC /* PartialSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88B24D87171028D100F7C2CC /* PartialSprite.cpp */; };
-		88B24D95171028D100F7C2CC /* PSSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88B24D89171028D100F7C2CC /* PSSprite.cpp */; };
-		88B24D96171028D100F7C2CC /* Sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88B24D8C171028D100F7C2CC /* Sprite.cpp */; };
-		88B24D97171028D100F7C2CC /* TiledSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88B24D8E171028D100F7C2CC /* TiledSprite.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -51,6 +29,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		882D74FA17167851002E1BBD /* Scene2DNode-Animation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "Scene2DNode-Animation.cpp"; path = "../../src/scene2d/Scene2DNode-Animation.cpp"; sourceTree = "<group>"; };
+		882D74FB17167851002E1BBD /* Scene2DNode-Animation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Scene2DNode-Animation.h"; path = "../../src/scene2d/Scene2DNode-Animation.h"; sourceTree = "<group>"; };
 		88B24CF2170EC86800F7C2CC /* libscene2d.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libscene2d.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		88B24CF5170EC86800F7C2CC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		88B24D04170ECB9900F7C2CC /* CameraNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CameraNode.cpp; path = ../../src/scene2d/CameraNode.cpp; sourceTree = "<group>"; };
@@ -128,11 +108,44 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		882D74F9171676C4002E1BBD /* anim */ = {
+			isa = PBXGroup;
+			children = (
+				882D74FA17167851002E1BBD /* Scene2DNode-Animation.cpp */,
+				882D74FB17167851002E1BBD /* Scene2DNode-Animation.h */,
+			);
+			name = anim;
+			sourceTree = "<group>";
+		};
+		882D74FD171684F5002E1BBD /* ui */ = {
+			isa = PBXGroup;
+			children = (
+				88B24D0B170ECB9900F7C2CC /* EventUI.cpp */,
+				88B24D0C170ECB9900F7C2CC /* EventUI.h */,
+				88B24D1C170ECB9900F7C2CC /* NodeUI.cpp */,
+				88B24D1D170ECB9900F7C2CC /* NodeUI.h */,
+				88B24D4A170ECB9900F7C2CC /* UICheckBox.cpp */,
+				88B24D4B170ECB9900F7C2CC /* UICheckBox.h */,
+				88B24D4C170ECB9900F7C2CC /* UIClick.cpp */,
+				88B24D4D170ECB9900F7C2CC /* UIClick.h */,
+				88B24D4E170ECB9900F7C2CC /* UICounter.cpp */,
+				88B24D4F170ECB9900F7C2CC /* UICounter.h */,
+				88B24D50170ECB9900F7C2CC /* uielements.h */,
+				88B24D51170ECB9900F7C2CC /* UIProgress.cpp */,
+				88B24D52170ECB9900F7C2CC /* UIProgress.h */,
+				88B24D53170ECB9900F7C2CC /* UIRating.cpp */,
+				88B24D54170ECB9900F7C2CC /* UIRating.h */,
+			);
+			name = ui;
+			sourceTree = "<group>";
+		};
 		88B24CE9170EC86800F7C2CC = {
 			isa = PBXGroup;
 			children = (
 				88B24D7E171028D100F7C2CC /* sprite2d */,
+				882D74FD171684F5002E1BBD /* ui */,
 				88B24D03170ECA6C00F7C2CC /* src */,
+				882D74F9171676C4002E1BBD /* anim */,
 				88B24CF4170EC86800F7C2CC /* Frameworks */,
 				88B24CF3170EC86800F7C2CC /* Products */,
 			);
@@ -162,8 +175,6 @@
 				88B24D08170ECB9900F7C2CC /* DrawingUtil-iPhone.mm */,
 				88B24D09170ECB9900F7C2CC /* DrawingUtil.cpp */,
 				88B24D0A170ECB9900F7C2CC /* DrawingUtil.h */,
-				88B24D0B170ECB9900F7C2CC /* EventUI.cpp */,
-				88B24D0C170ECB9900F7C2CC /* EventUI.h */,
 				88B24D0D170ECB9900F7C2CC /* game2d.h */,
 				88B24D13170ECB9900F7C2CC /* NodeApplier.h */,
 				88B24D14170ECB9900F7C2CC /* NodeColor.cpp */,
@@ -174,8 +185,6 @@
 				88B24D19170ECB9900F7C2CC /* NodeFrame.h */,
 				88B24D1A170ECB9900F7C2CC /* NodeFrameGlobal.cpp */,
 				88B24D1B170ECB9900F7C2CC /* NodeFrameGlobal.h */,
-				88B24D1C170ECB9900F7C2CC /* NodeUI.cpp */,
-				88B24D1D170ECB9900F7C2CC /* NodeUI.h */,
 				88B24D24170ECB9900F7C2CC /* PptCameraNode.cpp */,
 				88B24D25170ECB9900F7C2CC /* PptCameraNode.h */,
 				88B24D26170ECB9900F7C2CC /* ps2d.h */,
@@ -191,17 +200,6 @@
 				88B24D3F170ECB9900F7C2CC /* SceneVisitor.h */,
 				88B24D48170ECB9900F7C2CC /* Transform.cpp */,
 				88B24D49170ECB9900F7C2CC /* Transform.h */,
-				88B24D4A170ECB9900F7C2CC /* UICheckBox.cpp */,
-				88B24D4B170ECB9900F7C2CC /* UICheckBox.h */,
-				88B24D4C170ECB9900F7C2CC /* UIClick.cpp */,
-				88B24D4D170ECB9900F7C2CC /* UIClick.h */,
-				88B24D4E170ECB9900F7C2CC /* UICounter.cpp */,
-				88B24D4F170ECB9900F7C2CC /* UICounter.h */,
-				88B24D50170ECB9900F7C2CC /* uielements.h */,
-				88B24D51170ECB9900F7C2CC /* UIProgress.cpp */,
-				88B24D52170ECB9900F7C2CC /* UIProgress.h */,
-				88B24D53170ECB9900F7C2CC /* UIRating.cpp */,
-				88B24D54170ECB9900F7C2CC /* UIRating.h */,
 			);
 			name = src;
 			sourceTree = "<group>";
@@ -281,34 +279,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				88B24D59170ECB9900F7C2CC /* CameraNode.cpp in Sources */,
-				88B24D5B170ECB9900F7C2CC /* DrawingUtil-iPhone.mm in Sources */,
-				88B24D5C170ECB9900F7C2CC /* DrawingUtil.cpp in Sources */,
-				88B24D5D170ECB9900F7C2CC /* EventUI.cpp in Sources */,
 				88B24D60170ECB9900F7C2CC /* NodeColor.cpp in Sources */,
-				88B24D61170ECB9900F7C2CC /* NodeComponent.cpp in Sources */,
 				88B24D62170ECB9900F7C2CC /* NodeFrame.cpp in Sources */,
 				88B24D63170ECB9900F7C2CC /* NodeFrameGlobal.cpp in Sources */,
-				88B24D64170ECB9900F7C2CC /* NodeUI.cpp in Sources */,
-				88B24D68170ECB9900F7C2CC /* PptCameraNode.cpp in Sources */,
-				88B24D6E170ECB9900F7C2CC /* Scene2DHandler.cpp in Sources */,
-				88B24D6F170ECB9900F7C2CC /* Scene2DManager.cpp in Sources */,
 				88B24D70170ECB9900F7C2CC /* Scene2DNode.cpp in Sources */,
-				88B24D71170ECB9900F7C2CC /* Scene2DNodeFactory.cpp in Sources */,
 				88B24D76170ECB9900F7C2CC /* Transform.cpp in Sources */,
-				88B24D77170ECB9900F7C2CC /* UICheckBox.cpp in Sources */,
-				88B24D78170ECB9900F7C2CC /* UIClick.cpp in Sources */,
-				88B24D79170ECB9900F7C2CC /* UICounter.cpp in Sources */,
-				88B24D7A170ECB9900F7C2CC /* UIProgress.cpp in Sources */,
-				88B24D7B170ECB9900F7C2CC /* UIRating.cpp in Sources */,
-				88B24D90171028D100F7C2CC /* MapTiledSprite.cpp in Sources */,
-				88B24D91171028D100F7C2CC /* MultiSprite.cpp in Sources */,
-				88B24D92171028D100F7C2CC /* PartialCircleSprite.cpp in Sources */,
-				88B24D93171028D100F7C2CC /* PartialRevSprite.cpp in Sources */,
-				88B24D94171028D100F7C2CC /* PartialSprite.cpp in Sources */,
-				88B24D95171028D100F7C2CC /* PSSprite.cpp in Sources */,
-				88B24D96171028D100F7C2CC /* Sprite.cpp in Sources */,
-				88B24D97171028D100F7C2CC /* TiledSprite.cpp in Sources */,
+				882D74FC17167851002E1BBD /* Scene2DNode-Animation.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

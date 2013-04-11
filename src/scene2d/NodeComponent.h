@@ -10,49 +10,26 @@
 #ifndef	_CHAOS_NODECOMPONENT_H
 #define	_CHAOS_NODECOMPONENT_H
 
-#include "chaos_config.h"
-#include "core/RTTI.h"
-#include "script/LuaFactory.h"
+#include "common/common.h"
 
 _CHAOS_BEGIN
 
-class Scene2DNode;
-
-DECLARE_CLASS(NodeComponent, NilParent);
-class NodeComponent{
-	//DYNAMIC_CLASS;
-protected:
-	Scene2DNode* const	mNode;
-
-	virtual void parseElement(lua_State* L){
-	};
-
-public:
-	virtual ~NodeComponent(){};
-	NodeComponent(Scene2DNode* n) : mNode(n){
-		ASSERT(mNode != 0 );
-	};
-
-	Scene2DNode* getNode() const{ return mNode; }
-};
-
-class NodeFactory : public LuaObjectFactory{
-public:
-	virtual ~NodeFactory(){}
-	virtual NodeComponent*	createNodeObject(Scene2DNode*) = 0;
-
-	virtual void	destroyLuaObject( void* obj ){};
-	virtual	void*	createLuaObject( lua_State* L) { return 0; };
-};
-
-template<class N>
-class GenericNodeFactory : public NodeFactory{
-public:
-	virtual NodeComponent*	createNodeObject(Scene2DNode* n){
-		return new N(n);
-	};
-};
-
+namespace scene2d {
+    // component traits
+    template <class C>
+    struct has_clear_flag {
+        struct result_ {
+            enum { value = false; }
+        };
+    };
+    
+    template <class C>
+    struct needs_update {
+        struct result_ {
+            enum { value = false; }
+        };        
+    };
+}
 
 _CHAOS_END
 

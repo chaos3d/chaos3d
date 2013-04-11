@@ -1,6 +1,7 @@
-#include "2d/NodeFrameGlobal.h"
-#include "2d/Scene2DNode.h"
+#include "NodeFrameGlobal.h"
+#include "Scene2DNode.h"
 
+using namespace Wm4;
 //using namespace chaos;
 
 Scene2DNode* NodeFrameGlobal::pick( Vector3f const& p, Vector3f const& d, Vector3f& q, int& ret){
