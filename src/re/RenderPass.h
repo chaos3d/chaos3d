@@ -5,7 +5,7 @@
 
 #include "common/common.h"
 #include "common/ReferencedCount.h"
-#include "wm4-algebra/Vector3.h"
+#include "wm4-algebra/algebra.h"
 #include "RenderTarget.h"
 #include "RenderQueue.h"
 
@@ -17,7 +17,7 @@ struct Viewport{
 
 class RenderPass : public ReferencedCount{
 public:
-	typedef Vector3f ClearColor;
+	typedef Wm4::ColorRGBA ClearColor;
 	enum {
 		COLOR = 0x1,
 		DEPTH = 0x2,

@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		882D74FC17167851002E1BBD /* Scene2DNode-Animation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D74FA17167851002E1BBD /* Scene2DNode-Animation.cpp */; };
+		882D75011716A109002E1BBD /* Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D74FF1716A109002E1BBD /* Camera.cpp */; };
+		882D75041716A134002E1BBD /* Scene2DRoot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D75021716A133002E1BBD /* Scene2DRoot.cpp */; };
+		882D75071716A44F002E1BBD /* PptCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D75051716A44F002E1BBD /* PptCamera.cpp */; };
 		88B24CF6170EC86800F7C2CC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88B24CF5170EC86800F7C2CC /* Foundation.framework */; };
 		88B24D60170ECB9900F7C2CC /* NodeColor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88B24D14170ECB9900F7C2CC /* NodeColor.cpp */; };
 		88B24D62170ECB9900F7C2CC /* NodeFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88B24D18170ECB9900F7C2CC /* NodeFrame.cpp */; };
@@ -31,13 +34,16 @@
 /* Begin PBXFileReference section */
 		882D74FA17167851002E1BBD /* Scene2DNode-Animation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "Scene2DNode-Animation.cpp"; path = "../../src/scene2d/Scene2DNode-Animation.cpp"; sourceTree = "<group>"; };
 		882D74FB17167851002E1BBD /* Scene2DNode-Animation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Scene2DNode-Animation.h"; path = "../../src/scene2d/Scene2DNode-Animation.h"; sourceTree = "<group>"; };
+		882D74FF1716A109002E1BBD /* Camera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Camera.cpp; path = ../../src/scene2d/Camera.cpp; sourceTree = "<group>"; };
+		882D75001716A109002E1BBD /* Camera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Camera.h; path = ../../src/scene2d/Camera.h; sourceTree = "<group>"; };
+		882D75021716A133002E1BBD /* Scene2DRoot.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Scene2DRoot.cpp; path = ../../src/scene2d/Scene2DRoot.cpp; sourceTree = "<group>"; };
+		882D75031716A134002E1BBD /* Scene2DRoot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Scene2DRoot.h; path = ../../src/scene2d/Scene2DRoot.h; sourceTree = "<group>"; };
+		882D75051716A44F002E1BBD /* PptCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PptCamera.cpp; path = ../../src/scene2d/PptCamera.cpp; sourceTree = "<group>"; };
+		882D75061716A44F002E1BBD /* PptCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PptCamera.h; path = ../../src/scene2d/PptCamera.h; sourceTree = "<group>"; };
 		88B24CF2170EC86800F7C2CC /* libscene2d.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libscene2d.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		88B24CF5170EC86800F7C2CC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		88B24D04170ECB9900F7C2CC /* CameraNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CameraNode.cpp; path = ../../src/scene2d/CameraNode.cpp; sourceTree = "<group>"; };
 		88B24D05170ECB9900F7C2CC /* CameraNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CameraNode.h; path = ../../src/scene2d/CameraNode.h; sourceTree = "<group>"; };
-		88B24D08170ECB9900F7C2CC /* DrawingUtil-iPhone.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "DrawingUtil-iPhone.mm"; path = "../../src/scene2d/DrawingUtil-iPhone.mm"; sourceTree = "<group>"; };
-		88B24D09170ECB9900F7C2CC /* DrawingUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DrawingUtil.cpp; path = ../../src/scene2d/DrawingUtil.cpp; sourceTree = "<group>"; };
-		88B24D0A170ECB9900F7C2CC /* DrawingUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DrawingUtil.h; path = ../../src/scene2d/DrawingUtil.h; sourceTree = "<group>"; };
 		88B24D0B170ECB9900F7C2CC /* EventUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = EventUI.cpp; path = ../../src/scene2d/EventUI.cpp; sourceTree = "<group>"; };
 		88B24D0C170ECB9900F7C2CC /* EventUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EventUI.h; path = ../../src/scene2d/EventUI.h; sourceTree = "<group>"; };
 		88B24D0D170ECB9900F7C2CC /* game2d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = game2d.h; path = ../../src/scene2d/game2d.h; sourceTree = "<group>"; };
@@ -139,9 +145,21 @@
 			name = ui;
 			sourceTree = "<group>";
 		};
+		882D74FE1716A0E7002E1BBD /* render */ = {
+			isa = PBXGroup;
+			children = (
+				882D75051716A44F002E1BBD /* PptCamera.cpp */,
+				882D75061716A44F002E1BBD /* PptCamera.h */,
+				882D74FF1716A109002E1BBD /* Camera.cpp */,
+				882D75001716A109002E1BBD /* Camera.h */,
+			);
+			name = render;
+			sourceTree = "<group>";
+		};
 		88B24CE9170EC86800F7C2CC = {
 			isa = PBXGroup;
 			children = (
+				882D74FE1716A0E7002E1BBD /* render */,
 				88B24D7E171028D100F7C2CC /* sprite2d */,
 				882D74FD171684F5002E1BBD /* ui */,
 				88B24D03170ECA6C00F7C2CC /* src */,
@@ -172,9 +190,6 @@
 			children = (
 				88B24D04170ECB9900F7C2CC /* CameraNode.cpp */,
 				88B24D05170ECB9900F7C2CC /* CameraNode.h */,
-				88B24D08170ECB9900F7C2CC /* DrawingUtil-iPhone.mm */,
-				88B24D09170ECB9900F7C2CC /* DrawingUtil.cpp */,
-				88B24D0A170ECB9900F7C2CC /* DrawingUtil.h */,
 				88B24D0D170ECB9900F7C2CC /* game2d.h */,
 				88B24D13170ECB9900F7C2CC /* NodeApplier.h */,
 				88B24D14170ECB9900F7C2CC /* NodeColor.cpp */,
@@ -197,6 +212,8 @@
 				88B24D3C170ECB9900F7C2CC /* Scene2DNode.cpp */,
 				88B24D3D170ECB9900F7C2CC /* Scene2DNode.h */,
 				88B24D3E170ECB9900F7C2CC /* Scene2DNodeFactory.cpp */,
+				882D75021716A133002E1BBD /* Scene2DRoot.cpp */,
+				882D75031716A134002E1BBD /* Scene2DRoot.h */,
 				88B24D3F170ECB9900F7C2CC /* SceneVisitor.h */,
 				88B24D48170ECB9900F7C2CC /* Transform.cpp */,
 				88B24D49170ECB9900F7C2CC /* Transform.h */,
@@ -285,6 +302,9 @@
 				88B24D70170ECB9900F7C2CC /* Scene2DNode.cpp in Sources */,
 				88B24D76170ECB9900F7C2CC /* Transform.cpp in Sources */,
 				882D74FC17167851002E1BBD /* Scene2DNode-Animation.cpp in Sources */,
+				882D75011716A109002E1BBD /* Camera.cpp in Sources */,
+				882D75041716A134002E1BBD /* Scene2DRoot.cpp in Sources */,
+				882D75071716A44F002E1BBD /* PptCamera.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

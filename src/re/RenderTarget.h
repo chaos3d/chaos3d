@@ -1,6 +1,6 @@
 class RenderTarget {
 public:
-	typedef Vector2f Size;
+	typedef Wm4::Vector2f Size;
 	enum {
 		Format565,
 		Format8888,
