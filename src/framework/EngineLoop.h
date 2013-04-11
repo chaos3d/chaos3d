@@ -17,15 +17,16 @@ public:
     
     EngineLoop(Config const&);
     
-	EventHandler* getHandler();
+	//EventHandler* getHandler();
 	virtual bool startUp();
 	virtual bool tearDown();
 	virtual void collect();
 	virtual bool loop();
     
 protected:
-    AnimationManager* _animManager;
-    EventHandler* _handler;     // for engine-level events: resume/suspend/crash
+    class Internal;
+    
+    Internal* _internal;
 };
 
 _CHAOS_END

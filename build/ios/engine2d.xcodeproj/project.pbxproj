@@ -76,6 +76,7 @@
 		882D75421716AB9C002E1BBD /* lyield.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 882D75101716AB7F002E1BBD /* lyield.framework */; };
 		882D75431716ABA5002E1BBD /* luajit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 882D750F1716AB7F002E1BBD /* luajit.framework */; };
 		882D75441716ABA7002E1BBD /* lua.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 882D750E1716AB7F002E1BBD /* lua.framework */; };
+		882D75A11716BD30002E1BBD /* EngineLoop.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D75A01716BD30002E1BBD /* EngineLoop.cpp */; };
 		88B24DA51711FBF400F7C2CC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88B24DA41711FBF400F7C2CC /* Foundation.framework */; };
 /* End PBXBuildFile section */
 
@@ -250,6 +251,7 @@
 		882D750F1716AB7F002E1BBD /* luajit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = luajit.framework; path = ../../dependency/ios/luajit.framework; sourceTree = "<group>"; };
 		882D75101716AB7F002E1BBD /* lyield.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = lyield.framework; path = ../../dependency/ios/lyield.framework; sourceTree = "<group>"; };
 		882D753E1716AB88002E1BBD /* libengine2d-jit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libengine2d-jit.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		882D75A01716BD30002E1BBD /* EngineLoop.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EngineLoop.cpp; sourceTree = "<group>"; };
 		88B24DA11711FBF400F7C2CC /* libengine2d.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libengine2d.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		88B24DA41711FBF400F7C2CC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		88B24DB217120F1C00F7C2CC /* scene2d.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = scene2d.xcodeproj; sourceTree = SOURCE_ROOT; };
@@ -465,6 +467,7 @@
 				882D75091716AB14002E1BBD /* AutoreleasePool.cpp */,
 				882D750A1716AB14002E1BBD /* AutoreleasePool.h */,
 				882D750B1716AB14002E1BBD /* EngineLoop.h */,
+				882D75A01716BD30002E1BBD /* EngineLoop.cpp */,
 			);
 			name = framework;
 			path = ../../src/framework;
@@ -679,6 +682,7 @@
 				882D74F6171285A9002E1BBD /* Serialization.cpp in Sources */,
 				882D74F7171285A9002E1BBD /* StreamLocator.cpp in Sources */,
 				882D750C1716AB14002E1BBD /* AutoreleasePool.cpp in Sources */,
+				882D75A11716BD30002E1BBD /* EngineLoop.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -769,6 +773,10 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					../../src,
+					../../external,
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -791,6 +799,10 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					../../src,
+					../../external,
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;

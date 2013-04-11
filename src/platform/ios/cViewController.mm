@@ -7,10 +7,11 @@
 //
 
 #import "cViewController.h"
-#include "lyield/lyield.h"
-#include "lua/lua.h"
+#include "framework/EngineLoop.h"
 
-@interface cViewController ()
+@interface cViewController (){
+    EngineLoop* _engineLoop;
+}
 
 @end
 
@@ -50,7 +51,7 @@
 }
 
 - (void) frameLoop: (id) _ {
-    lua_cpcall(NULL, lyield_run, NULL);
+    _engineLoop->loop();
 }
 
 @end

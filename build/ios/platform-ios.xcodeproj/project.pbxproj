@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		881D4D681702E492007299A2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 881D4D671702E492007299A2 /* Foundation.framework */; };
 		881D4D761702EB41007299A2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 881D4D751702EB41007299A2 /* UIKit.framework */; };
-		881D4D791702EB6E007299A2 /* cViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 881D4D781702EB6E007299A2 /* cViewController.m */; };
+		881D4D791702EB6E007299A2 /* cViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 881D4D781702EB6E007299A2 /* cViewController.mm */; };
 		881D4DB517043C43007299A2 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 881D4DB417043C43007299A2 /* GLKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		882D75471716B0C4002E1BBD /* cAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 882D75461716B0C4002E1BBD /* cAppDelegate.m */; };
 /* End PBXBuildFile section */
@@ -31,7 +31,7 @@
 		881D4D671702E492007299A2 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		881D4D751702EB41007299A2 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		881D4D771702EB6E007299A2 /* cViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cViewController.h; sourceTree = "<group>"; };
-		881D4D781702EB6E007299A2 /* cViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = cViewController.m; sourceTree = "<group>"; };
+		881D4D781702EB6E007299A2 /* cViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = cViewController.mm; sourceTree = "<group>"; };
 		881D4DB417043C43007299A2 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		882D75451716B0C4002E1BBD /* cAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cAppDelegate.h; sourceTree = "<group>"; };
 		882D75461716B0C4002E1BBD /* cAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = cAppDelegate.m; sourceTree = "<group>"; };
@@ -83,7 +83,7 @@
 			isa = PBXGroup;
 			children = (
 				881D4D771702EB6E007299A2 /* cViewController.h */,
-				881D4D781702EB6E007299A2 /* cViewController.m */,
+				881D4D781702EB6E007299A2 /* cViewController.mm */,
 				882D75451716B0C4002E1BBD /* cAppDelegate.h */,
 				882D75461716B0C4002E1BBD /* cAppDelegate.m */,
 			);
@@ -149,7 +149,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				881D4D791702EB6E007299A2 /* cViewController.m in Sources */,
+				881D4D791702EB6E007299A2 /* cViewController.mm in Sources */,
 				882D75471716B0C4002E1BBD /* cAppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
