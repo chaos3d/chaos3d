@@ -17,6 +17,10 @@
 
 @implementation cViewController
 
+- (void) dealloc{
+    [super dealloc];
+}
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -42,6 +46,12 @@
 	// Do any additional setup after loading the view.
     
     // TODO: open lua state
+    if(_engineLoop == nullptr){
+        EngineLoop::Config config;
+        config.bootstrap = std::string([self.boostrap UTF8String]);
+        
+        _engineLoop = new EngineLoop(config);
+    }
 }
 
 - (void)didReceiveMemoryWarning

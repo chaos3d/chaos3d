@@ -19,5 +19,9 @@
     // TODO: support <5.0 later
     UIViewController
 #endif
+{
+}
+
+@property (copy) NSString* boostrap;
 
 @end
