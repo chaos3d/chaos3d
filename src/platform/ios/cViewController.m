@@ -7,6 +7,8 @@
 //
 
 #import "cViewController.h"
+#include "lyield/lyield.h"
+#include "lua/lua.h"
 
 @interface cViewController ()
 
@@ -37,12 +39,18 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    
+    // TODO: open lua state
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void) frameLoop: (id) _ {
+    lua_cpcall(NULL, lyield_run, NULL);
 }
 
 @end

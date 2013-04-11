@@ -22,6 +22,9 @@ public:
 	// Color
 	static AnimationState* colorTo(Scene2DNode*, Wm4::ColorRGBA const&);
 	
+    // Sprite
+	static AnimationState* sprite(Scene2DNode*);
+    
 	// others?
 };
 

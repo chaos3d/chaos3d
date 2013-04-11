@@ -1,0 +1,453 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		882D75551716B302002E1BBD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 882D75541716B302002E1BBD /* UIKit.framework */; };
+		882D75571716B302002E1BBD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 882D75561716B302002E1BBD /* Foundation.framework */; };
+		882D75591716B302002E1BBD /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 882D75581716B302002E1BBD /* CoreGraphics.framework */; };
+		882D755B1716B302002E1BBD /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 882D755A1716B302002E1BBD /* GLKit.framework */; };
+		882D755D1716B302002E1BBD /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 882D755C1716B302002E1BBD /* OpenGLES.framework */; };
+		882D75631716B302002E1BBD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 882D75611716B302002E1BBD /* InfoPlist.strings */; };
+		882D75651716B302002E1BBD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 882D75641716B302002E1BBD /* main.m */; };
+		882D756B1716B302002E1BBD /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 882D756A1716B302002E1BBD /* Default.png */; };
+		882D756D1716B302002E1BBD /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 882D756C1716B302002E1BBD /* Default@2x.png */; };
+		882D756F1716B302002E1BBD /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 882D756E1716B302002E1BBD /* Default-568h@2x.png */; };
+		882D75711716B302002E1BBD /* Shader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 882D75701716B302002E1BBD /* Shader.fsh */; };
+		882D75731716B302002E1BBD /* Shader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 882D75721716B302002E1BBD /* Shader.vsh */; };
+		882D75791716B302002E1BBD /* ViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 882D75771716B302002E1BBD /* ViewController_iPhone.xib */; };
+		882D757C1716B302002E1BBD /* ViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 882D757A1716B302002E1BBD /* ViewController_iPad.xib */; };
+		882D75991716B41B002E1BBD /* libengine2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 882D758D1716B3FC002E1BBD /* libengine2d.a */; };
+		882D759A1716B41B002E1BBD /* libplatform-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 882D75921716B3FC002E1BBD /* libplatform-ios.a */; };
+		882D759C1716B612002E1BBD /* bootstrap.lua in Resources */ = {isa = PBXBuildFile; fileRef = 882D759B1716B611002E1BBD /* bootstrap.lua */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		882D758C1716B3FC002E1BBD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 882D75871716B3FA002E1BBD /* engine2d.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 88B24DA11711FBF400F7C2CC;
+			remoteInfo = engine2d;
+		};
+		882D758E1716B3FC002E1BBD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 882D75871716B3FA002E1BBD /* engine2d.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 882D753E1716AB88002E1BBD;
+			remoteInfo = "engine2d-jit";
+		};
+		882D75911716B3FC002E1BBD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 882D75841716B3FA002E1BBD /* platform-ios.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 881D4D641702E492007299A2;
+			remoteInfo = "platform-ios";
+		};
+		882D75931716B40A002E1BBD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 882D75841716B3FA002E1BBD /* platform-ios.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 881D4D631702E492007299A2;
+			remoteInfo = "platform-ios";
+		};
+		882D75951716B40A002E1BBD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 882D75871716B3FA002E1BBD /* engine2d.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 88B24DA01711FBF400F7C2CC;
+			remoteInfo = engine2d;
+		};
+		882D75971716B40A002E1BBD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 882D75871716B3FA002E1BBD /* engine2d.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 882D75111716AB88002E1BBD;
+			remoteInfo = "engine2d-jit";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		882D75511716B302002E1BBD /* Minimalist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Minimalist.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		882D75541716B302002E1BBD /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		882D75561716B302002E1BBD /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		882D75581716B302002E1BBD /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		882D755A1716B302002E1BBD /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
+		882D755C1716B302002E1BBD /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		882D75601716B302002E1BBD /* Minimalist-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Minimalist-Info.plist"; sourceTree = "<group>"; };
+		882D75621716B302002E1BBD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		882D75641716B302002E1BBD /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		882D75661716B302002E1BBD /* Minimalist-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Minimalist-Prefix.pch"; sourceTree = "<group>"; };
+		882D756A1716B302002E1BBD /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		882D756C1716B302002E1BBD /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		882D756E1716B302002E1BBD /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		882D75701716B302002E1BBD /* Shader.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = Shader.fsh; path = Shaders/Shader.fsh; sourceTree = "<group>"; };
+		882D75721716B302002E1BBD /* Shader.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = Shader.vsh; path = Shaders/Shader.vsh; sourceTree = "<group>"; };
+		882D75781716B302002E1BBD /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController_iPhone.xib; sourceTree = "<group>"; };
+		882D757B1716B302002E1BBD /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController_iPad.xib; sourceTree = "<group>"; };
+		882D75841716B3FA002E1BBD /* platform-ios.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "platform-ios.xcodeproj"; path = "../../build/ios/platform-ios.xcodeproj"; sourceTree = "<group>"; };
+		882D75871716B3FA002E1BBD /* engine2d.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = engine2d.xcodeproj; path = ../../build/ios/engine2d.xcodeproj; sourceTree = "<group>"; };
+		882D759B1716B611002E1BBD /* bootstrap.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bootstrap.lua; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		882D754E1716B302002E1BBD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				882D75991716B41B002E1BBD /* libengine2d.a in Frameworks */,
+				882D759A1716B41B002E1BBD /* libplatform-ios.a in Frameworks */,
+				882D75551716B302002E1BBD /* UIKit.framework in Frameworks */,
+				882D75571716B302002E1BBD /* Foundation.framework in Frameworks */,
+				882D75591716B302002E1BBD /* CoreGraphics.framework in Frameworks */,
+				882D755B1716B302002E1BBD /* GLKit.framework in Frameworks */,
+				882D755D1716B302002E1BBD /* OpenGLES.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		882D75481716B302002E1BBD = {
+			isa = PBXGroup;
+			children = (
+				882D75841716B3FA002E1BBD /* platform-ios.xcodeproj */,
+				882D75871716B3FA002E1BBD /* engine2d.xcodeproj */,
+				882D755E1716B302002E1BBD /* Minimalist */,
+				882D75531716B302002E1BBD /* Frameworks */,
+				882D75521716B302002E1BBD /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		882D75521716B302002E1BBD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				882D75511716B302002E1BBD /* Minimalist.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		882D75531716B302002E1BBD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				882D75541716B302002E1BBD /* UIKit.framework */,
+				882D75561716B302002E1BBD /* Foundation.framework */,
+				882D75581716B302002E1BBD /* CoreGraphics.framework */,
+				882D755A1716B302002E1BBD /* GLKit.framework */,
+				882D755C1716B302002E1BBD /* OpenGLES.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		882D755E1716B302002E1BBD /* Minimalist */ = {
+			isa = PBXGroup;
+			children = (
+				882D759B1716B611002E1BBD /* bootstrap.lua */,
+				882D75701716B302002E1BBD /* Shader.fsh */,
+				882D75721716B302002E1BBD /* Shader.vsh */,
+				882D75771716B302002E1BBD /* ViewController_iPhone.xib */,
+				882D757A1716B302002E1BBD /* ViewController_iPad.xib */,
+				882D755F1716B302002E1BBD /* Supporting Files */,
+			);
+			path = Minimalist;
+			sourceTree = "<group>";
+		};
+		882D755F1716B302002E1BBD /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				882D75601716B302002E1BBD /* Minimalist-Info.plist */,
+				882D75611716B302002E1BBD /* InfoPlist.strings */,
+				882D75641716B302002E1BBD /* main.m */,
+				882D75661716B302002E1BBD /* Minimalist-Prefix.pch */,
+				882D756A1716B302002E1BBD /* Default.png */,
+				882D756C1716B302002E1BBD /* Default@2x.png */,
+				882D756E1716B302002E1BBD /* Default-568h@2x.png */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		882D75851716B3FA002E1BBD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				882D75921716B3FC002E1BBD /* libplatform-ios.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		882D75881716B3FA002E1BBD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				882D758D1716B3FC002E1BBD /* libengine2d.a */,
+				882D758F1716B3FC002E1BBD /* libengine2d copy.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		882D75501716B302002E1BBD /* Minimalist */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 882D757F1716B302002E1BBD /* Build configuration list for PBXNativeTarget "Minimalist" */;
+			buildPhases = (
+				882D754D1716B302002E1BBD /* Sources */,
+				882D754E1716B302002E1BBD /* Frameworks */,
+				882D754F1716B302002E1BBD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				882D75941716B40A002E1BBD /* PBXTargetDependency */,
+				882D75961716B40A002E1BBD /* PBXTargetDependency */,
+				882D75981716B40A002E1BBD /* PBXTargetDependency */,
+			);
+			name = Minimalist;
+			productName = Minimalist;
+			productReference = 882D75511716B302002E1BBD /* Minimalist.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		882D75491716B302002E1BBD /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = cHaos3D;
+			};
+			buildConfigurationList = 882D754C1716B302002E1BBD /* Build configuration list for PBXProject "Minimalist" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 882D75481716B302002E1BBD;
+			productRefGroup = 882D75521716B302002E1BBD /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 882D75881716B3FA002E1BBD /* Products */;
+					ProjectRef = 882D75871716B3FA002E1BBD /* engine2d.xcodeproj */;
+				},
+				{
+					ProductGroup = 882D75851716B3FA002E1BBD /* Products */;
+					ProjectRef = 882D75841716B3FA002E1BBD /* platform-ios.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				882D75501716B302002E1BBD /* Minimalist */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		882D758D1716B3FC002E1BBD /* libengine2d.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libengine2d.a;
+			remoteRef = 882D758C1716B3FC002E1BBD /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		882D758F1716B3FC002E1BBD /* libengine2d copy.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libengine2d copy.a";
+			remoteRef = 882D758E1716B3FC002E1BBD /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		882D75921716B3FC002E1BBD /* libplatform-ios.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libplatform-ios.a";
+			remoteRef = 882D75911716B3FC002E1BBD /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		882D754F1716B302002E1BBD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				882D75631716B302002E1BBD /* InfoPlist.strings in Resources */,
+				882D756B1716B302002E1BBD /* Default.png in Resources */,
+				882D756D1716B302002E1BBD /* Default@2x.png in Resources */,
+				882D756F1716B302002E1BBD /* Default-568h@2x.png in Resources */,
+				882D75711716B302002E1BBD /* Shader.fsh in Resources */,
+				882D75731716B302002E1BBD /* Shader.vsh in Resources */,
+				882D75791716B302002E1BBD /* ViewController_iPhone.xib in Resources */,
+				882D757C1716B302002E1BBD /* ViewController_iPad.xib in Resources */,
+				882D759C1716B612002E1BBD /* bootstrap.lua in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		882D754D1716B302002E1BBD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				882D75651716B302002E1BBD /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		882D75941716B40A002E1BBD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "platform-ios";
+			targetProxy = 882D75931716B40A002E1BBD /* PBXContainerItemProxy */;
+		};
+		882D75961716B40A002E1BBD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = engine2d;
+			targetProxy = 882D75951716B40A002E1BBD /* PBXContainerItemProxy */;
+		};
+		882D75981716B40A002E1BBD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "engine2d-jit";
+			targetProxy = 882D75971716B40A002E1BBD /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		882D75611716B302002E1BBD /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				882D75621716B302002E1BBD /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		882D75771716B302002E1BBD /* ViewController_iPhone.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				882D75781716B302002E1BBD /* en */,
+			);
+			name = ViewController_iPhone.xib;
+			sourceTree = "<group>";
+		};
+		882D757A1716B302002E1BBD /* ViewController_iPad.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				882D757B1716B302002E1BBD /* en */,
+			);
+			name = ViewController_iPad.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		882D757D1716B302002E1BBD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		882D757E1716B302002E1BBD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		882D75801716B302002E1BBD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Minimalist/Minimalist-Prefix.pch";
+				HEADER_SEARCH_PATHS = ../../src/platform/ios;
+				INFOPLIST_FILE = "Minimalist/Minimalist-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		882D75811716B302002E1BBD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Minimalist/Minimalist-Prefix.pch";
+				HEADER_SEARCH_PATHS = ../../src/platform/ios;
+				INFOPLIST_FILE = "Minimalist/Minimalist-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		882D754C1716B302002E1BBD /* Build configuration list for PBXProject "Minimalist" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				882D757D1716B302002E1BBD /* Debug */,
+				882D757E1716B302002E1BBD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		882D757F1716B302002E1BBD /* Build configuration list for PBXNativeTarget "Minimalist" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				882D75801716B302002E1BBD /* Debug */,
+				882D75811716B302002E1BBD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 882D75491716B302002E1BBD /* Project object */;
+}

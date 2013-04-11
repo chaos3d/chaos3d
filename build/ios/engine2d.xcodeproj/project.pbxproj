@@ -37,6 +37,45 @@
 		882D74F5171285A9002E1BBD /* ScriptLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D74CF171285A9002E1BBD /* ScriptLoader.cpp */; };
 		882D74F6171285A9002E1BBD /* Serialization.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D74D1171285A9002E1BBD /* Serialization.cpp */; };
 		882D74F7171285A9002E1BBD /* StreamLocator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D74D3171285A9002E1BBD /* StreamLocator.cpp */; };
+		882D750C1716AB14002E1BBD /* AutoreleasePool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D75091716AB14002E1BBD /* AutoreleasePool.cpp */; };
+		882D75191716AB88002E1BBD /* ParticleGenericOperator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D748C171285A9002E1BBD /* ParticleGenericOperator.cpp */; };
+		882D751A1716AB88002E1BBD /* ParticleSystem_Particle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D748F171285A9002E1BBD /* ParticleSystem_Particle.cpp */; };
+		882D751B1716AB88002E1BBD /* AnimationManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D7494171285A9002E1BBD /* AnimationManager.cpp */; };
+		882D751C1716AB88002E1BBD /* AnimationState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D7496171285A9002E1BBD /* AnimationState.cpp */; };
+		882D751D1716AB88002E1BBD /* NumericAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D749A171285A9002E1BBD /* NumericAnimation.cpp */; };
+		882D751E1716AB88002E1BBD /* Event.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D749E171285A9002E1BBD /* Event.cpp */; };
+		882D751F1716AB88002E1BBD /* EventHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D74A0171285A9002E1BBD /* EventHandler.cpp */; };
+		882D75201716AB88002E1BBD /* APKAssetsLocator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D74A9171285A9002E1BBD /* APKAssetsLocator.cpp */; };
+		882D75211716AB88002E1BBD /* AudioLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D74AB171285A9002E1BBD /* AudioLoader.cpp */; };
+		882D75221716AB88002E1BBD /* AudioLoader_NotSpt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D74AD171285A9002E1BBD /* AudioLoader_NotSpt.cpp */; };
+		882D75231716AB88002E1BBD /* ChunkLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D74AE171285A9002E1BBD /* ChunkLoader.cpp */; };
+		882D75241716AB88002E1BBD /* DataSourceAndStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D74B1171285A9002E1BBD /* DataSourceAndStream.cpp */; };
+		882D75251716AB88002E1BBD /* DataStreamFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D74B3171285A9002E1BBD /* DataStreamFactory.cpp */; };
+		882D75261716AB88002E1BBD /* FileSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D74B5171285A9002E1BBD /* FileSource.cpp */; };
+		882D75271716AB88002E1BBD /* FileStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D74B7171285A9002E1BBD /* FileStream.cpp */; };
+		882D75281716AB88002E1BBD /* GlobalMDSManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D74B9171285A9002E1BBD /* GlobalMDSManager.cpp */; };
+		882D75291716AB88002E1BBD /* IOManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D74BC171285A9002E1BBD /* IOManager.cpp */; };
+		882D752A1716AB88002E1BBD /* IOManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 882D74BE171285A9002E1BBD /* IOManager.mm */; };
+		882D752B1716AB88002E1BBD /* JavaInputStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D74BF171285A9002E1BBD /* JavaInputStream.cpp */; };
+		882D752C1716AB88002E1BBD /* MemoryDataStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D74C1171285A9002E1BBD /* MemoryDataStream.cpp */; };
+		882D752D1716AB88002E1BBD /* PkgChunkStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D74C3171285A9002E1BBD /* PkgChunkStream.cpp */; };
+		882D752E1716AB88002E1BBD /* Resource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D74C7171285A9002E1BBD /* Resource.cpp */; };
+		882D752F1716AB88002E1BBD /* ResourceLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D74CA171285A9002E1BBD /* ResourceLoader.cpp */; };
+		882D75301716AB88002E1BBD /* ResourceManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D74CC171285A9002E1BBD /* ResourceManager.cpp */; };
+		882D75311716AB88002E1BBD /* ScriptLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D74CF171285A9002E1BBD /* ScriptLoader.cpp */; };
+		882D75321716AB88002E1BBD /* Serialization.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D74D1171285A9002E1BBD /* Serialization.cpp */; };
+		882D75331716AB88002E1BBD /* StreamLocator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D74D3171285A9002E1BBD /* StreamLocator.cpp */; };
+		882D75341716AB88002E1BBD /* AutoreleasePool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D75091716AB14002E1BBD /* AutoreleasePool.cpp */; };
+		882D75361716AB88002E1BBD /* libre.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 882D746D171216ED002E1BBD /* libre.a */; };
+		882D75371716AB88002E1BBD /* libscene2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 882D7468171216ED002E1BBD /* libscene2d.a */; };
+		882D75381716AB88002E1BBD /* libwm4-algebra.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 882D7472171216ED002E1BBD /* libwm4-algebra.a */; };
+		882D75391716AB88002E1BBD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88B24DA41711FBF400F7C2CC /* Foundation.framework */; };
+		882D753F1716AB9A002E1BBD /* boost.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 882D750D1716AB7F002E1BBD /* boost.framework */; };
+		882D75401716AB9A002E1BBD /* lyield.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 882D75101716AB7F002E1BBD /* lyield.framework */; };
+		882D75411716AB9C002E1BBD /* boost.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 882D750D1716AB7F002E1BBD /* boost.framework */; };
+		882D75421716AB9C002E1BBD /* lyield.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 882D75101716AB7F002E1BBD /* lyield.framework */; };
+		882D75431716ABA5002E1BBD /* luajit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 882D750F1716AB7F002E1BBD /* luajit.framework */; };
+		882D75441716ABA7002E1BBD /* lua.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 882D750E1716AB7F002E1BBD /* lua.framework */; };
 		88B24DA51711FBF400F7C2CC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88B24DA41711FBF400F7C2CC /* Foundation.framework */; };
 /* End PBXBuildFile section */
 
@@ -83,9 +122,39 @@
 			remoteGlobalIDString = 88B24CF1170EC86800F7C2CC;
 			remoteInfo = scene2d;
 		};
+		882D75131716AB88002E1BBD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88B24DB417120F3700F7C2CC /* wm4-algebra.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 880D86D3170BB8A7009A9EF6;
+			remoteInfo = "wm4-algebra";
+		};
+		882D75151716AB88002E1BBD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88B24DB317120F2800F7C2CC /* re.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 881D4DCF170442BF007299A2;
+			remoteInfo = re;
+		};
+		882D75171716AB88002E1BBD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88B24DB217120F1C00F7C2CC /* scene2d.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 88B24CF1170EC86800F7C2CC;
+			remoteInfo = scene2d;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		882D753A1716AB88002E1BBD /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/${PRODUCT_NAME}";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		88B24D9F1711FBF400F7C2CC /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -152,7 +221,6 @@
 		882D74C2171285A9002E1BBD /* MemoryDataStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MemoryDataStream.h; sourceTree = "<group>"; };
 		882D74C3171285A9002E1BBD /* PkgChunkStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PkgChunkStream.cpp; sourceTree = "<group>"; };
 		882D74C4171285A9002E1BBD /* PkgChunkStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PkgChunkStream.h; sourceTree = "<group>"; };
-		882D74C5171285A9002E1BBD /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		882D74C6171285A9002E1BBD /* res.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = res.h; sourceTree = "<group>"; };
 		882D74C7171285A9002E1BBD /* Resource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Resource.cpp; sourceTree = "<group>"; };
 		882D74C8171285A9002E1BBD /* Resource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Resource.h; sourceTree = "<group>"; };
@@ -174,6 +242,14 @@
 		882D74D9171285A9002E1BBD /* ResourceSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceSource.h; sourceTree = "<group>"; };
 		882D74DB171285A9002E1BBD /* MaterialResource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaterialResource.h; sourceTree = "<group>"; };
 		882D74DC171285A9002E1BBD /* TextureResource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextureResource.h; sourceTree = "<group>"; };
+		882D75091716AB14002E1BBD /* AutoreleasePool.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AutoreleasePool.cpp; sourceTree = "<group>"; };
+		882D750A1716AB14002E1BBD /* AutoreleasePool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AutoreleasePool.h; sourceTree = "<group>"; };
+		882D750B1716AB14002E1BBD /* EngineLoop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EngineLoop.h; sourceTree = "<group>"; };
+		882D750D1716AB7F002E1BBD /* boost.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = boost.framework; path = ../../dependency/ios/boost.framework; sourceTree = "<group>"; };
+		882D750E1716AB7F002E1BBD /* lua.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = lua.framework; path = ../../dependency/ios/lua.framework; sourceTree = "<group>"; };
+		882D750F1716AB7F002E1BBD /* luajit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = luajit.framework; path = ../../dependency/ios/luajit.framework; sourceTree = "<group>"; };
+		882D75101716AB7F002E1BBD /* lyield.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = lyield.framework; path = ../../dependency/ios/lyield.framework; sourceTree = "<group>"; };
+		882D753E1716AB88002E1BBD /* libengine2d-jit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libengine2d-jit.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		88B24DA11711FBF400F7C2CC /* libengine2d.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libengine2d.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		88B24DA41711FBF400F7C2CC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		88B24DB217120F1C00F7C2CC /* scene2d.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = scene2d.xcodeproj; sourceTree = SOURCE_ROOT; };
@@ -182,6 +258,20 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		882D75351716AB88002E1BBD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				882D75361716AB88002E1BBD /* libre.a in Frameworks */,
+				882D75371716AB88002E1BBD /* libscene2d.a in Frameworks */,
+				882D75381716AB88002E1BBD /* libwm4-algebra.a in Frameworks */,
+				882D75391716AB88002E1BBD /* Foundation.framework in Frameworks */,
+				882D75411716AB9C002E1BBD /* boost.framework in Frameworks */,
+				882D75421716AB9C002E1BBD /* lyield.framework in Frameworks */,
+				882D75431716ABA5002E1BBD /* luajit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		88B24D9E1711FBF400F7C2CC /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -190,6 +280,9 @@
 				882D748017121851002E1BBD /* libscene2d.a in Frameworks */,
 				882D748117121851002E1BBD /* libwm4-algebra.a in Frameworks */,
 				88B24DA51711FBF400F7C2CC /* Foundation.framework in Frameworks */,
+				882D753F1716AB9A002E1BBD /* boost.framework in Frameworks */,
+				882D75401716AB9A002E1BBD /* lyield.framework in Frameworks */,
+				882D75441716ABA7002E1BBD /* lua.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -223,6 +316,7 @@
 		882D74881712672C002E1BBD /* src */ = {
 			isa = PBXGroup;
 			children = (
+				882D75081716AB14002E1BBD /* framework */,
 				882D7489171285A9002E1BBD /* ps */,
 				882D7492171285A9002E1BBD /* anim */,
 				882D749D171285A9002E1BBD /* event */,
@@ -323,7 +417,6 @@
 				882D74C2171285A9002E1BBD /* MemoryDataStream.h */,
 				882D74C3171285A9002E1BBD /* PkgChunkStream.cpp */,
 				882D74C4171285A9002E1BBD /* PkgChunkStream.h */,
-				882D74C5171285A9002E1BBD /* README.md */,
 				882D74C6171285A9002E1BBD /* res.h */,
 				882D74C7171285A9002E1BBD /* Resource.cpp */,
 				882D74C8171285A9002E1BBD /* Resource.h */,
@@ -366,6 +459,17 @@
 			path = ../../src/asset_support;
 			sourceTree = "<group>";
 		};
+		882D75081716AB14002E1BBD /* framework */ = {
+			isa = PBXGroup;
+			children = (
+				882D75091716AB14002E1BBD /* AutoreleasePool.cpp */,
+				882D750A1716AB14002E1BBD /* AutoreleasePool.h */,
+				882D750B1716AB14002E1BBD /* EngineLoop.h */,
+			);
+			name = framework;
+			path = ../../src/framework;
+			sourceTree = "<group>";
+		};
 		88B24D981711FBF400F7C2CC = {
 			isa = PBXGroup;
 			children = (
@@ -382,6 +486,7 @@
 			isa = PBXGroup;
 			children = (
 				88B24DA11711FBF400F7C2CC /* libengine2d.a */,
+				882D753E1716AB88002E1BBD /* libengine2d-jit.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -389,6 +494,10 @@
 		88B24DA31711FBF400F7C2CC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				882D750D1716AB7F002E1BBD /* boost.framework */,
+				882D750E1716AB7F002E1BBD /* lua.framework */,
+				882D750F1716AB7F002E1BBD /* luajit.framework */,
+				882D75101716AB7F002E1BBD /* lyield.framework */,
 				88B24DA41711FBF400F7C2CC /* Foundation.framework */,
 			);
 			name = Frameworks;
@@ -397,6 +506,26 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		882D75111716AB88002E1BBD /* engine2d-jit */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 882D753B1716AB88002E1BBD /* Build configuration list for PBXNativeTarget "engine2d-jit" */;
+			buildPhases = (
+				882D75181716AB88002E1BBD /* Sources */,
+				882D75351716AB88002E1BBD /* Frameworks */,
+				882D753A1716AB88002E1BBD /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				882D75121716AB88002E1BBD /* PBXTargetDependency */,
+				882D75141716AB88002E1BBD /* PBXTargetDependency */,
+				882D75161716AB88002E1BBD /* PBXTargetDependency */,
+			);
+			name = "engine2d-jit";
+			productName = engine2d;
+			productReference = 882D753E1716AB88002E1BBD /* libengine2d-jit.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 		88B24DA01711FBF400F7C2CC /* engine2d */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 88B24DAF1711FBF400F7C2CC /* Build configuration list for PBXNativeTarget "engine2d" */;
@@ -453,6 +582,7 @@
 			projectRoot = "";
 			targets = (
 				88B24DA01711FBF400F7C2CC /* engine2d */,
+				882D75111716AB88002E1BBD /* engine2d-jit */,
 			);
 		};
 /* End PBXProject section */
@@ -482,6 +612,41 @@
 /* End PBXReferenceProxy section */
 
 /* Begin PBXSourcesBuildPhase section */
+		882D75181716AB88002E1BBD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				882D75191716AB88002E1BBD /* ParticleGenericOperator.cpp in Sources */,
+				882D751A1716AB88002E1BBD /* ParticleSystem_Particle.cpp in Sources */,
+				882D751B1716AB88002E1BBD /* AnimationManager.cpp in Sources */,
+				882D751C1716AB88002E1BBD /* AnimationState.cpp in Sources */,
+				882D751D1716AB88002E1BBD /* NumericAnimation.cpp in Sources */,
+				882D751E1716AB88002E1BBD /* Event.cpp in Sources */,
+				882D751F1716AB88002E1BBD /* EventHandler.cpp in Sources */,
+				882D75201716AB88002E1BBD /* APKAssetsLocator.cpp in Sources */,
+				882D75211716AB88002E1BBD /* AudioLoader.cpp in Sources */,
+				882D75221716AB88002E1BBD /* AudioLoader_NotSpt.cpp in Sources */,
+				882D75231716AB88002E1BBD /* ChunkLoader.cpp in Sources */,
+				882D75241716AB88002E1BBD /* DataSourceAndStream.cpp in Sources */,
+				882D75251716AB88002E1BBD /* DataStreamFactory.cpp in Sources */,
+				882D75261716AB88002E1BBD /* FileSource.cpp in Sources */,
+				882D75271716AB88002E1BBD /* FileStream.cpp in Sources */,
+				882D75281716AB88002E1BBD /* GlobalMDSManager.cpp in Sources */,
+				882D75291716AB88002E1BBD /* IOManager.cpp in Sources */,
+				882D752A1716AB88002E1BBD /* IOManager.mm in Sources */,
+				882D752B1716AB88002E1BBD /* JavaInputStream.cpp in Sources */,
+				882D752C1716AB88002E1BBD /* MemoryDataStream.cpp in Sources */,
+				882D752D1716AB88002E1BBD /* PkgChunkStream.cpp in Sources */,
+				882D752E1716AB88002E1BBD /* Resource.cpp in Sources */,
+				882D752F1716AB88002E1BBD /* ResourceLoader.cpp in Sources */,
+				882D75301716AB88002E1BBD /* ResourceManager.cpp in Sources */,
+				882D75311716AB88002E1BBD /* ScriptLoader.cpp in Sources */,
+				882D75321716AB88002E1BBD /* Serialization.cpp in Sources */,
+				882D75331716AB88002E1BBD /* StreamLocator.cpp in Sources */,
+				882D75341716AB88002E1BBD /* AutoreleasePool.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		88B24D9D1711FBF400F7C2CC /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -513,6 +678,7 @@
 				882D74F5171285A9002E1BBD /* ScriptLoader.cpp in Sources */,
 				882D74F6171285A9002E1BBD /* Serialization.cpp in Sources */,
 				882D74F7171285A9002E1BBD /* StreamLocator.cpp in Sources */,
+				882D750C1716AB14002E1BBD /* AutoreleasePool.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -534,9 +700,52 @@
 			name = scene2d;
 			targetProxy = 882D747D17121845002E1BBD /* PBXContainerItemProxy */;
 		};
+		882D75121716AB88002E1BBD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "wm4-algebra";
+			targetProxy = 882D75131716AB88002E1BBD /* PBXContainerItemProxy */;
+		};
+		882D75141716AB88002E1BBD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = re;
+			targetProxy = 882D75151716AB88002E1BBD /* PBXContainerItemProxy */;
+		};
+		882D75161716AB88002E1BBD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = scene2d;
+			targetProxy = 882D75171716AB88002E1BBD /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		882D753C1716AB88002E1BBD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/engine2d.dst;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../dependency/ios\"",
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "engine2d-jit";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		882D753D1716AB88002E1BBD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/engine2d.dst;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../dependency/ios\"",
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "engine2d-jit";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
 		88B24DAD1711FBF400F7C2CC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -592,6 +801,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DSTROOT = /tmp/engine2d.dst;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../dependency/ios\"",
+				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -602,6 +815,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DSTROOT = /tmp/engine2d.dst;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../dependency/ios\"",
+				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -611,6 +828,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		882D753B1716AB88002E1BBD /* Build configuration list for PBXNativeTarget "engine2d-jit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				882D753C1716AB88002E1BBD /* Debug */,
+				882D753D1716AB88002E1BBD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		88B24D9C1711FBF400F7C2CC /* Build configuration list for PBXProject "engine2d" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
