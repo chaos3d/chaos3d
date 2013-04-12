@@ -7,66 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		882D747F17121851002E1BBD /* libre.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 882D746D171216ED002E1BBD /* libre.a */; };
 		882D748017121851002E1BBD /* libscene2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 882D7468171216ED002E1BBD /* libscene2d.a */; };
 		882D748117121851002E1BBD /* libwm4-algebra.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 882D7472171216ED002E1BBD /* libwm4-algebra.a */; };
-		882D74DD171285A9002E1BBD /* ParticleGenericOperator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D748C171285A9002E1BBD /* ParticleGenericOperator.cpp */; };
-		882D74DE171285A9002E1BBD /* ParticleSystem_Particle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D748F171285A9002E1BBD /* ParticleSystem_Particle.cpp */; };
-		882D74DF171285A9002E1BBD /* AnimationManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D7494171285A9002E1BBD /* AnimationManager.cpp */; };
-		882D74E0171285A9002E1BBD /* AnimationState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D7496171285A9002E1BBD /* AnimationState.cpp */; };
-		882D74E1171285A9002E1BBD /* NumericAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D749A171285A9002E1BBD /* NumericAnimation.cpp */; };
-		882D74E2171285A9002E1BBD /* Event.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D749E171285A9002E1BBD /* Event.cpp */; };
-		882D74E3171285A9002E1BBD /* EventHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D74A0171285A9002E1BBD /* EventHandler.cpp */; };
-		882D74E4171285A9002E1BBD /* APKAssetsLocator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D74A9171285A9002E1BBD /* APKAssetsLocator.cpp */; };
-		882D74E5171285A9002E1BBD /* AudioLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D74AB171285A9002E1BBD /* AudioLoader.cpp */; };
-		882D74E6171285A9002E1BBD /* AudioLoader_NotSpt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D74AD171285A9002E1BBD /* AudioLoader_NotSpt.cpp */; };
-		882D74E7171285A9002E1BBD /* ChunkLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D74AE171285A9002E1BBD /* ChunkLoader.cpp */; };
-		882D74E8171285A9002E1BBD /* DataSourceAndStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D74B1171285A9002E1BBD /* DataSourceAndStream.cpp */; };
-		882D74E9171285A9002E1BBD /* DataStreamFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D74B3171285A9002E1BBD /* DataStreamFactory.cpp */; };
-		882D74EA171285A9002E1BBD /* FileSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D74B5171285A9002E1BBD /* FileSource.cpp */; };
-		882D74EB171285A9002E1BBD /* FileStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D74B7171285A9002E1BBD /* FileStream.cpp */; };
-		882D74EC171285A9002E1BBD /* GlobalMDSManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D74B9171285A9002E1BBD /* GlobalMDSManager.cpp */; };
-		882D74ED171285A9002E1BBD /* IOManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D74BC171285A9002E1BBD /* IOManager.cpp */; };
-		882D74EE171285A9002E1BBD /* IOManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 882D74BE171285A9002E1BBD /* IOManager.mm */; };
-		882D74EF171285A9002E1BBD /* JavaInputStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D74BF171285A9002E1BBD /* JavaInputStream.cpp */; };
-		882D74F0171285A9002E1BBD /* MemoryDataStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D74C1171285A9002E1BBD /* MemoryDataStream.cpp */; };
-		882D74F1171285A9002E1BBD /* PkgChunkStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D74C3171285A9002E1BBD /* PkgChunkStream.cpp */; };
-		882D74F2171285A9002E1BBD /* Resource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D74C7171285A9002E1BBD /* Resource.cpp */; };
-		882D74F3171285A9002E1BBD /* ResourceLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D74CA171285A9002E1BBD /* ResourceLoader.cpp */; };
-		882D74F4171285A9002E1BBD /* ResourceManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D74CC171285A9002E1BBD /* ResourceManager.cpp */; };
-		882D74F5171285A9002E1BBD /* ScriptLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D74CF171285A9002E1BBD /* ScriptLoader.cpp */; };
-		882D74F6171285A9002E1BBD /* Serialization.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D74D1171285A9002E1BBD /* Serialization.cpp */; };
-		882D74F7171285A9002E1BBD /* StreamLocator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D74D3171285A9002E1BBD /* StreamLocator.cpp */; };
 		882D750C1716AB14002E1BBD /* AutoreleasePool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D75091716AB14002E1BBD /* AutoreleasePool.cpp */; };
-		882D75191716AB88002E1BBD /* ParticleGenericOperator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D748C171285A9002E1BBD /* ParticleGenericOperator.cpp */; };
-		882D751A1716AB88002E1BBD /* ParticleSystem_Particle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D748F171285A9002E1BBD /* ParticleSystem_Particle.cpp */; };
-		882D751B1716AB88002E1BBD /* AnimationManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D7494171285A9002E1BBD /* AnimationManager.cpp */; };
-		882D751C1716AB88002E1BBD /* AnimationState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D7496171285A9002E1BBD /* AnimationState.cpp */; };
-		882D751D1716AB88002E1BBD /* NumericAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D749A171285A9002E1BBD /* NumericAnimation.cpp */; };
-		882D751E1716AB88002E1BBD /* Event.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D749E171285A9002E1BBD /* Event.cpp */; };
-		882D751F1716AB88002E1BBD /* EventHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D74A0171285A9002E1BBD /* EventHandler.cpp */; };
-		882D75201716AB88002E1BBD /* APKAssetsLocator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D74A9171285A9002E1BBD /* APKAssetsLocator.cpp */; };
-		882D75211716AB88002E1BBD /* AudioLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D74AB171285A9002E1BBD /* AudioLoader.cpp */; };
-		882D75221716AB88002E1BBD /* AudioLoader_NotSpt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D74AD171285A9002E1BBD /* AudioLoader_NotSpt.cpp */; };
-		882D75231716AB88002E1BBD /* ChunkLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D74AE171285A9002E1BBD /* ChunkLoader.cpp */; };
-		882D75241716AB88002E1BBD /* DataSourceAndStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D74B1171285A9002E1BBD /* DataSourceAndStream.cpp */; };
-		882D75251716AB88002E1BBD /* DataStreamFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D74B3171285A9002E1BBD /* DataStreamFactory.cpp */; };
-		882D75261716AB88002E1BBD /* FileSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D74B5171285A9002E1BBD /* FileSource.cpp */; };
-		882D75271716AB88002E1BBD /* FileStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D74B7171285A9002E1BBD /* FileStream.cpp */; };
-		882D75281716AB88002E1BBD /* GlobalMDSManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D74B9171285A9002E1BBD /* GlobalMDSManager.cpp */; };
-		882D75291716AB88002E1BBD /* IOManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D74BC171285A9002E1BBD /* IOManager.cpp */; };
-		882D752A1716AB88002E1BBD /* IOManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 882D74BE171285A9002E1BBD /* IOManager.mm */; };
-		882D752B1716AB88002E1BBD /* JavaInputStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D74BF171285A9002E1BBD /* JavaInputStream.cpp */; };
-		882D752C1716AB88002E1BBD /* MemoryDataStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D74C1171285A9002E1BBD /* MemoryDataStream.cpp */; };
-		882D752D1716AB88002E1BBD /* PkgChunkStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D74C3171285A9002E1BBD /* PkgChunkStream.cpp */; };
-		882D752E1716AB88002E1BBD /* Resource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D74C7171285A9002E1BBD /* Resource.cpp */; };
-		882D752F1716AB88002E1BBD /* ResourceLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D74CA171285A9002E1BBD /* ResourceLoader.cpp */; };
-		882D75301716AB88002E1BBD /* ResourceManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D74CC171285A9002E1BBD /* ResourceManager.cpp */; };
-		882D75311716AB88002E1BBD /* ScriptLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D74CF171285A9002E1BBD /* ScriptLoader.cpp */; };
-		882D75321716AB88002E1BBD /* Serialization.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D74D1171285A9002E1BBD /* Serialization.cpp */; };
-		882D75331716AB88002E1BBD /* StreamLocator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D74D3171285A9002E1BBD /* StreamLocator.cpp */; };
 		882D75341716AB88002E1BBD /* AutoreleasePool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D75091716AB14002E1BBD /* AutoreleasePool.cpp */; };
-		882D75361716AB88002E1BBD /* libre.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 882D746D171216ED002E1BBD /* libre.a */; };
 		882D75371716AB88002E1BBD /* libscene2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 882D7468171216ED002E1BBD /* libscene2d.a */; };
 		882D75381716AB88002E1BBD /* libwm4-algebra.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 882D7472171216ED002E1BBD /* libwm4-algebra.a */; };
 		882D75391716AB88002E1BBD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88B24DA41711FBF400F7C2CC /* Foundation.framework */; };
@@ -77,6 +21,7 @@
 		882D75431716ABA5002E1BBD /* luajit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 882D750F1716AB7F002E1BBD /* luajit.framework */; };
 		882D75441716ABA7002E1BBD /* lua.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 882D750E1716AB7F002E1BBD /* lua.framework */; };
 		882D75A11716BD30002E1BBD /* EngineLoop.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D75A01716BD30002E1BBD /* EngineLoop.cpp */; };
+		882D75A81717E337002E1BBD /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 882D75A71717E336002E1BBD /* QuartzCore.framework */; };
 		88B24DA51711FBF400F7C2CC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88B24DA41711FBF400F7C2CC /* Foundation.framework */; };
 /* End PBXBuildFile section */
 
@@ -252,6 +197,7 @@
 		882D75101716AB7F002E1BBD /* lyield.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = lyield.framework; path = ../../dependency/ios/lyield.framework; sourceTree = "<group>"; };
 		882D753E1716AB88002E1BBD /* libengine2d-jit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libengine2d-jit.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		882D75A01716BD30002E1BBD /* EngineLoop.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EngineLoop.cpp; sourceTree = "<group>"; };
+		882D75A71717E336002E1BBD /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		88B24DA11711FBF400F7C2CC /* libengine2d.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libengine2d.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		88B24DA41711FBF400F7C2CC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		88B24DB217120F1C00F7C2CC /* scene2d.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = scene2d.xcodeproj; sourceTree = SOURCE_ROOT; };
@@ -264,7 +210,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				882D75361716AB88002E1BBD /* libre.a in Frameworks */,
+				882D75A81717E337002E1BBD /* QuartzCore.framework in Frameworks */,
 				882D75371716AB88002E1BBD /* libscene2d.a in Frameworks */,
 				882D75381716AB88002E1BBD /* libwm4-algebra.a in Frameworks */,
 				882D75391716AB88002E1BBD /* Foundation.framework in Frameworks */,
@@ -278,7 +224,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				882D747F17121851002E1BBD /* libre.a in Frameworks */,
 				882D748017121851002E1BBD /* libscene2d.a in Frameworks */,
 				882D748117121851002E1BBD /* libwm4-algebra.a in Frameworks */,
 				88B24DA51711FBF400F7C2CC /* Foundation.framework in Frameworks */,
@@ -497,6 +442,7 @@
 		88B24DA31711FBF400F7C2CC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				882D75A71717E336002E1BBD /* QuartzCore.framework */,
 				882D750D1716AB7F002E1BBD /* boost.framework */,
 				882D750E1716AB7F002E1BBD /* lua.framework */,
 				882D750F1716AB7F002E1BBD /* luajit.framework */,
@@ -619,33 +565,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				882D75191716AB88002E1BBD /* ParticleGenericOperator.cpp in Sources */,
-				882D751A1716AB88002E1BBD /* ParticleSystem_Particle.cpp in Sources */,
-				882D751B1716AB88002E1BBD /* AnimationManager.cpp in Sources */,
-				882D751C1716AB88002E1BBD /* AnimationState.cpp in Sources */,
-				882D751D1716AB88002E1BBD /* NumericAnimation.cpp in Sources */,
-				882D751E1716AB88002E1BBD /* Event.cpp in Sources */,
-				882D751F1716AB88002E1BBD /* EventHandler.cpp in Sources */,
-				882D75201716AB88002E1BBD /* APKAssetsLocator.cpp in Sources */,
-				882D75211716AB88002E1BBD /* AudioLoader.cpp in Sources */,
-				882D75221716AB88002E1BBD /* AudioLoader_NotSpt.cpp in Sources */,
-				882D75231716AB88002E1BBD /* ChunkLoader.cpp in Sources */,
-				882D75241716AB88002E1BBD /* DataSourceAndStream.cpp in Sources */,
-				882D75251716AB88002E1BBD /* DataStreamFactory.cpp in Sources */,
-				882D75261716AB88002E1BBD /* FileSource.cpp in Sources */,
-				882D75271716AB88002E1BBD /* FileStream.cpp in Sources */,
-				882D75281716AB88002E1BBD /* GlobalMDSManager.cpp in Sources */,
-				882D75291716AB88002E1BBD /* IOManager.cpp in Sources */,
-				882D752A1716AB88002E1BBD /* IOManager.mm in Sources */,
-				882D752B1716AB88002E1BBD /* JavaInputStream.cpp in Sources */,
-				882D752C1716AB88002E1BBD /* MemoryDataStream.cpp in Sources */,
-				882D752D1716AB88002E1BBD /* PkgChunkStream.cpp in Sources */,
-				882D752E1716AB88002E1BBD /* Resource.cpp in Sources */,
-				882D752F1716AB88002E1BBD /* ResourceLoader.cpp in Sources */,
-				882D75301716AB88002E1BBD /* ResourceManager.cpp in Sources */,
-				882D75311716AB88002E1BBD /* ScriptLoader.cpp in Sources */,
-				882D75321716AB88002E1BBD /* Serialization.cpp in Sources */,
-				882D75331716AB88002E1BBD /* StreamLocator.cpp in Sources */,
 				882D75341716AB88002E1BBD /* AutoreleasePool.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -654,33 +573,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				882D74DD171285A9002E1BBD /* ParticleGenericOperator.cpp in Sources */,
-				882D74DE171285A9002E1BBD /* ParticleSystem_Particle.cpp in Sources */,
-				882D74DF171285A9002E1BBD /* AnimationManager.cpp in Sources */,
-				882D74E0171285A9002E1BBD /* AnimationState.cpp in Sources */,
-				882D74E1171285A9002E1BBD /* NumericAnimation.cpp in Sources */,
-				882D74E2171285A9002E1BBD /* Event.cpp in Sources */,
-				882D74E3171285A9002E1BBD /* EventHandler.cpp in Sources */,
-				882D74E4171285A9002E1BBD /* APKAssetsLocator.cpp in Sources */,
-				882D74E5171285A9002E1BBD /* AudioLoader.cpp in Sources */,
-				882D74E6171285A9002E1BBD /* AudioLoader_NotSpt.cpp in Sources */,
-				882D74E7171285A9002E1BBD /* ChunkLoader.cpp in Sources */,
-				882D74E8171285A9002E1BBD /* DataSourceAndStream.cpp in Sources */,
-				882D74E9171285A9002E1BBD /* DataStreamFactory.cpp in Sources */,
-				882D74EA171285A9002E1BBD /* FileSource.cpp in Sources */,
-				882D74EB171285A9002E1BBD /* FileStream.cpp in Sources */,
-				882D74EC171285A9002E1BBD /* GlobalMDSManager.cpp in Sources */,
-				882D74ED171285A9002E1BBD /* IOManager.cpp in Sources */,
-				882D74EE171285A9002E1BBD /* IOManager.mm in Sources */,
-				882D74EF171285A9002E1BBD /* JavaInputStream.cpp in Sources */,
-				882D74F0171285A9002E1BBD /* MemoryDataStream.cpp in Sources */,
-				882D74F1171285A9002E1BBD /* PkgChunkStream.cpp in Sources */,
-				882D74F2171285A9002E1BBD /* Resource.cpp in Sources */,
-				882D74F3171285A9002E1BBD /* ResourceLoader.cpp in Sources */,
-				882D74F4171285A9002E1BBD /* ResourceManager.cpp in Sources */,
-				882D74F5171285A9002E1BBD /* ScriptLoader.cpp in Sources */,
-				882D74F6171285A9002E1BBD /* Serialization.cpp in Sources */,
-				882D74F7171285A9002E1BBD /* StreamLocator.cpp in Sources */,
 				882D750C1716AB14002E1BBD /* AutoreleasePool.cpp in Sources */,
 				882D75A11716BD30002E1BBD /* EngineLoop.cpp in Sources */,
 			);

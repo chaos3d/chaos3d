@@ -10,4 +10,5 @@
 
 @interface cAppDelegate : UIResponder <UIApplicationDelegate>
 
+@property (retain) UIWindow* window;
 @end

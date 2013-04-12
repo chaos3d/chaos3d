@@ -13,7 +13,7 @@
 		882D755B1716B302002E1BBD /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 882D755A1716B302002E1BBD /* GLKit.framework */; };
 		882D755D1716B302002E1BBD /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 882D755C1716B302002E1BBD /* OpenGLES.framework */; };
 		882D75631716B302002E1BBD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 882D75611716B302002E1BBD /* InfoPlist.strings */; };
-		882D75651716B302002E1BBD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 882D75641716B302002E1BBD /* main.m */; };
+		882D75651716B302002E1BBD /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 882D75641716B302002E1BBD /* main.mm */; };
 		882D756B1716B302002E1BBD /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 882D756A1716B302002E1BBD /* Default.png */; };
 		882D756D1716B302002E1BBD /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 882D756C1716B302002E1BBD /* Default@2x.png */; };
 		882D756F1716B302002E1BBD /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 882D756E1716B302002E1BBD /* Default-568h@2x.png */; };
@@ -24,6 +24,10 @@
 		882D75991716B41B002E1BBD /* libengine2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 882D758D1716B3FC002E1BBD /* libengine2d.a */; };
 		882D759A1716B41B002E1BBD /* libplatform-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 882D75921716B3FC002E1BBD /* libplatform-ios.a */; };
 		882D759C1716B612002E1BBD /* bootstrap.lua in Resources */ = {isa = PBXBuildFile; fileRef = 882D759B1716B611002E1BBD /* bootstrap.lua */; };
+		882D75AA1717E341002E1BBD /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 882D75A91717E341002E1BBD /* QuartzCore.framework */; };
+		882D75AE1717E436002E1BBD /* boost.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 882D75AB1717E434002E1BBD /* boost.framework */; };
+		882D75AF1717E436002E1BBD /* lua.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 882D75AC1717E435002E1BBD /* lua.framework */; };
+		882D75B01717E436002E1BBD /* lyield.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 882D75AD1717E435002E1BBD /* lyield.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,7 +84,7 @@
 		882D755C1716B302002E1BBD /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		882D75601716B302002E1BBD /* Minimalist-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Minimalist-Info.plist"; sourceTree = "<group>"; };
 		882D75621716B302002E1BBD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		882D75641716B302002E1BBD /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		882D75641716B302002E1BBD /* main.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
 		882D75661716B302002E1BBD /* Minimalist-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Minimalist-Prefix.pch"; sourceTree = "<group>"; };
 		882D756A1716B302002E1BBD /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		882D756C1716B302002E1BBD /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
@@ -92,6 +96,10 @@
 		882D75841716B3FA002E1BBD /* platform-ios.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "platform-ios.xcodeproj"; path = "../../build/ios/platform-ios.xcodeproj"; sourceTree = "<group>"; };
 		882D75871716B3FA002E1BBD /* engine2d.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = engine2d.xcodeproj; path = ../../build/ios/engine2d.xcodeproj; sourceTree = "<group>"; };
 		882D759B1716B611002E1BBD /* bootstrap.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bootstrap.lua; sourceTree = "<group>"; };
+		882D75A91717E341002E1BBD /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = "<absolute>"; };
+		882D75AB1717E434002E1BBD /* boost.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = boost.framework; path = ../../dependency/ios/boost.framework; sourceTree = "<group>"; };
+		882D75AC1717E435002E1BBD /* lua.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = lua.framework; path = ../../dependency/ios/lua.framework; sourceTree = "<group>"; };
+		882D75AD1717E435002E1BBD /* lyield.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = lyield.framework; path = ../../dependency/ios/lyield.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +114,10 @@
 				882D75591716B302002E1BBD /* CoreGraphics.framework in Frameworks */,
 				882D755B1716B302002E1BBD /* GLKit.framework in Frameworks */,
 				882D755D1716B302002E1BBD /* OpenGLES.framework in Frameworks */,
+				882D75AA1717E341002E1BBD /* QuartzCore.framework in Frameworks */,
+				882D75AE1717E436002E1BBD /* boost.framework in Frameworks */,
+				882D75AF1717E436002E1BBD /* lua.framework in Frameworks */,
+				882D75B01717E436002E1BBD /* lyield.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -134,6 +146,10 @@
 		882D75531716B302002E1BBD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				882D75AB1717E434002E1BBD /* boost.framework */,
+				882D75AC1717E435002E1BBD /* lua.framework */,
+				882D75AD1717E435002E1BBD /* lyield.framework */,
+				882D75A91717E341002E1BBD /* QuartzCore.framework */,
 				882D75541716B302002E1BBD /* UIKit.framework */,
 				882D75561716B302002E1BBD /* Foundation.framework */,
 				882D75581716B302002E1BBD /* CoreGraphics.framework */,
@@ -161,7 +177,7 @@
 			children = (
 				882D75601716B302002E1BBD /* Minimalist-Info.plist */,
 				882D75611716B302002E1BBD /* InfoPlist.strings */,
-				882D75641716B302002E1BBD /* main.m */,
+				882D75641716B302002E1BBD /* main.mm */,
 				882D75661716B302002E1BBD /* Minimalist-Prefix.pch */,
 				882D756A1716B302002E1BBD /* Default.png */,
 				882D756C1716B302002E1BBD /* Default@2x.png */,
@@ -294,7 +310,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				882D75651716B302002E1BBD /* main.m in Sources */,
+				882D75651716B302002E1BBD /* main.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -405,6 +421,10 @@
 		882D75801716B302002E1BBD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../dependency/ios\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Minimalist/Minimalist-Prefix.pch";
 				HEADER_SEARCH_PATHS = ../../src/platform/ios;
@@ -417,6 +437,10 @@
 		882D75811716B302002E1BBD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../dependency/ios\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Minimalist/Minimalist-Prefix.pch";
 				HEADER_SEARCH_PATHS = ../../src/platform/ios;

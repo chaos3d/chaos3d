@@ -12,6 +12,7 @@
 		881D4D791702EB6E007299A2 /* cViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 881D4D781702EB6E007299A2 /* cViewController.mm */; };
 		881D4DB517043C43007299A2 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 881D4DB417043C43007299A2 /* GLKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		882D75471716B0C4002E1BBD /* cAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 882D75461716B0C4002E1BBD /* cAppDelegate.m */; };
+		882D75A61717CA4F002E1BBD /* lplatform.m in Sources */ = {isa = PBXBuildFile; fileRef = 882D75A51717CA4F002E1BBD /* lplatform.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -35,6 +36,8 @@
 		881D4DB417043C43007299A2 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		882D75451716B0C4002E1BBD /* cAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cAppDelegate.h; sourceTree = "<group>"; };
 		882D75461716B0C4002E1BBD /* cAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = cAppDelegate.m; sourceTree = "<group>"; };
+		882D75A41717C9F6002E1BBD /* lplatform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lplatform.h; path = ../../src/platform/lplatform.h; sourceTree = "<group>"; };
+		882D75A51717CA4F002E1BBD /* lplatform.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = lplatform.m; path = ../../src/platform/ios/lplatform.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +57,7 @@
 		881D4D5B1702E492007299A2 = {
 			isa = PBXGroup;
 			children = (
+				882D75A21717C94D002E1BBD /* lplatform */,
 				88B24CE8170EC76A00F7C2CC /* backend-gles2 */,
 				881D4D691702E492007299A2 /* iOSWrapper */,
 				881D4D661702E492007299A2 /* Frameworks */,
@@ -89,6 +93,15 @@
 			);
 			name = iOSWrapper;
 			path = ../../src/platform/ios;
+			sourceTree = "<group>";
+		};
+		882D75A21717C94D002E1BBD /* lplatform */ = {
+			isa = PBXGroup;
+			children = (
+				882D75A51717CA4F002E1BBD /* lplatform.m */,
+				882D75A41717C9F6002E1BBD /* lplatform.h */,
+			);
+			name = lplatform;
 			sourceTree = "<group>";
 		};
 		88B24CE8170EC76A00F7C2CC /* backend-gles2 */ = {
@@ -151,6 +164,7 @@
 			files = (
 				881D4D791702EB6E007299A2 /* cViewController.mm in Sources */,
 				882D75471716B0C4002E1BBD /* cAppDelegate.m in Sources */,
+				882D75A61717CA4F002E1BBD /* lplatform.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

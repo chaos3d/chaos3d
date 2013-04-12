@@ -10,7 +10,7 @@
 #ifndef	_CHAOS_AUTORELEASEPOOL_H
 #define	_CHAOS_AUTORELEASEPOOL_H
 
-#include "chaos_config.h"
+#include "common/common.h"
 #include <list>
 #include <vector>
 #include "ReferencedCount.h"

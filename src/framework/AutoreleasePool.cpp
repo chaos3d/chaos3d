@@ -7,13 +7,12 @@
  *
  */
 
-#include "core/AutoreleasePool.h"
-#include "core/ReferencedCount.h"
-#include "Timer.h"
+#include "AutoreleasePool.h"
+#include "ReferencedCount.h"
 
 //using namespace chaos;
 
-Timer::Tick Timer::smTickPerSec = 0;
+//Timer::Tick Timer::smTickPerSec = 0;
 AutoreleasePool::AutoreleasePool() 
 	: mCurBuffer(0), mStackPool(1){
 }

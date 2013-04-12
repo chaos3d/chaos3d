@@ -10,15 +10,11 @@
 #ifndef	_CHAOS_IOMANAGER_H
 #define	_CHAOS_IOMANAGER_H
 
-#include "chaos_config.h"
-#include "core/core.h"
-#include "core/RTTI.h"
+#include "common/common.h"
+#include "common/Singleton.h"
+
 #include <string>
 #include <map>
-
-namespace pcrecpp{
-	class RE;
-};
 
 _CHAOS_BEGIN
 
@@ -31,19 +27,7 @@ Very like file manager, but not limited on file system, but expend to
 network. Every data stream is denoted as a unique string, like URL,
 and io manager will parse it and return a data stream if valid.
 */
-DECLARE_CLASS(IOManager, NilParent);
 class CHAOS_API IOManager : public Singleton<IOManager>{
-
-	DECLARE_NOTCOPYABLE(IOManager);
-	DECLARE_NOTASSIGNABLE(IOManager);
-protected:
-	//default locations, such as app/doc
-	typedef std::multimap<std::string, StreamLocator*>	TFileMap;
-	std::string		mDocPath, mApplicationPath, mExternalPath;
-	TFileMap		mFileLoc;
-	pcrecpp::RE*	mUrlRE;
-
-	void			registerDefaults();
 public:
 	enum{
 		MAX_URL_LEN = 256
@@ -52,19 +36,10 @@ public:
 	IOManager();
 	~IOManager();
 
-	/*
-	to get a data stream by url
-
-	e.g.
-	app://texture.png
-	doc://savefile.xml
-	mem://memdata
-	http://url.com
-
-	*/
-	DataStream*		streamByURL( char const* url );
-	DataStream*		streamByURL( std::string const& url ){
-		return streamByURL( url.c_str() );
+	// to create a data stream from a path
+	DataStream* createStreamByPath(char const* path);
+	DataStream*	createStreamByPath(std::string const& path){
+		return createStreamByPath(path.c_str());
 	}
 	
 	DataSource*		open( char const* url, char const* mode );
@@ -77,6 +52,14 @@ public:
 	std::string applicationPath() const { return mApplicationPath; };
 	// only for sdcard
 	std::string externalPath() const { return mExternalPath; };
+    
+private:
+	//default locations, such as app/doc
+	typedef std::multimap<std::string, StreamLocator*>	TFileMap;
+	std::string		mDocPath, mApplicationPath, mExternalPath;
+	TFileMap		mFileLoc;
+    
+	void			registerDefaults();
 };
 
 _CHAOS_END

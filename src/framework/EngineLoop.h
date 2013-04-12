@@ -16,16 +16,18 @@ public:
     };
     
     EngineLoop(Config const&);
+    virtual ~EngineLoop();
     
 	//EventHandler* getHandler();
 	virtual bool startUp();
 	virtual bool tearDown();
-	virtual void collect();
 	virtual bool loop();
     
 protected:
-    class Internal;
+    virtual void _forcelink();
+	//virtual void collect();
     
+    class Internal;
     Internal* _internal;
 };
 

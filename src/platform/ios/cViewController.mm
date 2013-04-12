@@ -7,10 +7,12 @@
 //
 
 #import "cViewController.h"
+#import <QuartzCore/QuartzCore.h>
 #include "framework/EngineLoop.h"
 
 @interface cViewController (){
     EngineLoop* _engineLoop;
+    CADisplayLink* _displayLink;
 }
 
 @end
@@ -46,12 +48,18 @@
 	// Do any additional setup after loading the view.
     
     // TODO: open lua state
-    if(_engineLoop == nullptr){
+    if(_engineLoop == NULL){
         EngineLoop::Config config;
         config.bootstrap = std::string([self.boostrap UTF8String]);
         
         _engineLoop = new EngineLoop(config);
+        _engineLoop->startUp();
     }
+    
+    _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(frameLoop:)];
+    _displayLink.frameInterval = 1;
+    [_displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+    
 }
 
 - (void)didReceiveMemoryWarning
