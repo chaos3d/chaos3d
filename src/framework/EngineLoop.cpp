@@ -5,6 +5,7 @@
 #include "platform/lplatform.h"
 
 //#include "io/IOManager.h"
+#include "io/wrapper_lua.h"
 
 #include <iostream>
 
@@ -40,9 +41,10 @@ void EngineLoop::_forcelink(){
 }
 
 bool EngineLoop::startUp() {
-    _internal->mainL = lua_open();
-    luaL_openlibs(_internal->mainL);
-    lua_cpcall(_internal->mainL, luaopen_lplatform, 0);
+    lua_State* &L = _internal->mainL;
+    L = lua_open();
+    luaL_openlibs(L);
+    lua_cpcall(L, luaopen_lplatform, 0);
     
 #if 0
     if(IOManager::getInstance() == NULL){
@@ -50,6 +52,11 @@ bool EngineLoop::startUp() {
     }
     
     DataStream* ds = IOManager::getInstance()->createStreamByPath(_internal->config.bootstrap);
+    if(luaio_load(L, ds, ds->where()) != 0){
+        // TODO: error log
+    }
+    
+    lua_pcall(L, 0, LUA_MULTRET, 0);    // TODO: stack trace, initial parameters (how/where to start??)
 #endif
     // temp code for testing
     //luaL_dostring(_internal->mainL, (std::string("require \"") + _internal->config.bootstrap + "\"").c_str());
