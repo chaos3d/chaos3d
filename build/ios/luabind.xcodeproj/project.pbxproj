@@ -27,6 +27,23 @@
 		880DEDCD171BFBF900CBCA7E /* wrapper_base.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 880DEDBC171BFBF900CBCA7E /* wrapper_base.cpp */; };
 		880DEF84171BFC7000CBCA7E /* boost.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 880DEF82171BFC7000CBCA7E /* boost.framework */; };
 		880DEF85171BFC7000CBCA7E /* lua.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 880DEF83171BFC7000CBCA7E /* lua.framework */; };
+		883FC58E171E8BF100AAEA76 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 880DEF8B171BFD8900CBCA7E /* UIKit.framework */; };
+		883FC58F171E8BF100AAEA76 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 880DED4B171BFAFF00CBCA7E /* Foundation.framework */; };
+		883FC590171E8BF100AAEA76 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 880DEF8E171BFD8900CBCA7E /* CoreGraphics.framework */; };
+		883FC596171E8BF100AAEA76 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 883FC594171E8BF100AAEA76 /* InfoPlist.strings */; };
+		883FC598171E8BF100AAEA76 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 883FC597171E8BF100AAEA76 /* main.m */; };
+		883FC59C171E8BF100AAEA76 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 883FC59B171E8BF100AAEA76 /* AppDelegate.m */; };
+		883FC59E171E8BF100AAEA76 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 883FC59D171E8BF100AAEA76 /* Default.png */; };
+		883FC5A0171E8BF100AAEA76 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 883FC59F171E8BF100AAEA76 /* Default@2x.png */; };
+		883FC5A2171E8BF100AAEA76 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 883FC5A1171E8BF100AAEA76 /* Default-568h@2x.png */; };
+		883FC5A6171E8C2E00AAEA76 /* libluabind.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 880DED48171BFAFF00CBCA7E /* libluabind.a */; };
+		883FC5A7171E8C3200AAEA76 /* boost.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 880DEF82171BFC7000CBCA7E /* boost.framework */; };
+		883FC5AE171E8D6300AAEA76 /* TestViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 883FC5AC171E8D6300AAEA76 /* TestViewController.mm */; };
+		883FC5AF171E8D6300AAEA76 /* TestViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 883FC5AD171E8D6300AAEA76 /* TestViewController.xib */; };
+		883FC5B0171E907400AAEA76 /* test_yield.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 880DEF81171BFC2B00CBCA7E /* test_yield.cpp */; };
+		883FC5B1171E90D300AAEA76 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 880DEF51171BFC2B00CBCA7E /* main.cpp */; };
+		883FC5B6171E94E500AAEA76 /* benchmark.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 880DEF4F171BFC2B00CBCA7E /* benchmark.cpp */; };
+		883FC5B8171E96EA00AAEA76 /* lua.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 880DEF83171BFC7000CBCA7E /* lua.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -216,6 +233,23 @@
 		880DEF81171BFC2B00CBCA7E /* test_yield.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = test_yield.cpp; sourceTree = "<group>"; };
 		880DEF82171BFC7000CBCA7E /* boost.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = boost.framework; path = ../../dependency/ios/boost.framework; sourceTree = "<group>"; };
 		880DEF83171BFC7000CBCA7E /* lua.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = lua.framework; path = ../../dependency/ios/lua.framework; sourceTree = "<group>"; };
+		880DEF8B171BFD8900CBCA7E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		880DEF8E171BFD8900CBCA7E /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		880DEFA9171C017400CBCA7E /* luabind-test-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "luabind-test-Info.plist"; path = "luabind/luabind-test-Info.plist"; sourceTree = "<group>"; };
+		883FC58D171E8BF100AAEA76 /* luabind-test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "luabind-test.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		883FC593171E8BF100AAEA76 /* luabind-test-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "luabind-test-Info.plist"; sourceTree = "<group>"; };
+		883FC595171E8BF100AAEA76 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		883FC597171E8BF100AAEA76 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		883FC599171E8BF100AAEA76 /* luabind-test-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "luabind-test-Prefix.pch"; sourceTree = "<group>"; };
+		883FC59A171E8BF100AAEA76 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		883FC59B171E8BF100AAEA76 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		883FC59D171E8BF100AAEA76 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		883FC59F171E8BF100AAEA76 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		883FC5A1171E8BF100AAEA76 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		883FC5AB171E8D6300AAEA76 /* TestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestViewController.h; sourceTree = "<group>"; };
+		883FC5AC171E8D6300AAEA76 /* TestViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TestViewController.mm; sourceTree = "<group>"; };
+		883FC5AD171E8D6300AAEA76 /* TestViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TestViewController.xib; sourceTree = "<group>"; };
+		883FC5B3171E93B000AAEA76 /* luajit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = luajit.framework; path = ../../dependency/ios/luajit.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -229,16 +263,31 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		883FC58A171E8BF100AAEA76 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				883FC5A6171E8C2E00AAEA76 /* libluabind.a in Frameworks */,
+				883FC58E171E8BF100AAEA76 /* UIKit.framework in Frameworks */,
+				883FC58F171E8BF100AAEA76 /* Foundation.framework in Frameworks */,
+				883FC590171E8BF100AAEA76 /* CoreGraphics.framework in Frameworks */,
+				883FC5A7171E8C3200AAEA76 /* boost.framework in Frameworks */,
+				883FC5B8171E96EA00AAEA76 /* lua.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		880DED3F171BFAFF00CBCA7E = {
 			isa = PBXGroup;
 			children = (
+				880DEFA9171C017400CBCA7E /* luabind-test-Info.plist */,
 				880DEF31171BFC2B00CBCA7E /* examples */,
 				880DEF4E171BFC2B00CBCA7E /* test */,
-				880DED59171BFBF900CBCA7E /* luabind */,
-				880DEDAB171BFBF900CBCA7E /* src */,
+				880DED59171BFBF900CBCA7E /* luabind-inc */,
+				880DEDAB171BFBF900CBCA7E /* luabind-src */,
+				883FC591171E8BF100AAEA76 /* luabind-test */,
 				880DED4A171BFAFF00CBCA7E /* Frameworks */,
 				880DED49171BFAFF00CBCA7E /* Products */,
 			);
@@ -248,6 +297,7 @@
 			isa = PBXGroup;
 			children = (
 				880DED48171BFAFF00CBCA7E /* libluabind.a */,
+				883FC58D171E8BF100AAEA76 /* luabind-test.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -255,14 +305,17 @@
 		880DED4A171BFAFF00CBCA7E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				883FC5B3171E93B000AAEA76 /* luajit.framework */,
 				880DEF82171BFC7000CBCA7E /* boost.framework */,
 				880DEF83171BFC7000CBCA7E /* lua.framework */,
 				880DED4B171BFAFF00CBCA7E /* Foundation.framework */,
+				880DEF8B171BFD8900CBCA7E /* UIKit.framework */,
+				880DEF8E171BFD8900CBCA7E /* CoreGraphics.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		880DED59171BFBF900CBCA7E /* luabind */ = {
+		880DED59171BFBF900CBCA7E /* luabind-inc */ = {
 			isa = PBXGroup;
 			children = (
 				880DED5A171BFBF900CBCA7E /* adopt_policy.hpp */,
@@ -305,7 +358,7 @@
 				880DEDA9171BFBF900CBCA7E /* wrapper_base.hpp */,
 				880DEDAA171BFBF900CBCA7E /* yield_policy.hpp */,
 			);
-			name = luabind;
+			name = "luabind-inc";
 			path = ../../external/luabind/luabind;
 			sourceTree = "<group>";
 		};
@@ -358,7 +411,7 @@
 			path = detail;
 			sourceTree = "<group>";
 		};
-		880DEDAB171BFBF900CBCA7E /* src */ = {
+		880DEDAB171BFBF900CBCA7E /* luabind-src */ = {
 			isa = PBXGroup;
 			children = (
 				880DEDAC171BFBF900CBCA7E /* class.cpp */,
@@ -380,7 +433,7 @@
 				880DEDBB171BFBF900CBCA7E /* weak_ref.cpp */,
 				880DEDBC171BFBF900CBCA7E /* wrapper_base.cpp */,
 			);
-			name = src;
+			name = "luabind-src";
 			path = ../../external/luabind/src;
 			sourceTree = "<group>";
 		};
@@ -528,6 +581,33 @@
 			path = ../../external/luabind/test;
 			sourceTree = "<group>";
 		};
+		883FC591171E8BF100AAEA76 /* luabind-test */ = {
+			isa = PBXGroup;
+			children = (
+				883FC592171E8BF100AAEA76 /* Supporting Files */,
+				883FC59A171E8BF100AAEA76 /* AppDelegate.h */,
+				883FC59B171E8BF100AAEA76 /* AppDelegate.m */,
+				883FC5AB171E8D6300AAEA76 /* TestViewController.h */,
+				883FC5AC171E8D6300AAEA76 /* TestViewController.mm */,
+				883FC5AD171E8D6300AAEA76 /* TestViewController.xib */,
+			);
+			path = "luabind-test";
+			sourceTree = "<group>";
+		};
+		883FC592171E8BF100AAEA76 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				883FC593171E8BF100AAEA76 /* luabind-test-Info.plist */,
+				883FC594171E8BF100AAEA76 /* InfoPlist.strings */,
+				883FC597171E8BF100AAEA76 /* main.m */,
+				883FC599171E8BF100AAEA76 /* luabind-test-Prefix.pch */,
+				883FC59D171E8BF100AAEA76 /* Default.png */,
+				883FC59F171E8BF100AAEA76 /* Default@2x.png */,
+				883FC5A1171E8BF100AAEA76 /* Default-568h@2x.png */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -547,6 +627,23 @@
 			productName = luabind;
 			productReference = 880DED48171BFAFF00CBCA7E /* libluabind.a */;
 			productType = "com.apple.product-type.library.static";
+		};
+		883FC58C171E8BF100AAEA76 /* luabind-test */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 883FC5A3171E8BF100AAEA76 /* Build configuration list for PBXNativeTarget "luabind-test" */;
+			buildPhases = (
+				883FC589171E8BF100AAEA76 /* Sources */,
+				883FC58A171E8BF100AAEA76 /* Frameworks */,
+				883FC58B171E8BF100AAEA76 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "luabind-test";
+			productName = "luabind-test";
+			productReference = 883FC58D171E8BF100AAEA76 /* luabind-test.app */;
+			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
@@ -570,9 +667,25 @@
 			projectRoot = "";
 			targets = (
 				880DED47171BFAFF00CBCA7E /* luabind */,
+				883FC58C171E8BF100AAEA76 /* luabind-test */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		883FC58B171E8BF100AAEA76 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				883FC596171E8BF100AAEA76 /* InfoPlist.strings in Resources */,
+				883FC59E171E8BF100AAEA76 /* Default.png in Resources */,
+				883FC5A0171E8BF100AAEA76 /* Default@2x.png in Resources */,
+				883FC5A2171E8BF100AAEA76 /* Default-568h@2x.png in Resources */,
+				883FC5AF171E8D6300AAEA76 /* TestViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		880DED44171BFAFF00CBCA7E /* Sources */ = {
@@ -599,7 +712,31 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		883FC589171E8BF100AAEA76 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				883FC598171E8BF100AAEA76 /* main.m in Sources */,
+				883FC59C171E8BF100AAEA76 /* AppDelegate.m in Sources */,
+				883FC5AE171E8D6300AAEA76 /* TestViewController.mm in Sources */,
+				883FC5B0171E907400AAEA76 /* test_yield.cpp in Sources */,
+				883FC5B1171E90D300AAEA76 /* main.cpp in Sources */,
+				883FC5B6171E94E500AAEA76 /* benchmark.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		883FC594171E8BF100AAEA76 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				883FC595171E8BF100AAEA76 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		880DED54171BFAFF00CBCA7E /* Debug */ = {
@@ -619,6 +756,8 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
+					LUABIND_NO_ERROR_CHECKING,
+					LUABIND_DONT_COPY_STRINGS,
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
@@ -703,6 +842,45 @@
 			};
 			name = Release;
 		};
+		883FC5A4171E8BF100AAEA76 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../dependency/ios\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "luabind-test/luabind-test-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "luabind-test/luabind-test-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		883FC5A5171E8BF100AAEA76 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../dependency/ios\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "luabind-test/luabind-test-Prefix.pch";
+				INFOPLIST_FILE = "luabind-test/luabind-test-Info.plist";
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -723,6 +901,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		883FC5A3171E8BF100AAEA76 /* Build configuration list for PBXNativeTarget "luabind-test" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				883FC5A4171E8BF100AAEA76 /* Debug */,
+				883FC5A5171E8BF100AAEA76 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};
