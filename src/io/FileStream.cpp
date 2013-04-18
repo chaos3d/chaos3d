@@ -8,15 +8,14 @@
  */
 
 #include "io/FileStream.h"
-#include "core/core.h"
 
 //using namespace chaos;
 
 FileStream::FileStream( char const* filename ) : mName(filename){
 	mFile = fopen (filename , "rb");
 
-	if( mFile == 0 )
-		LOG("Unable to open file: %s", filename);
+	//if( mFile == 0 )
+	//	LOG("Unable to open file: %s", filename);
 }
 
 FileStream::~FileStream(){

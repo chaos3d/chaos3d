@@ -13,6 +13,7 @@
 		881D4DB517043C43007299A2 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 881D4DB417043C43007299A2 /* GLKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		882D75471716B0C4002E1BBD /* cAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 882D75461716B0C4002E1BBD /* cAppDelegate.m */; };
 		882D75A61717CA4F002E1BBD /* lplatform.m in Sources */ = {isa = PBXBuildFile; fileRef = 882D75A51717CA4F002E1BBD /* lplatform.m */; };
+		883FC5C0171FF8FF00AAEA76 /* boost.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 883FC5BF171FF8FE00AAEA76 /* boost.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -38,6 +39,7 @@
 		882D75461716B0C4002E1BBD /* cAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = cAppDelegate.m; sourceTree = "<group>"; };
 		882D75A41717C9F6002E1BBD /* lplatform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lplatform.h; path = ../../src/platform/lplatform.h; sourceTree = "<group>"; };
 		882D75A51717CA4F002E1BBD /* lplatform.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = lplatform.m; path = ../../src/platform/ios/lplatform.m; sourceTree = "<group>"; };
+		883FC5BF171FF8FE00AAEA76 /* boost.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = boost.framework; path = ../../dependency/ios/boost.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,6 +50,7 @@
 				881D4DB517043C43007299A2 /* GLKit.framework in Frameworks */,
 				881D4D761702EB41007299A2 /* UIKit.framework in Frameworks */,
 				881D4D681702E492007299A2 /* Foundation.framework in Frameworks */,
+				883FC5C0171FF8FF00AAEA76 /* boost.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -76,6 +79,7 @@
 		881D4D661702E492007299A2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				883FC5BF171FF8FE00AAEA76 /* boost.framework */,
 				881D4DB417043C43007299A2 /* GLKit.framework */,
 				881D4D751702EB41007299A2 /* UIKit.framework */,
 				881D4D671702E492007299A2 /* Foundation.framework */,
@@ -234,6 +238,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DSTROOT = /tmp/platform_ios.dst;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../dependency/ios\"",
+				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -244,6 +252,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DSTROOT = /tmp/platform_ios.dst;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../dependency/ios\"",
+				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;

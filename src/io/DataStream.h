@@ -10,19 +10,14 @@
 #ifndef _CHAOS_DATASTTREAM_H
 #define _CHAOS_DATASTTREAM_H
 
-#include "chaos_config.h"
-#include "core/core.h"
-#include "core/RTTI.h"
+#include "common/common.h"
+#include "common/ReferencedCount.h"
 
 _CHAOS_BEGIN
 
 class DeSerialization;
 
-DECLARE_CLASS(DataStream, NilParent);
 class CHAOS_API DataStream : public ReferencedCount{
-
-	DECLARE_NOTCOPYABLE(DataStream);
-	DECLARE_NOTASSIGNABLE(DataStream);
 
 public:
 	enum{
@@ -42,11 +37,9 @@ public:
 	virtual void	close() = 0;
 	virtual char const* where() = 0;
 
-	virtual DeSerialization* asDeSerialization();
+	//virtual DeSerialization* asDeSerialization();
 
 };
-
-TYPE_RET_REF( DataStream );
 
 _CHAOS_END
 

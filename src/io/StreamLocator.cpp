@@ -11,43 +11,62 @@
 #include "io/FileStream.h"
 #include "io/PkgChunkStream.h"
 #include "io/IOManager.h"
-#include "core/utils.h"
-#include "pcre/pcrecpp.h"
+
+#include "boost/filesystem.hpp"
 
 using namespace std;
+using namespace boost::filesystem;
+
+namespace io{
+    
+	class CHAOS_PRIVATE PkgFileLocator : public StreamLocator{
+	protected:
+		typedef std::multimap<size_t, long>	TFileHash;
+        
+		TFileHash		mHash;
+		std::string		mFilename;
+		DataStream*		mPkgFile;
+        
+	public:
+		PkgFileLocator( const char* pkg );
+		~PkgFileLocator();
+        
+		virtual bool	exist( const char* path );
+		virtual DataStream*	stream( const char* path);
+		virtual std::string	url( const char* path);
+	};
+    
+	class CHAOS_PRIVATE DirLocator : public StreamLocator{
+	protected:
+        path _base;
+        
+	public:
+		DirLocator( const char* base ) : _base(base){};
+        
+        // TODO: checking relative path
+		virtual bool exist( const char* cpath){
+            path base(_base);
+            return exists(base+=string(cpath));
+        }
+        
+		virtual DataStream*	createStream(const char* cpath){
+            path base(_base);
+            return new FileStream( (base+=string(cpath)).string().c_str() );
+        }
+
+	};
+    
+};
+
 //using namespace chaos;
 using namespace io;
 
-#ifdef	WIN32
-static pcrecpp::RE s_fileRE("/");	// to replace '/' to '\'
-#endif
-
-bool DirLocator::exist(const char *cpath){
-	string path(mBase + cpath);
-#ifdef	WIN32
-	// translate '/' to '\'
-	s_fileRE.GlobalReplace( "\\\\", &path );
-#endif
-
-	return FileStream::exist( path.c_str() );
+bool IOManager::addDirLocator(char const* base, int priority){
+    addLocator(new DirLocator(base));
+    return true;
 }
 
-DataStream* DirLocator::stream(const char *cpath){
-	string path(mBase + cpath);
-#ifdef	WIN32
-	// translate '/' to '\'
-	s_fileRE.GlobalReplace( "\\\\", &path );
-#endif
-
-	DataStream* ds = new FileStream( path.c_str() );
-	ds->autorelease();
-	return ds;
-}
-
-std::string	DirLocator::url( const char* path){
-	return mBase + path;
-}
-
+#if 0
 ///-----------------------------------------------------
 ///-----------------------------------------------------
 PkgFileLocator::~PkgFileLocator(){
@@ -152,3 +171,4 @@ DataStream* PkgFileLocator::stream(const char *path){
 std::string	PkgFileLocator::url( const char* path){
 	return mFilename;
 }
+#endif

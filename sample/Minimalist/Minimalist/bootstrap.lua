@@ -1,8 +1,7 @@
-print "hello world"
-
--- the following is beyond minimum
-require "lyield"
-
+print "hello world2"
+print(tostring(jit and jit.version))
+print(tostring(coroutine.coco))
+coroutine.yield();
 -- this is due to a hack in the engine
 lyield.resume(function()
 local idx = 10

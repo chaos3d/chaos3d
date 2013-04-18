@@ -10,9 +10,8 @@
 #ifndef _CHAOS_DATASOURCE_H
 #define _CHAOS_DATASOURCE_H
 
-#include "chaos_config.h"
-#include "core/core.h"
-#include "core/RTTI.h"
+#include "common/common.h"
+#include "common/ReferencedCount.h"
 
 _CHAOS_BEGIN
 
@@ -22,14 +21,7 @@ class Serialization;
 /*
 to write data into a source
 */
-DECLARE_CLASS(DataSource, NilParent);
-
 class DataSource : public ReferencedCount{
-
-	DECLARE_NOTCOPYABLE(DataSource);
-	DECLARE_NOTASSIGNABLE(DataSource);
-protected:
-
 public:
 	enum{
 		Seek_Cur,
@@ -49,8 +41,6 @@ public:
 	
 	virtual Serialization* asSerialization();
 };
-
-TYPE_RET_REF(DataSource);
 
 _CHAOS_END
 

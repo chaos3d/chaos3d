@@ -9,6 +9,7 @@
 #import "cViewController.h"
 #import <QuartzCore/QuartzCore.h>
 #include "framework/EngineLoop.h"
+#include "io/IOManager.h"
 
 @interface cViewController (){
     EngineLoop* _engineLoop;
@@ -46,6 +47,10 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    
+    // TODO: to put in a better place
+    IOManager* io = new IOManager();
+    io->addDirLocator([[[[NSBundle mainBundle] bundlePath] stringByAppendingString: @"/"] UTF8String]);
     
     // TODO: open lua state
     if(_engineLoop == NULL){

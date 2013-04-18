@@ -10,7 +10,7 @@
 #ifndef	_CHAOS_FILESTREAM_H
 #define	_CHAOS_FILESTREAM_H
 
-#include "chaos_config.h"
+#include "common/common.h"
 #include "DataStream.h"
 #include <cstdio>
 #include <string>

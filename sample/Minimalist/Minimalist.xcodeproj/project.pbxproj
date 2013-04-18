@@ -26,8 +26,8 @@
 		882D759C1716B612002E1BBD /* bootstrap.lua in Resources */ = {isa = PBXBuildFile; fileRef = 882D759B1716B611002E1BBD /* bootstrap.lua */; };
 		882D75AA1717E341002E1BBD /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 882D75A91717E341002E1BBD /* QuartzCore.framework */; };
 		882D75AE1717E436002E1BBD /* boost.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 882D75AB1717E434002E1BBD /* boost.framework */; };
-		882D75AF1717E436002E1BBD /* lua.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 882D75AC1717E435002E1BBD /* lua.framework */; };
 		882D75B01717E436002E1BBD /* lyield.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 882D75AD1717E435002E1BBD /* lyield.framework */; };
+		883FC5BC171FE67C00AAEA76 /* luajit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 883FC5B9171FE3D800AAEA76 /* luajit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -100,6 +100,7 @@
 		882D75AB1717E434002E1BBD /* boost.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = boost.framework; path = ../../dependency/ios/boost.framework; sourceTree = "<group>"; };
 		882D75AC1717E435002E1BBD /* lua.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = lua.framework; path = ../../dependency/ios/lua.framework; sourceTree = "<group>"; };
 		882D75AD1717E435002E1BBD /* lyield.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = lyield.framework; path = ../../dependency/ios/lyield.framework; sourceTree = "<group>"; };
+		883FC5B9171FE3D800AAEA76 /* luajit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = luajit.framework; path = ../../dependency/ios/luajit.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,8 +117,8 @@
 				882D755D1716B302002E1BBD /* OpenGLES.framework in Frameworks */,
 				882D75AA1717E341002E1BBD /* QuartzCore.framework in Frameworks */,
 				882D75AE1717E436002E1BBD /* boost.framework in Frameworks */,
-				882D75AF1717E436002E1BBD /* lua.framework in Frameworks */,
 				882D75B01717E436002E1BBD /* lyield.framework in Frameworks */,
+				883FC5BC171FE67C00AAEA76 /* luajit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -146,6 +147,7 @@
 		882D75531716B302002E1BBD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				883FC5B9171FE3D800AAEA76 /* luajit.framework */,
 				882D75AB1717E434002E1BBD /* boost.framework */,
 				882D75AC1717E435002E1BBD /* lua.framework */,
 				882D75AD1717E435002E1BBD /* lyield.framework */,
@@ -198,7 +200,7 @@
 			isa = PBXGroup;
 			children = (
 				882D758D1716B3FC002E1BBD /* libengine2d.a */,
-				882D758F1716B3FC002E1BBD /* libengine2d copy.a */,
+				882D758F1716B3FC002E1BBD /* libengine2d-jit.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -270,10 +272,10 @@
 			remoteRef = 882D758C1716B3FC002E1BBD /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		882D758F1716B3FC002E1BBD /* libengine2d copy.a */ = {
+		882D758F1716B3FC002E1BBD /* libengine2d-jit.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = "libengine2d copy.a";
+			path = "libengine2d-jit.a";
 			remoteRef = 882D758E1716B3FC002E1BBD /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};

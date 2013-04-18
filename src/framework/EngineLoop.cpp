@@ -4,8 +4,9 @@
 #include "lua/lua.hpp"
 #include "platform/lplatform.h"
 
-//#include "io/IOManager.h"
+#include "io/IOManager.h"
 #include "io/wrapper_lua.h"
+#include "io/DataStream.h"
 
 #include <iostream>
 
@@ -36,7 +37,7 @@ EngineLoop::~EngineLoop() {
 
 void EngineLoop::_forcelink(){
     static int (*__lualibs[])(lua_State*) = {
-        luaopen_lyield,
+        //luaopen_lyield,
     };
 }
 
@@ -45,23 +46,32 @@ bool EngineLoop::startUp() {
     L = lua_open();
     luaL_openlibs(L);
     lua_cpcall(L, luaopen_lplatform, 0);
-    
-#if 0
+    lua_cpcall(L, luaopen_lyield, 0);
+
+#if 1
+    DataStream* ds = NULL;
     if(IOManager::getInstance() == NULL){
-        new IOManager();
+        //TODO: logging error
+    }else
+        ds = IOManager::getInstance()->createStreamByPath(_internal->config.bootstrap + ".lua");
+    if(ds != NULL){
+        if(luaio_load(L, ds, ds->where()) != 0){
+            // TODO: error log
+        }else{
+            lua_pushcfunction(L, lyield_resume);
+            lua_insert(L, lua_gettop(L)-1);
+            lua_pcall(L, 1, LUA_MULTRET, 0);    // push the function 
+        }
     }
-    
-    DataStream* ds = IOManager::getInstance()->createStreamByPath(_internal->config.bootstrap);
-    if(luaio_load(L, ds, ds->where()) != 0){
-        // TODO: error log
-    }
-    
-    lua_pcall(L, 0, LUA_MULTRET, 0);    // TODO: stack trace, initial parameters (how/where to start??)
-#endif
+#else
     // temp code for testing
     //luaL_dostring(_internal->mainL, (std::string("require \"") + _internal->config.bootstrap + "\"").c_str());
-    luaL_dostring(_internal->mainL, "require 'bootstrap'");
+    luaL_loadstring(_internal->mainL, "require 'bootstrap'");
+    lua_pushcfunction(L, lyield_resume);
+    lua_insert(L, lua_gettop(L)-1);
+    lua_pcall(L, 1, LUA_MULTRET, 0);
     printf("%s", lua_tostring(_internal->mainL, -1));
+#endif
     return true;
 }
 

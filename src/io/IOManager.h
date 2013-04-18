@@ -15,6 +15,8 @@
 
 #include <string>
 #include <map>
+#include <vector>
+#include "boost/smart_ptr.hpp"
 
 _CHAOS_BEGIN
 
@@ -46,20 +48,27 @@ public:
 
 	std::string		nameByURL( char const* url );
 
-	void	addPackage( char const* base, char const* url );
-
 	std::string	docPath() const { return mDocPath; };
 	std::string applicationPath() const { return mApplicationPath; };
 	// only for sdcard
 	std::string externalPath() const { return mExternalPath; };
+
+    // adding locators
+    bool addLocator(StreamLocator*);
+    bool addPkgLocator(char const*, int priority = 0);
+    bool addDirLocator(char const*, int priority = 0);
+    bool addZipLocator(char const*, int priority = 0);
     
 private:
 	//default locations, such as app/doc
-	typedef std::multimap<std::string, StreamLocator*>	TFileMap;
+	//typedef std::multimap<std::string, StreamLocator*>	TFileMap;
+	//TFileMap		mFileLoc;
 	std::string		mDocPath, mApplicationPath, mExternalPath;
-	TFileMap		mFileLoc;
     
-	void			registerDefaults();
+    typedef std::vector<boost::shared_ptr<StreamLocator> > TLocator;
+    TLocator _locators;
+    
+	//void			registerDefaults();
 };
 
 _CHAOS_END

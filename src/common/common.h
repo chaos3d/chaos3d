@@ -32,5 +32,6 @@
 #endif
 
 #include <cstdint>
+#include <cstdlib>
 
 #endif

@@ -10,7 +10,7 @@
 #ifndef	_CHAOS_STREAMLOCATOR_H
 #define	_CHAOS_STREAMLOCATOR_H
 
-#include "chaos_config.h"
+#include "common/common.h"
 #include <string>
 #include <map>
 
@@ -18,54 +18,19 @@ _CHAOS_BEGIN
 
 class DataStream;
 
+// how to find a stream
 class CHAOS_API StreamLocator{
-	DECLARE_NOTCOPYABLE(StreamLocator);
-	DECLARE_NOTASSIGNABLE(StreamLocator);
 public:
 	StreamLocator(){};
 	virtual ~StreamLocator(){};
 
+    virtual int priority(){ return 0; };
+    
 	// check if it exists in the locator
-	virtual bool	exist( const char* path ) = 0;
+	virtual bool exist(const char* path) = 0;
 
-	// get the stream
-	virtual DataStream*	stream( const char* url) = 0;		
-
-	// get the universal name
-	virtual std::string	url( const char* path) = 0;
-};
-
-namespace io{
-
-	class CHAOS_PRIVATE PkgFileLocator : public StreamLocator{
-	protected:
-		typedef std::multimap<size_t, long>	TFileHash;
-
-		TFileHash		mHash;
-		std::string		mFilename;
-		DataStream*		mPkgFile;
-
-	public:
-		PkgFileLocator( const char* pkg );
-		~PkgFileLocator();
-
-		virtual bool	exist( const char* path );
-		virtual DataStream*	stream( const char* path);
-		virtual std::string	url( const char* path);
-	};
-
-	class CHAOS_PRIVATE DirLocator : public StreamLocator{
-	protected:
-		std::string		mBase;
-
-	public:
-		DirLocator( const char* base ) : mBase(base){};
-
-		virtual bool	exist( const char* path );
-		virtual DataStream*	stream( const char* path);
-		virtual std::string	url( const char* path);
-	};
-
+	// create a stream
+	virtual DataStream*	createStream(const char* path) = 0;
 };
 
 _CHAOS_END

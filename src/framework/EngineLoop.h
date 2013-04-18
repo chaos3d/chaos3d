@@ -22,7 +22,7 @@ public:
 	virtual bool startUp();
 	virtual bool tearDown();
 	virtual bool loop();
-    
+
 protected:
     virtual void _forcelink();
 	//virtual void collect();

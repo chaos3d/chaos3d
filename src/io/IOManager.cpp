@@ -8,46 +8,28 @@
  */
 
 #include "io/IOManager.h"
-#include "script/bind.h"
-#include "pcre/pcrecpp.h"
 
 #include "io/StreamLocator.h"
-#include "io/APKAssetsLocator.h"
-#include "io/FileStream.h"
-#include "io/FileSource.h"
-#include "io/MemoryDataStream.h"
-#include "io/GlobalMDSManager.h"
 
 #include "io/DataStream.h"
 #include "io/DataSource.h"
-#include "io/DataStreamFactory.h"
 
+#include <algorithm>
+/*
 #ifdef	WIN32
 #include <windows.h>
 #else
 #include <unistd.h>
 #include <dirent.h>
 #endif
-
+*/
 //using namespace chaos;
 using namespace std;
 
-IMPLEMENT_CLASS(IOManager, LIB_DOMAIN)
-IMPLEMENT_FUNC(addPackage, &IOManager::addPackage)
-IMPLEMENT_FUNC(streamByURL, (DataStream* (IOManager::*)(char const*))&IOManager::streamByURL)
-IMPLEMENT_FUNC(open, &IOManager::open)
-IMPLEMENT_FUNC(path, &IOManager::nameByURL)
-IMPLEMENT_PROP(docPath, 0, &IOManager::docPath)
-IMPLEMENT_PROP(applicationPath, 0, &IOManager::applicationPath)
-IMPLEMENT_END;
-
-IOManager::IOManager() : mUrlRE( new pcrecpp::RE("(\\w+)://(.+)$"))
-{
-	registerDefaults();
+IOManager::IOManager(){
 }
 
 IOManager::~IOManager(){
-	delete mUrlRE;
 }
 
 #ifdef	WIN32
@@ -130,15 +112,35 @@ void IOManager::registerDefaults(){
 }
 
 #elif !defined(CHAOS_OSX)	// defined in mm file
-void IOManager::registerDefaults(){
-}
+//void IOManager::registerDefaults(){
+//}
 #endif
 
-void IOManager::addPackage( char const* base, char const* url ){
-	mFileLoc.insert( pair<string,StreamLocator*>( base, 
-		new io::PkgFileLocator( url ) ));
+bool IOManager::addLocator(StreamLocator* loc){
+//	mFileLoc.insert( pair<string,StreamLocator*>( base,
+//		new io::PkgFileLocator( url ) ));
+    typedef boost::shared_ptr<StreamLocator> type;
+    class locator_compare{
+    public:
+        bool operator()(type const& lhs, type const& rhs) const{
+            return lhs->priority() < rhs->priority();
+        }
+    };
+    _locators.push_back(type(loc));
+    sort(_locators.begin(), _locators.end(), locator_compare());
+    return true;
 }
 
+DataStream* IOManager::createStreamByPath(char const* path){
+    DataStream* ds = NULL;
+    for(TLocator::iterator it = _locators.begin(); it != _locators.end(); ++it){
+        if((*it)->exist(path))
+            ds = (*it)->createStream(path);
+    }
+    return ds;
+}
+
+#if 0
 std::string IOManager::nameByURL( char const* url ){
 	string prefix, post;
 
@@ -192,9 +194,11 @@ DataStream* IOManager::streamByURL( char const* url ){
 	return ds;
 }
 
+                   /*
 DataSource* IOManager::open( char const* url, char const* mode ){
 	FileSource* file = new FileSource( nameByURL(url).c_str(), mode );
 	file->autorelease();
 	return file;
 }
-
+*/
+#endif
