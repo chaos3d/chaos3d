@@ -1,15 +1,18 @@
-#include "2d/CameraNode.h"
-#include "2d/Transform.h"
+#include "CameraNode.h"
+#include "Transform.h"
+#include "Camera.h"
 
 //using namespace chaos;
 
-IMPLEMENT_CLASS(CameraNode, LIB_DOMAIN)
-IMPLEMENT_END;
-
 CameraNode::~CameraNode(){
-	setTransform( new Transform(this) );
+	SAFE_DELETE0(_camera);
 }
 
+void CameraNode::doRender() {
+    _camera->render();
+}
+
+#if 0
 void CameraNode::update(){
 	Scene2DNode::update();
 
@@ -23,3 +26,5 @@ Matrix4f const& CameraNode::getTransformMatrix() const{
 	else
 		return mTransform->getMatrix();
 };
+
+#endif

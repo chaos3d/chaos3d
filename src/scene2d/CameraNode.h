@@ -10,42 +10,44 @@
 #ifndef	_CHAOS_CAMERANODE_H
 #define	_CHAOS_CAMERANODE_H
 
-#include "chaos_config.h"
+#include "common/common.h"
 #include "Scene2DNode.h"
-
-#include "core/math.h"
-#include "Transform.h"
 
 _CHAOS_BEGIN
 
-DECLARE_CLASS(CameraNode, Scene2DNode);
+class Camera;
+
 class CameraNode : public Scene2DNode{
-	DYNAMIC_CLASS(CameraNode);
-
-protected:
-	Matrix4f	mProjMatrix;
-	Matrix4f	mProjMatrixInv;
-	Matrix4f	mTransformInv;
-
 public:
 	CameraNode(std::string const& tag)
-		:Scene2DNode(tag),
-		mProjMatrix(Matrix4f::IDENTITY),
-		mProjMatrixInv(Matrix4f::IDENTITY),
-		mTransformInv(Matrix4f::IDENTITY)
+		:Scene2DNode(tag)
 	{};
 
 	virtual ~CameraNode();
 
+    //void createCamera();
+    void setCamera(Camera*);
+    Camera* getCamera() const { return _camera; }
+    
+    virtual void doRender();
+    
+#if 0
+protected:
 	virtual void unproject(Vector3f& viewPos, cRect const& vp) const = 0;
 	virtual void update();
-
+    
 	Matrix4f const& getProjectiveMatrix() const{ return mProjMatrix; };
 	Matrix4f const& getTransformMatrix() const;
 	Matrix4f const& getTransformInvMatrix() const { return mTransformInv;};
+    
+	Matrix4f	mProjMatrix;
+	Matrix4f	mProjMatrixInv;
+	Matrix4f	mTransformInv;
+#endif
+    
+protected:
+    Camera* _camera;
 };
-
-TYPE_RET_REF(CameraNode);
 
 _CHAOS_END
 

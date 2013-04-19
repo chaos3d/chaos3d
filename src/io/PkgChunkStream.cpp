@@ -7,8 +7,8 @@
  *
  */
 
+#include "common/common.h"
 #include "io/PkgChunkStream.h"
-#include "core/core.h"
 
 //using namespace chaos;
 

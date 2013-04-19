@@ -235,7 +235,6 @@
 		880DEF83171BFC7000CBCA7E /* lua.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = lua.framework; path = ../../dependency/ios/lua.framework; sourceTree = "<group>"; };
 		880DEF8B171BFD8900CBCA7E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		880DEF8E171BFD8900CBCA7E /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		880DEFA9171C017400CBCA7E /* luabind-test-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "luabind-test-Info.plist"; path = "luabind/luabind-test-Info.plist"; sourceTree = "<group>"; };
 		883FC58D171E8BF100AAEA76 /* luabind-test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "luabind-test.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		883FC593171E8BF100AAEA76 /* luabind-test-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "luabind-test-Info.plist"; sourceTree = "<group>"; };
 		883FC595171E8BF100AAEA76 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -282,7 +281,6 @@
 		880DED3F171BFAFF00CBCA7E = {
 			isa = PBXGroup;
 			children = (
-				880DEFA9171C017400CBCA7E /* luabind-test-Info.plist */,
 				880DEF31171BFC2B00CBCA7E /* examples */,
 				880DEF4E171BFC2B00CBCA7E /* test */,
 				880DED59171BFBF900CBCA7E /* luabind-inc */,

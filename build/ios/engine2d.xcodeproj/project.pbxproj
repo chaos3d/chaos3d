@@ -18,6 +18,8 @@
 		883FC5BD171FF2EB00AAEA76 /* IOManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D74BC171285A9002E1BBD /* IOManager.cpp */; };
 		883FC5C1171FF90D00AAEA76 /* StreamLocator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D74D3171285A9002E1BBD /* StreamLocator.cpp */; };
 		883FC5C2171FFA7600AAEA76 /* FileStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D74B7171285A9002E1BBD /* FileStream.cpp */; };
+		883FC5C317211B1200AAEA76 /* PkgChunkStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D74C3171285A9002E1BBD /* PkgChunkStream.cpp */; };
+		883FC5CF17211EF700AAEA76 /* libluabind.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 883FC5CA17211ECD00AAEA76 /* libluabind.a */; };
 		88B24DA51711FBF400F7C2CC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88B24DA41711FBF400F7C2CC /* Foundation.framework */; };
 /* End PBXBuildFile section */
 
@@ -63,6 +65,27 @@
 			proxyType = 1;
 			remoteGlobalIDString = 88B24CF1170EC86800F7C2CC;
 			remoteInfo = scene2d;
+		};
+		883FC5C917211ECD00AAEA76 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 883FC5C417211ECC00AAEA76 /* luabind.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 880DED48171BFAFF00CBCA7E;
+			remoteInfo = luabind;
+		};
+		883FC5CB17211ECD00AAEA76 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 883FC5C417211ECC00AAEA76 /* luabind.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 883FC58D171E8BF100AAEA76;
+			remoteInfo = "luabind-test";
+		};
+		883FC5CD17211EED00AAEA76 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 883FC5C417211ECC00AAEA76 /* luabind.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 880DED47171BFAFF00CBCA7E;
+			remoteInfo = luabind;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -164,6 +187,7 @@
 		882D75101716AB7F002E1BBD /* lyield.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = lyield.framework; path = ../../dependency/ios/lyield.framework; sourceTree = "<group>"; };
 		882D75A01716BD30002E1BBD /* EngineLoop.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EngineLoop.cpp; sourceTree = "<group>"; };
 		882D75A71717E336002E1BBD /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		883FC5C417211ECC00AAEA76 /* luabind.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = luabind.xcodeproj; sourceTree = "<group>"; };
 		88B24DA11711FBF400F7C2CC /* libengine2d.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libengine2d.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		88B24DA41711FBF400F7C2CC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		88B24DB217120F1C00F7C2CC /* scene2d.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = scene2d.xcodeproj; sourceTree = SOURCE_ROOT; };
@@ -176,6 +200,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				883FC5CF17211EF700AAEA76 /* libluabind.a in Frameworks */,
 				882D748017121851002E1BBD /* libscene2d.a in Frameworks */,
 				882D748117121851002E1BBD /* libwm4-algebra.a in Frameworks */,
 				88B24DA51711FBF400F7C2CC /* Foundation.framework in Frameworks */,
@@ -372,9 +397,19 @@
 			path = ../../src/framework;
 			sourceTree = "<group>";
 		};
+		883FC5C517211ECC00AAEA76 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				883FC5CA17211ECD00AAEA76 /* libluabind.a */,
+				883FC5CC17211ECD00AAEA76 /* luabind-test.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		88B24D981711FBF400F7C2CC = {
 			isa = PBXGroup;
 			children = (
+				883FC5C417211ECC00AAEA76 /* luabind.xcodeproj */,
 				88B24DB417120F3700F7C2CC /* wm4-algebra.xcodeproj */,
 				88B24DB317120F2800F7C2CC /* re.xcodeproj */,
 				88B24DB217120F1C00F7C2CC /* scene2d.xcodeproj */,
@@ -418,6 +453,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				883FC5CE17211EED00AAEA76 /* PBXTargetDependency */,
 				882D747A17121845002E1BBD /* PBXTargetDependency */,
 				882D747C17121845002E1BBD /* PBXTargetDependency */,
 				882D747E17121845002E1BBD /* PBXTargetDependency */,
@@ -447,6 +483,10 @@
 			productRefGroup = 88B24DA21711FBF400F7C2CC /* Products */;
 			projectDirPath = "";
 			projectReferences = (
+				{
+					ProductGroup = 883FC5C517211ECC00AAEA76 /* Products */;
+					ProjectRef = 883FC5C417211ECC00AAEA76 /* luabind.xcodeproj */;
+				},
 				{
 					ProductGroup = 882D7469171216ED002E1BBD /* Products */;
 					ProjectRef = 88B24DB317120F2800F7C2CC /* re.xcodeproj */;
@@ -489,6 +529,20 @@
 			remoteRef = 882D7471171216ED002E1BBD /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		883FC5CA17211ECD00AAEA76 /* libluabind.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libluabind.a;
+			remoteRef = 883FC5C917211ECD00AAEA76 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		883FC5CC17211ECD00AAEA76 /* luabind-test.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = "luabind-test.app";
+			remoteRef = 883FC5CB17211ECD00AAEA76 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -502,6 +556,7 @@
 				883FC5BD171FF2EB00AAEA76 /* IOManager.cpp in Sources */,
 				883FC5C1171FF90D00AAEA76 /* StreamLocator.cpp in Sources */,
 				883FC5C2171FFA7600AAEA76 /* FileStream.cpp in Sources */,
+				883FC5C317211B1200AAEA76 /* PkgChunkStream.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -522,6 +577,11 @@
 			isa = PBXTargetDependency;
 			name = scene2d;
 			targetProxy = 882D747D17121845002E1BBD /* PBXContainerItemProxy */;
+		};
+		883FC5CE17211EED00AAEA76 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = luabind;
+			targetProxy = 883FC5CD17211EED00AAEA76 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
