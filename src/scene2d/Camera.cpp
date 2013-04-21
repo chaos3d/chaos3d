@@ -123,6 +123,24 @@ void Camera::setOrtho(const float width,const float height,const float near,cons
 	setOrthoProj( 0.f, 0.f, width, height, near, far);
 }
 
-void Camera::render(){
+class CHAOS_PRIVATE CameraRenderer{
+public:
     
+	inline int operator() (Scene2DNode* node) const{
+		//if( node->getSprite() != 0 )
+		//	mRM->drawSprite( node->getSprite() );
+        return Scene2DNode::DFS_CONTINUE;
+	};
+};
+
+void Camera::render(){
+    if(_target == NULL){
+        return; // TODO: log
+    }
+    
+    Scene2DNode* root = getRootNode();
+    
+    _target->bind();
+    root->dfs(CameraRenderer());
+    _target->flush();
 }

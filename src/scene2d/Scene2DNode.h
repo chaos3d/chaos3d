@@ -188,9 +188,6 @@ public:
 	Scene2DNode*&	nextSibling() { return mNextSibling; };
 	Scene2DNode*&	preSibling() { return mPreSibling; };
 
-	// pre-order transverse taking the current node as root
-	template<class Visitor> void visit(Visitor&);
-    
 	// Rendering
 	void		setSprite(Sprite*);
 	Sprite*		getSprite() const { return mSprite; };
@@ -202,6 +199,65 @@ public:
 	virtual void		update();
 	virtual void		postUpdate(){};
 
+    // depth-first/pre-order iterating all nodes
+    // if the visitor returns:
+    enum{
+        DFS_CONTINUE,   // continue to next node
+        DFS_PRUNE,      // stop visiting the children
+        DFS_STOP,       // stop and return the node
+    };
+    // if all nodes are visited, it returns null
+    template<class F>
+    Scene2DNode* dfs( F const& visitor ){
+        int result = visitor(this);
+        
+        if(result != DFS_STOP)
+            return this;
+        
+        if(mFirstChild == 0)
+            return NULL;
+        
+        std::stack<Scene2DNode*> nodes;
+        nodes.push( mFirstChild );
+        
+        Scene2DNode* node = nodes.top();
+        
+        do{
+            result = visitor( node );
+            
+            if(result == DFS_STOP)
+                return node;
+            
+            nodes.pop();
+            if( node->mNextSibling != 0 )
+                nodes.push( node->mNextSibling );
+            
+            if(result != DFS_PRUNE && node->mFirstChild != 0 )
+                nodes.push( node->mFirstChild );
+            
+            if( nodes.empty() )
+                break;
+            else
+                node = nodes.top();
+        }while(1);
+        return NULL;
+    }
+
+    class Updater{
+    public:
+        inline int operator() (Scene2DNode* node) const{
+            node->update();
+            return DFS_CONTINUE;
+        };
+    };
+    
+    class ClearFlag{
+    public:
+        inline int operator() (Scene2DNode* node) const{
+            node->clearFlag();
+            return DFS_CONTINUE;
+        };
+    };
 };
 
 /*
@@ -286,31 +342,6 @@ void Scene2DNode::sort(F const& less){
 
 		}
 	}
-}
-
-template<class Visitor>
-void Scene2DNode::visit(Visitor& visitor) {
-    std::stack<Scene2DNode*> nodes;
-	nodes.push( this );
-    
-	Scene2DNode* node = nodes.top();
-    
-	do{
-		visitor( node );
-        
-		nodes.pop();
-		if( node->nextSibling() != 0 )
-			nodes.push( node->nextSibling() );
-            
-        if( node->firstChild() != 0 )
-            nodes.push( node->firstChild() );
-            
-        if( nodes.empty() )
-            break;
-        else
-            node = nodes.top();
-        
-    }while(1);
 }
     
 _CHAOS_END
