@@ -8,8 +8,10 @@
 
 #import "cViewController.h"
 #import <QuartzCore/QuartzCore.h>
+
 #include "framework/EngineLoop.h"
 #include "io/IOManager.h"
+#include "boost/bind.hpp"
 
 @interface cViewController (){
     EngineLoop* _engineLoop;
@@ -17,6 +19,10 @@
 }
 
 @end
+
+void testCallback(cViewController* view){
+    NSLog(@"callback %@", view);
+}
 
 @implementation cViewController
 
@@ -56,7 +62,7 @@
     if(_engineLoop == NULL){
         EngineLoop::Config config;
         config.bootstrap = std::string([self.boostrap UTF8String]);
-        
+        config.startUp = boost::bind(testCallback, self);
         _engineLoop = new EngineLoop(config);
         _engineLoop->startUp();
     }

@@ -19,6 +19,8 @@ using namespace std;
 struct EngineLoop::Internal {
     Config config;
     lua_State* mainL;
+    ListenerList listenerList[2];
+    int activeListenerList;
     //AnimationManager* animManager;
     //EventHandler* handler;     // for engine-level events: resume/suspend/crash
 };
@@ -26,7 +28,7 @@ struct EngineLoop::Internal {
 EngineLoop::EngineLoop(Config const& config){
     _internal = new Internal();
     _internal->config = config;
-    
+    _internal->activeListenerList = 0;
     new AutoreleasePool();
 }
 
@@ -41,6 +43,10 @@ void EngineLoop::_forcelink(){
     };
 }
 
+void EngineLoop::addListener(Listener const& lsn){
+    _internal->listenerList[_internal->activeListenerList].push_back(lsn);
+}
+
 bool EngineLoop::startUp() {
     lua_State* &L = _internal->mainL;
     L = lua_open();
@@ -48,6 +54,7 @@ bool EngineLoop::startUp() {
     lua_cpcall(L, luaopen_lplatform, 0);
     lua_cpcall(L, luaopen_lyield, 0);
 
+    _internal->config.startUp();
 #if 1
     DataStream* ds = NULL;
     if(IOManager::getInstance() == NULL){
@@ -81,6 +88,17 @@ bool EngineLoop::tearDown() {
 }
 
 bool EngineLoop::loop() {
+    int curList = _internal->activeListenerList;
+    _internal->activeListenerList = _internal->activeListenerList == 0 ? 1 : 0;
+    for(ListenerList::iterator it = _internal->listenerList[curList].begin();
+        it != _internal->listenerList[curList].end(); ++it){
+        if(!it->first()) {
+            _internal->listenerList[_internal->activeListenerList].push_back(*it);
+        }else
+            it->second();
+    }
+    _internal->listenerList[curList].clear();
+    
 	lua_cpcall(_internal->mainL, lyield_run, NULL);
     lua_gc(_internal->mainL, LUA_GCSTEP, 2);
     AutoreleasePool::getInstance()->cleanUp();
