@@ -41,7 +41,7 @@ class Scene2DNode;
 
 class NodeFrame{
 protected:
-	Scene2DNode	*mNode;
+	Scene2DNode	*const _node;
 	float	mCenter[2];
 	float	mExtent[2];
 
@@ -55,7 +55,7 @@ protected:
 	// todo, add bounding volume
 
 public:
-	NodeFrame(Scene2DNode *n) : mNode(n){};
+	NodeFrame(Scene2DNode *n);
 //	NodeFrame(Scene2DNode*, TypeLua const&);
 
 	void setFrame(float x, float y, float hW, float hH );
@@ -64,6 +64,8 @@ public:
 	float const*	getCenter() const { return mCenter;};
 	float const*	getExtent() const { return mExtent;};
 
+    Scene2DNode* getNode() const { return _node; };
+    
 	// test if the ray intersects across the boundary
 	// R(t) = p + t*d, where p and d are in the global space
 	bool test(Wm4::Vector3f const& p, Wm4::Vector3f const& d) const;

@@ -6,7 +6,7 @@ using namespace Wm4;
 
 Scene2DNode* NodeFrameGlobal::pick( Vector3f const& p, Vector3f const& d, Vector3f& q, int& ret){
 	Scene2DNode *pick(0);
-	for( Scene2DNode *child(mNode->lastChild()); child != 0; child = child->preSibling() ){
+	for( Scene2DNode *child(_node->lastChild()); child != 0; child = child->preSibling() ){
 		if( child->getFrame() == 0 )
 			continue;
 

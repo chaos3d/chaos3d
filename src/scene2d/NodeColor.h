@@ -36,7 +36,7 @@ public:
 protected:
 	Wm4::ColorRGBA	mColor;		// global color
 	Wm4::ColorRGBA	mLocalColor;	// self color
-	Scene2DNode* const	mNode;
+	Scene2DNode* const _node;
 
 public:
 	NodeColor(Scene2DNode*);
@@ -56,7 +56,7 @@ public:
 		return as;
 	};*/
 
-	Scene2DNode* getNode() const { return mNode; };
+	Scene2DNode* getNode() const { return _node; };
 };
 
 _CHAOS_END

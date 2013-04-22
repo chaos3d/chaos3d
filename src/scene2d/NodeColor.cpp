@@ -11,7 +11,7 @@ IMPLEMENT_FUNC(linearAnimation, (&NodeColor::animation<NodeColor::ColorApplier, 
 IMPLEMENT_FUNC(cubicAnimation, (&NodeColor::animation<NodeColor::ColorApplier, CubicTiming>) )
 IMPLEMENT_END;
 
-NodeColor::NodeColor(Scene2DNode* n, TypeLua const& lua) : mNode(n){
+NodeColor::NodeColor(Scene2DNode* n, TypeLua const& lua) : _node(n){
 	ASSERT( n != 0 );
 	lua_State *L(lua.getL());
 	int top = lua_gettop(L);
@@ -28,25 +28,26 @@ NodeColor::NodeColor(Scene2DNode* n, TypeLua const& lua) : mNode(n){
 }
 #endif
 
-NodeColor::NodeColor(Scene2DNode* n) : mNode(n){
-	ASSERT( n != 0 );
+NodeColor::NodeColor(Scene2DNode* n) : _node(n){
+	assert(_node != 0);
+    _node->setColor(this);
 }
 
 void NodeColor::updateColor(){
 	mColor = mLocalColor;
-	if( mNode->getParent() != 0 ){
-		NodeColor* color = mNode->getParent()->getColor();
+	if( _node->getParent() != 0 ){
+		NodeColor* color = _node->getParent()->getColor();
 		if( color != 0 )
 			 mColor *= color->getColor();
 	}
 }
 
 void NodeColor::setColor(ColorRGBA const& color){
-	mNode->dirtyFlag() |= Scene2DNode::D_COLOR;
+	_node->dirtyFlag() |= Scene2DNode::D_COLOR;
 	mLocalColor = color;
 }
 
 void NodeColor::setColor(float r, float g, float b, float a){
-	mNode->dirtyFlag() |= Scene2DNode::D_COLOR;
+	_node->dirtyFlag() |= Scene2DNode::D_COLOR;
 	mLocalColor = ColorRGBA(r,g,b,a);
 }

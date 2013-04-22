@@ -36,7 +36,7 @@ IMPLEMENT_END;
 
 Transform::Transform(Scene2DNode *n, TypeLua const& lua)
 : mRotate(1.f,0.f,0.f,0.f),mScale(1.f,1.f,1.f),mTranslate(0.f,0.f,0.f),
-	mNode(n)
+	_node(n)
 {
 	lua_State *L(lua.getL());
 	int top = lua_gettop(L);
@@ -80,6 +80,12 @@ Transform::Transform(Scene2DNode *n, TypeLua const& lua)
 }
 #endif
 
+Transform::Transform(Scene2DNode* node):mRotate(1.f,0.f,0.f,0.f),mScale(1.f,1.f,1.f),mTranslate(0.f,0.f,0.f),
+_node(node){
+    assert(_node != 0);
+    _node->setTransform(this);
+}
+
 void Transform::relocate(Transform* ot){
 	Matrix4f global = ot->getMatrix().Inverse() * mGlobal;
 	mScale = Vector3f(
@@ -100,14 +106,14 @@ void Transform::relocate(Transform* ot){
 }
 
 void Transform::forceUpdate(){
-	Scene2DNode* parent = mNode->getParent();
+	Scene2DNode* parent = _node->getParent();
 	if(parent != 0 && parent->getTransform())
 		parent->getTransform()->forceUpdate();
 
-	if(mNode->transformFlag()){
+	if(_node->transformFlag()){
 		updateTransform();
 		// Don't clear flag here since the parent may have other children that are not populated yet
-		// mNode->dirtyFlag() = mNode->dirtyFlag() & (~Scene2DNode::D_TRANSFORM);
+		// _node->dirtyFlag() = _node->dirtyFlag() & (~Scene2DNode::D_TRANSFORM);
 		// or populate the dirty flag to all it children
 	}
 }
@@ -133,44 +139,44 @@ void Transform::updateTransform(){
 		(fTxz-fTwy)*mScale.X(), (fTyz+fTwx)*mScale.Y(), (1.f-(fTxx+fTyy))*mScale.Z(), mTranslate.Z(),
 		0.f, 0.f, 0.f, 1.f);
 
-	if( mNode->getParent() != 0 && mNode->getParent()->getTransform() != 0 )
-		mGlobal = mNode->getParent()->getTransform()->mGlobal * mat;
+	if( _node->getParent() != 0 && _node->getParent()->getTransform() != 0 )
+		mGlobal = _node->getParent()->getTransform()->mGlobal * mat;
 	else
 		mGlobal = mat;
 }
 
 void Transform::setTranslate(Vector3f const& vec){
-	mNode->dirtyFlag() |= Scene2DNode::D_TRANSFORM;
+	_node->dirtyFlag() |= Scene2DNode::D_TRANSFORM;
 	mTranslate = vec;
 }
 
 void Transform::setTranslate(float x,float y,float z){
-	mNode->dirtyFlag() |= Scene2DNode::D_TRANSFORM;
+	_node->dirtyFlag() |= Scene2DNode::D_TRANSFORM;
 	mTranslate = Vector3f(x,y,z);
 }
 
 void Transform::setRotate(Quaternionf const& rot){
-	mNode->dirtyFlag() |= Scene2DNode::D_TRANSFORM;
+	_node->dirtyFlag() |= Scene2DNode::D_TRANSFORM;
 	(mRotate = rot).Normalize();
 }
 
 void Transform::setRotate(float x,float y,float z){
-	mNode->dirtyFlag() |= Scene2DNode::D_TRANSFORM;
+	_node->dirtyFlag() |= Scene2DNode::D_TRANSFORM;
 	mRotate = Quaternionf((float)DEGREE_TO_RADIAN(x),(float)DEGREE_TO_RADIAN(y),(float)DEGREE_TO_RADIAN(z));
 }
 
 void Transform::setRotate(float x,float y,float z, float angle){
-	mNode->dirtyFlag() |= Scene2DNode::D_TRANSFORM;
+	_node->dirtyFlag() |= Scene2DNode::D_TRANSFORM;
 	mRotate = Quaternionf(Vector3f(x,y,z), angle);
 }
 
 void Transform::setScale(Vector3f const& scale){
-	mNode->dirtyFlag() |= Scene2DNode::D_TRANSFORM;
+	_node->dirtyFlag() |= Scene2DNode::D_TRANSFORM;
 	mScale = scale;
 }
 
 void Transform::setScale(float x,float y,float z){
-	mNode->dirtyFlag() |= Scene2DNode::D_TRANSFORM;
+	_node->dirtyFlag() |= Scene2DNode::D_TRANSFORM;
 	mScale = Vector3f(x,y,z);
 }
 

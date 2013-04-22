@@ -369,18 +369,33 @@ void Scene2DNode::setSprite(Sprite* spr){
 }
 
 void Scene2DNode::setTransform(Transform *t){
-	if( mTransform != 0 )
+    assert(t->getNode() == this);
+    
+    if(t == mTransform)
+        return;
+    
+	if(mTransform != 0)
 		delete mTransform;
 	mTransform = t;
 }
 
 void Scene2DNode::setColor(NodeColor *c){
+    assert(c->getNode() == this);
+    
+    if(c == mColor)
+        return;
+    
 	if( mColor != 0 )
 		delete mColor;
 	mColor = c;
 }
 
 void Scene2DNode::setFrame(NodeFrame *f){
+    assert(f->getNode() == this);
+    
+    if( mFrame == f)
+        return;
+    
 	if( mFrame != 0 )
 		delete mFrame;
 	mFrame = f;

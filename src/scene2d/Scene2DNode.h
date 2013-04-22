@@ -142,7 +142,6 @@ public:
     };
     
 	// Transform
-    Transform*  createTransform(Transform const&);
 	void		setTransform(Transform*);
 	Transform*	getTransform() const { return mTransform; };
 

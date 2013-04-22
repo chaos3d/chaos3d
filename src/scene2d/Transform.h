@@ -28,6 +28,7 @@ class Scene2DNode;
 */
 
 class Transform{
+    friend class Scene2DNode;
 public:
 	class TranslateApplier;
 	class RotateApplier;
@@ -42,16 +43,10 @@ protected:
 	Wm4::Vector3f		mTranslate;
 	Wm4::Vector3f		mScale;
 
-	Scene2DNode* const mNode;       // this is a weak reference
+	Scene2DNode* const _node;       // this is a weak reference
 
 public:
-	Transform(Scene2DNode *n)
-		: mRotate(1.f,0.f,0.f,0.f),mScale(1.f,1.f,1.f),mTranslate(0.f,0.f,0.f),
-		mNode(n)
-	{};
-
-    Transform(Transform const&);
-    
+	Transform(Scene2DNode *n);
 	//Transform(Scene2DNode *, TypeLua const&);
 
 	void updateTransform();
@@ -97,7 +92,7 @@ public:
 	}
 #endif
 
-	Scene2DNode* getNode() const { return mNode; };
+	Scene2DNode* getNode() const { return _node; };
 };
 
 _CHAOS_END

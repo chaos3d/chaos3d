@@ -29,6 +29,11 @@ NodeFrame::NodeFrame(Scene2DNode* n, TypeLua const& lua) : mNode(n){
 }
 #endif
 
+NodeFrame::NodeFrame(Scene2DNode* node) : _node(node) {
+    assert(_node!=0);
+    _node->setFrame(this);
+}
+
 void NodeFrame::setFrame(float x, float y, float hW, float hH ){
 	mCenter[0] = x;
 	mCenter[1] = y;
@@ -37,17 +42,17 @@ void NodeFrame::setFrame(float x, float y, float hW, float hH ){
 }
 
 void NodeFrame::setFrameFromeSprite(){
-	if( mNode->getSprite() == 0 )
+	if( _node->getSprite() == 0 )
 		return;
 
-	Rectanglef const& rt(mNode->getSprite()->getFrame());
+	Rectanglef const& rt(_node->getSprite()->getFrame());
 	setFrame( rt.Origin[0]+rt.Extent[0]/2.f, rt.Origin[1]+rt.Extent[1]/2.f,
 	abs(rt.Extent[0]/2.f), abs(rt.Extent[1]/2.f));
 }
 
 bool NodeFrame::test(Vector3f const& p, Vector3f const& d) const{
 	// trivial test
-	if( mNode == 0 || mNode->getTransform() == 0 ||
+	if( _node == 0 || _node->getTransform() == 0 ||
 		abs( mExtent[0] + mExtent[1] ) <= FLT_EPSILON)
 		return false;
 
@@ -57,7 +62,7 @@ bool NodeFrame::test(Vector3f const& p, Vector3f const& d) const{
 }
 
 void NodeFrame::intersect( Vector3f const& p, Vector3f const& d, Vector3f& q) const{
-	Matrix4f const& global( mNode->getTransform()->getMatrix() );
+	Matrix4f const& global( _node->getTransform()->getMatrix() );
     
 	/*
      First, transform the ray into the client space, 
@@ -94,11 +99,11 @@ void NodeFrame::intersect( Vector3f const& p, Vector3f const& d, Vector3f& q) co
 
 int NodeFrame::testIntersect( Vector3f const& p, Vector3f const& d, Vector3f& q, Vector2f const& extra) const{
 	// trivial test
-	if( mNode == 0 || mNode->getTransform() == 0 ||
+	if( _node == 0 || _node->getTransform() == 0 ||
 		abs( mExtent[0] + mExtent[1] ) <= FLT_EPSILON)
 		return 0;
 
-	Matrix4f const& global( mNode->getTransform()->getMatrix() );
+	Matrix4f const& global( _node->getTransform()->getMatrix() );
 
 	/*
 	First, transform the ray into the client space, 
@@ -154,14 +159,14 @@ Scene2DNode* NodeFrame::pick( Vector3f const& p, Vector3f const& d, Vector3f& q,
 	// test if intersect against itself
 	ret = testIntersect( p, d, q);
 	if( ret == 0 )
-		return 0;
+		return NULL;
 
-	Scene2DNode* pick = mNode;
+	Scene2DNode* pick = _node;
 	// pick one of children
 	
 	Vector3f cq;
 	int cret(0);
-	for( Scene2DNode *child(mNode->lastChild()); child != 0; child = child->preSibling() ){
+	for( Scene2DNode *child(_node->lastChild()); child != 0; child = child->preSibling() ){
 		if( child->getFrame() == 0 )
 			continue;
 
@@ -172,7 +177,7 @@ Scene2DNode* NodeFrame::pick( Vector3f const& p, Vector3f const& d, Vector3f& q,
 		}
 	}
 
-	if( pick != mNode )
+	if( pick != _node )
 		ret = cret, q = cq;
 
 	return pick;
