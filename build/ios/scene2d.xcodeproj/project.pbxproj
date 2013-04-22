@@ -56,8 +56,6 @@
 		88B24D1B170ECB9900F7C2CC /* NodeFrameGlobal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NodeFrameGlobal.h; path = ../../src/scene2d/NodeFrameGlobal.h; sourceTree = "<group>"; };
 		88B24D1C170ECB9900F7C2CC /* NodeUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = NodeUI.cpp; path = ../../src/scene2d/NodeUI.cpp; sourceTree = "<group>"; };
 		88B24D1D170ECB9900F7C2CC /* NodeUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NodeUI.h; path = ../../src/scene2d/NodeUI.h; sourceTree = "<group>"; };
-		88B24D24170ECB9900F7C2CC /* PptCameraNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PptCameraNode.cpp; path = ../../src/scene2d/PptCameraNode.cpp; sourceTree = "<group>"; };
-		88B24D25170ECB9900F7C2CC /* PptCameraNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PptCameraNode.h; path = ../../src/scene2d/PptCameraNode.h; sourceTree = "<group>"; };
 		88B24D26170ECB9900F7C2CC /* ps2d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ps2d.h; path = ../../src/scene2d/ps2d.h; sourceTree = "<group>"; };
 		88B24D2F170ECB9900F7C2CC /* render.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = render.h; path = ../../src/scene2d/render.h; sourceTree = "<group>"; };
 		88B24D37170ECB9900F7C2CC /* scene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = scene.h; path = ../../src/scene2d/scene.h; sourceTree = "<group>"; };
@@ -196,8 +194,6 @@
 				88B24D19170ECB9900F7C2CC /* NodeFrame.h */,
 				88B24D1A170ECB9900F7C2CC /* NodeFrameGlobal.cpp */,
 				88B24D1B170ECB9900F7C2CC /* NodeFrameGlobal.h */,
-				88B24D24170ECB9900F7C2CC /* PptCameraNode.cpp */,
-				88B24D25170ECB9900F7C2CC /* PptCameraNode.h */,
 				88B24D26170ECB9900F7C2CC /* ps2d.h */,
 				88B24D2F170ECB9900F7C2CC /* render.h */,
 				88B24D37170ECB9900F7C2CC /* scene.h */,
