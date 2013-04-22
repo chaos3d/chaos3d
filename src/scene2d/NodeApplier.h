@@ -10,206 +10,83 @@
 #ifndef	_CHAOS_NODEAPPLIER_H
 #define	_CHAOS_NODEAPPLIER_H
 
-#include "chaos_config.h"
+#include "common/common.h"
 #include "Scene2DNode.h"
 #include "NodeColor.h"
 #include "Transform.h"
 
 _CHAOS_BEGIN
 
-///--------------------------------------------------------
-///--------------------------------------------------------
-class NodeColor::ColorApplier{
-private:
-	NodeColor	*mColor;
+template <typename Componenet>
+class ComponenetApplier {
 public:
-	inline NodeColor*	getColor() const { return mColor; };
-	inline NodeColor*&	getColor() {return mColor; };
-
-	ColorApplier(NodeColor* t) : mColor(t) {
+	ComponenetApplier(Componenet* t) : _component(t) {
 		if( t != 0 )
 			t->getNode()->retain();
 	};
 	
-	//ColorApplier(NodeColor* t) : mColor(t) {
-	//	mColor->getNode()->retain();
-	//};
-	ColorApplier(ColorApplier const& rhs) : mColor(rhs.mColor) {
-		if( mColor != 0 )
-			mColor->getNode()->retain();
-	};
-
-	ColorApplier& operator=(ColorApplier const& rhs){
-		if( mColor == rhs.mColor )
+	ComponenetApplier& operator=(ComponenetApplier const& rhs){
+		if( _component == rhs._component )
 			return *this;
 		
-		if( mColor != 0 )
-			mColor->getNode()->release();
-
-		mColor = rhs.mColor;
-		if( mColor != 0 )
-			mColor->getNode()->retain();
-		return *this;
+		if( _component != 0 )
+			_component->getNode()->release();
+            
+        _component = rhs._component;
+		if( _component != 0 )
+			_component->getNode()->retain();
+            return *this;
 	};
 
-	~ColorApplier() {
-		if( mColor != 0 ) {
-#if defined(DEBUG)
-			LOG("ColorAnimation deallocated (%s) %p", mColor->getNode()->getTag().c_str(), this);
-#endif
-			mColor->getNode()->release();
-		}
-	};
+    ~ComponenetApplier(){
+        if(_component != NULL){
+            assert(_component->getNode() != NULL);
+            _component->getNode()->release();
+        }
+    }
 
-	inline bool operator() (ColorRGBA const& color){
-		mColor->setColor( color );
-		return mColor->getNode()->getParent() != 0;
-	}
+    inline Componenet* getComponent() const { return _component; };
+	//inline Componenet*&	getColor() {return _componenet; };
+
+protected:
+    Componenet* _component;
 };
-
 
 ///--------------------------------------------------------
 ///--------------------------------------------------------
-class Transform::TranslateApplier{
-private:
-	Transform	*mTransform;
+class NodeColor::ColorApplier : public ComponenetApplier<NodeColor>{
 public:
-
-	inline Transform*	getTransform() const { return mTransform; };
-	inline Transform*&	getTransform() {return mTransform; };
-
-	inline bool operator() (Vector3f const& pos){
-		mTransform->setTranslate( pos );
-		return mTransform->getNode()->getParent() != 0;
-	}
-
-	//TranslateApplier(Transform* t) : mTransform(t) {};
-	TranslateApplier(Transform* t) : mTransform(t) {
-		if( t != 0 )
-			t->getNode()->retain();
-	};
-
-	TranslateApplier(TranslateApplier const& rhs) : mTransform(rhs.mTransform) {
-		if( mTransform != 0 )
-			mTransform->getNode()->retain();
-	};
-
-	TranslateApplier& operator=(TranslateApplier const& rhs){
-		if( mTransform == rhs.mTransform )
-			return *this;
-		
-		if( mTransform != 0 )
-			mTransform->getNode()->release();
-
-		mTransform = rhs.mTransform;
-		if( mTransform != 0 )
-			mTransform->getNode()->retain();
-		return *this;
-	};
-
-	~TranslateApplier() {
-		if( mTransform != 0 ){
-#if defined(DEBUG)
-			LOG("TranslateAnimation deallocated (%s) %p", mTransform->getNode()->getTag().c_str(), this);
-#endif
-			mTransform->getNode()->release();
-		}
-	};
-
-};
-
-
-class Transform::RotateApplier{
-private:
-	Transform	*mTransform;
-public:
-	inline Transform*	getTransform() const { return mTransform; };
-	inline Transform*&	getTransform() {return mTransform; };
-
-	//RotateApplier(Transform* t) : mTransform(t) {};
-	RotateApplier(Transform* t) : mTransform(t) {
-		if( t != 0 )
-			t->getNode()->retain();
-	};
-
-	RotateApplier(RotateApplier const& rhs) : mTransform(rhs.mTransform) {
-		if( mTransform != 0 )
-			mTransform->getNode()->retain();
-	};
-
-	RotateApplier& operator=(RotateApplier const& rhs){
-		if( mTransform == rhs.mTransform )
-			return *this;
-		
-		if( mTransform != 0 )
-			mTransform->getNode()->release();
-
-		mTransform = rhs.mTransform;
-		if( mTransform != 0 )
-			mTransform->getNode()->retain();
-		return *this;
-	};
-
-	~RotateApplier() {
-		if( mTransform != 0 ){
-#if defined(DEBUG)
-			LOG("RotateAnimation deallocated (%s) %p", mTransform->getNode()->getTag().c_str(), this);
-#endif
-			mTransform->getNode()->release();
-		}
-	};
-	inline bool operator() (Quaternionf const& rot){
-		mTransform->setRotate( rot );
-		return mTransform->getNode()->getParent() != 0;
+	inline bool operator() (Wm4::ColorRGBA const& color) const{
+		_component->setColor( color );
+		return _component->getNode()->getParent() != 0;
 	}
 };
 
-class Transform::ScaleApplier{
-private:
-	Transform	*mTransform;
+///--------------------------------------------------------
+///--------------------------------------------------------
+class Transform::TranslateApplier : public ComponenetApplier<Transform>{
 public:
-	inline Transform*	getTransform() const { return mTransform; };
-	inline Transform*&	getTransform() {return mTransform; };
-
-	//ScaleApplier(Transform* t) : mTransform(t) {};
-	ScaleApplier(Transform* t) : mTransform(t) {
-		if( t != 0 )
-			t->getNode()->retain();
-	};
-
-	ScaleApplier(ScaleApplier const& rhs) : mTransform(rhs.mTransform) {
-		if( mTransform != 0 )
-			mTransform->getNode()->retain();
-	};
-
-	ScaleApplier& operator=(ScaleApplier const& rhs){
-		if( mTransform == rhs.mTransform )
-			return *this;
-		
-		if( mTransform != 0 )
-			mTransform->getNode()->release();
-
-		mTransform = rhs.mTransform;
-		if( mTransform != 0 )
-			mTransform->getNode()->retain();
-		return *this;
-	};
-
-	~ScaleApplier() {
-		if( mTransform != 0 ){
-#if defined(DEBUG)
-			LOG("ScaleAnimation deallocated (%s) %p", mTransform->getNode()->getTag().c_str(), this);
-#endif
-			mTransform->getNode()->release();
-		}
-	};
-	
-	inline bool operator() (Vector3f const& scale){
-		mTransform->setScale( scale );
-		return mTransform->getNode()->getParent() != 0;
+	inline bool operator() (Wm4::Vector3f const& pos) const{
+		_component->setTranslate( pos );
+		return _component->getNode()->getParent() != 0;
 	}
 };
 
+
+class Transform::RotateApplier : public ComponenetApplier<Transform>{
+public:
+	inline bool operator() (Wm4::Quaternionf const& rot) const{
+		_component->setRotate( rot );
+		return _component->getNode()->getParent() != 0;
+	}
+};
+
+class Transform::ScaleApplier : public ComponenetApplier<Transform>{
+	inline bool operator() (Wm4::Vector3f const& scale) const{
+		_component->setScale( scale );
+		return _component->getNode()->getParent() != 0;
+	}
+};
 
 _CHAOS_END
 
