@@ -17,6 +17,34 @@ coroutine.yield(co)
 
 print "end";
 
+print "start simple&dirty test"
+
+local node = scene2d.create({
+    "tag1",
+    transform={translate={1,1,1}},
+})
+
+local camera = scene2d.create({
+    "camera",
+    type="camera",
+})
+
+node:addChildren(
+    {camera, others}
+)
+
+--[[
+local children = node:children
+print(type(children);
+for _, child in ipairs(children) do
+    print(child)
+end
+--]]
+while true do
+    print "render camera";
+    camera:doRender();
+	coroutine.yield()
+end
 
 -- psudo code
 --[[
