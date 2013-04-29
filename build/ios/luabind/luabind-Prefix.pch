@@ -5,3 +5,12 @@
 #ifdef __OBJC__
     #import <Foundation/Foundation.h>
 #endif
+
+#ifdef __cpluplus
+#include <luabind/luabind.hpp>
+
+#include <luabind/class.hpp>
+#include <luabind/yield_policy.hpp>
+#include <luabind/return_reference_to_policy.hpp>
+#include <luabind/raw_policy.hpp>
+#endif
