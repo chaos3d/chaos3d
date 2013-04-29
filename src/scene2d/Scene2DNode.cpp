@@ -67,87 +67,9 @@ TypeLua Scene2DNode::getChildren() const{
     return TypeLua(L);
 }*/
 
-#if 0
-
-void Scene2DNode::addChildren( TypeLua const& lua, Scene2DNode* after){
-	lua_State *L(lua.getL());
-	int n = lua_gettop(L);
-	lua.get(L);
-	if( !lua_istable(L,-1) ){
-		LOG("Expected a table of scene nodes.");
-		lua_settop(L,n);
-		return;
-	}
-
-#if 1
-	for(int i=1, t=luaL_getn(L, -1); i<=t; ++i){
-		lua_rawgeti(L, n+1, i);
-		ScriptData *udata = (ScriptData*)lua_touserdata(L,-1);
-		if( udata == 0 || udata->dataType != ScriptData::Instance
-		   /*|| udata->type->isDerived( )*/){
-			LOG( "Child is not a scene node."  );
-		}else
-			addChild( (Scene2DNode*)udata->obj, after );
-		lua_pop(L,1);
-	}
-#else
-	lua_pushnil(L);
-	while(lua_next(L,-2)){
-		ScriptData *udata = (ScriptData*)lua_touserdata(L,-1);
-		if( udata == 0 || udata->dataType != ScriptData::Instance
-			/*|| udata->type->isDerived( )*/){
-			LOG( "Child is not a scene node."  );
-		}else
-			addChild( (Scene2DNode*)udata->obj, after );
-		lua_pop(L,1);
-	};
-#endif
-	lua_settop(L,n);
-}
-
-void Scene2DNode::removeChildren( TypeLua const& lua ){
-	lua_State *L(lua.getL());
-	int n = lua_gettop(L);
-	lua.get(L);
-	ASSERT( lua_istable(L,-1) );
-
-	lua_pushnil(L);
-	while(lua_next(L,-2)){
-		ScriptData *udata = (ScriptData*)lua_touserdata(L,-1);
-		if( udata == 0 || udata->dataType != ScriptData::Instance
-			/*|| udata->type->isDerived( )*/){
-			LOG( "Child is not a scene node."  );
-		}else
-			( (Scene2DNode*)udata->obj )->removeSelf();
-		lua_pop(L,1);
-	};
-	lua_settop(L,n);
-}
-
-#endif
-/*
-
-void Scene2DNode::addChild( Scene2DNode* child, Scene2DNode* after ){
-	if( child == 0 || (child->mParent == this && child == mFirstChild))
-		return;
-
-	if( child->mParent != 0 )
-		child->mParent->removeChild( child );
-	child->mParent = this;
-
-	child->mNextSibling = mFirstChild;
-	child->mPreSibling = 0;
-
-	if( mFirstChild != 0 )
-		mFirstChild->mPreSibling = child;
-	
-	mFirstChild = child;
-	child->mDirtyFlag = D_ALL;	// need to recalculate when adding to a parent node
-	child->retain();
-
-	return;
-}
-*/
+// move to bind extension
+//void Scene2DNode::addChildren( TypeLua const& lua, Scene2DNode* after)
+//void Scene2DNode::removeChildren( TypeLua const& lua ){
 
 void Scene2DNode::relocateTo(Scene2DNode* parent, Scene2DNode* after){
 	if( parent == 0 || mTransform == 0 
@@ -164,7 +86,8 @@ Scene2DNode& Scene2DNode::addChild( Scene2DNode* child, Scene2DNode* after ){
 //	if( after == 0 )
 //		after = mFirstChild;
 
-	if( child == 0 || (child->mParent == this && (child == after|| child->mPreSibling == after) ))
+	if( child == 0 || child == this ||  // TODO: detect circle, adding self to its child
+       (child->mParent == this && (child == after|| child->mPreSibling == after) ))
 		return *this;
 
 	child->retain();

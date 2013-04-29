@@ -20,7 +20,7 @@ class Camera;
 class CameraNode : public Scene2DNode{
 public:
 	CameraNode(std::string const& tag)
-		:Scene2DNode(tag)
+		:Scene2DNode(tag), _camera(NULL)
 	{};
 
 	virtual ~CameraNode();

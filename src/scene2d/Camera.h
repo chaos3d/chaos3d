@@ -36,6 +36,8 @@ public:
     void setRootNode(Scene2DNode*);
     Scene2DNode* getRootNode() const { return _rootNode == NULL? _node : _rootNode; }
     
+    Scene2DNode* getNode() const { return _node; }
+    
 	void setClearColor(Wm4::ColorRGBA const& clear) { _clearColor = clear; }
 	Wm4::ColorRGBA const& getClearColor() const { return _clearColor; }
 

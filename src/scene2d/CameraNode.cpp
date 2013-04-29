@@ -9,9 +9,18 @@ CameraNode::~CameraNode(){
 }
 
 void CameraNode::doRender() {
-    _camera->render();
+    if(_camera != NULL){
+        _camera->render();
+    }
 }
 
+void CameraNode::setCamera(Camera* camera){
+    if(_camera == camera)
+        return;
+    SAFE_DELETE(_camera);
+    _camera = camera;
+    assert(camera->getNode() == this);
+}
 #if 0
 void CameraNode::update(){
 	Scene2DNode::update();
