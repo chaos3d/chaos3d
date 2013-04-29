@@ -8,31 +8,6 @@
 
 //using namespace chaos;
 
-/*
-IMPLEMENT_CLASS(Scene2DNode, LIB_DOMAIN)
-IMPLEMENT_FUNC(childByTag, &Scene2DNode::childByTag )
-IMPLEMENT_FUNC(childByIndex, &Scene2DNode::childByIndex )
-IMPLEMENT_FUNC(relocateTo, &Scene2DNode::relocateTo )
-IMPLEMENT_FUNC(moveUp, &Scene2DNode::moveUpward )
-IMPLEMENT_FUNC(moveDown, &Scene2DNode::moveDownward )
-IMPLEMENT_FUNC(moveTop, &Scene2DNode::moveTop )
-IMPLEMENT_FUNC(moveBottom, &Scene2DNode::moveBottom )
-IMPLEMENT_FUNC(addChild, &Scene2DNode::addChild )
-IMPLEMENT_FUNC(addChildren, &Scene2DNode::addChildren )
-IMPLEMENT_FUNC(removeSelf, &Scene2DNode::removeSelf )
-IMPLEMENT_FUNC(removeChildren, &Scene2DNode::removeChildren )
-IMPLEMENT_FUNC(removeWhen, &Scene2DNode::removeWhenDone )
-IMPLEMENT_FUNC(removeAll, &Scene2DNode::removeAllChildren )
-IMPLEMENT_PROP(transform, 0, &Scene2DNode::getTransform )
-IMPLEMENT_PROP(color, 0, &Scene2DNode::getColor )
-IMPLEMENT_PROP(sprite, 0, &Scene2DNode::getSprite )
-IMPLEMENT_PROP(script, &Scene2DNode::setLua, &Scene2DNode::getLua)
-IMPLEMENT_PROP(ui, 0, &Scene2DNode::getUI)
-IMPLEMENT_PROP(tag, 0, &Scene2DNode::getTag)
-IMPLEMENT_PROP(parent, 0, &Scene2DNode::getParent)
-IMPLEMENT_PROP(children, 0, &Scene2DNode::getChildren)
-IMPLEMENT_END;*/
-
 static void mutexCallback(void*, void *ud){
 	if( ((Scene2DNode*)ud)->getParent() != 0 )
 		((Scene2DNode*)ud)->removeSelf();
@@ -185,12 +160,12 @@ void Scene2DNode::relocateTo(Scene2DNode* parent, Scene2DNode* after){
 	parent->addChild(this, after);
 }
 
-void Scene2DNode::addChild( Scene2DNode* child, Scene2DNode* after ){
+Scene2DNode& Scene2DNode::addChild( Scene2DNode* child, Scene2DNode* after ){
 //	if( after == 0 )
 //		after = mFirstChild;
 
 	if( child == 0 || (child->mParent == this && (child == after|| child->mPreSibling == after) ))
-		return;
+		return *this;
 
 	child->retain();
 	if( child->mParent != 0 )
@@ -213,7 +188,7 @@ void Scene2DNode::addChild( Scene2DNode* child, Scene2DNode* after ){
 	
 	child->mDirtyFlag = D_ALL;	// need to recalculate when adding to a parent node
 
-	return;
+	return *this;
 }
 
 #if 0
@@ -268,9 +243,9 @@ void Scene2DNode::removeAllChildren( ){
 	mFirstChild = 0;
 }
 
-void Scene2DNode::moveUpward(){
+Scene2DNode& Scene2DNode::moveUpward(){
 	if( mNextSibling == 0 || mParent == 0)
-		return;
+		return *this;
 
 	if(mPreSibling == 0)
 		mParent->mFirstChild = mNextSibling;
@@ -285,11 +260,12 @@ void Scene2DNode::moveUpward(){
 	mPreSibling = mNextSibling;
 	mNextSibling = mNextSibling->mNextSibling;
 	mPreSibling->mNextSibling = this;
+    return *this;
 }
 
-void Scene2DNode::moveDownward(){
+Scene2DNode& Scene2DNode::moveDownward(){
 	if( mPreSibling == 0 || mParent == 0)
-		return;
+		return *this;
 
 	if(mNextSibling != 0)
 		mNextSibling->mPreSibling = mPreSibling;
@@ -304,11 +280,12 @@ void Scene2DNode::moveDownward(){
 	else {
 		mPreSibling->mNextSibling = this;
 	}
+    return *this;
 }
 
-void Scene2DNode::moveTop(){
+Scene2DNode& Scene2DNode::moveTop(){
 	if( mParent == 0 || mNextSibling == 0)
-		return;
+		return *this;
 
 	Scene2DNode* last = mParent->lastChild();
 
@@ -321,17 +298,20 @@ void Scene2DNode::moveTop(){
 	last->mNextSibling = this;
 	mPreSibling = last;
 	mNextSibling = 0;
+    return *this;
 }
 
-void Scene2DNode::moveBottom(){
+Scene2DNode& Scene2DNode::moveBottom(){
 	if( mParent == 0 || mPreSibling == 0)
-		return;
+		return *this;
 	Scene2DNode *parent = mParent;
 
 	this->retain();
 	removeSelf();
 	parent->addChild( this );
 	this->release();
+    
+    return *this;
 }
 
 Scene2DNode* Scene2DNode::childByTag( char const* tag ) const{

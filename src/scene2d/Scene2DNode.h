@@ -158,15 +158,15 @@ public:
 	NodeUI*		getUI() const { return mUI; };
 
 	// Scene tree
-	void		addChild( Scene2DNode* child, Scene2DNode* after = 0 );
+	Scene2DNode& addChild( Scene2DNode* child, Scene2DNode* after = 0 );
 	void		removeAllChildren( );
 	void		removeSelf();
 	void		relocateTo(Scene2DNode* parent, Scene2DNode* after = 0);
-	void		moveUpward();
-	void		moveDownward();
-	void		moveTop();
-	void		moveBottom();
-	void		moveAfterward(Scene2DNode*);
+	Scene2DNode& moveUpward();
+	Scene2DNode& moveDownward();
+	Scene2DNode& moveTop();
+	Scene2DNode& moveBottom();
+	Scene2DNode& moveAfterward(Scene2DNode*);
 	void		removeWhenDone(void *);
 	iterator	childIterator() const { return iterator(mFirstChild); };
 
