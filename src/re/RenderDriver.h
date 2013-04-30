@@ -7,6 +7,6 @@ struct DriverCap{
 
 class RenderDriver{
 public:
-	virtual RenderTarget* createTarget() = 0;
+//	virtual RenderTarget* createTarget() = 0;
 	virtual void getCap(DriverCap&) = 0;
 };

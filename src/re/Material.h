@@ -6,13 +6,12 @@
 
 #include <string>
 #include <vector>
-#include <cstddef>
 
 _CHAOS_BEGIN
 
 class MaterialQuality;
 class Texture;
-class Shader;
+class GpuProgram;
 
 class MaterialChooser{
 public:
@@ -21,7 +20,6 @@ public:
 
 class MaterialQuality{
 public:
-	typedef std::vector<std::string> VertexAttribute;
 	enum {
 		MAX_PASSES = 8,
 		MAX_TEXTURES = 8,	// ogl es 2.0 supports 8
@@ -35,8 +33,7 @@ private:
 
 	int _passTags[MAX_PASSES];	// pass tags: in which pass this material will be applied. pass filter
 	Texture* _unit[MAX_TEXTURES];
-	VertexAttribute _vertexAttr;	// vertex attributes: normal, color, position, etc
-	Shader* _shader;
+	GpuProgram* _program[2];    // vertex and frag
 };
 
 class Material : public ReferencedCount{
@@ -45,6 +42,7 @@ public:
 	void select(MaterialChooser const&);
 
 	/* attributes for all qualities */
+    // these are probably for editor or inspection
 	virtual uint8_t numOfUniforms() const;
 	virtual bool setUniform(const char* name, Vector3f const&);
 	virtual uint8_t numOfAttributes() const;

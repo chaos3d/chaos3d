@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		88160938172FC53C00004AEE /* RenderTargetView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 88160937172FC53C00004AEE /* RenderTargetView.mm */; };
 		881D4DD4170442BF007299A2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 881D4DD3170442BF007299A2 /* Foundation.framework */; };
 		881D4DFA1704443C007299A2 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 881D4DF4170443D2007299A2 /* GLKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		881D4DFB1704443C007299A2 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 881D4DF5170443D2007299A2 /* OpenGLES.framework */; };
@@ -25,12 +26,16 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		88160936172FC53C00004AEE /* RenderTargetView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderTargetView.h; sourceTree = "<group>"; };
+		88160937172FC53C00004AEE /* RenderTargetView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RenderTargetView.mm; sourceTree = "<group>"; };
+		88160939172FC54400004AEE /* iOSRenderDriver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iOSRenderDriver.h; sourceTree = "<group>"; };
+		8816093A172FC55700004AEE /* RenderWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RenderWindow.h; path = ../../src/re/RenderWindow.h; sourceTree = "<group>"; };
+		8816093B172FC55700004AEE /* GpuProgram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GpuProgram.h; path = ../../src/re/GpuProgram.h; sourceTree = "<group>"; };
 		881D4DD0170442BF007299A2 /* libre.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libre.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		881D4DD3170442BF007299A2 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		881D4DF4170443D2007299A2 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		881D4DF5170443D2007299A2 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		88B24CDC170EB85100F7C2CC /* Context.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Context.h; sourceTree = "<group>"; };
-		88B24CDE170EB87700F7C2CC /* Shader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Shader.h; path = ../../src/re/Shader.h; sourceTree = "<group>"; };
 		88B24CDF170EB87700F7C2CC /* Material.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Material.h; path = ../../src/re/Material.h; sourceTree = "<group>"; };
 		88B24CE0170EB87700F7C2CC /* RenderPass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RenderPass.h; path = ../../src/re/RenderPass.h; sourceTree = "<group>"; };
 		88B24CE1170EB87700F7C2CC /* RenderTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RenderTexture.h; path = ../../src/re/RenderTexture.h; sourceTree = "<group>"; };
@@ -56,9 +61,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		88160933172FC53C00004AEE /* backend */ = {
+			isa = PBXGroup;
+			children = (
+				88160934172FC53C00004AEE /* gles2 */,
+			);
+			name = backend;
+			path = ../../src/re/backend;
+			sourceTree = "<group>";
+		};
+		88160934172FC53C00004AEE /* gles2 */ = {
+			isa = PBXGroup;
+			children = (
+				88160936172FC53C00004AEE /* RenderTargetView.h */,
+				88160937172FC53C00004AEE /* RenderTargetView.mm */,
+			);
+			path = gles2;
+			sourceTree = "<group>";
+		};
 		881D4DC7170442BF007299A2 = {
 			isa = PBXGroup;
 			children = (
+				88160933172FC53C00004AEE /* backend */,
 				88B24CDB170EB85100F7C2CC /* frontend */,
 				88B24CDD170EB85D00F7C2CC /* src */,
 				881D4DD2170442BF007299A2 /* Frameworks */,
@@ -87,6 +111,7 @@
 		88B24CDB170EB85100F7C2CC /* frontend */ = {
 			isa = PBXGroup;
 			children = (
+				88160939172FC54400004AEE /* iOSRenderDriver.h */,
 				88B24CDC170EB85100F7C2CC /* Context.h */,
 			);
 			name = frontend;
@@ -96,16 +121,17 @@
 		88B24CDD170EB85D00F7C2CC /* src */ = {
 			isa = PBXGroup;
 			children = (
-				88B24CDE170EB87700F7C2CC /* Shader.h */,
+				8816093B172FC55700004AEE /* GpuProgram.h */,
 				88B24CDF170EB87700F7C2CC /* Material.h */,
-				88B24CE0170EB87700F7C2CC /* RenderPass.h */,
-				88B24CE1170EB87700F7C2CC /* RenderTexture.h */,
-				88B24CE2170EB87700F7C2CC /* Texture.h */,
-				88B24CE3170EB87700F7C2CC /* RenderLoop.h */,
 				88B24CE4170EB87700F7C2CC /* RenderDriver.h */,
+				88B24CE3170EB87700F7C2CC /* RenderLoop.h */,
+				88B24CE0170EB87700F7C2CC /* RenderPass.h */,
 				88B24CE5170EB87700F7C2CC /* RenderTarget.h */,
-				88B24CE6170EB87700F7C2CC /* VertexData.h */,
+				88B24CE1170EB87700F7C2CC /* RenderTexture.h */,
+				8816093A172FC55700004AEE /* RenderWindow.h */,
+				88B24CE2170EB87700F7C2CC /* Texture.h */,
 				88B24CE7170EB87700F7C2CC /* VertexBuffer.h */,
+				88B24CE6170EB87700F7C2CC /* VertexData.h */,
 			);
 			name = src;
 			sourceTree = "<group>";
@@ -161,6 +187,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				88160938172FC53C00004AEE /* RenderTargetView.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -171,7 +198,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -190,7 +217,10 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				HEADER_SEARCH_PATHS = (
+					../../src,
+					../../external,
+				);
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
@@ -200,7 +230,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -212,7 +242,10 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				HEADER_SEARCH_PATHS = (
+					../../src,
+					../../external,
+				);
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -222,8 +255,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DSTROOT = /tmp/re.dst;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "re/re-Prefix.pch";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/build/Debug-iphoneos\"",
@@ -238,8 +269,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DSTROOT = /tmp/re.dst;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "re/re-Prefix.pch";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/build/Debug-iphoneos\"",
