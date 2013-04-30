@@ -280,6 +280,7 @@ void Scene2DNode::setTransform(Transform *t){
 	if(mTransform != 0)
 		delete mTransform;
 	mTransform = t;
+    dirtyFlag() |= Scene2DNode::D_TRANSFORM;
 }
 
 void Scene2DNode::setColor(NodeColor *c){
@@ -291,6 +292,7 @@ void Scene2DNode::setColor(NodeColor *c){
 	if( mColor != 0 )
 		delete mColor;
 	mColor = c;
+    dirtyFlag() |= Scene2DNode::D_COLOR;
 }
 
 void Scene2DNode::setFrame(NodeFrame *f){
@@ -302,6 +304,7 @@ void Scene2DNode::setFrame(NodeFrame *f){
 	if( mFrame != 0 )
 		delete mFrame;
 	mFrame = f;
+    dirtyFlag() |= Scene2DNode::D_FRAME;
 }
 
 void Scene2DNode::setUI( NodeUI* ui ){

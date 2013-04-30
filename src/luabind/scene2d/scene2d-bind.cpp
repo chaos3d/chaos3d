@@ -17,18 +17,33 @@ static Scene2DNode* create_node(luabind::object const& o);
 static Scene2DNode& ext_add_children(Scene2DNode&, luabind::object const&);
 //static luabind::object ext_all_children(Scene2DNode&, luabind::object&);
 
+/**
+ * this is a helper function that creates the components for
+ * the scene node so that the extended classes can use to init
+ * the base class while paassing the newly created scene node
+ * note that the side effect of this function will re-create 
+ * the components if they are already created, and this might
+ * be what you want as well
+ */
+static Scene2DNode* create_components(Scene2DNode* node, luabind::object const&);
+
 static void bind_scene2d(lua_State *L){
     module(L)[
-              namespace_("scene2d")[
-                                    def("create", &create_node)
-                                    ]
+              namespace_("scene2d")
+              [
+               def("create", &create_node)
+               ]
 
               ,class_<ReferencedCount>("RefCount") // this is temprary solution until adding new luabind policies
               .def("retain", &ReferencedCount::retain)
               .def("release", &ReferencedCount::release)
               
               ,class_<Scene2DNode, ReferencedCount>("Scene2DNode")
+              .scope[
+              def("createComponents", &create_components)
+              ]
               .def("addChildren", &ext_add_children, return_reference_to(_1))
+              .def("removeAll", &Scene2DNode::removeAllChildren)
              // .def("children", &ext_all_children)
               //IMPLEMENT_FUNC(removeChildren, &Scene2DNode::removeChildren ) TODO
               
@@ -63,24 +78,16 @@ static void bind_scene2d(lua_State *L){
 }
 
 static Scene2DNode* create_node(luabind::object const& o){
-    assert(o.is_valid());
-    // TODO
-    if(type(o) != LUA_TTABLE){
-        // TODO: log
-        return NULL;
-    }
+    assert(type(o) == LUA_TTABLE);
     
-    /**
-     * { 
-	 * 	"node name",
-     *
-     * }
-     */
     Scene2DNode* node = NULL;
     char const* node_tag = (type(o[1]) == LUA_TNIL) ? "" : object_cast<char const*>(o[1]);
-    // TODO: this should be abstract factory?
-    if(type(o["type"]) != LUA_TNIL){
-        assert(type(o["type"]) == LUA_TSTRING); // maybe type is a custom scene2d and it'll parse the rest
+
+    // this creats internal scene node, for those
+    // who extends the scene node, create_components
+    // can be used to init the components by passing
+    // the new scene node
+    if(type(o["type"]) == LUA_TSTRING){
         char const* node_type = object_cast<char const*>(o["type"]);
         if(strcmp(node_type, "camera") == 0){
             node = new CameraNode(node_tag);
@@ -89,8 +96,26 @@ static Scene2DNode* create_node(luabind::object const& o){
     if(node == NULL)// default type is Scene2DNode
         node = new Scene2DNode(node_tag);
     
+    return create_components(node, o);
+}
+
+static Scene2DNode* create_components(Scene2DNode* node, luabind::object const& o){
+    assert(o.is_valid());
+    assert(node != NULL);
+    assert(type(o) == LUA_TTABLE);
+
+    //// ----------------
+    /// children = { node1, node2, ... }
+    object const& children = o["children"];
+    int value_type = type(children);
+    if(value_type == LUA_TTABLE){
+        ext_add_children(*node, children);
+    }
+    
+    //// ----------------
+    /// transform = {translate = {}, scale = {}, rotate = {}}
     object const& transform = o["transform"];
-    int value_type = type(transform);
+    value_type = type(transform);
     if(value_type == LUA_TTABLE){
         Transform *comp_transform = new Transform(node);
         node->setTransform(comp_transform);
@@ -117,6 +142,7 @@ static Scene2DNode* create_node(luabind::object const& o){
     }else if(value_type == LUA_TBOOLEAN && (object_cast<bool>(transform) == true)){
         node->setTransform(new Transform(node));
     }
+
 #if 0
 	lua_State* L(lua.getL());
 	int n = lua_gettop( L );
@@ -203,6 +229,7 @@ static Scene2DNode& ext_add_children(Scene2DNode& thiz, luabind::object const& c
             if(type(children[i]) == LUA_TNIL)
                 break;
             
+            // TODO: child order? add them all in once?
             Scene2DNode* node = object_cast<Scene2DNode*>(children[i]);
             thiz.addChild(node);
         }
