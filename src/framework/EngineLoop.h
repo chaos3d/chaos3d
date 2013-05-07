@@ -1,8 +1,10 @@
 #ifndef _ENGINE_LOOP
 #define _ENGINE_LOOP
 
-#include "common/common.h"
-#include "boost/function.hpp"
+#include <common/common.h>
+#include <common/Singleton.h>
+#include <boost/function.hpp>
+#include <lua/lua.hpp>
 #include <string>
 #include <list>
 
@@ -11,7 +13,9 @@ _CHAOS_BEGIN
 class AnimationManager;
 class EventHandler;
 
-class EngineLoop {
+class EngineLoop
+    : public Singleton<EngineLoop>  /// it is not necessory to be a singleton, this is convenient to get the client extended instance
+{
 public:
     typedef boost::function<void ()> Callback;
     typedef boost::function<bool ()> Poller;
@@ -40,9 +44,10 @@ public:
     void addListener(Poller const& poller, Callback const& callback){
         addListener(Listener(poller, callback));
     }
-    
+
+    /// TODO: replace with lThread
+    lua_State* getState();
 protected:
-    virtual void _forcelink();
 	//virtual void collect();
     
     class Internal;

@@ -10,6 +10,8 @@
 
 #include <iostream>
 
+#include "luabind/engine-bind.h"
+
 //#include "anim/AnimationManager.h"
 //#include "event/EventHandler.h"
 //#include "event/Event.h"
@@ -37,30 +39,31 @@ EngineLoop::~EngineLoop() {
     delete AutoreleasePool::getInstance();
 }
 
-void EngineLoop::_forcelink(){
-    static int (*__lualibs[])(lua_State*) = {
-        //luaopen_lyield,
-    };
-}
-
 void EngineLoop::addListener(Listener const& lsn){
     _internal->listenerList[_internal->activeListenerList].push_back(lsn);
 }
 
+lua_State* EngineLoop::getState(){
+    return _internal->mainL;
+}
+
 bool EngineLoop::startUp() {
     lua_State* &L = _internal->mainL;
+    
+    // TODO: refactor this to lThread => lYield goes to lThread then
     L = lua_open();
     luaL_openlibs(L);
     lua_cpcall(L, luaopen_lplatform, 0);
     lua_cpcall(L, luaopen_lyield, 0);
+    
+    // TODO: add -u link flag
+    lua_cpcall(L, luaopen_scene2d, 0);
+    lua_cpcall(L, luaopen_platform, 0);     // link against different platform implementation libs
 
-    _internal->config.startUp();
+    //_internal->config.startUp(); // should extend this class
 #if 1
-    DataStream* ds = NULL;
-    if(IOManager::getInstance() == NULL){
-        //TODO: logging error
-    }else
-        ds = IOManager::getInstance()->createStreamByPath(_internal->config.bootstrap + ".lua");
+    assert(IOManager::getInstance() != NULL);
+    DataStream* ds = IOManager::getInstance()->createStreamByPath(_internal->config.bootstrap + ".lua");
     if(ds != NULL){
         if(luaio_load(L, ds, ds->where()) != 0){
             // TODO: error log
