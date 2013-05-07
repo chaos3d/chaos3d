@@ -25,6 +25,18 @@
 
 #endif	// __GNU_C__
 
+#if __APPLE__
+#include <TargetConditionals.h>
+#endif
+
+#if TARGET_OS_IPHONE == 1
+#define PLATFORM_IOS 1
+#endif
+
+#if TARGET_IPHONE_SIMULATOR == 1
+#define PLATFORM_IOS_SIM 1
+#endif
+
 #if defined(DEBUG) && !defined(NDEBUG)
 #define ASSERT(x)
 #else
@@ -33,5 +45,6 @@
 
 #include <cstdint>
 #include <cstdlib>
+#include <cstddef>
 
 #endif
