@@ -8,20 +8,28 @@
 
 #import <UIKit/UIKit.h>
 
-#if __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_5_0
-#import <GLKit/GLKit.h>
-#endif
+class EngineLoop;
+class RenderDriver;
 
-@interface cViewController :
-#if __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_5_0
-    GLKViewController
-#else
-    // TODO: support <5.0 later
-    UIViewController
-#endif
+/**
+ * This is a run loop wrapper for iOS
+ *
+ * This will start/stop the looping and be
+ * a context of render views, UI layout etc.
+ * cAppDelegate or client's should create
+ * and maintain this
+ *
+ * this also has timer controller which the loop can run
+ * frame by frame, and simulate and other debug facilities
+ */
+@interface cViewController : UIViewController /// use standard view controller
 {
 }
 
-@property (copy) NSString* boostrap;
+@property (assign) EngineLoop* engineLoop;
+@property (assign, readonly) RenderDriver* renderDriver; // render driver works with cViewController(owner)
 
+- (void) startLoop;
+- (void) stopLoop;
+- (void) pauseLoop: (BOOL) paused;
 @end

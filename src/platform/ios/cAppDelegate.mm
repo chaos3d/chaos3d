@@ -8,10 +8,12 @@
 
 #import "cAppDelegate.h"
 #import "cViewController.h"
+#include "io/IOManager.h"
+#include "framework/EngineLoop.h"
 
 @implementation cAppDelegate
 
-@synthesize window;
+@synthesize window, controller;
 
 - (void)dealloc
 {
@@ -31,18 +33,35 @@
     
     // FIXME:
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
+#if 0
     // Override point for customization after application launch.
-    /*
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
         self.viewController = [[[ViewController alloc] initWithNibName:@"ViewController_iPhone" bundle:nil] autorelease];
     } else {
         self.viewController = [[[ViewController alloc] initWithNibName:@"ViewController_iPad" bundle:nil] autorelease];
-    }*/
-    cViewController* controller = [[[cViewController alloc] init] autorelease];
-    controller.boostrap = bootstrap;
+    }
+#endif
+
+    // create the singleton
+    IOManager* io = new IOManager();
+    io->addDirLocator([[[[NSBundle mainBundle] bundlePath] stringByAppendingString: @"/"] UTF8String]);
+    
+    self.controller = [[[cViewController alloc] init] autorelease];
+
+    // if not init by the client, create a default one
+    if(EngineLoop::getInstance() == NULL){
+        EngineLoop::Config config;
+        config.bootstrap = std::string([bootstrap UTF8String]);
+        new EngineLoop(config);
+    }
+
+    controller.engineLoop = EngineLoop::getInstance();
+
     self.window.rootViewController = controller;
     [self.window makeKeyAndVisible];
     
+    // other initialization: render driver/environment variables/
+    [controller startLoop];
     return YES;
 }
 
@@ -50,6 +69,8 @@
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+    
+    [controller pauseLoop:TRUE];
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
@@ -66,6 +87,7 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    [controller pauseLoop:FALSE];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application

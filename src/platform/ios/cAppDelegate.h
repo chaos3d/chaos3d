@@ -8,7 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class cViewController;
+
 @interface cAppDelegate : UIResponder <UIApplicationDelegate>
 
-@property (retain) UIWindow* window;
+@property (nonatomic, retain) UIWindow* window;
+@property (nonatomic, retain) cViewController* controller;
 @end
