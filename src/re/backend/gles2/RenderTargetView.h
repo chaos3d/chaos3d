@@ -5,11 +5,7 @@
 #include <re/RenderWindow.h>
 
 // iOS only
-#if __APPLE__
-#include <TargetConditionals.h>
-#endif
-
-#if TARGET_OS_IPHONE == 1 || TARGET_IPHONE_SIMULATOR == 1
+#ifdef PLATFORM_IOS
 
 #include <UIKit/UIKit.h>
 
@@ -23,6 +19,7 @@ public:
 	class Context;
 
 	/// default constructor
+    // TODO: more options: full screen, position, color space
 	RenderTargetView(Context*,		//!< native shared context to create the window and multithreading (OpenGL concerns)
 			uint16_t width = 0,	//!< window width
 			uint16_t height = 0 //!< window height, default is the screen size
@@ -33,6 +30,6 @@ private:
 	UIView* _view;	// TODO: customized view
 };
 
-#endif
+#endif // PLATFORM_IOS
 
 #endif
