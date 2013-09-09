@@ -19,9 +19,11 @@ print "end";
 
 print "start simple&dirty test"
 
+-- working code
+
 local node = scene2d.create({
     "tag1",
-    transform={translate={1,1,1}},
+    transform={translate={1,1}},
 })
 
 local camera = scene2d.create({
@@ -33,23 +35,22 @@ node:addChildren(
     {camera, others}
 )
 
---[[
-local children = node:children
-print(type(children);
-for _, child in ipairs(children) do
-    print(child)
-end
---]]
 while true do
-    print "render camera";
+    --print "render camera";
     camera:doRender();
 	coroutine.yield()
 end
 
 -- psudo code
 --[[
-local screen = device.screen
-local window = re.createWindow({screen.width, screen.height})
+local children = node.children
+print(type(children);
+for _, child in ipairs(children) do
+    print(child)
+end
+local screen = platform.screen -- full screen? width? height?
+local re = platform.renderEngine
+local window = re.createWindow(screen.width, screen.height)
 local camera = scene2d.createNode( { type='camera', target=window } )
 local node = scene2d.createNode( {} )
 

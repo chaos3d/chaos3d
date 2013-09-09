@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		88160938172FC53C00004AEE /* RenderTargetView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 88160937172FC53C00004AEE /* RenderTargetView.mm */; };
+		881609451738EA1800004AEE /* iOSRenderDriver.mm in Sources */ = {isa = PBXBuildFile; fileRef = 881609441738EA1800004AEE /* iOSRenderDriver.mm */; };
 		881D4DD4170442BF007299A2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 881D4DD3170442BF007299A2 /* Foundation.framework */; };
 		881D4DFA1704443C007299A2 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 881D4DF4170443D2007299A2 /* GLKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		881D4DFB1704443C007299A2 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 881D4DF5170443D2007299A2 /* OpenGLES.framework */; };
@@ -31,6 +32,7 @@
 		88160939172FC54400004AEE /* iOSRenderDriver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iOSRenderDriver.h; sourceTree = "<group>"; };
 		8816093A172FC55700004AEE /* RenderWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RenderWindow.h; path = ../../src/re/RenderWindow.h; sourceTree = "<group>"; };
 		8816093B172FC55700004AEE /* GpuProgram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GpuProgram.h; path = ../../src/re/GpuProgram.h; sourceTree = "<group>"; };
+		881609441738EA1800004AEE /* iOSRenderDriver.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = iOSRenderDriver.mm; sourceTree = "<group>"; };
 		881D4DD0170442BF007299A2 /* libre.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libre.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		881D4DD3170442BF007299A2 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		881D4DF4170443D2007299A2 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
@@ -111,6 +113,7 @@
 		88B24CDB170EB85100F7C2CC /* frontend */ = {
 			isa = PBXGroup;
 			children = (
+				881609441738EA1800004AEE /* iOSRenderDriver.mm */,
 				88160939172FC54400004AEE /* iOSRenderDriver.h */,
 				88B24CDC170EB85100F7C2CC /* Context.h */,
 			);
@@ -188,6 +191,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				88160938172FC53C00004AEE /* RenderTargetView.mm in Sources */,
+				881609451738EA1800004AEE /* iOSRenderDriver.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

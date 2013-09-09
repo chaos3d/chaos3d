@@ -63,7 +63,7 @@
         [displayLink invalidate];
     }
 
-    if(!pause){
+    if(!paused){
         self.displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(frameLoop:)];
         displayLink.frameInterval = 1;
         [displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];

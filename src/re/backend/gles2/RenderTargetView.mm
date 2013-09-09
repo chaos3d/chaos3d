@@ -1,16 +1,6 @@
 #include "RenderTargetView.h"
 
-#if __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_5_0
-#include <GLKit/GLKit.h>
-#endif
-
-@interface RenderView :
-#if __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_5_0
-    GLKView
-#else
-    UIView
-#endif
-{
+@interface RenderView : UIView{
 }
 
 @property (assign, nonatomic) RenderTargetView* target;
@@ -52,11 +42,14 @@
 	eaglLayer.opaque = TRUE;
 	eaglLayer.drawableProperties = [NSDictionary dictionaryWithObjectsAndKeys:
 									[NSNumber numberWithBool:FALSE], kEAGLDrawablePropertyRetainedBacking, kEAGLColorFormatRGBA8, kEAGLDrawablePropertyColorFormat, nil];
+    eaglLayer.contentScaleFactor = [UIScreen mainScreen].scale; //TODO
 	
-	self.userInteractionEnabled = YES;
+	self.userInteractionEnabled = YES;  // TODO
 	self.opaque = TRUE;
 	self.autoresizesSubviews = NO;
 	self.autoresizingMask = UIViewAutoresizingNone;
+    self.multipleTouchEnabled = TRUE; // TODO
+
 	//self.backgroundColor = [UIColor redColor];
 }
 
@@ -139,3 +132,21 @@
 	//window->getHandler().processEvent(window->getTouches());
 }
 @end
+
+RenderTargetView::RenderTargetView(UIView* parent, uint16_t width, uint16_t height){
+    _view = [[RenderView alloc] initWithFrame:CGRectMake(0.f, 0.f, width, height)];
+    _view.target = this;
+    
+    [parent addSubview: _view];
+}
+
+RenderTargetView::~RenderTargetView(){
+    [_view removeFromSuperview];
+    [_view release];
+}
+
+RenderTarget::Size RenderTargetView::getSize() const{
+    CGSize size = _view.bounds.size;
+    float scale = _view.contentScaleFactor;
+    return RenderTarget::Size(size.width*scale, size.height*scale);
+}

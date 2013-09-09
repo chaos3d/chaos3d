@@ -8,6 +8,7 @@ _projMatrix(Matrix4f::IDENTITY), _projMatrixInv(Matrix4f::IDENTITY)
 
 Camera::~Camera(){
     SAFE_RELEASE0(_rootNode);
+    SAFE_RELEASE0(_target);
 }
 
 void Camera::setRootNode(Scene2DNode* rootNode){
@@ -121,6 +122,10 @@ void Camera::setPerspective(const float fov,const float aspect,const float near,
 
 void Camera::setOrtho(const float width,const float height,const float near,const float far){
 	setOrthoProj( 0.f, 0.f, width, height, near, far);
+}
+
+void Camera::setTarget(RenderTarget *target){
+    SAFE_REFAGN(_target, target);
 }
 
 class CHAOS_PRIVATE CameraRenderer{

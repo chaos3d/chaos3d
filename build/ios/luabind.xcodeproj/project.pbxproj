@@ -27,6 +27,8 @@
 		880DEDCD171BFBF900CBCA7E /* wrapper_base.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 880DEDBC171BFBF900CBCA7E /* wrapper_base.cpp */; };
 		880DEF84171BFC7000CBCA7E /* boost.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 880DEF82171BFC7000CBCA7E /* boost.framework */; };
 		880DEF85171BFC7000CBCA7E /* lua.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 880DEF83171BFC7000CBCA7E /* lua.framework */; };
+		881605DF172E4DAE00004AEE /* scene2d-bind.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 881605DD172E4DAE00004AEE /* scene2d-bind.cpp */; };
+		88160932172F8BCF00004AEE /* platform-ios-bind.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88160930172F8BCF00004AEE /* platform-ios-bind.cpp */; };
 		883FC58E171E8BF100AAEA76 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 880DEF8B171BFD8900CBCA7E /* UIKit.framework */; };
 		883FC58F171E8BF100AAEA76 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 880DED4B171BFAFF00CBCA7E /* Foundation.framework */; };
 		883FC590171E8BF100AAEA76 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 880DEF8E171BFD8900CBCA7E /* CoreGraphics.framework */; };
@@ -61,7 +63,7 @@
 /* Begin PBXFileReference section */
 		880DED48171BFAFF00CBCA7E /* libluabind.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libluabind.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		880DED4B171BFAFF00CBCA7E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		880DED4F171BFAFF00CBCA7E /* luabind-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "luabind-Prefix.pch"; path = "../../../build/ios/luabind/luabind-Prefix.pch"; sourceTree = "<group>"; };
+		880DED4F171BFAFF00CBCA7E /* luabind-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "luabind-Prefix.pch"; path = "luabind/luabind-Prefix.pch"; sourceTree = "<group>"; };
 		880DED5A171BFBF900CBCA7E /* adopt_policy.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = adopt_policy.hpp; sourceTree = "<group>"; };
 		880DED5B171BFBF900CBCA7E /* back_reference.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = back_reference.hpp; sourceTree = "<group>"; };
 		880DED5C171BFBF900CBCA7E /* back_reference_fwd.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = back_reference_fwd.hpp; sourceTree = "<group>"; };
@@ -235,6 +237,11 @@
 		880DEF83171BFC7000CBCA7E /* lua.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = lua.framework; path = ../../dependency/ios/lua.framework; sourceTree = "<group>"; };
 		880DEF8B171BFD8900CBCA7E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		880DEF8E171BFD8900CBCA7E /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		881605DD172E4DAE00004AEE /* scene2d-bind.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "scene2d-bind.cpp"; sourceTree = "<group>"; };
+		881605DE172E4DAE00004AEE /* scene2d-bind.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "scene2d-bind.h"; sourceTree = "<group>"; };
+		8816092F172E5CCE00004AEE /* engine-bind.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "engine-bind.h"; path = "../../src/luabind/engine-bind.h"; sourceTree = "<group>"; };
+		88160930172F8BCF00004AEE /* platform-ios-bind.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "platform-ios-bind.cpp"; path = "../../src/luabind/platform-ios-bind.cpp"; sourceTree = "<group>"; };
+		88160931172F8BCF00004AEE /* platform-ios-bind.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "platform-ios-bind.h"; path = "../../src/luabind/platform-ios-bind.h"; sourceTree = "<group>"; };
 		883FC58D171E8BF100AAEA76 /* luabind-test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "luabind-test.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		883FC593171E8BF100AAEA76 /* luabind-test-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "luabind-test-Info.plist"; sourceTree = "<group>"; };
 		883FC595171E8BF100AAEA76 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -286,6 +293,7 @@
 				880DED59171BFBF900CBCA7E /* luabind-inc */,
 				880DEDAB171BFBF900CBCA7E /* luabind-src */,
 				883FC591171E8BF100AAEA76 /* luabind-test */,
+				881605DB172E4D8700004AEE /* engine-bind */,
 				880DED4A171BFAFF00CBCA7E /* Frameworks */,
 				880DED49171BFAFF00CBCA7E /* Products */,
 			);
@@ -413,7 +421,6 @@
 			isa = PBXGroup;
 			children = (
 				880DEDAC171BFBF900CBCA7E /* class.cpp */,
-				880DED4F171BFAFF00CBCA7E /* luabind-Prefix.pch */,
 				880DEDAD171BFBF900CBCA7E /* class_info.cpp */,
 				880DEDAE171BFBF900CBCA7E /* class_registry.cpp */,
 				880DEDAF171BFBF900CBCA7E /* class_rep.cpp */,
@@ -579,6 +586,28 @@
 			path = ../../external/luabind/test;
 			sourceTree = "<group>";
 		};
+		881605DB172E4D8700004AEE /* engine-bind */ = {
+			isa = PBXGroup;
+			children = (
+				88160930172F8BCF00004AEE /* platform-ios-bind.cpp */,
+				88160931172F8BCF00004AEE /* platform-ios-bind.h */,
+				8816092F172E5CCE00004AEE /* engine-bind.h */,
+				880DED4F171BFAFF00CBCA7E /* luabind-Prefix.pch */,
+				881605DC172E4DAE00004AEE /* scene2d */,
+			);
+			name = "engine-bind";
+			sourceTree = "<group>";
+		};
+		881605DC172E4DAE00004AEE /* scene2d */ = {
+			isa = PBXGroup;
+			children = (
+				881605DD172E4DAE00004AEE /* scene2d-bind.cpp */,
+				881605DE172E4DAE00004AEE /* scene2d-bind.h */,
+			);
+			name = scene2d;
+			path = ../../src/luabind/scene2d;
+			sourceTree = "<group>";
+		};
 		883FC591171E8BF100AAEA76 /* luabind-test */ = {
 			isa = PBXGroup;
 			children = (
@@ -707,6 +736,8 @@
 				880DEDCB171BFBF900CBCA7E /* stack_content_by_name.cpp in Sources */,
 				880DEDCC171BFBF900CBCA7E /* weak_ref.cpp in Sources */,
 				880DEDCD171BFBF900CBCA7E /* wrapper_base.cpp in Sources */,
+				881605DF172E4DAE00004AEE /* scene2d-bind.cpp in Sources */,
+				88160932172F8BCF00004AEE /* platform-ios-bind.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -765,6 +796,7 @@
 				HEADER_SEARCH_PATHS = (
 					../../external/luabind,
 					../../src,
+					../../external,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				ONLY_ACTIVE_ARCH = YES;
@@ -791,6 +823,7 @@
 				HEADER_SEARCH_PATHS = (
 					../../external/luabind,
 					../../src,
+					../../external,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				SDKROOT = iphoneos;
@@ -907,6 +940,7 @@
 				883FC5A5171E8BF100AAEA76 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

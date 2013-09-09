@@ -64,6 +64,8 @@ public:
     
 	virtual void render();
 
+    void setTarget(RenderTarget*);
+    RenderTarget* getTarget() const { return _target; };
 private:
 	Scene2DNode* _node;
     // the node to start rendering; use _node if this is null (to prevent trivial circular
