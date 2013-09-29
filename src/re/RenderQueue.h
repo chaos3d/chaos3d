@@ -5,7 +5,7 @@
 
 #include "common/common.h"
 #include "common/ReferencedCount.h"
-#include "Material.h"
+#include "material.h"
 #include "VertexData.h"
 
 _CHAOS_BEGIN
@@ -16,7 +16,7 @@ _CHAOS_BEGIN
  */
 class RenderUnit{
 public:
-	RenderUnit(Material*, VertexData*);
+	RenderUnit(material*, VertexData*);
 	~RenderUnit();
 
 	Material* getMaterial() const { return material; };

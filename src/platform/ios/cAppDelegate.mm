@@ -8,8 +8,7 @@
 
 #import "cAppDelegate.h"
 #import "cViewController.h"
-#include "io/IOManager.h"
-#include "framework/EngineLoop.h"
+//#include "framework/EngineLoop.h"
 
 @implementation cAppDelegate
 
@@ -17,13 +16,13 @@
 
 - (void)dealloc
 {
-    //[_window release];
-    //[_viewController release];
+    self.controller = nil;
     [super dealloc];
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+#if 0
     NSDictionary* info = [[NSBundle mainBundle] infoDictionary];
     NSString* bootstrap = [info objectForKey: @"BOOTSTRAP"];
     
@@ -33,18 +32,12 @@
     
     // FIXME:
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
-#if 0
     // Override point for customization after application launch.
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
         self.viewController = [[[ViewController alloc] initWithNibName:@"ViewController_iPhone" bundle:nil] autorelease];
     } else {
         self.viewController = [[[ViewController alloc] initWithNibName:@"ViewController_iPad" bundle:nil] autorelease];
     }
-#endif
-
-    // create the singleton
-    IOManager* io = new IOManager();
-    io->addDirLocator([[[[NSBundle mainBundle] bundlePath] stringByAppendingString: @"/"] UTF8String]);
     
     self.controller = [[[cViewController alloc] init] autorelease];
 
@@ -62,6 +55,7 @@
     
     // other initialization: render driver/environment variables/
     [controller startLoop];
+#endif
     return YES;
 }
 

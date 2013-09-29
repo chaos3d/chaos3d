@@ -10,8 +10,13 @@
 
 @class cViewController;
 
+/**
+ * iOS delegate wrapper
+ *
+ * common application skeleton functions to easily
+ * set up the app
+ */
 @interface cAppDelegate : UIResponder <UIApplicationDelegate>
 
-@property (nonatomic, retain) UIWindow* window;
 @property (nonatomic, retain) cViewController* controller;
 @end

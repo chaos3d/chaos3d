@@ -8,9 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		882D74FC17167851002E1BBD /* Scene2DNode-Animation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D74FA17167851002E1BBD /* Scene2DNode-Animation.cpp */; };
-		882D75011716A109002E1BBD /* Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D74FF1716A109002E1BBD /* Camera.cpp */; };
 		882D75041716A134002E1BBD /* Scene2DRoot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D75021716A133002E1BBD /* Scene2DRoot.cpp */; };
-		883FC5D017212BF700AAEA76 /* CameraNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88B24D04170ECB9900F7C2CC /* CameraNode.cpp */; };
 		88B24CF6170EC86800F7C2CC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88B24CF5170EC86800F7C2CC /* Foundation.framework */; };
 		88B24D60170ECB9900F7C2CC /* NodeColor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88B24D14170ECB9900F7C2CC /* NodeColor.cpp */; };
 		88B24D62170ECB9900F7C2CC /* NodeFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88B24D18170ECB9900F7C2CC /* NodeFrame.cpp */; };
@@ -294,9 +292,7 @@
 				88B24D70170ECB9900F7C2CC /* Scene2DNode.cpp in Sources */,
 				88B24D76170ECB9900F7C2CC /* Transform.cpp in Sources */,
 				882D74FC17167851002E1BBD /* Scene2DNode-Animation.cpp in Sources */,
-				882D75011716A109002E1BBD /* Camera.cpp in Sources */,
 				882D75041716A134002E1BBD /* Scene2DRoot.cpp in Sources */,
-				883FC5D017212BF700AAEA76 /* CameraNode.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

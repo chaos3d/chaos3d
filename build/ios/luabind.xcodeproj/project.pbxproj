@@ -28,7 +28,6 @@
 		880DEF84171BFC7000CBCA7E /* boost.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 880DEF82171BFC7000CBCA7E /* boost.framework */; };
 		880DEF85171BFC7000CBCA7E /* lua.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 880DEF83171BFC7000CBCA7E /* lua.framework */; };
 		881605DF172E4DAE00004AEE /* scene2d-bind.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 881605DD172E4DAE00004AEE /* scene2d-bind.cpp */; };
-		88160932172F8BCF00004AEE /* platform-ios-bind.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88160930172F8BCF00004AEE /* platform-ios-bind.cpp */; };
 		883FC58E171E8BF100AAEA76 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 880DEF8B171BFD8900CBCA7E /* UIKit.framework */; };
 		883FC58F171E8BF100AAEA76 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 880DED4B171BFAFF00CBCA7E /* Foundation.framework */; };
 		883FC590171E8BF100AAEA76 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 880DEF8E171BFD8900CBCA7E /* CoreGraphics.framework */; };
@@ -240,8 +239,6 @@
 		881605DD172E4DAE00004AEE /* scene2d-bind.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "scene2d-bind.cpp"; sourceTree = "<group>"; };
 		881605DE172E4DAE00004AEE /* scene2d-bind.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "scene2d-bind.h"; sourceTree = "<group>"; };
 		8816092F172E5CCE00004AEE /* engine-bind.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "engine-bind.h"; path = "../../src/luabind/engine-bind.h"; sourceTree = "<group>"; };
-		88160930172F8BCF00004AEE /* platform-ios-bind.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "platform-ios-bind.cpp"; path = "../../src/luabind/platform-ios-bind.cpp"; sourceTree = "<group>"; };
-		88160931172F8BCF00004AEE /* platform-ios-bind.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "platform-ios-bind.h"; path = "../../src/luabind/platform-ios-bind.h"; sourceTree = "<group>"; };
 		883FC58D171E8BF100AAEA76 /* luabind-test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "luabind-test.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		883FC593171E8BF100AAEA76 /* luabind-test-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "luabind-test-Info.plist"; sourceTree = "<group>"; };
 		883FC595171E8BF100AAEA76 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -589,8 +586,6 @@
 		881605DB172E4D8700004AEE /* engine-bind */ = {
 			isa = PBXGroup;
 			children = (
-				88160930172F8BCF00004AEE /* platform-ios-bind.cpp */,
-				88160931172F8BCF00004AEE /* platform-ios-bind.h */,
 				8816092F172E5CCE00004AEE /* engine-bind.h */,
 				880DED4F171BFAFF00CBCA7E /* luabind-Prefix.pch */,
 				881605DC172E4DAE00004AEE /* scene2d */,
@@ -737,7 +732,6 @@
 				880DEDCC171BFBF900CBCA7E /* weak_ref.cpp in Sources */,
 				880DEDCD171BFBF900CBCA7E /* wrapper_base.cpp in Sources */,
 				881605DF172E4DAE00004AEE /* scene2d-bind.cpp in Sources */,
-				88160932172F8BCF00004AEE /* platform-ios-bind.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

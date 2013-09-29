@@ -10,7 +10,7 @@
 
 #include <iostream>
 
-#include "luabind/engine-bind.h"
+//#include "luabind/engine-bind.h"
 
 //#include "anim/AnimationManager.h"
 //#include "event/EventHandler.h"
@@ -53,12 +53,12 @@ bool EngineLoop::startUp() {
     // TODO: refactor this to lThread => lYield goes to lThread then
     L = lua_open();
     luaL_openlibs(L);
-    lua_cpcall(L, luaopen_lplatform, 0);
+    //lua_cpcall(L, luaopen_lplatform, 0);
     lua_cpcall(L, luaopen_lyield, 0);
     
     // TODO: add -u link flag
-    lua_cpcall(L, luaopen_scene2d, 0);
-    lua_cpcall(L, luaopen_platform, 0);     // link against different platform implementation libs
+    //lua_cpcall(L, luaopen_scene2d, 0);
+    //lua_cpcall(L, luaopen_platform, 0);     // link against different platform implementation libs
 
     //_internal->config.startUp(); // should extend this class
 #if 1

@@ -140,8 +140,6 @@
 		882D74B0171285A9002E1BBD /* DataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataSource.h; sourceTree = "<group>"; };
 		882D74B1171285A9002E1BBD /* DataSourceAndStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DataSourceAndStream.cpp; sourceTree = "<group>"; };
 		882D74B2171285A9002E1BBD /* DataStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataStream.h; sourceTree = "<group>"; };
-		882D74B3171285A9002E1BBD /* DataStreamFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DataStreamFactory.cpp; sourceTree = "<group>"; };
-		882D74B4171285A9002E1BBD /* DataStreamFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataStreamFactory.h; sourceTree = "<group>"; };
 		882D74B5171285A9002E1BBD /* FileSource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FileSource.cpp; sourceTree = "<group>"; };
 		882D74B6171285A9002E1BBD /* FileSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileSource.h; sourceTree = "<group>"; };
 		882D74B7171285A9002E1BBD /* FileStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FileStream.cpp; sourceTree = "<group>"; };
@@ -325,8 +323,6 @@
 				882D74B0171285A9002E1BBD /* DataSource.h */,
 				882D74B1171285A9002E1BBD /* DataSourceAndStream.cpp */,
 				882D74B2171285A9002E1BBD /* DataStream.h */,
-				882D74B3171285A9002E1BBD /* DataStreamFactory.cpp */,
-				882D74B4171285A9002E1BBD /* DataStreamFactory.h */,
 				882D74B5171285A9002E1BBD /* FileSource.cpp */,
 				882D74B6171285A9002E1BBD /* FileSource.h */,
 				882D74B7171285A9002E1BBD /* FileStream.cpp */,
