@@ -9,9 +9,9 @@
 #import "cViewController.h"
 #import <QuartzCore/QuartzCore.h>
 
-#include "framework/EngineLoop.h"
-#include "re/frontend/iOSRenderDriver.h"
-#include "boost/bind.hpp"
+//#include "framework/EngineLoop.h"
+//#include "re/frontend/iOSRenderDriver.h"
+//#include "boost/bind.hpp"
 
 @interface cViewController (){
 }
@@ -20,10 +20,21 @@
 
 @implementation cViewController
 
-@synthesize engineLoop, displayLink, renderDriver;
+@synthesize displayLink, delegate;
 
 - (void) dealloc{
+    self.displayLink = nil;
     [super dealloc];
+}
+
+- (void) update{
+    
+}
+
++ (cViewController*) controllerWithDelegate: (id<cControllerDelegate>) delegate_ {
+    cViewController* controller = [[self alloc] init];
+    controller.delegate = delegate_;
+    return [controller autorelease];
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -50,16 +61,8 @@
     
 }
 
-- (RenderDriver*) getRenderDriver{
-    if(renderDriver == NULL){
-        
-    }
-    
-    return renderDriver;
-}
-
 - (void) pauseLoop: (BOOL) paused{
-    if(self.displayLink != NULL){
+    if(self.displayLink != nil){
         [displayLink invalidate];
     }
 
@@ -77,9 +80,6 @@
 }
 
 - (void) startLoop{
-    if(engineLoop != NULL){
-        engineLoop->startUp();
-    }
 
     assert(self.displayLink == NULL);
     [self pauseLoop:FALSE];
@@ -92,8 +92,10 @@
 }
 
 - (void) frameLoop: (id) _ {
-    assert(engineLoop != NULL);
-    engineLoop->loop();
+    if( delegate )
+        [delegate update: self];
+    else
+        [self update];
 }
 
 - (void)viewDidAppear:(BOOL)animated{

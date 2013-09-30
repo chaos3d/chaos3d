@@ -8,8 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
-class EngineLoop;
-class RenderDriver;
+@class cViewController;
+
+@protocol cControllerDelegate <NSObject>
+
+@required
+- (void) update: (cViewController*) controller;
+
+@optional
+
+@end
 
 /**
  * This is a run loop wrapper for iOS
@@ -23,13 +31,12 @@ class RenderDriver;
  * frame by frame, and simulate and other debug facilities
  */
 @interface cViewController : UIViewController /// use standard view controller
-{
-}
+@property (nonatomic, assign) id<cControllerDelegate> delegate;
 
-@property (assign) EngineLoop* engineLoop;
-@property (assign, readonly) RenderDriver* renderDriver; // render driver works with cViewController(owner)
++ (cViewController*) controllerWithDelegate: (id<cControllerDelegate>) delegate_;
 
 - (void) startLoop;
 - (void) stopLoop;
 - (void) pauseLoop: (BOOL) paused;
+- (void) update;
 @end

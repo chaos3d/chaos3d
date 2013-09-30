@@ -19,6 +19,8 @@ public:
     
     target_size_t const& get_size() const { return _size; };
     
+    virtual bool bind() = 0;
+    virtual bool flush() = 0;
 protected:
     target_size_t _size;
 

@@ -42,6 +42,8 @@ namespace gles20 {
 render_view::render_view(target_size_t const& size_, window_pos_t const& pos_) :
     render_window(size_, pos_), _native_view(nil) {
     _context = [EAGLContext currentContext];
+    create_native();
+    create_view();
     assert(_context != nil);
 }
 
@@ -58,6 +60,7 @@ void render_view::create_native() {
 	_native_view.opaque = TRUE;
 	_native_view.autoresizesSubviews = NO;
 	_native_view.autoresizingMask = UIViewAutoresizingNone;
+    _native_view.backgroundColor = [UIColor yellowColor];
     
 }
     
@@ -94,7 +97,7 @@ void render_view::create_view() {
     // stencil
     //glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, _depthBuffer);
 
-	//glCheckFramebufferStatus(GL_FRAMEBUFFER)) != GL_FRAMEBUFFER_COMPLETE
+	assert(glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE);
     
 }
 

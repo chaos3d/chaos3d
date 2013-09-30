@@ -2,10 +2,8 @@
 #define _RENDER_DEVICE_H
 
 #include "common/common.h"
+#include "render_types.h"
 
-class texture;
-class render_texture;
-class render_window;
 class vertex_array;
 
 class render_device {
@@ -24,18 +22,22 @@ public:
     //
     // it could also be potential to have multiple
     // devices...
-    static render_device& get_device(uint8_t type = None);
+    static render_device* get_device(uint8_t type = None);
     
     virtual ~render_device() {};
     
     // initialize the context for the current thread
     // each thread should have different contexts,
     // and it's client's job to avoid race conditions
-    virtual bool init_context() {};
+    //
+    // returns false if it doesn't support the current
+    // device
+    virtual bool init_context() { return false; };
     
     virtual texture* create_texture() = 0;
     virtual render_texture* create_render_texture() = 0;
-    virtual render_window* create_window(/*pos, size*/) = 0;
+    virtual render_window* create_window(render_target::target_size_t const&,
+                                         render_window::window_pos_t const& pos = render_window::window_pos_t(0.f,0.f)) = 0;
     virtual vertex_array* create_vertex() = 0;
 };
 
