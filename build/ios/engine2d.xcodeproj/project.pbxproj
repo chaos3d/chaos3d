@@ -20,6 +20,7 @@
 		883FC5C2171FFA7600AAEA76 /* FileStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D74B7171285A9002E1BBD /* FileStream.cpp */; };
 		883FC5C317211B1200AAEA76 /* PkgChunkStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882D74C3171285A9002E1BBD /* PkgChunkStream.cpp */; };
 		883FC5CF17211EF700AAEA76 /* libluabind.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 883FC5CA17211ECD00AAEA76 /* libluabind.a */; };
+		8888D99D17F95C8B001B0C99 /* libre.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 882D746D171216ED002E1BBD /* libre.a */; };
 		88B24DA51711FBF400F7C2CC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88B24DA41711FBF400F7C2CC /* Foundation.framework */; };
 /* End PBXBuildFile section */
 
@@ -198,6 +199,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8888D99D17F95C8B001B0C99 /* libre.a in Frameworks */,
 				883FC5CF17211EF700AAEA76 /* libluabind.a in Frameworks */,
 				882D748017121851002E1BBD /* libscene2d.a in Frameworks */,
 				882D748117121851002E1BBD /* libwm4-algebra.a in Frameworks */,
