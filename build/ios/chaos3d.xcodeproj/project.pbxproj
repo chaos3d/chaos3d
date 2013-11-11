@@ -1,0 +1,426 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		88A84AD01830652F009F7ECD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88A84ACF1830652F009F7ECD /* Foundation.framework */; };
+		88A84AD51830652F009F7ECD /* chaos3d.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 88A84AD41830652F009F7ECD /* chaos3d.h */; };
+		88A84AD71830652F009F7ECD /* chaos3d.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A84AD61830652F009F7ECD /* chaos3d.m */; };
+		88A84ADE1830652F009F7ECD /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88A84ADD1830652F009F7ECD /* XCTest.framework */; };
+		88A84ADF1830652F009F7ECD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88A84ACF1830652F009F7ECD /* Foundation.framework */; };
+		88A84AE11830652F009F7ECD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88A84AE01830652F009F7ECD /* UIKit.framework */; };
+		88A84AE41830652F009F7ECD /* libchaos3d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 88A84ACC1830652F009F7ECD /* libchaos3d.a */; };
+		88A84AEA1830652F009F7ECD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 88A84AE81830652F009F7ECD /* InfoPlist.strings */; };
+		88A84AEC1830652F009F7ECD /* chaos3dTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A84AEB1830652F009F7ECD /* chaos3dTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		88A84AE21830652F009F7ECD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88A84AC41830652F009F7ECD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 88A84ACB1830652F009F7ECD;
+			remoteInfo = chaos3d;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		88A84ACA1830652F009F7ECD /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+				88A84AD51830652F009F7ECD /* chaos3d.h in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		88A84ACC1830652F009F7ECD /* libchaos3d.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libchaos3d.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		88A84ACF1830652F009F7ECD /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		88A84AD31830652F009F7ECD /* chaos3d-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "chaos3d-Prefix.pch"; sourceTree = "<group>"; };
+		88A84AD41830652F009F7ECD /* chaos3d.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = chaos3d.h; sourceTree = "<group>"; };
+		88A84AD61830652F009F7ECD /* chaos3d.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = chaos3d.m; sourceTree = "<group>"; };
+		88A84ADC1830652F009F7ECD /* chaos3dTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = chaos3dTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		88A84ADD1830652F009F7ECD /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		88A84AE01830652F009F7ECD /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		88A84AE71830652F009F7ECD /* chaos3dTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "chaos3dTests-Info.plist"; sourceTree = "<group>"; };
+		88A84AE91830652F009F7ECD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		88A84AEB1830652F009F7ECD /* chaos3dTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = chaos3dTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		88A84AC91830652F009F7ECD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				88A84AD01830652F009F7ECD /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		88A84AD91830652F009F7ECD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				88A84ADE1830652F009F7ECD /* XCTest.framework in Frameworks */,
+				88A84AE11830652F009F7ECD /* UIKit.framework in Frameworks */,
+				88A84ADF1830652F009F7ECD /* Foundation.framework in Frameworks */,
+				88A84AE41830652F009F7ECD /* libchaos3d.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		88A84AC31830652F009F7ECD = {
+			isa = PBXGroup;
+			children = (
+				88A84AD11830652F009F7ECD /* chaos3d */,
+				88A84AE51830652F009F7ECD /* chaos3dTests */,
+				88A84ACE1830652F009F7ECD /* Frameworks */,
+				88A84ACD1830652F009F7ECD /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		88A84ACD1830652F009F7ECD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				88A84ACC1830652F009F7ECD /* libchaos3d.a */,
+				88A84ADC1830652F009F7ECD /* chaos3dTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		88A84ACE1830652F009F7ECD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				88A84ACF1830652F009F7ECD /* Foundation.framework */,
+				88A84ADD1830652F009F7ECD /* XCTest.framework */,
+				88A84AE01830652F009F7ECD /* UIKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		88A84AD11830652F009F7ECD /* chaos3d */ = {
+			isa = PBXGroup;
+			children = (
+				88A84AD41830652F009F7ECD /* chaos3d.h */,
+				88A84AD61830652F009F7ECD /* chaos3d.m */,
+				88A84AD21830652F009F7ECD /* Supporting Files */,
+			);
+			path = chaos3d;
+			sourceTree = "<group>";
+		};
+		88A84AD21830652F009F7ECD /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				88A84AD31830652F009F7ECD /* chaos3d-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		88A84AE51830652F009F7ECD /* chaos3dTests */ = {
+			isa = PBXGroup;
+			children = (
+				88A84AEB1830652F009F7ECD /* chaos3dTests.m */,
+				88A84AE61830652F009F7ECD /* Supporting Files */,
+			);
+			path = chaos3dTests;
+			sourceTree = "<group>";
+		};
+		88A84AE61830652F009F7ECD /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				88A84AE71830652F009F7ECD /* chaos3dTests-Info.plist */,
+				88A84AE81830652F009F7ECD /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		88A84ACB1830652F009F7ECD /* chaos3d */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 88A84AEF1830652F009F7ECD /* Build configuration list for PBXNativeTarget "chaos3d" */;
+			buildPhases = (
+				88A84AC81830652F009F7ECD /* Sources */,
+				88A84AC91830652F009F7ECD /* Frameworks */,
+				88A84ACA1830652F009F7ECD /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = chaos3d;
+			productName = chaos3d;
+			productReference = 88A84ACC1830652F009F7ECD /* libchaos3d.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		88A84ADB1830652F009F7ECD /* chaos3dTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 88A84AF21830652F009F7ECD /* Build configuration list for PBXNativeTarget "chaos3dTests" */;
+			buildPhases = (
+				88A84AD81830652F009F7ECD /* Sources */,
+				88A84AD91830652F009F7ECD /* Frameworks */,
+				88A84ADA1830652F009F7ECD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				88A84AE31830652F009F7ECD /* PBXTargetDependency */,
+			);
+			name = chaos3dTests;
+			productName = chaos3dTests;
+			productReference = 88A84ADC1830652F009F7ECD /* chaos3dTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		88A84AC41830652F009F7ECD /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0500;
+				ORGANIZATIONNAME = cHaos3D;
+			};
+			buildConfigurationList = 88A84AC71830652F009F7ECD /* Build configuration list for PBXProject "chaos3d" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 88A84AC31830652F009F7ECD;
+			productRefGroup = 88A84ACD1830652F009F7ECD /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				88A84ACB1830652F009F7ECD /* chaos3d */,
+				88A84ADB1830652F009F7ECD /* chaos3dTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		88A84ADA1830652F009F7ECD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				88A84AEA1830652F009F7ECD /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		88A84AC81830652F009F7ECD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				88A84AD71830652F009F7ECD /* chaos3d.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		88A84AD81830652F009F7ECD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				88A84AEC1830652F009F7ECD /* chaos3dTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		88A84AE31830652F009F7ECD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 88A84ACB1830652F009F7ECD /* chaos3d */;
+			targetProxy = 88A84AE21830652F009F7ECD /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		88A84AE81830652F009F7ECD /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				88A84AE91830652F009F7ECD /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		88A84AED1830652F009F7ECD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		88A84AEE1830652F009F7ECD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		88A84AF01830652F009F7ECD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/chaos3d.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "chaos3d/chaos3d-Prefix.pch";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		88A84AF11830652F009F7ECD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/chaos3d.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "chaos3d/chaos3d-Prefix.pch";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		88A84AF31830652F009F7ECD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "chaos3d/chaos3d-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "chaos3dTests/chaos3dTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		88A84AF41830652F009F7ECD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "chaos3d/chaos3d-Prefix.pch";
+				INFOPLIST_FILE = "chaos3dTests/chaos3dTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		88A84AC71830652F009F7ECD /* Build configuration list for PBXProject "chaos3d" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				88A84AED1830652F009F7ECD /* Debug */,
+				88A84AEE1830652F009F7ECD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		88A84AEF1830652F009F7ECD /* Build configuration list for PBXNativeTarget "chaos3d" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				88A84AF01830652F009F7ECD /* Debug */,
+				88A84AF11830652F009F7ECD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		88A84AF21830652F009F7ECD /* Build configuration list for PBXNativeTarget "chaos3dTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				88A84AF31830652F009F7ECD /* Debug */,
+				88A84AF41830652F009F7ECD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 88A84AC41830652F009F7ECD /* Project object */;
+}

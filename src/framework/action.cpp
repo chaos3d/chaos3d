@@ -54,7 +54,7 @@ void action::append(action* nt){
 }
 
 void action::reverse() {
-    if(_next != nullptr && _next->_next != nullptr){ // reverse a link-list :)
+    if(_next != nullptr && _next->_next != nullptr){
         Action* pre = _next, *nt = _next->_next;
         pre->_next = nullptr;
         while(nt != nullptr) {

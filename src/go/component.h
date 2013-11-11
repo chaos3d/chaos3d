@@ -14,11 +14,8 @@
 #include <vector>
 #include <cassert>
 
-template<class ...Cs>
-class game_object;
+class game_object_t;
 
-// no polymorphism, no virtual function
-// it can be done in another way if needed
 class component {
 public:
     component(void* go) : _parent(go)
@@ -26,7 +23,9 @@ public:
     }
 
     void* parent() const { return _parent;}
+    
 private:
+    bool _dirty;
     void* _parent;
 };
 
