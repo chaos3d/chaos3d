@@ -14,19 +14,26 @@
 #include <vector>
 #include <cassert>
 
-class game_object_t;
+class game_object;
+
+// TODO: move this to utility header
+#define ATTRIBUTE(type, name) \
+    private: type _##name; \
+    public: type const& name () const { return _##name; } \
+    public: type & name () { return _##name; } \
+    public: void set_##name (type const& name) { _##name = name; } \
 
 class component {
 public:
-    component(void* go) : _parent(go)
+    component(game_object* go) : _parent(go)
     {
     }
 
-    void* parent() const { return _parent;}
+    game_object* parent() const { return _parent;}
     
 private:
     bool _dirty;
-    void* _parent;
+    game_object* _parent;
 };
 
 template<class C>
@@ -55,33 +62,5 @@ class component_manager<transform> : public cascading_manager<transform> {
     
 };
 
-template<class ...Cs>
-class components_visitor {
-public:
-    void update();
-};
 
-template<class ...Cs>
-class component_managers {
-public:
-    typedef boost::mpl::vector<Cs...> component_list_t;
-    typedef typename boost::mpl::size<component_list_t>::type component_size;
-    
-    component_managers() : _managers(component_size::value) {
-        
-    }
-    
-    template<class C>
-    component_manager<C>& get_manager() {
-        typedef typename boost::mpl::find<component_list_t, C>::type iter;
-        void*& mgr = _managers[iter::pos::value];
-        assert(iter::pos::value >= 0 && iter::pos::value < component_size::value);
-        if(mgr == nullptr) {
-            mgr = new component_manager<C>();
-        }
-        return *static_cast<component_manager<C>*>(mgr);
-    }
-private:
-    std::vector<void*> _managers;
-};
 #endif
