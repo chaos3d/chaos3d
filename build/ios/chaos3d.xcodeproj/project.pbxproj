@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		883246A2183233F10022EA4A /* aabb.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 883246A0183233F10022EA4A /* aabb.cpp */; };
+		883246C7183237220022EA4A /* render_device_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 883246AD183237220022EA4A /* render_device_ios.mm */; };
+		883246C8183237220022EA4A /* render_view_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 883246B0183237220022EA4A /* render_view_ios.mm */; };
+		883246C9183237220022EA4A /* render_device.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 883246B5183237220022EA4A /* render_device.cpp */; };
 		88A84AD01830652F009F7ECD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88A84ACF1830652F009F7ECD /* Foundation.framework */; };
 		88A84ADE1830652F009F7ECD /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88A84ADD1830652F009F7ECD /* XCTest.framework */; };
 		88A84ADF1830652F009F7ECD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88A84ACF1830652F009F7ECD /* Foundation.framework */; };
@@ -367,6 +370,22 @@
 		8832469F183220130022EA4A /* UmfPackSupport */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UmfPackSupport; sourceTree = "<group>"; };
 		883246A0183233F10022EA4A /* aabb.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = aabb.cpp; sourceTree = "<group>"; };
 		883246A1183233F10022EA4A /* aabb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aabb.h; sourceTree = "<group>"; };
+		883246AC183237220022EA4A /* render_device.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = render_device.h; sourceTree = "<group>"; };
+		883246AD183237220022EA4A /* render_device_ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = render_device_ios.mm; sourceTree = "<group>"; };
+		883246AE183237220022EA4A /* render_gles20.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = render_gles20.h; sourceTree = "<group>"; };
+		883246AF183237220022EA4A /* render_view_ios.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = render_view_ios.h; sourceTree = "<group>"; };
+		883246B0183237220022EA4A /* render_view_ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = render_view_ios.mm; sourceTree = "<group>"; };
+		883246B1183237220022EA4A /* gpu_program.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gpu_program.h; sourceTree = "<group>"; };
+		883246B3183237220022EA4A /* material.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = material.h; sourceTree = "<group>"; };
+		883246B4183237220022EA4A /* render_batch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = render_batch.h; sourceTree = "<group>"; };
+		883246B5183237220022EA4A /* render_device.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = render_device.cpp; sourceTree = "<group>"; };
+		883246B6183237220022EA4A /* render_device.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = render_device.h; sourceTree = "<group>"; };
+		883246B7183237220022EA4A /* render_pass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = render_pass.h; sourceTree = "<group>"; };
+		883246B8183237220022EA4A /* render_pipeline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = render_pipeline.h; sourceTree = "<group>"; };
+		883246B9183237220022EA4A /* render_state.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = render_state.h; sourceTree = "<group>"; };
+		883246BA183237220022EA4A /* render_types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = render_types.h; sourceTree = "<group>"; };
+		883246BB183237220022EA4A /* render_vertex_array.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = render_vertex_array.h; sourceTree = "<group>"; };
+		883246C3183237220022EA4A /* texture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = texture.h; sourceTree = "<group>"; };
 		88A84ACC1830652F009F7ECD /* libchaos3d.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libchaos3d.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		88A84ACF1830652F009F7ECD /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		88A84ADC1830652F009F7ECD /* chaos3dTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = chaos3dTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1041,6 +1060,37 @@
 			path = UmfPackSupport;
 			sourceTree = "<group>";
 		};
+		883246A3183237220022EA4A /* re */ = {
+			isa = PBXGroup;
+			children = (
+				883246AB183237220022EA4A /* gles20 */,
+				883246B1183237220022EA4A /* gpu_program.h */,
+				883246B3183237220022EA4A /* material.h */,
+				883246B4183237220022EA4A /* render_batch.h */,
+				883246B5183237220022EA4A /* render_device.cpp */,
+				883246B6183237220022EA4A /* render_device.h */,
+				883246B7183237220022EA4A /* render_pass.h */,
+				883246B8183237220022EA4A /* render_pipeline.h */,
+				883246B9183237220022EA4A /* render_state.h */,
+				883246BA183237220022EA4A /* render_types.h */,
+				883246BB183237220022EA4A /* render_vertex_array.h */,
+				883246C3183237220022EA4A /* texture.h */,
+			);
+			path = re;
+			sourceTree = "<group>";
+		};
+		883246AB183237220022EA4A /* gles20 */ = {
+			isa = PBXGroup;
+			children = (
+				883246AC183237220022EA4A /* render_device.h */,
+				883246AD183237220022EA4A /* render_device_ios.mm */,
+				883246AE183237220022EA4A /* render_gles20.h */,
+				883246AF183237220022EA4A /* render_view_ios.h */,
+				883246B0183237220022EA4A /* render_view_ios.mm */,
+			);
+			path = gles20;
+			sourceTree = "<group>";
+		};
 		88A84AC31830652F009F7ECD = {
 			isa = PBXGroup;
 			children = (
@@ -1075,6 +1125,7 @@
 		88A84AD11830652F009F7ECD /* chaos3d */ = {
 			isa = PBXGroup;
 			children = (
+				883246A3183237220022EA4A /* re */,
 				88A84B08183067AF009F7ECD /* go */,
 				88A84B0B183067AF009F7ECD /* sg */,
 			);
@@ -1191,7 +1242,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				883246C8183237220022EA4A /* render_view_ios.mm in Sources */,
 				88A84B121830B6D9009F7ECD /* game_object.cpp in Sources */,
+				883246C9183237220022EA4A /* render_device.cpp in Sources */,
+				883246C7183237220022EA4A /* render_device_ios.mm in Sources */,
 				88A84B0E183067AF009F7ECD /* transform.cpp in Sources */,
 				883246A2183233F10022EA4A /* aabb.cpp in Sources */,
 			);
@@ -1223,7 +1277,6 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
@@ -1254,6 +1307,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					../../src,
 					../../external/,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
@@ -1270,7 +1324,6 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
@@ -1295,6 +1348,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					../../src,
 					../../external/,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
