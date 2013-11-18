@@ -1,8 +1,10 @@
 #ifndef _RENDER_DEVICE_H
 #define _RENDER_DEVICE_H
 
+#include <initializer_list>
 #include "common/common.h"
 #include "render_types.h"
+#include "vertex_buffer.h"
 
 class vertex_array;
 
@@ -38,7 +40,14 @@ public:
     virtual render_texture* create_render_texture() = 0;
     virtual render_window* create_window(render_target::target_size_t const&,
                                          render_window::window_pos_t const& pos = render_window::window_pos_t(0.f,0.f)) = 0;
-    virtual vertex_array* create_vertex() = 0;
+    
+    virtual vertex_array* create_vertex(std::initializer_list<vertex_buffer*> const&) = 0;
+    
+    // create a single multi-channel vertex buffer
+    virtual vertex_buffer* create_buffer(std::initializer_list<vertex_buffer::channel_desc> const&,
+                                         size_t size = 0, uint8_t* data = nullptr, // initial data
+                                         bool client = false,
+                                         bool interleaved = true);
 };
 
 #endif
