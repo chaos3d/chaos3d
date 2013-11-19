@@ -5,7 +5,14 @@
 
 class texture {
 public:
+    typedef Eigen::Vector2f vector2f;
+    enum { T1D, T2D, T3D };
+
     virtual ~texture() {};
+    
+    vector2f const& size() const;
+    int type() const;
+    int format() const;
 };
 
 class render_target {

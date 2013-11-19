@@ -4,6 +4,10 @@
 class gpu_program {
 public:
     
+private:
+    // a list of parameters
+    
+    // a list of vertex channels
 };
 
 #endif

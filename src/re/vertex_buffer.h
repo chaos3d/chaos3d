@@ -38,5 +38,7 @@ private:
 // in a logical manner, i.e.
 // a static buffer, a dynamic buffer and an indexed buffer
 // each of them could have different channels
-class vertex_array;
+class vertex_array {
+    
+};
 #endif
