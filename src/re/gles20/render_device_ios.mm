@@ -49,7 +49,7 @@ render_texture* render_device::create_render_texture() {
     return nullptr;
 }
 
-vertex_array* render_device::create_vertex() {
+vertex_array* render_device::create_vertex(std::initializer_list<vertex_buffer*> const& buffer) {
     //TODO
     return nullptr;
 }

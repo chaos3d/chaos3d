@@ -47,7 +47,7 @@ public:
     virtual vertex_buffer* create_buffer(std::initializer_list<vertex_buffer::channel_desc> const&,
                                          size_t size = 0, uint8_t* data = nullptr, // initial data
                                          bool client = false,
-                                         bool interleaved = true);
+                                         bool interleaved = true) = 0;
 };
 
 #endif
