@@ -12,6 +12,7 @@
 		883246C8183237220022EA4A /* render_view_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 883246B0183237220022EA4A /* render_view_ios.mm */; };
 		883246C9183237220022EA4A /* render_device.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 883246B5183237220022EA4A /* render_device.cpp */; };
 		883246CC183A01730022EA4A /* vertex_buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 883246CA183A01730022EA4A /* vertex_buffer.cpp */; };
+		883246CF183CC04C0022EA4A /* render_target.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 883246CD183CC04C0022EA4A /* render_target.cpp */; };
 		88A84AD01830652F009F7ECD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88A84ACF1830652F009F7ECD /* Foundation.framework */; };
 		88A84ADE1830652F009F7ECD /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88A84ADD1830652F009F7ECD /* XCTest.framework */; };
 		88A84ADF1830652F009F7ECD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88A84ACF1830652F009F7ECD /* Foundation.framework */; };
@@ -381,14 +382,13 @@
 		883246B4183237220022EA4A /* render_batch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = render_batch.h; sourceTree = "<group>"; };
 		883246B5183237220022EA4A /* render_device.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = render_device.cpp; sourceTree = "<group>"; };
 		883246B6183237220022EA4A /* render_device.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = render_device.h; sourceTree = "<group>"; };
-		883246B7183237220022EA4A /* render_pass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = render_pass.h; sourceTree = "<group>"; };
-		883246B8183237220022EA4A /* render_pipeline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = render_pipeline.h; sourceTree = "<group>"; };
 		883246B9183237220022EA4A /* render_state.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = render_state.h; sourceTree = "<group>"; };
 		883246BA183237220022EA4A /* render_types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = render_types.h; sourceTree = "<group>"; };
-		883246BB183237220022EA4A /* render_vertex_array.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = render_vertex_array.h; sourceTree = "<group>"; };
 		883246C3183237220022EA4A /* texture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = texture.h; sourceTree = "<group>"; };
 		883246CA183A01730022EA4A /* vertex_buffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vertex_buffer.cpp; sourceTree = "<group>"; };
 		883246CB183A01730022EA4A /* vertex_buffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vertex_buffer.h; sourceTree = "<group>"; };
+		883246CD183CC04C0022EA4A /* render_target.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = render_target.cpp; sourceTree = "<group>"; };
+		883246CE183CC04C0022EA4A /* render_target.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = render_target.h; sourceTree = "<group>"; };
 		88A84ACC1830652F009F7ECD /* libchaos3d.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libchaos3d.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		88A84ACF1830652F009F7ECD /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		88A84ADC1830652F009F7ECD /* chaos3dTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = chaos3dTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1072,11 +1072,10 @@
 				883246B4183237220022EA4A /* render_batch.h */,
 				883246B5183237220022EA4A /* render_device.cpp */,
 				883246B6183237220022EA4A /* render_device.h */,
-				883246B7183237220022EA4A /* render_pass.h */,
-				883246B8183237220022EA4A /* render_pipeline.h */,
 				883246B9183237220022EA4A /* render_state.h */,
+				883246CD183CC04C0022EA4A /* render_target.cpp */,
+				883246CE183CC04C0022EA4A /* render_target.h */,
 				883246BA183237220022EA4A /* render_types.h */,
-				883246BB183237220022EA4A /* render_vertex_array.h */,
 				883246C3183237220022EA4A /* texture.h */,
 				883246CA183A01730022EA4A /* vertex_buffer.cpp */,
 				883246CB183A01730022EA4A /* vertex_buffer.h */,
@@ -1130,8 +1129,8 @@
 		88A84AD11830652F009F7ECD /* chaos3d */ = {
 			isa = PBXGroup;
 			children = (
-				883246A3183237220022EA4A /* re */,
 				88A84B08183067AF009F7ECD /* go */,
+				883246A3183237220022EA4A /* re */,
 				88A84B0B183067AF009F7ECD /* sg */,
 			);
 			name = chaos3d;
@@ -1247,6 +1246,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				883246CF183CC04C0022EA4A /* render_target.cpp in Sources */,
 				883246C8183237220022EA4A /* render_view_ios.mm in Sources */,
 				88A84B121830B6D9009F7ECD /* game_object.cpp in Sources */,
 				883246C9183237220022EA4A /* render_device.cpp in Sources */,
