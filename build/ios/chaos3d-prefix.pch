@@ -9,5 +9,9 @@
 #endif
 
 #ifdef __cplusplus
-#include "Eigen/Geometry"
+#include <Eigen/Geometry>
+#include <Eigen/Dense>
 #endif
+
+#include <OpenGLES/ES2/gl.h>
+#include <OpenGLES/ES2/glext.h>
