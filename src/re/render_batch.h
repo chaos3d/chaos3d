@@ -19,12 +19,31 @@ class gpu_program;
 //  output: the bound target
 class render_batch {
 public:
+    struct batch_t {
+        vertex_array* vertex;
+        render_state* state;
+        render_parameters* parameters;
+        gpu_program* program;
+    };
+    
     bool operator<(render_batch const&rhs) const {
         return _sort_key < rhs._sort_key;
     }
     
     render_batch& operator=(render_batch const&);
     
+    render_batch(vertex_array* vertex,
+                 render_state* state,
+                 render_parameters* parameters,
+                 gpu_program* program)
+    : _vertex(vertex), _state(state),
+    _parameters(parameters), _program(program)
+    {}
+                 
+    render_batch(batch_t const& batch)
+    : render_batch(batch.vertex, batch.state,
+                   batch.parameters, batch.program)
+    {}
 private:
     typedef uint64_t sort_key;
     
@@ -39,7 +58,7 @@ private:
     render_state* _state;
     render_parameters* _parameters;
     gpu_program* _program;
-    
+    // TODO: memory management?
 };
 
 #endif

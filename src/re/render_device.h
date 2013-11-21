@@ -5,8 +5,7 @@
 #include "common/common.h"
 #include "render_types.h"
 #include "vertex_buffer.h"
-
-class vertex_array;
+#include "render_target.h"
 
 class render_device {
 public:

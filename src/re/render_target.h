@@ -10,16 +10,23 @@ public:
     typedef Eigen::Vector2f target_size_t;
     typedef std::vector<render_batch> batches_t;
     
+    enum { RGB565, RGBA8888, SRGBA8888 };
+    enum { NODEPTH, DEPTH16, DEPTH24 };
+    enum { NOSTENCIL, STENCIL8 };
+    enum { NOMULTISAMPLE, MULTISAMPLE4X };
+    
     render_target(target_size_t const& size_) :
     _size(size_)
     {};
     virtual ~render_target() {};
     
-    target_size_t const& get_size() const { return _size; };
+    target_size_t const& size() const { return _size; };
     
-    void do_render();
+    void do_render(bool clear = true /*! whether to clear the batches */);
     void sort(); // TODO: comparor
-    void add_batch();
+    
+    void add_batch(render_batch::batch_t const&);
+    
 protected:
     virtual bool bind() = 0;
     virtual bool flush() = 0;
@@ -27,6 +34,10 @@ protected:
 private:
     target_size_t _size;
     batches_t _batches;
+    uint8_t _color_format;
+    uint8_t _depth_format;
+    uint8_t _stencil_format;
+    uint8_t _multi_sample;
 };
 
 class texture;

@@ -2,6 +2,7 @@
 #define _GLES20_RENDER_DEVICE_H
 
 #include "../render_device.h"
+#include "../render_target.h"
 
 #if defined(__OBJC__)
 #import <OpenGLES/EAGL.h>
