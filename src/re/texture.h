@@ -1,9 +1,11 @@
 #ifndef _TEXTURE_H
 #define _TEXTURE_H
 
+class data_stream;
+
 class texture{
 public:
-    typedef Eigen::Vector2f vector2f;
+    typedef Eigen::Vector2i vector2i;
     
     ///! type: Texture 1D, 2D, 3D
     enum { T1D, T2D, T3D };
@@ -23,13 +25,13 @@ public:
     
     virtual ~texture() {};
     
-    vector2f const& size() const { return _size; }
+    vector2i const& size() const { return _size; }
     int type() const { return _type; }
     int format() const { return _format; }
     int color() const { return _color; }
     attribute_t const& attribute() const { return _attribute; }
     
-    virtual bool load() = 0;
+    virtual bool load(data_stream*, int format, int color, int level = 0) = 0;
 
 protected:
     void set_size(vector2f const& size) { _size = size; }
@@ -39,7 +41,7 @@ protected:
     attribute_t& attribute() { return _attribute; }
     
 private:
-    vector2f _size;
+    vector2i _size;
     int _type, _format, _color;
     attribute_t _attribute;
 };

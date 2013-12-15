@@ -401,6 +401,9 @@
 		88A84B0D183067AF009F7ECD /* transform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = transform.h; sourceTree = "<group>"; };
 		88A84B111830B6D9009F7ECD /* game_object.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = game_object.cpp; sourceTree = "<group>"; };
 		88A84B131830BA1E009F7ECD /* boost.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = boost.framework; path = ../../dependency/ios/boost.framework; sourceTree = "<group>"; };
+		AACCE35D185D89CA0017CEEE /* data_stream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = data_stream.h; path = io/data_stream.h; sourceTree = "<group>"; };
+		AACCE35E185D8AF80017CEEE /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = README.md; path = ../../README.md; sourceTree = "<group>"; };
+		AACCE360185D978E0017CEEE /* resource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = resource.h; path = asset/resource.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1098,6 +1101,7 @@
 		88A84AC31830652F009F7ECD = {
 			isa = PBXGroup;
 			children = (
+				AACCE35E185D8AF80017CEEE /* README.md */,
 				8832453518321FE90022EA4A /* external */,
 				88A84AD11830652F009F7ECD /* chaos3d */,
 				88A84ACE1830652F009F7ECD /* Frameworks */,
@@ -1129,6 +1133,8 @@
 		88A84AD11830652F009F7ECD /* chaos3d */ = {
 			isa = PBXGroup;
 			children = (
+				AACCE35F185D977C0017CEEE /* asset */,
+				AACCE35C185D89BA0017CEEE /* io */,
 				88A84B08183067AF009F7ECD /* go */,
 				883246A3183237220022EA4A /* re */,
 				88A84B0B183067AF009F7ECD /* sg */,
@@ -1164,6 +1170,22 @@
 				88A84B0D183067AF009F7ECD /* transform.h */,
 			);
 			path = sg;
+			sourceTree = "<group>";
+		};
+		AACCE35C185D89BA0017CEEE /* io */ = {
+			isa = PBXGroup;
+			children = (
+				AACCE35D185D89CA0017CEEE /* data_stream.h */,
+			);
+			name = io;
+			sourceTree = "<group>";
+		};
+		AACCE35F185D977C0017CEEE /* asset */ = {
+			isa = PBXGroup;
+			children = (
+				AACCE360185D978E0017CEEE /* resource.h */,
+			);
+			name = asset;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
