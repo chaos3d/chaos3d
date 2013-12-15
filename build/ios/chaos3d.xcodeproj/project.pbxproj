@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		8812C289185DA722001C4D0B /* memory_stream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8812C287185DA722001C4D0B /* memory_stream.cpp */; };
+		8812C28C185DB235001C4D0B /* png_loader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8812C28A185DB235001C4D0B /* png_loader.cpp */; };
 		883246A2183233F10022EA4A /* aabb.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 883246A0183233F10022EA4A /* aabb.cpp */; };
 		883246C7183237220022EA4A /* render_device_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 883246AD183237220022EA4A /* render_device_ios.mm */; };
 		883246C8183237220022EA4A /* render_view_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 883246B0183237220022EA4A /* render_view_ios.mm */; };
@@ -49,6 +50,8 @@
 /* Begin PBXFileReference section */
 		8812C287185DA722001C4D0B /* memory_stream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = memory_stream.cpp; path = io/memory_stream.cpp; sourceTree = "<group>"; };
 		8812C288185DA722001C4D0B /* memory_stream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = memory_stream.h; path = io/memory_stream.h; sourceTree = "<group>"; };
+		8812C28A185DB235001C4D0B /* png_loader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = png_loader.cpp; path = asset/png_loader.cpp; sourceTree = "<group>"; };
+		8812C28B185DB235001C4D0B /* png_loader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = png_loader.h; path = asset/png_loader.h; sourceTree = "<group>"; };
 		88324537183220130022EA4A /* Array */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Array; sourceTree = "<group>"; };
 		88324538183220130022EA4A /* Cholesky */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cholesky; sourceTree = "<group>"; };
 		88324539183220130022EA4A /* CholmodSupport */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CholmodSupport; sourceTree = "<group>"; };
@@ -1188,6 +1191,8 @@
 		AACCE35F185D977C0017CEEE /* asset */ = {
 			isa = PBXGroup;
 			children = (
+				8812C28A185DB235001C4D0B /* png_loader.cpp */,
+				8812C28B185DB235001C4D0B /* png_loader.h */,
 				AACCE360185D978E0017CEEE /* resource.h */,
 			);
 			name = asset;
@@ -1281,6 +1286,7 @@
 				883246C7183237220022EA4A /* render_device_ios.mm in Sources */,
 				88A84B0E183067AF009F7ECD /* transform.cpp in Sources */,
 				883246CC183A01730022EA4A /* vertex_buffer.cpp in Sources */,
+				8812C28C185DB235001C4D0B /* png_loader.cpp in Sources */,
 				883246A2183233F10022EA4A /* aabb.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
