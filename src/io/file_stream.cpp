@@ -7,54 +7,53 @@
  *
  */
 
-#include "io/FileStream.h"
+#include "io/file_stream.h"
 
-//using namespace chaos;
+file_stream::file_stream( char const* filename ) {
+    _file = fopen (filename , "rb");
 
-FileStream::FileStream( char const* filename ) : mName(filename){
-	mFile = fopen (filename , "rb");
-
+    // TODO
 	//if( mFile == 0 )
 	//	LOG("Unable to open file: %s", filename);
 }
 
-FileStream::~FileStream(){
-	if( mFile != 0 )
-		fclose( mFile );
+file_stream::~file_stream(){
+    if( _file != 0 )
+        fclose(_file );
 }
 
-bool FileStream::end( ){
-	return feof( mFile ) == 0;
+bool file_stream::end( ){
+    return feof( _file ) == 0;
 }
 
-bool FileStream::valid( ){
-	return mFile != 0;
+bool file_stream::valid( ){
+    return _file != 0;
 }
 
-size_t FileStream::read( void* buf, size_t bufSize ){
-	return fread( buf, 1, bufSize, mFile );
+size_t file_stream::read( void* buf, size_t bufSize ){
+    return fread( buf, 1, bufSize, _file );
 }
 
-bool FileStream::seek( long offset, int pos ){
-	static int origin[] = {SEEK_CUR, SEEK_END, SEEK_SET};
-	return fseek( mFile, offset, origin[pos] ) == 0;
+bool file_stream::seek( long offset, int pos ){
+    static int origin[] = {SEEK_CUR, SEEK_END, SEEK_SET};
+    return fseek( _file, offset, origin[pos] ) == 0;
 }
 
-long FileStream::tell(){
-	return ftell(mFile);
+long file_stream::tell(){
+    return ftell(_file);
 }
 
-void FileStream::close(){
-	fclose( mFile );
-	mFile = 0;
+void file_stream::close(){
+    fclose( _file );
+    _file = 0;
 }
 
 //#ifdef	WIN32
-bool FileStream::exist( const char* filename ){
-	FILE* f = fopen( filename, "rb" );
-	if( f == 0 )
-		return false;
-	else
-		return fclose(f), true;
+bool file_stream::exist( const char* filename ){
+    FILE* f = fopen( filename, "rb" );
+    if( f == 0 )
+        return false;
+    else
+        return fclose(f), true;
 }
 //#endif

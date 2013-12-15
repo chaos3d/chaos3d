@@ -7,37 +7,29 @@
  *
  */
 
-#ifndef	_CHAOS_FILESTREAM_H
-#define	_CHAOS_FILESTREAM_H
+#ifndef	_FILE_STREAM_H
+#define	_FILE_STREAM_H
 
-#include "common/common.h"
-#include "DataStream.h"
+#include "io/data_stream.h"
 #include <cstdio>
-#include <string>
 
-_CHAOS_BEGIN
-
-class CHAOS_PRIVATE FileStream : public DataStream{
-protected:
-	FILE	*mFile;
-	std::string const	mName;
-
+class file_stream : public data_stream{
 public:
-	~FileStream();
-	FileStream( char const* filename );
+    ~file_stream();
+    file_stream(char const* filename);
 
-	static	bool	exist( const char* filename );
+    static bool exist(const char* filename);
 
-	virtual bool	valid();
-	virtual void	close();
-	virtual bool	end();
-	virtual size_t	read( void* buf, size_t bufSize );
-	virtual bool	seek( long offset, int pos );
-	virtual long	tell();
-	virtual char const* where() { return mName.c_str(); }
+    virtual bool valid();
+    virtual void close();
+    virtual bool end();
+    virtual size_t read(void* buf, size_t bufSize);
+    virtual bool seek(long offset, int pos);
+    virtual long tell();
+
+private:
+    FILE *_file;
 };
-
-_CHAOS_END
 
 #endif
 
