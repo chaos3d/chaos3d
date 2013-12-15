@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8812C289185DA722001C4D0B /* memory_stream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8812C287185DA722001C4D0B /* memory_stream.cpp */; };
 		883246A2183233F10022EA4A /* aabb.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 883246A0183233F10022EA4A /* aabb.cpp */; };
 		883246C7183237220022EA4A /* render_device_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 883246AD183237220022EA4A /* render_device_ios.mm */; };
 		883246C8183237220022EA4A /* render_view_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 883246B0183237220022EA4A /* render_view_ios.mm */; };
@@ -46,6 +47,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		8812C287185DA722001C4D0B /* memory_stream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = memory_stream.cpp; path = io/memory_stream.cpp; sourceTree = "<group>"; };
+		8812C288185DA722001C4D0B /* memory_stream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = memory_stream.h; path = io/memory_stream.h; sourceTree = "<group>"; };
 		88324537183220130022EA4A /* Array */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Array; sourceTree = "<group>"; };
 		88324538183220130022EA4A /* Cholesky */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cholesky; sourceTree = "<group>"; };
 		88324539183220130022EA4A /* CholmodSupport */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CholmodSupport; sourceTree = "<group>"; };
@@ -1175,6 +1178,8 @@
 		AACCE35C185D89BA0017CEEE /* io */ = {
 			isa = PBXGroup;
 			children = (
+				8812C287185DA722001C4D0B /* memory_stream.cpp */,
+				8812C288185DA722001C4D0B /* memory_stream.h */,
 				AACCE35D185D89CA0017CEEE /* data_stream.h */,
 			);
 			name = io;
@@ -1269,6 +1274,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				883246CF183CC04C0022EA4A /* render_target.cpp in Sources */,
+				8812C289185DA722001C4D0B /* memory_stream.cpp in Sources */,
 				883246C8183237220022EA4A /* render_view_ios.mm in Sources */,
 				88A84B121830B6D9009F7ECD /* game_object.cpp in Sources */,
 				883246C9183237220022EA4A /* render_device.cpp in Sources */,

@@ -27,7 +27,6 @@ public:
     virtual bool seek(long offset, int pos = SeekCur) = 0;
     virtual long tell() = 0;
     virtual void close() = 0;
-    virtual char const* where() = 0;
 };
 
 #endif
