@@ -14,6 +14,7 @@
 		8812C295185E6359001C4D0B /* render_device.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8812C294185E6359001C4D0B /* render_device.cpp */; };
 		8812C298185EF4FA001C4D0B /* resource_manager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8812C297185EF4FA001C4D0B /* resource_manager.cpp */; };
 		8812C29B185EF887001C4D0B /* asset_locator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8812C299185EF887001C4D0B /* asset_locator.cpp */; };
+		8812C2A0185F0992001C4D0B /* asset_locator.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8812C29F185F0992001C4D0B /* asset_locator.mm */; };
 		883246A2183233F10022EA4A /* aabb.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 883246A0183233F10022EA4A /* aabb.cpp */; };
 		883246C7183237220022EA4A /* render_device_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 883246AD183237220022EA4A /* render_device_ios.mm */; };
 		883246C8183237220022EA4A /* render_view_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 883246B0183237220022EA4A /* render_view_ios.mm */; };
@@ -67,6 +68,7 @@
 		8812C297185EF4FA001C4D0B /* resource_manager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = resource_manager.cpp; path = asset/resource_manager.cpp; sourceTree = "<group>"; };
 		8812C299185EF887001C4D0B /* asset_locator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = asset_locator.cpp; path = asset/asset_locator.cpp; sourceTree = "<group>"; };
 		8812C29A185EF887001C4D0B /* asset_locator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = asset_locator.h; path = asset/asset_locator.h; sourceTree = "<group>"; };
+		8812C29F185F0992001C4D0B /* asset_locator.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = asset_locator.mm; path = asset/asset_locator.mm; sourceTree = "<group>"; };
 		88324537183220130022EA4A /* Array */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Array; sourceTree = "<group>"; };
 		88324538183220130022EA4A /* Cholesky */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cholesky; sourceTree = "<group>"; };
 		88324539183220130022EA4A /* CholmodSupport */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CholmodSupport; sourceTree = "<group>"; };
@@ -1210,6 +1212,7 @@
 		AACCE35F185D977C0017CEEE /* asset */ = {
 			isa = PBXGroup;
 			children = (
+				8812C29F185F0992001C4D0B /* asset_locator.mm */,
 				8812C299185EF887001C4D0B /* asset_locator.cpp */,
 				8812C29A185EF887001C4D0B /* asset_locator.h */,
 				8812C297185EF4FA001C4D0B /* resource_manager.cpp */,
@@ -1312,6 +1315,7 @@
 				8812C292185E5F77001C4D0B /* gl_texture.cpp in Sources */,
 				883246C7183237220022EA4A /* render_device_ios.mm in Sources */,
 				88A84B0E183067AF009F7ECD /* transform.cpp in Sources */,
+				8812C2A0185F0992001C4D0B /* asset_locator.mm in Sources */,
 				8812C29B185EF887001C4D0B /* asset_locator.cpp in Sources */,
 				883246CC183A01730022EA4A /* vertex_buffer.cpp in Sources */,
 				8812C28C185DB235001C4D0B /* png_loader.cpp in Sources */,

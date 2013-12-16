@@ -1,7 +1,10 @@
 #ifndef _ASSET_LOCATOR_H
 #define _ASSET_LOCATOR_H
 
+#include <string>
+
 class data_stream;
+
 class asset_locator {
 public:
     asset_locator(int priority = 0) : _priority(priority)
@@ -20,6 +23,16 @@ private:
 };
 
 namespace locator {
-    
+    class dir_locator : public asset_locator {
+    public:
+        dir_locator(std::string const&);
+        
+        virtual data_stream* from(std::string const&) const;
+        
+        static dir_locator* app_dir();
+        static dir_locator* home_dir();
+    private:
+        std::string _base;
+    };
 };
 #endif
