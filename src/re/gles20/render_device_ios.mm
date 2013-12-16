@@ -39,11 +39,6 @@ render_window* render_device::create_window(render_target::target_size_t const& 
     return new render_view(size_, pos_);
 }
 
-texture* render_device::create_texture() {
-    //TODO
-    return nullptr;
-}
-
 render_texture* render_device::create_render_texture() {
     //TODO
     return nullptr;

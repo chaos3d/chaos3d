@@ -1,8 +1,9 @@
 #ifndef _GLES20_RENDER_DEVICE_H
 #define _GLES20_RENDER_DEVICE_H
 
-#include "../render_device.h"
-#include "../render_target.h"
+#include "re/render_device.h"
+#include "re/render_target.h"
+#include "re/gles20/gl_texture.h"
 
 #if defined(__OBJC__)
 #import <OpenGLES/EAGL.h>
@@ -17,7 +18,7 @@ public:
     virtual ~render_device();
     virtual bool init_context() override;
     
-    virtual texture* create_texture() override;
+    virtual gl_texture* create_texture() override;
     virtual render_texture* create_render_texture() override;
     virtual render_window* create_window(render_target::target_size_t const&,
                                          render_window::window_pos_t const&) override;

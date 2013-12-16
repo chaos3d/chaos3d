@@ -34,7 +34,7 @@ public:
     virtual bool load(data_stream*, int format, int color, int level = 0) = 0;
 
 protected:
-    void set_size(vector2f const& size) { _size = size; }
+    void set_size(vector2i const& size) { _size = size; }
     void set_type(int type) { _type = type; }
     void set_format(int format) { _format = format; }
     void set_color(int color) { _color = color; }

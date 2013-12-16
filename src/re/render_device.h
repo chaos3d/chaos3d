@@ -3,7 +3,7 @@
 
 #include <initializer_list>
 #include "common/common.h"
-#include "render_types.h"
+#include "re/texture.h"
 #include "vertex_buffer.h"
 #include "render_target.h"
 

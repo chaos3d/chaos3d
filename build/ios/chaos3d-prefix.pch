@@ -11,6 +11,13 @@
 #ifdef __cplusplus
 #include <Eigen/Geometry>
 #include <Eigen/Dense>
+
+#include <string>
+#include <utility>
+#include <typeinfo>
+#include <typeindex>
+#include <forward_list>
+#include <memory>
 #endif
 
 #include <OpenGLES/ES2/gl.h>
