@@ -14,22 +14,32 @@ class asset_locator;
 class resource_manager {
 public:
     typedef std::string resource_id_t;
-    typedef std::type_index resource_type_t;
+    typedef std::type_info resource_type_t;
     typedef std::function<resource*(data_stream*)> resource_creator_t;
-    typedef std::unordered_map<resource_type_t, resource_creator_t> creators_map_t;
+    typedef std::unordered_map<std::type_index, resource_creator_t> creators_map_t;
     typedef std::forward_list<std::auto_ptr<asset_locator>> locators_t;
 
 public:
 	virtual ~resource_manager() {};
-    
+
+    // sync load create or retrieve a resource
     virtual resource* create_or_retrieve(resource_id_t const&, resource_type_t const&);
     template<class R>
     R* create_or_retrieve(resource_id_t const& rid) {
-        return static_cast<R*>(create_or_retrieve(rid, resource_type_t(typeid(R))));
+        return static_cast<R*>(create_or_retrieve(rid, typeid(R)));
     }
+    
+    // loading a group of resources, async-ly or sync-ly
+    void load(); // TODO
     
     // register a factory method
     bool register_factory(resource_type_t const&, resource_creator_t const&);
+    void register_factories(std::initializer_list<std::pair<resource_type_t const&,
+                            resource_creator_t const&>> factories) {
+        for(auto &it : factories) {
+            register_factory(it.first, it.second);
+        }
+    }
     
     // remove all the resources that are not used
     virtual void purge() = 0;
@@ -42,6 +52,7 @@ public:
     virtual resource* get_existing(resource_id_t const&) = 0;
 
     // add a list of locators
+    //  it will take over the locators
     void add_locators(std::initializer_list<asset_locator*>);
     
 protected:
