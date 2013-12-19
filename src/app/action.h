@@ -39,4 +39,8 @@ private:
     static action* null_action;
 };
 
+class root_action : public action{
+public:
+    using action::update;
+};
 #endif
