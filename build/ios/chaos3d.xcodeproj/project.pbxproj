@@ -15,6 +15,11 @@
 		8812C298185EF4FA001C4D0B /* resource_manager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8812C297185EF4FA001C4D0B /* resource_manager.cpp */; };
 		8812C29B185EF887001C4D0B /* asset_locator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8812C299185EF887001C4D0B /* asset_locator.cpp */; };
 		8812C2A0185F0992001C4D0B /* asset_locator.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8812C29F185F0992001C4D0B /* asset_locator.mm */; };
+		8812C2A718618055001C4D0B /* screen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8812C2A318618055001C4D0B /* screen.cpp */; };
+		8812C2A818618055001C4D0B /* action.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8812C2A518618055001C4D0B /* action.cpp */; };
+		8812C2AE18618ACE001C4D0B /* cViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8812C2AA18618ACE001C4D0B /* cViewController.mm */; };
+		8812C2AF18618ACE001C4D0B /* cAppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8812C2AC18618ACE001C4D0B /* cAppDelegate.mm */; };
+		8812C2B418619E33001C4D0B /* device.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8812C2B218619E33001C4D0B /* device.mm */; };
 		883246A2183233F10022EA4A /* aabb.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 883246A0183233F10022EA4A /* aabb.cpp */; };
 		883246C7183237220022EA4A /* render_device_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 883246AD183237220022EA4A /* render_device_ios.mm */; };
 		883246C8183237220022EA4A /* render_view_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 883246B0183237220022EA4A /* render_view_ios.mm */; };
@@ -69,6 +74,16 @@
 		8812C299185EF887001C4D0B /* asset_locator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = asset_locator.cpp; path = asset/asset_locator.cpp; sourceTree = "<group>"; };
 		8812C29A185EF887001C4D0B /* asset_locator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = asset_locator.h; path = asset/asset_locator.h; sourceTree = "<group>"; };
 		8812C29F185F0992001C4D0B /* asset_locator.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = asset_locator.mm; path = asset/asset_locator.mm; sourceTree = "<group>"; };
+		8812C2A318618055001C4D0B /* screen.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = screen.cpp; path = app/screen.cpp; sourceTree = "<group>"; };
+		8812C2A418618055001C4D0B /* screen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = screen.h; path = app/screen.h; sourceTree = "<group>"; };
+		8812C2A518618055001C4D0B /* action.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = action.cpp; path = app/action.cpp; sourceTree = "<group>"; };
+		8812C2A618618055001C4D0B /* action.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = action.h; path = app/action.h; sourceTree = "<group>"; };
+		8812C2AA18618ACE001C4D0B /* cViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = cViewController.mm; path = platform/ios/cViewController.mm; sourceTree = "<group>"; };
+		8812C2AB18618ACE001C4D0B /* cViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cViewController.h; path = platform/ios/cViewController.h; sourceTree = "<group>"; };
+		8812C2AC18618ACE001C4D0B /* cAppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = cAppDelegate.mm; path = platform/ios/cAppDelegate.mm; sourceTree = "<group>"; };
+		8812C2AD18618ACE001C4D0B /* cAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cAppDelegate.h; path = platform/ios/cAppDelegate.h; sourceTree = "<group>"; };
+		8812C2B218619E33001C4D0B /* device.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = device.mm; path = platform/ios/device.mm; sourceTree = "<group>"; };
+		8812C2B318619E33001C4D0B /* device.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = device.h; path = platform/device.h; sourceTree = "<group>"; };
 		88324537183220130022EA4A /* Array */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Array; sourceTree = "<group>"; };
 		88324538183220130022EA4A /* Cholesky */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cholesky; sourceTree = "<group>"; };
 		88324539183220130022EA4A /* CholmodSupport */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CholmodSupport; sourceTree = "<group>"; };
@@ -452,6 +467,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8812C2A21861788F001C4D0B /* app */ = {
+			isa = PBXGroup;
+			children = (
+				8812C2A318618055001C4D0B /* screen.cpp */,
+				8812C2A418618055001C4D0B /* screen.h */,
+				8812C2A518618055001C4D0B /* action.cpp */,
+				8812C2A618618055001C4D0B /* action.h */,
+			);
+			name = app;
+			sourceTree = "<group>";
+		};
+		8812C2A918618A8C001C4D0B /* platform */ = {
+			isa = PBXGroup;
+			children = (
+				8812C2B218619E33001C4D0B /* device.mm */,
+				8812C2B318619E33001C4D0B /* device.h */,
+				8812C2AA18618ACE001C4D0B /* cViewController.mm */,
+				8812C2AB18618ACE001C4D0B /* cViewController.h */,
+				8812C2AC18618ACE001C4D0B /* cAppDelegate.mm */,
+				8812C2AD18618ACE001C4D0B /* cAppDelegate.h */,
+			);
+			name = platform;
+			sourceTree = "<group>";
+		};
 		8832453518321FE90022EA4A /* external */ = {
 			isa = PBXGroup;
 			children = (
@@ -1158,6 +1197,8 @@
 		88A84AD11830652F009F7ECD /* chaos3d */ = {
 			isa = PBXGroup;
 			children = (
+				8812C2A918618A8C001C4D0B /* platform */,
+				8812C2A21861788F001C4D0B /* app */,
 				AACCE35F185D977C0017CEEE /* asset */,
 				AACCE35C185D89BA0017CEEE /* io */,
 				88A84B08183067AF009F7ECD /* go */,
@@ -1304,21 +1345,26 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8812C2A718618055001C4D0B /* screen.cpp in Sources */,
 				8812C295185E6359001C4D0B /* render_device.cpp in Sources */,
+				8812C2AF18618ACE001C4D0B /* cAppDelegate.mm in Sources */,
 				8812C298185EF4FA001C4D0B /* resource_manager.cpp in Sources */,
 				883246CF183CC04C0022EA4A /* render_target.cpp in Sources */,
 				8812C289185DA722001C4D0B /* memory_stream.cpp in Sources */,
 				883246C8183237220022EA4A /* render_view_ios.mm in Sources */,
 				8812C28F185DB7F8001C4D0B /* file_stream.cpp in Sources */,
+				8812C2A818618055001C4D0B /* action.cpp in Sources */,
 				88A84B121830B6D9009F7ECD /* game_object.cpp in Sources */,
 				883246C9183237220022EA4A /* render_device.cpp in Sources */,
 				8812C292185E5F77001C4D0B /* gl_texture.cpp in Sources */,
 				883246C7183237220022EA4A /* render_device_ios.mm in Sources */,
+				8812C2AE18618ACE001C4D0B /* cViewController.mm in Sources */,
 				88A84B0E183067AF009F7ECD /* transform.cpp in Sources */,
 				8812C2A0185F0992001C4D0B /* asset_locator.mm in Sources */,
 				8812C29B185EF887001C4D0B /* asset_locator.cpp in Sources */,
 				883246CC183A01730022EA4A /* vertex_buffer.cpp in Sources */,
 				8812C28C185DB235001C4D0B /* png_loader.cpp in Sources */,
+				8812C2B418619E33001C4D0B /* device.mm in Sources */,
 				883246A2183233F10022EA4A /* aabb.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

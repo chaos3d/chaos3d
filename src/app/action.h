@@ -29,7 +29,7 @@ protected:
     
 private:
     void reverse();
-    void append();
+    void append(action*);
     
     action* _child_head;
     action* _next_sibling;

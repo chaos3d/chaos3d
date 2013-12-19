@@ -1,4 +1,4 @@
-#include "action.h"
+#include "app/action.h"
 
 static int _no_action = 0x12345678;
 action* action::null_action = reinterpret_cast<action*>(&_no_action);
@@ -55,7 +55,7 @@ void action::append(action* nt){
 
 void action::reverse() {
     if(_next != nullptr && _next->_next != nullptr){
-        Action* pre = _next, *nt = _next->_next;
+        action* pre = _next, *nt = _next->_next;
         pre->_next = nullptr;
         while(nt != nullptr) {
             action* next = nt->_next;

@@ -8,54 +8,72 @@
 
 #import "cAppDelegate.h"
 #import "cViewController.h"
-//#include "framework/EngineLoop.h"
+#import "app/screen.h"
+#import "re/render_device.h"
+#import "re/render_target.h"
+
+#import <OpenGLES/ES2/gl.h>
+#import <OpenGLES/ES2/glext.h>
 
 @implementation cAppDelegate
 
-@synthesize window, controller;
+@synthesize window, controller, displayLink;
+@synthesize mainWindow = _main_window;
 
 - (void)dealloc
 {
     self.controller = nil;
+    self.window = nil;
     [super dealloc];
+}
+
+- (screen*) createScreen {
+    return new screen();
+}
+
+- (void) frameLoop: (CADisplayLink*) _{
+    _main_screen->loop();
+}
+
+- (void) startLoop {
+    if(self.displayLink != nil){
+        [displayLink invalidate];
+    }
+    
+    self.displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(frameLoop:)];
+    displayLink.frameInterval = 1;
+    [displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+}
+
+- (void) stopLoop {
+    [displayLink invalidate];
+    self.displayLink = nil;
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-#if 0
-    NSDictionary* info = [[NSBundle mainBundle] infoDictionary];
-    NSString* bootstrap = [info objectForKey: @"BOOTSTRAP"];
+    CGRect rt = [[UIScreen mainScreen] bounds];
+    self.window = [[[UIWindow alloc] initWithFrame:rt] autorelease];
     
-    if( bootstrap == nil || (![bootstrap isEqualToString: @""]) ){
-        bootstrap = @"bootstrap";
-    }
-    
-    // FIXME:
-    self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     // Override point for customization after application launch.
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        self.viewController = [[[ViewController alloc] initWithNibName:@"ViewController_iPhone" bundle:nil] autorelease];
-    } else {
-        self.viewController = [[[ViewController alloc] initWithNibName:@"ViewController_iPad" bundle:nil] autorelease];
-    }
-    
+    self.window.backgroundColor = [UIColor blackColor];
     self.controller = [[[cViewController alloc] init] autorelease];
-
-    // if not init by the client, create a default one
-    if(EngineLoop::getInstance() == NULL){
-        EngineLoop::Config config;
-        config.bootstrap = std::string([bootstrap UTF8String]);
-        new EngineLoop(config);
-    }
-
-    controller.engineLoop = EngineLoop::getInstance();
 
     self.window.rootViewController = controller;
     [self.window makeKeyAndVisible];
     
-    // other initialization: render driver/environment variables/
-    [controller startLoop];
-#endif
+    // create the device
+    auto* device = render_device::get_device(render_device::OpenGLES20);
+    
+    // init the context for the current thread
+    device->init_context();
+    _main_window = device->create_window(render_target::target_size_t(rt.size.width, rt.size.height));
+    [self.controller.view addSubview: (UIView*)_main_window->native_handle()];
+    
+    _main_screen = [self createScreen];
+    _main_screen->on_start();
+    
+    [self startLoop];
     return YES;
 }
 
@@ -64,7 +82,7 @@
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
     
-    [controller pauseLoop:TRUE];
+    [self stopLoop];
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
@@ -81,7 +99,8 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-    [controller pauseLoop:FALSE];
+    
+    [self startLoop];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
