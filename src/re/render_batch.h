@@ -30,7 +30,9 @@ public:
         return _sort_key < rhs._sort_key;
     }
     
-    render_batch& operator=(render_batch const&);
+    render_batch& operator=(render_batch const&) {
+        return *this; // TODO: just fixed linking
+    };
     
     render_batch(vertex_array* vertex,
                  render_state* state,
@@ -51,7 +53,9 @@ private:
     
     //---------====-----------
 public:
-    void execute();
+    void execute() {
+        // TODO: fixed linking
+    };
     
 private:
     vertex_array* _vertex;

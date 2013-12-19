@@ -118,7 +118,8 @@ void action::update() {
     action* child = _child_head;
     _child_head = null_action;
     
-    for(action* next = child->_next_sibling; child;
+    for(action* next = child->_next_sibling;
+        child != null_action;
         next = (child = next)->_next_sibling) {
         child->_next_sibling = nullptr;
         child->update();

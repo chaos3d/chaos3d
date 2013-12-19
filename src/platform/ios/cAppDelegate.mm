@@ -33,6 +33,9 @@
 
 - (void) frameLoop: (CADisplayLink*) _{
     _main_screen->loop();
+    _main_window->do_render(); // clear batch
+    glClearColor(1.f, 0.f, 0.f, 1.f);
+    glClear(GL_COLOR_BUFFER_BIT);
 }
 
 - (void) startLoop {

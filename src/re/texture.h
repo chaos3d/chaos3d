@@ -1,6 +1,8 @@
 #ifndef _TEXTURE_H
 #define _TEXTURE_H
 
+#include <Eigen/Dense>
+
 class data_stream;
 
 class texture{
