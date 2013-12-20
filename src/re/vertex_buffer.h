@@ -13,6 +13,7 @@ public:
         int type;
         int format;
         size_t size;
+        std::string name;
     };
     
     typedef std::vector<channel_desc> channels_t;
