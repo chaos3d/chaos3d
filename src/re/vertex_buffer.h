@@ -30,6 +30,7 @@ public:
     virtual void load(void*, size_t offset, size_t size) = 0;
     
     void set_channels(std::initializer_list<channel_desc> desc);
+    channels_t const& channels() const { return _channels; }
     size_t size() const { return _size; }
     
 private:
