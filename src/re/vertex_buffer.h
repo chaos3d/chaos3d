@@ -1,11 +1,7 @@
 #ifndef _VERTEX_BUFFER_H
 #define _VERTEX_BUFFER_H
 
-class vertex_channel {
-public:
-    size_t stride() const;
-    uint8_t* data() const;
-};
+#include <vector>
 
 // a single buffer that saves multi-channel data
 // which can be interleaved
@@ -19,26 +15,47 @@ public:
         size_t size;
     };
     
+    typedef std::vector<channel_desc> channels_t;
+    
+public:
+    vertex_buffer(size_t size, int type);
     virtual ~vertex_buffer() {};
     
-    virtual void bind();
-    virtual void unbind();
+    virtual void bind() = 0;
+    virtual void unbind() = 0;
     
-    size_t size() const;
-    bool interleaved() const;
-    bool client() const;
+    virtual void* lock(size_t offset, size_t size) = 0;
+    virtual void unlock() = 0;
+    virtual void load(void*, size_t offset, size_t size) = 0;
     
-    vertex_channel* channel(int idx) const;
+    void set_channels(std::initializer_list<channel_desc> desc);
+    size_t size() const { return _size; }
+    
 private:
-    
+    size_t _size;
+    int _type;
+    channels_t _channels;
 };
 
-// TODO
-// an array of vertex_buffer that are grouped together
-// in a logical manner, i.e.
-// a static buffer, a dynamic buffer and an indexed buffer
-// each of them could have different channels
+class vertex_index_buffer {
+public:
+};
+
+// an array of vertex buffers
 class vertex_array {
+public:
+    typedef vertex_buffer* vertex_buffer_ptr;
+    typedef std::vector<vertex_buffer_ptr> buffers_t;
     
+public:
+    vertex_array(std::initializer_list<vertex_buffer_ptr> buffers);
+
+    virtual void bind() = 0;
+    virtual void unbind() = 0;
+    
+    buffers_t const& buffers() const { return _buffers; }
+    
+private:
+    buffers_t _buffers;
 };
 #endif

@@ -16,10 +16,14 @@ void screen::loop()
 }
 
 void screen::push_front(screen_state* state) {
+#if 0
     _states.emplace_front(state);
     if(_states.size() == 1) {
         _states.front()->on_enter();
     }
+#else
+    assert(0); // no push front yet
+#endif
 }
 
 void screen::push_back(screen_state* state) {

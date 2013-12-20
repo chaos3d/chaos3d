@@ -20,6 +20,7 @@
 		8812C2AE18618ACE001C4D0B /* cViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8812C2AA18618ACE001C4D0B /* cViewController.mm */; };
 		8812C2AF18618ACE001C4D0B /* cAppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8812C2AC18618ACE001C4D0B /* cAppDelegate.mm */; };
 		8812C2B418619E33001C4D0B /* device.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8812C2B218619E33001C4D0B /* device.mm */; };
+		8812C2BD18644221001C4D0B /* gl_vertex_buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8812C2BA18644221001C4D0B /* gl_vertex_buffer.cpp */; };
 		883246A2183233F10022EA4A /* aabb.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 883246A0183233F10022EA4A /* aabb.cpp */; };
 		883246C7183237220022EA4A /* render_device_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 883246AD183237220022EA4A /* render_device_ios.mm */; };
 		883246C8183237220022EA4A /* render_view_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 883246B0183237220022EA4A /* render_view_ios.mm */; };
@@ -84,6 +85,8 @@
 		8812C2AD18618ACE001C4D0B /* cAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cAppDelegate.h; path = platform/ios/cAppDelegate.h; sourceTree = "<group>"; };
 		8812C2B218619E33001C4D0B /* device.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = device.mm; path = platform/ios/device.mm; sourceTree = "<group>"; };
 		8812C2B318619E33001C4D0B /* device.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = device.h; path = platform/device.h; sourceTree = "<group>"; };
+		8812C2BA18644221001C4D0B /* gl_vertex_buffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gl_vertex_buffer.cpp; sourceTree = "<group>"; };
+		8812C2BB18644221001C4D0B /* gl_vertex_buffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gl_vertex_buffer.h; sourceTree = "<group>"; };
 		88324537183220130022EA4A /* Array */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Array; sourceTree = "<group>"; };
 		88324538183220130022EA4A /* Cholesky */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cholesky; sourceTree = "<group>"; };
 		88324539183220130022EA4A /* CholmodSupport */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CholmodSupport; sourceTree = "<group>"; };
@@ -1150,6 +1153,8 @@
 			isa = PBXGroup;
 			children = (
 				8812C293185E61EA001C4D0B /* gles2.h */,
+				8812C2BA18644221001C4D0B /* gl_vertex_buffer.cpp */,
+				8812C2BB18644221001C4D0B /* gl_vertex_buffer.h */,
 				8812C290185E5F77001C4D0B /* gl_texture.cpp */,
 				8812C291185E5F77001C4D0B /* gl_texture.h */,
 				883246AC183237220022EA4A /* render_device.h */,
@@ -1363,6 +1368,7 @@
 				8812C2A0185F0992001C4D0B /* asset_locator.mm in Sources */,
 				8812C29B185EF887001C4D0B /* asset_locator.cpp in Sources */,
 				883246CC183A01730022EA4A /* vertex_buffer.cpp in Sources */,
+				8812C2BD18644221001C4D0B /* gl_vertex_buffer.cpp in Sources */,
 				8812C28C185DB235001C4D0B /* png_loader.cpp in Sources */,
 				8812C2B418619E33001C4D0B /* device.mm in Sources */,
 				883246A2183233F10022EA4A /* aabb.cpp in Sources */,

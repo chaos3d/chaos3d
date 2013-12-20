@@ -43,10 +43,8 @@ public:
     virtual vertex_array* create_vertex(std::initializer_list<vertex_buffer*> const&) = 0;
     
     // create a single multi-channel vertex buffer
-    virtual vertex_buffer* create_buffer(std::initializer_list<vertex_buffer::channel_desc> const&,
-                                         size_t size = 0, uint8_t* data = nullptr, // initial data
-                                         bool client = false,
-                                         bool interleaved = true) = 0;
+    virtual vertex_buffer* create_buffer(size_t size, int type) = 0;
+    virtual vertex_index_buffer* create_index_buffer(size_t size) = 0;
 };
 
 #endif

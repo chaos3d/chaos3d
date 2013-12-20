@@ -4,6 +4,7 @@
 #include "re/render_device.h"
 #include "re/render_target.h"
 #include "re/gles20/gl_texture.h"
+#include "re/gles20/gl_vertex_buffer.h"
 
 #if defined(__OBJC__)
 #import <OpenGLES/EAGL.h>
@@ -26,10 +27,8 @@ public:
     virtual vertex_array* create_vertex(std::initializer_list<vertex_buffer*> const&) override;
     
     // create a single multi-channel vertex buffer
-    virtual vertex_buffer* create_buffer(std::initializer_list<vertex_buffer::channel_desc> const&,
-                                         size_t size = 0, uint8_t* data = nullptr, // initial data
-                                         bool client = false,
-                                         bool interleaved = true) override;
+    virtual gl_vertex_buffer* create_buffer(size_t size, int type) override;
+    virtual gl_vertex_index_buffer* create_index_buffer(size_t size) override;
 
 private:
 #if defined(__OBJC__)
