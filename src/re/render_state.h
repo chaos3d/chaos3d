@@ -21,7 +21,7 @@ private:
 // programmable pipeline parameters (uniforms)
 //  parented searching path such that each parameter
 //  will have a 'scope'
-class render_parameter {
+class render_uniform {
 public:
     void apply();
 
@@ -30,6 +30,6 @@ public:
     void add_texture(char const*);
     
 private:
-    render_parameter* _parent;
+    render_uniform* _parent;
 };
 #endif
