@@ -95,6 +95,7 @@
 		8812C2C51866D892001C4D0B /* pngconf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pngconf.h; sourceTree = "<group>"; };
 		8812C2C61866D892001C4D0B /* pnglibconf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pnglibconf.h; sourceTree = "<group>"; };
 		8812C2C71866D892001C4D0B /* libpng.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libpng.a; sourceTree = "<group>"; };
+		8812C2D11866E1EB001C4D0B /* utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utility.h; sourceTree = "<group>"; };
 		88324537183220130022EA4A /* Array */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Array; sourceTree = "<group>"; };
 		88324538183220130022EA4A /* Cholesky */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cholesky; sourceTree = "<group>"; };
 		88324539183220130022EA4A /* CholmodSupport */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CholmodSupport; sourceTree = "<group>"; };
@@ -531,6 +532,14 @@
 				8812C2C31866D892001C4D0B /* pnglibconf.h */,
 			);
 			path = libpng16;
+			sourceTree = "<group>";
+		};
+		8812C2CB1866E1EB001C4D0B /* common */ = {
+			isa = PBXGroup;
+			children = (
+				8812C2D11866E1EB001C4D0B /* utility.h */,
+			);
+			path = common;
 			sourceTree = "<group>";
 		};
 		8832453518321FE90022EA4A /* external */ = {
@@ -1242,6 +1251,7 @@
 		88A84AD11830652F009F7ECD /* chaos3d */ = {
 			isa = PBXGroup;
 			children = (
+				8812C2CB1866E1EB001C4D0B /* common */,
 				8812C2A918618A8C001C4D0B /* platform */,
 				8812C2A21861788F001C4D0B /* app */,
 				AACCE35F185D977C0017CEEE /* asset */,

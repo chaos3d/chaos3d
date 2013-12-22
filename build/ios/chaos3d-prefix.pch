@@ -17,6 +17,7 @@
 #include <typeinfo>
 #include <typeindex>
 #include <forward_list>
+#include <type_traits>
 #include <memory>
 #endif
 
