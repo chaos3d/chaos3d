@@ -2,8 +2,11 @@
 #include "io/memory_stream.h"
 #include "libpng/include/png.h"
 
-png_loader::png_loader(data_stream* source) {
-    // TODO: load png data
+png_loader::png_loader(data_stream* source)
+: _buf_size(0), _buffer(nullptr){
+    if(source == nullptr || !source->valid())
+        throw std::exception(); // TODO: fix throw
+    
     load(*source);
 }
 
@@ -28,7 +31,9 @@ static void PNGAPI user_read_data_fcn(png_structp png_ptr, png_bytep data, png_s
         png_error(png_ptr, "Read Error");
 }
 
-void png_loader::load(data_stream& ds) {    
+void png_loader::load(data_stream& ds) {
+    //TODO: fix error loading
+    
 	png_byte buffer[8];
 	png_bytep *row_pointers = 0;
 	png_bytep data = 0;
@@ -149,7 +154,9 @@ void png_loader::load(data_stream& ds) {
 	
 	// Create array of pointers to rows in image data
 	row_pointers = new png_bytep[height];
-	data = (png_bytep)calloc(sizeof(png_byte),alignHeight*alignWidth*channels);
+    _buf_size = sizeof(png_byte) * alignHeight * alignWidth * channels;
+	_buffer = new char [_buf_size];
+    data = (png_bytep)_buffer;
     
 	if (!row_pointers || !data)
 	{
@@ -166,6 +173,7 @@ void png_loader::load(data_stream& ds) {
 	// Read data using the library function that handles all transformations including interlacing
 	png_read_image(png_ptr, row_pointers);
     
+    // TODO: convertor
 #if 0
 	Texture *texture = rm->createTexture( Texture::TEXTURE_2D, NEAREST_MIPMAP_NEAREST, LINEAR,
                                          CLAMP_TO_EDGE, CLAMP_TO_EDGE, true);
@@ -190,7 +198,6 @@ void png_loader::load(data_stream& ds) {
 #endif
 	png_read_end(png_ptr, NULL);
 	delete [] row_pointers;
-	free(data);
+
 	png_destroy_read_struct(&png_ptr,&info_ptr, 0); // Clean up memory
-    
 }
