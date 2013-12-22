@@ -18,7 +18,7 @@
 @implementation cAppDelegate
 
 @synthesize window, controller, displayLink;
-@synthesize mainWindow = _main_window;
+@synthesize mainWindow = _main_window, defaultDevice = _default_device;
 
 - (void)dealloc
 {
@@ -53,6 +53,10 @@
     self.displayLink = nil;
 }
 
+- (int) renderType {
+    return render_device::OpenGLES20;
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     CGRect rt = [[UIScreen mainScreen] bounds];
@@ -66,11 +70,11 @@
     [self.window makeKeyAndVisible];
     
     // create the device
-    auto* device = render_device::get_device(render_device::OpenGLES20);
+    _default_device = render_device::get_device([self renderType]);
     
     // init the context for the current thread
-    device->init_context();
-    _main_window = device->create_window(render_target::target_size_t(rt.size.width, rt.size.height));
+    _default_device->init_context();
+    _main_window = _default_device->create_window(render_target::target_size_t(rt.size.width, rt.size.height));
     [self.controller.view addSubview: (UIView*)_main_window->native_handle()];
     
     _main_screen = [self createScreen];
