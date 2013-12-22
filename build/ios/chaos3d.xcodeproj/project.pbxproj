@@ -21,6 +21,7 @@
 		8812C2AF18618ACE001C4D0B /* cAppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8812C2AC18618ACE001C4D0B /* cAppDelegate.mm */; };
 		8812C2B418619E33001C4D0B /* device.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8812C2B218619E33001C4D0B /* device.mm */; };
 		8812C2BD18644221001C4D0B /* gl_vertex_buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8812C2BA18644221001C4D0B /* gl_vertex_buffer.cpp */; };
+		8812C2C81866D892001C4D0B /* libpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8812C2C71866D892001C4D0B /* libpng.a */; };
 		883246A2183233F10022EA4A /* aabb.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 883246A0183233F10022EA4A /* aabb.cpp */; };
 		883246C7183237220022EA4A /* render_device_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 883246AD183237220022EA4A /* render_device_ios.mm */; };
 		883246C8183237220022EA4A /* render_view_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 883246B0183237220022EA4A /* render_view_ios.mm */; };
@@ -87,6 +88,13 @@
 		8812C2B318619E33001C4D0B /* device.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = device.h; path = platform/device.h; sourceTree = "<group>"; };
 		8812C2BA18644221001C4D0B /* gl_vertex_buffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gl_vertex_buffer.cpp; sourceTree = "<group>"; };
 		8812C2BB18644221001C4D0B /* gl_vertex_buffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gl_vertex_buffer.h; sourceTree = "<group>"; };
+		8812C2C11866D892001C4D0B /* png.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = png.h; sourceTree = "<group>"; };
+		8812C2C21866D892001C4D0B /* pngconf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pngconf.h; sourceTree = "<group>"; };
+		8812C2C31866D892001C4D0B /* pnglibconf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pnglibconf.h; sourceTree = "<group>"; };
+		8812C2C41866D892001C4D0B /* png.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = png.h; sourceTree = "<group>"; };
+		8812C2C51866D892001C4D0B /* pngconf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pngconf.h; sourceTree = "<group>"; };
+		8812C2C61866D892001C4D0B /* pnglibconf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pnglibconf.h; sourceTree = "<group>"; };
+		8812C2C71866D892001C4D0B /* libpng.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libpng.a; sourceTree = "<group>"; };
 		88324537183220130022EA4A /* Array */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Array; sourceTree = "<group>"; };
 		88324538183220130022EA4A /* Cholesky */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cholesky; sourceTree = "<group>"; };
 		88324539183220130022EA4A /* CholmodSupport */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CholmodSupport; sourceTree = "<group>"; };
@@ -453,6 +461,7 @@
 			files = (
 				88A84B141830BA1F009F7ECD /* boost.framework in Frameworks */,
 				88A84AD01830652F009F7ECD /* Foundation.framework in Frameworks */,
+				8812C2C81866D892001C4D0B /* libpng.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -494,9 +503,40 @@
 			name = platform;
 			sourceTree = "<group>";
 		};
+		8812C2BE1866D892001C4D0B /* libpng */ = {
+			isa = PBXGroup;
+			children = (
+				8812C2BF1866D892001C4D0B /* include */,
+				8812C2C71866D892001C4D0B /* libpng.a */,
+			);
+			path = libpng;
+			sourceTree = "<group>";
+		};
+		8812C2BF1866D892001C4D0B /* include */ = {
+			isa = PBXGroup;
+			children = (
+				8812C2C01866D892001C4D0B /* libpng16 */,
+				8812C2C41866D892001C4D0B /* png.h */,
+				8812C2C51866D892001C4D0B /* pngconf.h */,
+				8812C2C61866D892001C4D0B /* pnglibconf.h */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		8812C2C01866D892001C4D0B /* libpng16 */ = {
+			isa = PBXGroup;
+			children = (
+				8812C2C11866D892001C4D0B /* png.h */,
+				8812C2C21866D892001C4D0B /* pngconf.h */,
+				8812C2C31866D892001C4D0B /* pnglibconf.h */,
+			);
+			path = libpng16;
+			sourceTree = "<group>";
+		};
 		8832453518321FE90022EA4A /* external */ = {
 			isa = PBXGroup;
 			children = (
+				8812C2BE1866D892001C4D0B /* libpng */,
 				88324536183220130022EA4A /* Eigen */,
 			);
 			name = external;
@@ -1491,6 +1531,10 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "chaos3d-prefix.pch";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/wuh/dev/tdgame/chaos3d/external/libpng,
+				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1507,6 +1551,10 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "chaos3d-prefix.pch";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/wuh/dev/tdgame/chaos3d/external/libpng,
+				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;

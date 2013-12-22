@@ -29,6 +29,8 @@ public:
     image_desc const& image() const { return _desc; }
     
 private:
+    void load(data_stream&);
+    
     image_desc _desc;
     char* _buffer;
     size_t _buf_size;
