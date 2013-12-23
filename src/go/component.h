@@ -1,6 +1,7 @@
 #ifndef _COMPONENT_H
 #define _COMPONENT_H
 
+#if 0
 #include <boost/mpl/vector.hpp>
 #include <boost/mpl/find.hpp>
 #include <boost/mpl/if.hpp>
@@ -10,18 +11,13 @@
 #include <boost/mpl/size.hpp>
 #include <boost/type_traits.hpp>
 #include <boost/mpl/int.hpp>
+#endif
 
 #include <vector>
 #include <cassert>
+#include "common/utility.h"
 
 class game_object;
-
-// TODO: move this to utility header
-#define ATTRIBUTE(type, name) \
-    private: type _##name; \
-    public: type const& name () const { return _##name; } \
-    public: type & name () { return _##name; } \
-    public: void set_##name (type const& name) { _##name = name; } \
 
 class component {
 public:
