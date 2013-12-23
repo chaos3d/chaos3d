@@ -6,9 +6,10 @@ class data_stream;
 // TODO: move this up
 struct image_desc {
     typedef Eigen::Vector2i vector2i;
+    enum { RGB565, RGBA8888, A8 }; // TODO: probably will support 4-bit channel
+    
     vector2i _size;
     int format;
-    bool alpha;
 };
 
 // decode the png data and load the image
@@ -17,7 +18,7 @@ class png_loader {
 public:
     // it will load the data right away
     //  may change this later...
-    png_loader(data_stream* source);
+    png_loader(data_stream* source, int format = image_desc::RGB565);
     
     ~png_loader();
     

@@ -2,8 +2,8 @@
 #include "io/memory_stream.h"
 #include "libpng/include/png.h"
 
-png_loader::png_loader(data_stream* source)
-: _buf_size(0), _buffer(nullptr){
+png_loader::png_loader(data_stream* source, int format)
+: _buf_size(0), _buffer(nullptr), _desc{{0, 0}, format}{
     if(source == nullptr || !source->valid())
         throw std::exception(); // TODO: fix throw
     
@@ -118,22 +118,13 @@ void png_loader::load(data_stream& ds) {
 	if (bitDepth == 16)
 		png_set_strip_16(png_ptr);
     
-#if 0
-	// read data format
-	if( (colorType&PNG_COLOR_MASK_ALPHA) && channels == 1 ){
-		// only alpha channel
-		format = Texture::Format2D_A8;
-	}else if(colorType == PNG_COLOR_TYPE_GRAY || colorType == PNG_COLOR_TYPE_GRAY_ALPHA){
-		// gray color into 5_6_5
-		format = Texture::Format2D_RGB565;
-		png_set_gray_to_rgb(png_ptr);
-	}else if( !(colorType&PNG_COLOR_MASK_ALPHA) ){
-		// if no alpha channel, pack to 5_6_5
-		format = Texture::Format2D_RGB565;
-	}else{
-		format = Texture::Format2D_RGBA8888;
-	}
-#endif
+    if(_desc.format == image_desc::A8 && channels != 1) {
+        // convert to grey scale and use it as an alpha mask
+        // and strip the alpha channel
+        png_set_strip_alpha(png_ptr);
+        png_set_rgb_to_gray(png_ptr, 1, 0.2109375, 0.71484375);
+    }
+    
 	// Update the changes
 	png_read_update_info(png_ptr, info_ptr);
 	png_get_IHDR(png_ptr, info_ptr,
@@ -141,20 +132,11 @@ void png_loader::load(data_stream& ds) {
                  &bitDepth, &colorType, NULL, NULL, NULL);
 	channels = png_get_channels(png_ptr, info_ptr);
     
-	int alignWidth(width), alignHeight(height);
-	if((width != 1) && (width & (width-1))){
-		alignWidth = 1;
-		while( alignWidth < width ) alignWidth <<= 1;
-	}
-	
-	if((height != 1) && (height & (height-1))){
-		alignHeight = 1;
-		while( alignHeight < height ) alignHeight<<= 1;
-	}
-	
+    _desc._size = {width, height};
+    
 	// Create array of pointers to rows in image data
 	row_pointers = new png_bytep[height];
-    _buf_size = sizeof(png_byte) * alignHeight * alignWidth * channels;
+    _buf_size = sizeof(png_byte) * width * height * channels;
 	_buffer = new char [_buf_size];
     data = (png_bytep)_buffer;
     
@@ -166,36 +148,29 @@ void png_loader::load(data_stream& ds) {
 	}
     
 	png_bytep rp = data;
-	for ( int i = 0 ; i < height ; ++i, rp += alignWidth*channels ){
+	for ( int i = 0 ; i < height ; ++i, rp += width * channels ){
 		row_pointers[i] = rp;
 	}
     
 	// Read data using the library function that handles all transformations including interlacing
 	png_read_image(png_ptr, row_pointers);
     
-    // TODO: convertor
-#if 0
-	Texture *texture = rm->createTexture( Texture::TEXTURE_2D, NEAREST_MIPMAP_NEAREST, LINEAR,
-                                         CLAMP_TO_EDGE, CLAMP_TO_EDGE, true);
-	texture->retain();
-    
-	// need convert to rgb565
-	if( format == Texture::Format2D_RGB565 ){
-		unsigned char* tempData = (unsigned char*)calloc(1, alignWidth * alignHeight * 2);
+    if( _desc.format == image_desc::A8 && channels != 1) {
+        assert(0); // shouldn't happen?
+    } else if (_desc.format == image_desc::RGB565) {
+		unsigned char* tempData = new unsigned char[width * height * 2];
 		unsigned char* in = data;
 		unsigned short* out = (unsigned short*)tempData;
         
-		for(int i = 0; i < alignWidth * height; ++i, in += channels)
+		for(int i = 0; i < width * height; ++i, in += channels)
 			*out++ = ((unsigned short)(*in >> 3)<<11) |
             ((unsigned short)(*(in+1) >> 2)<<5) |
             ((unsigned short)(*(in+2) >> 3));
         
-		free(data);
+		delete [] data;
 		data = tempData;
-	}
-	
-	texture->loadData( data, alignWidth, alignHeight, 0, format, 0 );
-#endif
+    }
+
 	png_read_end(png_ptr, NULL);
 	delete [] row_pointers;
 
