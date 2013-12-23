@@ -44,7 +44,7 @@ public:
     
     // create a single multi-channel vertex buffer
     virtual vertex_buffer* create_buffer(size_t size, int type) = 0;
-    virtual vertex_index_buffer* create_index_buffer(size_t size) = 0;
+    virtual vertex_index_buffer* create_index_buffer(size_t size, int type) = 0;
 };
 
 #endif

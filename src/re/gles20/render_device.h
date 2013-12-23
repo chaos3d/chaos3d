@@ -28,7 +28,7 @@ public:
     
     // create a single multi-channel vertex buffer
     virtual gl_vertex_buffer* create_buffer(size_t size, int type) override;
-    virtual gl_vertex_index_buffer* create_index_buffer(size_t size) override;
+    virtual gl_vertex_index_buffer* create_index_buffer(size_t size, int type) override;
 
 private:
 #if defined(__OBJC__)

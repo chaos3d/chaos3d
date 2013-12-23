@@ -9,9 +9,8 @@ namespace gles20 {
         return new gl_vertex_buffer(size, type);
     }
     
-    gl_vertex_index_buffer* render_device::create_index_buffer(size_t size) {
-        assert(0);
-        return nullptr;
+    gl_vertex_index_buffer* render_device::create_index_buffer(size_t size, int type) {
+        return new gl_vertex_index_buffer(size, type);
     }
 
 }
