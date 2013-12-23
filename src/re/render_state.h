@@ -18,18 +18,4 @@ private:
     // viewport/scissor
 };
 
-// programmable pipeline parameters (uniforms)
-//  parented searching path such that each parameter
-//  will have a 'scope'
-class render_uniform {
-public:
-    void apply();
-
-    void add_vector(char const*);
-    void add_matrix(char const*);
-    void add_texture(char const*);
-    
-private:
-    render_uniform* _parent;
-};
 #endif

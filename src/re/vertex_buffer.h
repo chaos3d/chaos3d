@@ -4,6 +4,8 @@
 #include <vector>
 #include <unordered_map>
 
+class gpu_program;
+
 class vertex_buffer {
 public:
     enum { Static, Dynamic };
@@ -63,8 +65,7 @@ public:
 public:
     vertex_channels(std::initializer_list<vertex_buffer_ptr> buffers);
 
-    virtual void bind() = 0;
-    virtual void unbind() = 0;
+    virtual void bind_to(gpu_program*) = 0;
     
     buffers_t const& buffers() const { return _buffers; }
     

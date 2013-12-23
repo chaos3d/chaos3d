@@ -23,6 +23,7 @@
 		8812C2BD18644221001C4D0B /* gl_vertex_buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8812C2BA18644221001C4D0B /* gl_vertex_buffer.cpp */; };
 		8812C2C81866D892001C4D0B /* libpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8812C2C71866D892001C4D0B /* libpng.a */; };
 		8812C2D518683BE0001C4D0B /* render_utility2d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8812C2D318683BE0001C4D0B /* render_utility2d.cpp */; };
+		8812C2D8186841B4001C4D0B /* render_uniform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8812C2D6186841B4001C4D0B /* render_uniform.cpp */; };
 		883246A2183233F10022EA4A /* aabb.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 883246A0183233F10022EA4A /* aabb.cpp */; };
 		883246C7183237220022EA4A /* render_device_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 883246AD183237220022EA4A /* render_device_ios.mm */; };
 		883246C8183237220022EA4A /* render_view_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 883246B0183237220022EA4A /* render_view_ios.mm */; };
@@ -99,6 +100,8 @@
 		8812C2D11866E1EB001C4D0B /* utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utility.h; sourceTree = "<group>"; };
 		8812C2D318683BE0001C4D0B /* render_utility2d.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = render_utility2d.cpp; sourceTree = "<group>"; };
 		8812C2D418683BE0001C4D0B /* render_utility2d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = render_utility2d.h; sourceTree = "<group>"; };
+		8812C2D6186841B4001C4D0B /* render_uniform.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = render_uniform.cpp; sourceTree = "<group>"; };
+		8812C2D7186841B4001C4D0B /* render_uniform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = render_uniform.h; sourceTree = "<group>"; };
 		88324537183220130022EA4A /* Array */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Array; sourceTree = "<group>"; };
 		88324538183220130022EA4A /* Cholesky */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cholesky; sourceTree = "<group>"; };
 		88324539183220130022EA4A /* CholmodSupport */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CholmodSupport; sourceTree = "<group>"; };
@@ -1196,6 +1199,8 @@
 				883246CE183CC04C0022EA4A /* render_target.h */,
 				8812C2D318683BE0001C4D0B /* render_utility2d.cpp */,
 				8812C2D418683BE0001C4D0B /* render_utility2d.h */,
+				8812C2D6186841B4001C4D0B /* render_uniform.cpp */,
+				8812C2D7186841B4001C4D0B /* render_uniform.h */,
 				883246C3183237220022EA4A /* texture.h */,
 				883246CA183A01730022EA4A /* vertex_buffer.cpp */,
 				883246CB183A01730022EA4A /* vertex_buffer.h */,
@@ -1415,6 +1420,7 @@
 				8812C28F185DB7F8001C4D0B /* file_stream.cpp in Sources */,
 				8812C2A818618055001C4D0B /* action.cpp in Sources */,
 				88A84B121830B6D9009F7ECD /* game_object.cpp in Sources */,
+				8812C2D8186841B4001C4D0B /* render_uniform.cpp in Sources */,
 				883246C9183237220022EA4A /* render_device.cpp in Sources */,
 				8812C292185E5F77001C4D0B /* gl_texture.cpp in Sources */,
 				883246C7183237220022EA4A /* render_device_ios.mm in Sources */,
