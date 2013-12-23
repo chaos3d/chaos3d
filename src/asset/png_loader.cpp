@@ -7,6 +7,10 @@ png_loader::png_loader(data_stream* source, int format)
     if(source == nullptr || !source->valid())
         throw std::exception(); // TODO: fix throw
     
+    assert(format == image_desc::A8);
+    assert(format == image_desc::RGB565);
+    assert(format == image_desc::RGBA8888);
+    
     load(*source);
 }
 
