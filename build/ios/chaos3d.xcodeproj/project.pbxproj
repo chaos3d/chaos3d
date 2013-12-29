@@ -434,7 +434,6 @@
 		883246AF183237220022EA4A /* render_view_ios.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = render_view_ios.h; sourceTree = "<group>"; };
 		883246B0183237220022EA4A /* render_view_ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = render_view_ios.mm; sourceTree = "<group>"; };
 		883246B1183237220022EA4A /* gpu_program.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gpu_program.h; sourceTree = "<group>"; };
-		883246B3183237220022EA4A /* material.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = material.h; sourceTree = "<group>"; };
 		883246B4183237220022EA4A /* render_batch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = render_batch.h; sourceTree = "<group>"; };
 		883246B5183237220022EA4A /* render_device.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = render_device.cpp; sourceTree = "<group>"; };
 		883246B6183237220022EA4A /* render_device.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = render_device.h; sourceTree = "<group>"; };
@@ -1190,7 +1189,6 @@
 			children = (
 				883246AB183237220022EA4A /* gles20 */,
 				883246B1183237220022EA4A /* gpu_program.h */,
-				883246B3183237220022EA4A /* material.h */,
 				883246B4183237220022EA4A /* render_batch.h */,
 				883246B5183237220022EA4A /* render_device.cpp */,
 				883246B6183237220022EA4A /* render_device.h */,

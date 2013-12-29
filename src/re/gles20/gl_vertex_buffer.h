@@ -36,8 +36,7 @@ private:
 
 class gl_vertex_channels : public vertex_channels {
 public:
-    virtual void bind() override;
-    virtual void unbind() override;
+    virtual void bind_to(gpu_program*) override;
 };
 
 #endif
