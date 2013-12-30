@@ -21,7 +21,7 @@
 class memory_stream : public data_stream{
 public:
     memory_stream(size_t size);
-    memory_stream(char* address, size_t size);
+    memory_stream(char* address, size_t size, bool copy = false);
     virtual ~memory_stream();
 
     virtual bool valid() override;

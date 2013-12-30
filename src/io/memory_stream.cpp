@@ -9,10 +9,14 @@
 
 #include "io/memory_stream.h"
 
-memory_stream::memory_stream(char* address, size_t size)
+memory_stream::memory_stream(char* address, size_t size, bool copy)
 : _address(address), _end(address + size), _current(address),
-_owned(false)
+_owned(copy)
 {
+    if(_owned) {
+        _address = new char [size];
+        memcpy(_address, address, size);
+    }
 }
 
 memory_stream::memory_stream(size_t size)
