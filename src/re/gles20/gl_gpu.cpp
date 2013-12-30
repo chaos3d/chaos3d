@@ -115,7 +115,7 @@ void gl_gpu_program::load_attributes() {
     }
     
     std::sort(channels().begin(), channels().end(), [] (channel const& rhs, channel const lhs) {
-        return rhs.location < lhs.location;
+        return rhs.name < lhs.name;
     });
 }
 
@@ -174,7 +174,7 @@ void gl_gpu_program::update_uniform(render_uniform::uniform const& uniform) {
     if(typeid(uniform) == typeid(render_uniform::uniform_texture)) {
         //static_cast<render_uniform::uniform_texture const&>(uniform).name;
     } else if(typeid(uniform) == typeid(render_uniform::uniform_vector4)) {
-        glUniform4fv(it->location, 1, static_cast<render_uniform::uniform_vector4 const&>(uniform).value.data());
+        glUniform4fv(it->location, 4, static_cast<render_uniform::uniform_vector4 const&>(uniform).value.data());
     } else if(typeid(uniform) == typeid(render_uniform::uniform_mat4)) {
     } else if(typeid(uniform) == typeid(render_uniform::uniform_float)) {
     } else if(typeid(uniform) == typeid(render_uniform::uniform_mat3)) {
