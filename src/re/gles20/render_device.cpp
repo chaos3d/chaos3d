@@ -13,4 +13,11 @@ namespace gles20 {
         return new gl_vertex_index_buffer(size, type);
     }
 
+    gl_gpu_program* render_device::create_program() {
+        return new gl_gpu_program();
+    }
+    
+    gl_gpu_shader* render_device::create_shader(int type) {
+        return new gl_gpu_shader(type);
+    }
 }

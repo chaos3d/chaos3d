@@ -23,7 +23,22 @@ void gl_gpu_shader::compile(data_stream* ds) {
     ds->read(buf, size);
     
     glShaderSource(_shader_id, 1, &buf, &size);
+    glCompileShader(_shader_id);
     
+    GLint status;
+    glGetShaderiv(_shader_id, GL_COMPILE_STATUS, &status);
+    
+    if (! status)
+    {
+        GLsizei length;
+		glGetShaderiv(_shader_id, GL_INFO_LOG_LENGTH, &length);
+		GLchar* src = (GLchar *)malloc(sizeof(GLchar) * length);
+		
+		glGetShaderInfoLog(_shader_id, length, &length, src);
+        
+        printf("%s\n", src);
+        free(src);
+    }
     delete [] buf;
 }
 
@@ -108,7 +123,7 @@ void gl_gpu_program::load_attributes() {
         glGetActiveAttrib(_program_id, idx, max_len, &name_len, &size, &type, name);
         
         // ignore built-in variables
-        if(memcmp(name, "gl_", 3))
+        if(memcmp(name, "gl_", 3) == 0)
             continue;
         
         add_attribute(name, type, size);
@@ -138,7 +153,7 @@ void gl_gpu_program::load_uniforms() {
         glGetActiveUniform(_program_id, idx, max_len, &name_len, &size, &type, name);
         
         // ignore built-in variables
-        if(memcmp(name, "gl_", 3))
+        if(memcmp(name, "gl_", 3) == 0)
             continue;
         
         add_uniform(name, type, size);
@@ -159,6 +174,16 @@ void gl_gpu_program::link(std::initializer_list<gpu_shader*> shaders) {
         glAttachShader(_program_id, static_cast<gl_gpu_shader*>(it)->shader_id());
     }
     glLinkProgram(_program_id);
+    
+#if 1
+    GLint log_len = 0;
+    glGetProgramiv(_program_id, GL_INFO_LOG_LENGTH, &log_len);
+    
+    char* log = new char [log_len];
+    glGetProgramInfoLog(_program_id, log_len, &log_len, log);
+    printf("%s\n", log);
+    delete [] log;
+#endif
     
     load_attributes();
     load_uniforms();

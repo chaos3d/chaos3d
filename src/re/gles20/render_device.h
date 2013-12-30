@@ -5,6 +5,7 @@
 #include "re/render_target.h"
 #include "re/gles20/gl_texture.h"
 #include "re/gles20/gl_vertex_buffer.h"
+#include "re/gles20/gl_gpu.h"
 
 #if defined(__OBJC__)
 #import <OpenGLES/EAGL.h>
@@ -26,6 +27,9 @@ public:
 
     virtual vertex_array* create_vertex(std::initializer_list<vertex_buffer*> const&) override;
     
+    virtual gl_gpu_program* create_program() override;
+    virtual gl_gpu_shader* create_shader(int type) override;
+
     // create a single multi-channel vertex buffer
     virtual gl_vertex_buffer* create_buffer(size_t size, int type) override;
     virtual gl_vertex_index_buffer* create_index_buffer(size_t size, int type) override;

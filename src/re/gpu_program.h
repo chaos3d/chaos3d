@@ -59,7 +59,6 @@ public:
     typedef std::vector<uniform> uniforms_t;
 
 public:
-    gpu_program();
     virtual ~gpu_program() {};
     
     channels_t const& channels() const { return _channels; }

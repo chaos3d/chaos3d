@@ -6,6 +6,7 @@
 #include "re/texture.h"
 #include "vertex_buffer.h"
 #include "render_target.h"
+#include "gpu_program.h"
 
 class render_device {
 public:
@@ -41,6 +42,10 @@ public:
                                          render_window::window_pos_t const& pos = render_window::window_pos_t(0.f,0.f)) = 0;
     
     virtual vertex_array* create_vertex(std::initializer_list<vertex_buffer*> const&) = 0;
+
+    // shaders
+    virtual gpu_program* create_program() = 0;
+    virtual gpu_shader* create_shader(int type) = 0;
     
     // create a single multi-channel vertex buffer
     virtual vertex_buffer* create_buffer(size_t size, int type) = 0;

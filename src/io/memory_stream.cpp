@@ -9,11 +9,20 @@
 
 #include "io/memory_stream.h"
 
+memory_stream::memory_stream(const char* address, size_t size)
+: _address(nullptr), _end(nullptr), _current(nullptr),
+_owned(true)
+{
+    _current = _address = new char [size];
+    memcpy(_address, address, size);
+    _end = _address + size;
+}
+
 memory_stream::memory_stream(char* address, size_t size, bool copy)
 : _address(address), _end(address + size), _current(address),
 _owned(copy)
 {
-    if(_owned) {
+    if(copy) {
         _address = new char [size];
         memcpy(_address, address, size);
     }

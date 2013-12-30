@@ -82,6 +82,7 @@ public:
     
     // walk through all the uniforms, from the parent to the child
     void apply_to(visitor_t const&) const;
+    
 protected:
     uniforms_t::iterator find(std::string const&);
     uniform* find(std::string const&, bool);
