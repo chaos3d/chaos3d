@@ -27,12 +27,12 @@ public:
     virtual bool valid() override;
     virtual bool end() override;
     virtual size_t read(void* buf, size_t bufSize) override;
-    virtual bool seek(long offset, int pos);
-    virtual long tell();
+    virtual bool seek(long offset, int pos) override;
+    virtual long tell() override;
     virtual void close() override {};
+    virtual size_t size() const { return _end - _address; }
 
     char* address() const { return _address; }
-    size_t size() const { return _end - _address; }
     
 private:
     char* _address;

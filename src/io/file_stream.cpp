@@ -8,10 +8,16 @@
  */
 
 #include "io/file_stream.h"
+#include <sys/stat.h>
 
-file_stream::file_stream( char const* filename ) {
+file_stream::file_stream( char const* filename ) : _size(0) {
     _file = fopen (filename , "rb");
 
+    struct stat st;
+    
+    if (stat(filename, &st) == 0)
+        _size = (size_t)st.st_size;
+    
     // TODO
 	//if( mFile == 0 )
 	//	LOG("Unable to open file: %s", filename);
@@ -46,6 +52,10 @@ long file_stream::tell(){
 void file_stream::close(){
     fclose( _file );
     _file = 0;
+}
+
+size_t file_stream::size() const{
+    return _size;
 }
 
 //#ifdef	WIN32

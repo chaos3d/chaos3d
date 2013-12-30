@@ -11,6 +11,7 @@ class gpu_program;
 //  uniform values that gpu uses
 class render_uniform {
 public:
+    typedef Eigen::Matrix2f matrix2f;
     typedef Eigen::Matrix3f matrix3f;
     typedef Eigen::Matrix4f matrix4f;
     typedef Eigen::Vector2f vector2f;
@@ -19,7 +20,7 @@ public:
 
     
     struct uniform
-    { std::string name; virtual ~uniform() {}; };
+    { std::string name; };
     
     struct uniform_texture : public uniform
     { uniform_texture(texture* v) : value(v) {}; texture* value; };
@@ -36,6 +37,9 @@ public:
     struct uniform_vector4 : public uniform
     { uniform_vector4(vector4f const& v) : value(v) {}; vector4f value; };
     
+    struct uniform_mat2 : public uniform
+    { uniform_mat2(matrix2f const& v): value(v) {}; matrix2f value; };
+    
     struct uniform_mat3 : public uniform
     { uniform_mat3(matrix3f const& v): value(v) {}; matrix3f value; };
 
@@ -43,13 +47,10 @@ public:
     { uniform_mat4(matrix4f const& v): value(v) {}; matrix4f value; };
 
     typedef std::vector<std::unique_ptr<uniform>> uniforms_t;
+    typedef std::function<void(uniform const&)> visitor_t;
     
 public:
     render_uniform(render_uniform* parent);
-    virtual ~render_uniform();
-    
-    // load values to the program
-    virtual void bind_to(gpu_program*) = 0;
     
     void set_vector(std::string const& name, float v) {
         set_vector<uniform_float>(name, v);
@@ -61,6 +62,10 @@ public:
     
     void set_vector(std::string const& name, float x, float y, float z) {
         set_vector<uniform_vector3>(name, vector3f(x, y, z));
+    }
+    
+    void set_matrix(std::string const& name, matrix2f const& val) {
+        set_vector<uniform_mat2>(name, val);
     }
     
     void set_matrix(std::string const& name, matrix3f const& val) {
@@ -75,6 +80,8 @@ public:
         set_vector<uniform_texture>(name, tex);
     }
     
+    // walk through all the uniforms, from the parent to the child
+    void apply_to(visitor_t const&) const;
 protected:
     uniforms_t::iterator find(std::string const&);
     uniform* find(std::string const&, bool);

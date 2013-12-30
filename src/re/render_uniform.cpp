@@ -21,3 +21,12 @@ render_uniform::uniform* render_uniform::find(std::string const& name, bool) {
     else
         return it->get();
 }
+
+void render_uniform::apply_to(visitor_t const& visitor) const {
+    if(_parent)
+        _parent->apply_to(visitor);
+
+    for(auto &it : _uniforms) {
+        visitor(*it.get());
+    }
+}
