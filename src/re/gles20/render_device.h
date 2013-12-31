@@ -25,7 +25,7 @@ public:
     virtual render_window* create_window(render_target::target_size_t const&,
                                          render_window::window_pos_t const&) override;
 
-    virtual vertex_array* create_vertex(std::initializer_list<vertex_buffer*> const&) override;
+    //virtual vertex_array* create_vertex(std::initializer_list<vertex_buffer*> const&) override;
     
     virtual gl_gpu_program* create_program() override;
     virtual gl_gpu_shader* create_shader(int type) override;

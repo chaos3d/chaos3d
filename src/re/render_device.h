@@ -41,7 +41,7 @@ public:
     virtual render_window* create_window(render_target::target_size_t const&,
                                          render_window::window_pos_t const& pos = render_window::window_pos_t(0.f,0.f)) = 0;
     
-    virtual vertex_array* create_vertex(std::initializer_list<vertex_buffer*> const&) = 0;
+    //virtual vertex_array* create_vertex(std::initializer_list<vertex_buffer*> const&) = 0;
 
     // shaders
     virtual gpu_program* create_program() = 0;

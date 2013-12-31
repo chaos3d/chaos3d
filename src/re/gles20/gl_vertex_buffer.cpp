@@ -3,6 +3,7 @@
 static GLenum _usage_map[] = {
     GL_STATIC_DRAW,     // Static
     GL_DYNAMIC_DRAW,    // dynamic
+    GL_STREAM_DRAW,     // Stream
 };
 
 #pragma mark - vertex buffer

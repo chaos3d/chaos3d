@@ -164,10 +164,15 @@ void gl_gpu_program::load_uniforms() {
     });
 }
 
-void gl_gpu_program::link(std::initializer_list<gpu_shader*> shaders) {
+void gl_gpu_program::link(std::initializer_list<char const*> layout, std::initializer_list<gpu_shader*> shaders) {
     uniforms().clear();
     channels().clear();
     detach_all();
+    
+    int idx = 0;
+    for(auto it : layout) {
+        glBindAttribLocation(_program_id, idx++, it);
+    }
     
     for(auto it : shaders) {
         assert(dynamic_cast<gl_gpu_shader*>(it) != nullptr);
@@ -176,13 +181,22 @@ void gl_gpu_program::link(std::initializer_list<gpu_shader*> shaders) {
     glLinkProgram(_program_id);
     
 #if 1
+    GLint status;
+    glGetProgramiv(_program_id, GL_LINK_STATUS, &status);
+    
+    if(status != GL_TRUE) {
+    
+    }
+    
     GLint log_len = 0;
     glGetProgramiv(_program_id, GL_INFO_LOG_LENGTH, &log_len);
     
-    char* log = new char [log_len];
-    glGetProgramInfoLog(_program_id, log_len, &log_len, log);
-    printf("%s\n", log);
-    delete [] log;
+    if(log_len > 0) {
+        char* log = new char [log_len];
+        glGetProgramInfoLog(_program_id, log_len, &log_len, log);
+        printf("%s\n", log);
+        delete [] log;
+    }
 #endif
     
     load_attributes();
@@ -210,8 +224,8 @@ void gl_gpu_program::update_uniform(render_uniform::uniform const& uniform) {
 }
 
 void gl_gpu_program::bind(render_uniform* uniform) {
-    uniform->apply_to(std::bind(&gl_gpu_program::update_uniform, this, std::placeholders::_1));
     glUseProgram(_program_id);
+    uniform->apply_to(std::bind(&gl_gpu_program::update_uniform, this, std::placeholders::_1));
 }
 
 void gl_gpu_program::unbind() {

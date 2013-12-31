@@ -8,7 +8,7 @@ class gpu_program;
 
 class vertex_buffer {
 public:
-    enum { Static, Dynamic };
+    enum { Static, Dynamic, Stream };
 
 public:
     vertex_buffer(size_t size, int type);

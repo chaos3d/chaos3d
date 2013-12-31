@@ -7,9 +7,9 @@
 #include "render_state.h"
 #endif
 
-class vertex_array;
+class vertex_layout;
 class render_state;
-class render_parameters;
+class render_uniform;
 class gpu_program;
 
 // a lightweight 'function call' that renders vertices
@@ -19,10 +19,13 @@ class gpu_program;
 //  output: the bound target
 class render_batch {
 public:
+    typedef uint64_t sort_key;
+    
+public:
     struct batch_t {
-        vertex_array* vertex;
+        vertex_layout* layout;
         render_state* state;
-        render_parameters* parameters;
+        render_uniform* uniform;
         gpu_program* program;
     };
     
@@ -34,33 +37,29 @@ public:
         return *this; // TODO: just fixed linking
     };
     
-    render_batch(vertex_array* vertex,
+    render_batch(vertex_layout* layout,
                  render_state* state,
-                 render_parameters* parameters,
+                 render_uniform* uniform,
                  gpu_program* program)
-    : _vertex(vertex), _state(state),
-    _parameters(parameters), _program(program)
+    : _uniform(uniform), _state(state),
+    _layout(layout), _program(program)
     {}
                  
     render_batch(batch_t const& batch)
-    : render_batch(batch.vertex, batch.state,
-                   batch.parameters, batch.program)
+    : render_batch(batch.layout, batch.state,
+                   batch.uniform, batch.program)
     {}
-private:
-    typedef uint64_t sort_key;
     
-    sort_key _sort_key;
-    
-    //---------====-----------
-public:
     void execute() {
         // TODO: fixed linking
     };
     
 private:
-    vertex_array* _vertex;
+    sort_key _sort_key;
+    
+    vertex_layout* _layout;
     render_state* _state;
-    render_parameters* _parameters;
+    render_uniform* _uniform;
     gpu_program* _program;
     // TODO: memory management?
 };
