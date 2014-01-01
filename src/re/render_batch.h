@@ -1,16 +1,16 @@
 #ifndef _RENDER_BATCH_H
 #define _RENDER_BATCH_H
 
-#if 0
-#include "gpu_program.h"
-#include "vertex_buffer.h
-#include "render_state.h"
-#endif
+#include "re/render_state.h"
+#include "re/render_uniform.h"
+#include "re/vertex_layout.h"
+#include "re/gpu_program.h"
 
 class vertex_layout;
 class render_state;
 class render_uniform;
 class gpu_program;
+class render_context;
 
 // a lightweight 'function call' that renders vertices
 // into the bound target
@@ -49,10 +49,11 @@ public:
     : render_batch(batch.layout, batch.state,
                    batch.uniform, batch.program)
     {}
-    
-    void execute() {
-        // TODO: fixed linking
-    };
+        
+    vertex_layout* layout() const { return _layout; };
+    render_state* state() const { return _state; };
+    render_uniform* uniform() const { return _uniform; };
+    gpu_program* program() const { return _program; };
     
 private:
     sort_key _sort_key;

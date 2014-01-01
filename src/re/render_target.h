@@ -3,7 +3,9 @@
 
 #include <Eigen/Dense>
 #include <vector>
-#include "render_batch.h"
+#include "re/render_batch.h"
+
+class render_context;
 
 class render_target {
 public:
@@ -22,14 +24,14 @@ public:
     
     target_size_t const& size() const { return _size; };
     
-    void do_render(bool clear = true /*! whether to clear the batches */);
+    void do_render(render_context*, bool clear = true /*! whether to clear the batches */);
     void sort(); // TODO: comparor
     
     void add_batch(render_batch::batch_t const&);
     
 protected:
-    virtual bool bind() = 0;
-    virtual bool flush() = 0;
+    virtual bool bind(render_context*) = 0;
+    virtual bool flush(render_context*) = 0;
     
 private:
     target_size_t _size;

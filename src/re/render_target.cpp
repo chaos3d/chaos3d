@@ -1,18 +1,21 @@
-#include "render_target.h"
-#include "render_batch.h"
+#include "re/render_target.h"
+#include "re/render_context.h"
 #include <algorithm>
 
-void render_target::do_render(bool clear) {
+void render_target::do_render(render_context* context, bool clear) {
     // TODO: profile and logging
-    if(!bind())
+    
+    if(!bind(context))
         return;
     sort();
     
     for(auto& it : _batches) {
-        it.execute();
+        context->set_state(*it.state());
+        it.program()->bind(context, it.uniform());
+        it.layout()->draw(context);
     }
     
-    flush();
+    flush(context);
 }
 
 void render_target::sort() {

@@ -15,6 +15,8 @@ public:
     virtual void unlock() override;
     virtual void load(void*, size_t offset, size_t size) override;
 
+    GLuint buffer_id() const { return _buffer_id; }
+    
 private:
     GLuint _buffer_id;
 };
@@ -30,13 +32,10 @@ public:
     virtual void unlock() override;
     virtual void load(void*, size_t offset, size_t size) override;
     
+    GLuint buffer_id() const { return _buffer_id; }
+    
 private:
     GLuint _buffer_id;
-};
-
-class gl_vertex_channels : public vertex_channels {
-public:
-    virtual void bind_to(gpu_program*) override;
 };
 
 #endif

@@ -3,8 +3,10 @@
 
 #include "re/render_device.h"
 #include "re/render_target.h"
+#include "re/render_context.h"
 #include "re/gles20/gl_texture.h"
 #include "re/gles20/gl_vertex_buffer.h"
+#include "re/gles20/gl_vertex_layout.h"
 #include "re/gles20/gl_gpu.h"
 
 #if defined(__OBJC__)
@@ -19,6 +21,7 @@ public:
     render_device();
     virtual ~render_device();
     virtual bool init_context() override;
+    virtual render_context* create_context() override; // TODO: thread-safe
     
     virtual gl_texture* create_texture() override;
     virtual render_texture* create_render_texture() override;
@@ -33,6 +36,9 @@ public:
     // create a single multi-channel vertex buffer
     virtual gl_vertex_buffer* create_buffer(size_t size, int type) override;
     virtual gl_vertex_index_buffer* create_index_buffer(size_t size, int type) override;
+    virtual gl_vertex_layout* create_layout(vertex_layout::channels_t const&,
+                                         uint8_t mode, vertex_index_buffer*) override;
+    
 
 private:
 #if defined(__OBJC__)

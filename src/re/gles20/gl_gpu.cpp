@@ -1,4 +1,5 @@
-#include "gl_gpu.h"
+#include "re/gles20/gl_gpu.h"
+#include "re/render_context.h"
 #include "io/data_stream.h"
 #include <algorithm>
 
@@ -203,29 +204,43 @@ void gl_gpu_program::link(std::initializer_list<char const*> layout, std::initia
     load_uniforms();
 }
 
-void gl_gpu_program::update_uniform(render_uniform::uniform const& uniform) {
-    auto it = std::lower_bound(uniforms().begin(), uniforms().end(), uniform.name, [=] (gpu_program::uniform const&u, std::string const& name){
-        return u.name < name;
-    });
-    if(it == uniforms().end() || it->name != uniform.name)
-        return;
-    
-    if(typeid(uniform) == typeid(render_uniform::uniform_texture)) {
-        //static_cast<render_uniform::uniform_texture const&>(uniform).name;
-    } else if(typeid(uniform) == typeid(render_uniform::uniform_vector4)) {
-        glUniform4fv(it->location, 4, static_cast<render_uniform::uniform_vector4 const&>(uniform).value.data());
+void gl_gpu_program::update_uniform(uniform const& g_uniform, render_uniform::uniform const& uniform) {
+    if(typeid(uniform) == typeid(render_uniform::uniform_vector4)) {
+        glUniform4fv(g_uniform.location, 1, static_cast<render_uniform::uniform_vector4 const&>(uniform).value.data());
     } else if(typeid(uniform) == typeid(render_uniform::uniform_mat4)) {
+        glUniformMatrix4fv(g_uniform.location, 1, GL_FALSE,
+                           static_cast<render_uniform::uniform_mat4 const&>(uniform).value.data());
     } else if(typeid(uniform) == typeid(render_uniform::uniform_float)) {
+        glUniform1fv(g_uniform.location, 1, &static_cast<render_uniform::uniform_float const&>(uniform).value);
     } else if(typeid(uniform) == typeid(render_uniform::uniform_mat3)) {
+        glUniformMatrix3fv(g_uniform.location, 1, GL_FALSE,
+                           static_cast<render_uniform::uniform_mat3 const&>(uniform).value.data());
     } else if(typeid(uniform) == typeid(render_uniform::uniform_vector3)) {
+        glUniform3fv(g_uniform.location, 1, static_cast<render_uniform::uniform_vector3 const&>(uniform).value.data());
     } else if(typeid(uniform) == typeid(render_uniform::uniform_vector2)) {
+        glUniform2fv(g_uniform.location, 1, static_cast<render_uniform::uniform_vector2 const&>(uniform).value.data());
     } else if(typeid(uniform) == typeid(render_uniform::uniform_mat2)) {
+        glUniformMatrix2fv(g_uniform.location, 1, GL_FALSE,
+                           static_cast<render_uniform::uniform_mat2 const&>(uniform).value.data());
     }
 }
 
-void gl_gpu_program::bind(render_uniform* uniform) {
+void gl_gpu_program::bind(render_context* context, render_uniform* uniform) {
     glUseProgram(_program_id);
-    uniform->apply_to(std::bind(&gl_gpu_program::update_uniform, this, std::placeholders::_1));
+    int unit = 0;
+    uniform->apply_to([=, &unit] (render_uniform::uniform const& uniform) {
+        auto it = std::lower_bound(uniforms().begin(), uniforms().end(), uniform.name, [=] (gpu_program::uniform const&u, std::string const& name){
+            return u.name < name;
+        });
+        if(it == uniforms().end() || it->name != uniform.name)
+            return;
+        
+        if(typeid(uniform) == typeid(render_uniform::uniform_texture)) {
+            // TODO: sanity check, unit less than max units
+            context->set_texture(unit++, static_cast<render_uniform::uniform_texture const&>(uniform).value);
+        } else
+            update_uniform(*it, uniform);
+    });
 }
 
 void gl_gpu_program::unbind() {

@@ -20,4 +20,10 @@ namespace gles20 {
     gl_gpu_shader* render_device::create_shader(int type) {
         return new gl_gpu_shader(type);
     }
+    
+    gl_vertex_layout* render_device::create_layout(vertex_layout::channels_t const& channels,
+                                                uint8_t mode, vertex_index_buffer* idx_buffer){
+        return new gl_vertex_layout(channels, mode, idx_buffer);
+    }
+
 }

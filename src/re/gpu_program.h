@@ -8,6 +8,7 @@ class vertex_channels;
 class render_uniform;
 class gpu_shader;
 class data_stream;
+class render_context;
 
 class gpu_shader {
 public:
@@ -68,7 +69,7 @@ public:
     virtual void link(std::initializer_list<char const*> layout /* vertex attributes layout hints*/,
                       std::initializer_list<gpu_shader*> shaders) = 0;
     
-    virtual void bind(render_uniform*) = 0;
+    virtual void bind(render_context*, render_uniform*) = 0;
     virtual void unbind() = 0;
  
 protected:

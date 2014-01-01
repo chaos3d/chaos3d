@@ -1,4 +1,5 @@
 #include "render_view_ios.h"
+#include "re/gles20/gl_context.h"
 
 #import <OpenGLES/EAGLDrawable.h>
 #import <QuartzCore/QuartzCore.h>
@@ -41,10 +42,8 @@ namespace gles20 {
 
 render_view::render_view(target_size_t const& size_, window_pos_t const& pos_) :
     render_window(size_, pos_), _native_view(nil) {
-    _context = [EAGLContext currentContext];
     create_native();
     create_view();
-    assert(_context != nil);
 }
 
 render_view::~render_view() {
@@ -65,7 +64,8 @@ void render_view::create_native() {
 }
     
 void render_view::create_view() {
-    EAGLContext* context = _context;
+    EAGLContext* context = [EAGLContext currentContext];
+    assert(context != nil);
 
     // TODO: format, gl error check, multi sample
 
@@ -101,14 +101,15 @@ void render_view::create_view() {
     
 }
 
-bool render_view::bind() {
+bool render_view::bind(render_context*) {
     glBindFramebuffer(GL_FRAMEBUFFER, _framebuffer_id);
     return true;
 }
     
-bool render_view::flush() {
+bool render_view::flush(render_context* context) {
+    assert(typeid(*context) == typeid(gl_context));
     glBindRenderbuffer(GL_RENDERBUFFER, _colorbuffer_id);
-    return [_context presentRenderbuffer:GL_RENDERBUFFER];
+    return [static_cast<gl_context*>(context)->context() presentRenderbuffer:GL_RENDERBUFFER];
 }
 
 }

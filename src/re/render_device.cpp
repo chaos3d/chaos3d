@@ -23,3 +23,11 @@ render_device* render_device::get_device(uint8_t type) {
     //assert(_one_device_for_now != nullptr);
     return _one_device_for_now;
 };
+
+template<> void render_device::release<render_context>(render_context* obj) {
+    release_context(obj);
+}
+
+void render_device::release_context(render_context* context) {
+    delete context; // TODO: don't release but save it for recycling
+}
