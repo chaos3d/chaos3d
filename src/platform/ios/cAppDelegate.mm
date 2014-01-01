@@ -19,6 +19,7 @@
 
 @synthesize window, controller, displayLink;
 @synthesize mainWindow = _main_window, defaultDevice = _default_device;
+@synthesize mainContext = _main_context;
 
 - (void)dealloc
 {
@@ -33,7 +34,8 @@
 
 - (void) frameLoop: (CADisplayLink*) _{
     _main_screen->loop();
-    _main_window->do_render(); // clear batch
+    _main_window->do_render(_main_context); // clear batch
+    
     glClearColor(1.f, 0.f, 0.f, 1.f);
     glClear(GL_COLOR_BUFFER_BIT);
 }
@@ -73,7 +75,9 @@
     _default_device = render_device::get_device([self renderType]);
     
     // init the context for the current thread
-    _default_device->init_context();
+    _main_context = _default_device->create_context();
+    _main_context->set_current();
+    
     _main_window = _default_device->create_window(render_target::target_size_t(rt.size.width, rt.size.height));
     [self.controller.view addSubview: (UIView*)_main_window->native_handle()];
     

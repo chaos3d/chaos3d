@@ -12,6 +12,7 @@
 class screen;
 class render_window;
 class render_device;
+class render_context;
 @class cViewController;
 
 /**
@@ -24,6 +25,7 @@ class render_device;
     screen* _main_screen;
     render_window* _main_window;
     render_device* _default_device;
+    render_context* _main_context;
 }
 
 @property (nonatomic, retain) UIWindow* window;
@@ -32,6 +34,7 @@ class render_device;
 
 @property (nonatomic, readonly, assign) render_window* mainWindow;
 @property (nonatomic, readonly, assign) render_device* defaultDevice;
+@property (nonatomic, readonly, assign) render_context* mainContext;
 
 - (screen*) createScreen;
 
