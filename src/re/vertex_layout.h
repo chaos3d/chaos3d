@@ -1,11 +1,13 @@
 #ifndef _VERTEX_LAYOUT_H
 #define _VERTEX_LAYOUT_H
 
+#include "common/utility.h"
 #include <vector>
 #include <initializer_list>
 
 class vertex_buffer;
 class vertex_index_buffer;
+class render_context;
 
 // a thin wrapper that dictates how the data will be
 // sent to the driver, and it will send the data
@@ -18,25 +20,29 @@ public:
         int type;   // unsigned/float
         int unit;   // count
         size_t offset;
+        size_t stride;
         vertex_buffer* buffer; // TODO: fix memory issue
     };
     
     typedef std::vector<channel> channels_t;
     
 public:
-    vertex_layout(std::initializer_list<channel>, uint8_t mode, vertex_index_buffer*);
+    vertex_layout(channels_t const& channels, uint8_t mode, vertex_index_buffer* buf)
+    : _channels(channels), _mode(mode), _index_buffer(buf)
+    {}
+    
     virtual ~vertex_layout() {};
     
-    virtual void draw() = 0;
+    virtual void draw(render_context*) = 0;
     
-    void set_size(size_t size) { _size = size; };
-    void set_mode(uint8_t mode) { _mode = mode; };
+    vertex_index_buffer* index_buffer() const { return _index_buffer; }
+    channels_t const& channels() const { return _channels; }
     
 private:
     channels_t _channels;
     vertex_index_buffer *_index_buffer;
-    uint8_t _mode;
-    size_t _size;
+    ATTRIBUTE(uint8_t, mode);
+    ATTRIBUTE(size_t, size);
 };
 
 #endif
