@@ -24,8 +24,11 @@
 		8812C2C81866D892001C4D0B /* libpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8812C2C71866D892001C4D0B /* libpng.a */; };
 		8812C2D518683BE0001C4D0B /* render_utility2d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8812C2D318683BE0001C4D0B /* render_utility2d.cpp */; };
 		8812C2D8186841B4001C4D0B /* render_uniform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8812C2D6186841B4001C4D0B /* render_uniform.cpp */; };
-		8827620E1870F39800B1291B /* gpu_shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8827620C1870F39800B1291B /* gpu_shader.cpp */; };
 		882762111870F9E600B1291B /* gl_gpu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8827620F1870F9E600B1291B /* gl_gpu.cpp */; };
+		882762141872D50D00B1291B /* vertex_layout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882762121872D50D00B1291B /* vertex_layout.cpp */; };
+		882762191873806A00B1291B /* render_context.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882762171873806A00B1291B /* render_context.cpp */; };
+		882762211873945A00B1291B /* gl_context.mm in Sources */ = {isa = PBXBuildFile; fileRef = 882762201873945A00B1291B /* gl_context.mm */; };
+		882762241873FA7100B1291B /* gl_vertex_layout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882762221873FA7100B1291B /* gl_vertex_layout.cpp */; };
 		883246A2183233F10022EA4A /* aabb.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 883246A0183233F10022EA4A /* aabb.cpp */; };
 		883246C7183237220022EA4A /* render_device_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 883246AD183237220022EA4A /* render_device_ios.mm */; };
 		883246C8183237220022EA4A /* render_view_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 883246B0183237220022EA4A /* render_view_ios.mm */; };
@@ -104,10 +107,16 @@
 		8812C2D418683BE0001C4D0B /* render_utility2d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = render_utility2d.h; sourceTree = "<group>"; };
 		8812C2D6186841B4001C4D0B /* render_uniform.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = render_uniform.cpp; sourceTree = "<group>"; };
 		8812C2D7186841B4001C4D0B /* render_uniform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = render_uniform.h; sourceTree = "<group>"; };
-		8827620C1870F39800B1291B /* gpu_shader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gpu_shader.cpp; sourceTree = "<group>"; };
-		8827620D1870F39800B1291B /* gpu_shader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gpu_shader.h; sourceTree = "<group>"; };
 		8827620F1870F9E600B1291B /* gl_gpu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gl_gpu.cpp; sourceTree = "<group>"; };
 		882762101870F9E600B1291B /* gl_gpu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gl_gpu.h; sourceTree = "<group>"; };
+		882762121872D50D00B1291B /* vertex_layout.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vertex_layout.cpp; sourceTree = "<group>"; };
+		882762131872D50D00B1291B /* vertex_layout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vertex_layout.h; sourceTree = "<group>"; };
+		882762171873806A00B1291B /* render_context.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = render_context.cpp; sourceTree = "<group>"; };
+		882762181873806A00B1291B /* render_context.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = render_context.h; sourceTree = "<group>"; };
+		8827621D187384EF00B1291B /* gl_context.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gl_context.h; sourceTree = "<group>"; };
+		882762201873945A00B1291B /* gl_context.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = gl_context.mm; sourceTree = "<group>"; };
+		882762221873FA7100B1291B /* gl_vertex_layout.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gl_vertex_layout.cpp; sourceTree = "<group>"; };
+		882762231873FA7100B1291B /* gl_vertex_layout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gl_vertex_layout.h; sourceTree = "<group>"; };
 		88324537183220130022EA4A /* Array */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Array; sourceTree = "<group>"; };
 		88324538183220130022EA4A /* Cholesky */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cholesky; sourceTree = "<group>"; };
 		88324539183220130022EA4A /* CholmodSupport */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CholmodSupport; sourceTree = "<group>"; };
@@ -1195,9 +1204,9 @@
 			children = (
 				883246AB183237220022EA4A /* gles20 */,
 				883246B1183237220022EA4A /* gpu_program.h */,
-				8827620C1870F39800B1291B /* gpu_shader.cpp */,
-				8827620D1870F39800B1291B /* gpu_shader.h */,
 				883246B4183237220022EA4A /* render_batch.h */,
+				882762171873806A00B1291B /* render_context.cpp */,
+				882762181873806A00B1291B /* render_context.h */,
 				883246B5183237220022EA4A /* render_device.cpp */,
 				883246B6183237220022EA4A /* render_device.h */,
 				883246B9183237220022EA4A /* render_state.h */,
@@ -1210,6 +1219,8 @@
 				883246C3183237220022EA4A /* texture.h */,
 				883246CA183A01730022EA4A /* vertex_buffer.cpp */,
 				883246CB183A01730022EA4A /* vertex_buffer.h */,
+				882762121872D50D00B1291B /* vertex_layout.cpp */,
+				882762131872D50D00B1291B /* vertex_layout.h */,
 			);
 			path = re;
 			sourceTree = "<group>";
@@ -1217,12 +1228,16 @@
 		883246AB183237220022EA4A /* gles20 */ = {
 			isa = PBXGroup;
 			children = (
+				8827621D187384EF00B1291B /* gl_context.h */,
+				882762201873945A00B1291B /* gl_context.mm */,
 				8827620F1870F9E600B1291B /* gl_gpu.cpp */,
 				882762101870F9E600B1291B /* gl_gpu.h */,
 				8812C290185E5F77001C4D0B /* gl_texture.cpp */,
 				8812C291185E5F77001C4D0B /* gl_texture.h */,
 				8812C2BA18644221001C4D0B /* gl_vertex_buffer.cpp */,
 				8812C2BB18644221001C4D0B /* gl_vertex_buffer.h */,
+				882762221873FA7100B1291B /* gl_vertex_layout.cpp */,
+				882762231873FA7100B1291B /* gl_vertex_layout.h */,
 				8812C293185E61EA001C4D0B /* gles2.h */,
 				8812C294185E6359001C4D0B /* render_device.cpp */,
 				883246AC183237220022EA4A /* render_device.h */,
@@ -1429,7 +1444,7 @@
 				8812C2A818618055001C4D0B /* action.cpp in Sources */,
 				88A84B121830B6D9009F7ECD /* game_object.cpp in Sources */,
 				8812C2D8186841B4001C4D0B /* render_uniform.cpp in Sources */,
-				8827620E1870F39800B1291B /* gpu_shader.cpp in Sources */,
+				882762191873806A00B1291B /* render_context.cpp in Sources */,
 				883246C9183237220022EA4A /* render_device.cpp in Sources */,
 				8812C292185E5F77001C4D0B /* gl_texture.cpp in Sources */,
 				883246C7183237220022EA4A /* render_device_ios.mm in Sources */,
@@ -1440,7 +1455,10 @@
 				882762111870F9E600B1291B /* gl_gpu.cpp in Sources */,
 				8812C2D518683BE0001C4D0B /* render_utility2d.cpp in Sources */,
 				883246CC183A01730022EA4A /* vertex_buffer.cpp in Sources */,
+				882762211873945A00B1291B /* gl_context.mm in Sources */,
+				882762141872D50D00B1291B /* vertex_layout.cpp in Sources */,
 				8812C2BD18644221001C4D0B /* gl_vertex_buffer.cpp in Sources */,
+				882762241873FA7100B1291B /* gl_vertex_layout.cpp in Sources */,
 				8812C28C185DB235001C4D0B /* png_loader.cpp in Sources */,
 				8812C2B418619E33001C4D0B /* device.mm in Sources */,
 				883246A2183233F10022EA4A /* aabb.cpp in Sources */,
@@ -1565,7 +1583,7 @@
 				GCC_PREFIX_HEADER = "chaos3d-prefix.pch";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/wuh/dev/tdgame/chaos3d/external/libpng,
+					../../external/libpng,
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1585,7 +1603,7 @@
 				GCC_PREFIX_HEADER = "chaos3d-prefix.pch";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/wuh/dev/tdgame/chaos3d/external/libpng,
+					../../external/libpng,
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
