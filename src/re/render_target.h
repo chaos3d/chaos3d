@@ -10,6 +10,7 @@ class render_context;
 class render_target {
 public:
     typedef Eigen::Vector2f target_size_t;
+    typedef Eigen::Vector4f color_t;
     typedef std::vector<render_batch> batches_t;
     
     enum { RGB565, RGBA8888, SRGBA8888 };
@@ -17,17 +18,14 @@ public:
     enum { NOSTENCIL, STENCIL8 };
     enum { NOMULTISAMPLE, MULTISAMPLE4X };
     
-    render_target(target_size_t const& size_) :
-    _size(size_)
-    {};
+    render_target(target_size_t const& size);
     virtual ~render_target() {};
     
     target_size_t const& size() const { return _size; };
     
-    void do_render(render_context*, bool clear = true /*! whether to clear the batches */);
-    void sort(); // TODO: comparor
-    
     void add_batch(render_batch::batch_t const&);
+    void do_render(render_context*);
+    void sort(); // TODO: comparor
     
 protected:
     virtual bool bind(render_context*) = 0;
@@ -40,6 +38,9 @@ private:
     uint8_t _depth_format;
     uint8_t _stencil_format;
     uint8_t _multi_sample;
+    
+    ATTRIBUTE(color_t, clear_color);
+    ATTRIBUTE(bool, batch_retained);
 };
 
 class texture;

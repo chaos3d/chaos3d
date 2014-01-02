@@ -1,5 +1,24 @@
 #include "re/gles20/gl_context.h"
 #include "re/gles20/gl_gpu.h"
+#include "re/gles20/gl_texture.h"
+#include "gles2.h"
+
+static GLenum _depth_func_map [] = {
+    0, // DepthNone
+    GL_NEVER, GL_ALWAYS,
+    GL_LESS, GL_LEQUAL,
+    GL_EQUAL, GL_NOTEQUAL,
+    GL_GEQUAL, GL_GREATER
+};
+
+static GLenum _blend_func_map [] = {
+    0, // BlendNone
+    GL_ONE,	GL_ZERO,
+    GL_DST_COLOR, GL_SRC_COLOR,
+    GL_ONE_MINUS_DST_COLOR, GL_ONE_MINUS_SRC_COLOR,
+    GL_DST_ALPHA, GL_SRC_ALPHA,
+    GL_ONE_MINUS_DST_ALPHA,	GL_ONE_MINUS_SRC_ALPHA
+};
 
 gl_context::gl_context(EAGLContext* context, size_t max)
 : _context(context), render_context(max)
@@ -11,8 +30,69 @@ void gl_context::set_current() {
     [EAGLContext setCurrentContext: context()];
 }
 
+void gl_context::apply() {
+    if(_cur_state == _bound_state)
+        return;
+    
+    render_state const& cur = _cur_state;
+    render_state const& bound = _bound_state;
+    
+    if(cur.depth_func() != bound.depth_func()) {
+        if(cur.depth_func() == render_state::DepthNone) {
+            glDisable(GL_DEPTH_TEST);
+        } else {
+            glEnable(GL_DEPTH_TEST);
+            glDepthFunc(_depth_func_map[cur.depth_func()]);
+        }
+    }
+
+    if(cur.src_blend() != bound.src_blend()
+       || cur.dst_blend() != bound.dst_blend()
+       || cur.src_alpha_blend() != bound.src_alpha_blend()
+       || cur.dst_alpha_blend() != bound.dst_alpha_blend()
+       ){
+        if(cur.src_blend() == render_state::BlendNone
+           || cur.dst_blend() == render_state::BlendNone
+           || cur.src_alpha_blend() == render_state::BlendNone
+           || cur.dst_alpha_blend() == render_state::BlendNone) {
+            glDisable(GL_BLEND);
+        } else {
+            glEnable(GL_BLEND);
+            glBlendFuncSeparate(_blend_func_map[cur.src_blend()],
+                                _blend_func_map[cur.dst_blend()],
+                                _blend_func_map[cur.src_alpha_blend()],
+                                _blend_func_map[cur.dst_alpha_blend()]);
+        }
+    }
+    
+    glBlendColor(cur.blend_color()[0], cur.blend_color()[1], cur.blend_color()[2], cur.blend_color()[3]);
+    
+    int unit = 0;
+    auto bound_it = _bound_textures.begin();
+    for(auto it = _textures.begin(); it != _textures.end();
+        ++bound_it, ++unit, ++it) {
+        if(*it == *bound_it)
+            continue;
+        
+        glActiveTexture(GL_TEXTURE0 + unit);
+        if(*it == nullptr) {
+            glDisable(GL_TEXTURE_2D); // FIXME: texture type
+        } else {
+            glEnable(GL_TEXTURE_2D);
+            glBindTexture(GL_TEXTURE_2D, static_cast<gles20::gl_texture*>(*it)->tex_id());
+        
+            // TODO: texture parameters
+        }
+    }
+    
+    glActiveTexture(GL_TEXTURE0);
+    _bound_state = _cur_state;
+    _bound_textures = _textures;
+}
+
 #pragma mark - move up
-bool gl_context::set_state(render_state const&) {
+bool gl_context::set_state(render_state const&state) {
+    _cur_state = state;
     return true;
 }
 

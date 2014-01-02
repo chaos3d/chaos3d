@@ -21,7 +21,7 @@ public:
     {}
     
     virtual void set_current() = 0;
-    virtual void apply() {}; // TODO
+    virtual void apply() = 0;
     virtual bool set_state(render_state const&) = 0;
     virtual bool set_program(gpu_program const&) = 0;
     virtual bool set_target(render_target const&) { return true; }; // FIXME

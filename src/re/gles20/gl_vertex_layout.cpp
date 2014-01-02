@@ -1,5 +1,6 @@
 #include "re/gles20/gl_vertex_layout.h"
 #include "re/gles20/gl_vertex_buffer.h"
+#include "re/render_context.h"
 
 static GLenum _mode_map [] = {
     GL_POINTS,          // Points,
@@ -30,6 +31,7 @@ void gl_vertex_layout::delete_vao() {
 }
 
 void gl_vertex_layout::draw(render_context *context) {
+    context->apply();
     bind_vao();
     
     if(index_buffer()) {
@@ -40,6 +42,8 @@ void gl_vertex_layout::draw(render_context *context) {
     } else {
         glDrawArrays(_mode_map[mode()], 0, size());
     }
+    
+    assert(glGetError() == GL_NO_ERROR);
 }
 
 void gl_vertex_layout::bind_vao() {

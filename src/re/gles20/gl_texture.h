@@ -12,6 +12,7 @@ namespace gles20 {
         
         virtual bool load(data_stream*, int format, int color, int level = 0) override;
         
+        GLuint tex_id() const { return _tex_id; }
     private:
         GLuint _tex_id;
     };

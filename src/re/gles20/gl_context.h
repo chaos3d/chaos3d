@@ -11,6 +11,7 @@ public:
     virtual bool set_state(render_state const&) override;
     virtual bool set_program(gpu_program const&) override;
     virtual void set_current() override;
+    virtual void apply() override;
     
     EAGLContext* context() const { return _context; }
     

@@ -225,8 +225,11 @@ void gl_gpu_program::update_uniform(uniform const& g_uniform, render_uniform::un
     }
 }
 
-void gl_gpu_program::bind(render_context* context, render_uniform* uniform) {
+void gl_gpu_program::bind(render_context* context, render_uniform const* uniform) {
     glUseProgram(_program_id);
+    
+    if(!uniform)
+        return;
     int unit = 0;
     uniform->apply_to([=, &unit] (render_uniform::uniform const& uniform) {
         auto it = std::lower_bound(uniforms().begin(), uniforms().end(), uniform.name, [=] (gpu_program::uniform const&u, std::string const& name){
@@ -237,6 +240,7 @@ void gl_gpu_program::bind(render_context* context, render_uniform* uniform) {
         
         if(typeid(uniform) == typeid(render_uniform::uniform_texture)) {
             // TODO: sanity check, unit less than max units
+            glUniform1i(it->location, unit);
             context->set_texture(unit++, static_cast<render_uniform::uniform_texture const&>(uniform).value);
         } else
             update_uniform(*it, uniform);

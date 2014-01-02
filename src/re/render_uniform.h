@@ -50,7 +50,7 @@ public:
     typedef std::function<void(uniform const&)> visitor_t;
     
 public:
-    render_uniform(render_uniform* parent);
+    render_uniform(render_uniform* parent = nullptr);
     
     void set_vector(std::string const& name, float v) {
         set_vector<uniform_float>(name, v);
@@ -91,10 +91,10 @@ protected:
     void set_vector(std::string const& name, Args&&... args) {
         auto it = find(name);
         if(it == _uniforms.end() || it->get()->name != name) {
+            _uniforms.emplace(it, new U(std::forward<Args>(args)...));
+        } else {
             assert(typeid(*it->get()) == typeid(U));
             *static_cast<U*>(it->get()) = U(std::forward<Args>(args)...);
-        } else {
-            _uniforms.emplace(it, new U(std::forward<Args>(args)...));
         }
     }
 

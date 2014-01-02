@@ -28,7 +28,7 @@ public:
     
 public:
     vertex_layout(channels_t const& channels, uint8_t mode, vertex_index_buffer* buf)
-    : _channels(channels), _mode(mode), _index_buffer(buf)
+    : _channels(channels), _mode(mode), _index_buffer(buf), _size(0)
     {}
     
     virtual ~vertex_layout() {};

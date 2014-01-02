@@ -23,9 +23,9 @@ public:
     
 public:
     struct batch_t {
+        const render_state* state;
+        const render_uniform* uniform;
         vertex_layout* layout;
-        render_state* state;
-        render_uniform* uniform;
         gpu_program* program;
     };
     
@@ -38,8 +38,8 @@ public:
     };
     
     render_batch(vertex_layout* layout,
-                 render_state* state,
-                 render_uniform* uniform,
+                 const render_state* state,
+                 const render_uniform* uniform,
                  gpu_program* program)
     : _uniform(uniform), _state(state),
     _layout(layout), _program(program)
@@ -51,16 +51,16 @@ public:
     {}
         
     vertex_layout* layout() const { return _layout; };
-    render_state* state() const { return _state; };
-    render_uniform* uniform() const { return _uniform; };
+    const render_state* state() const { return _state; };
+    const render_uniform* uniform() const { return _uniform; };
     gpu_program* program() const { return _program; };
     
 private:
     sort_key _sort_key;
     
     vertex_layout* _layout;
-    render_state* _state;
-    render_uniform* _uniform;
+    const render_state* _state;
+    const render_uniform* _uniform;
     gpu_program* _program;
     // TODO: memory management?
 };

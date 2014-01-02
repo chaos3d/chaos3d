@@ -103,6 +103,11 @@ void render_view::create_view() {
 
 bool render_view::bind(render_context*) {
     glBindFramebuffer(GL_FRAMEBUFFER, _framebuffer_id);
+
+    glClearColor(1.f, 0.f, 0.f, 1.f);
+    glClear(GL_COLOR_BUFFER_BIT);
+    
+    glViewport(0, 0, size()[0], size()[1]);
     return true;
 }
     

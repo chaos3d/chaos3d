@@ -2,7 +2,17 @@
 #include "re/render_context.h"
 #include <algorithm>
 
-void render_target::do_render(render_context* context, bool clear) {
+render_target::render_target(target_size_t const& size)
+: _size(size), _clear_color({0.f,0.f,0.f,0.f}), _batch_retained(true)
+{
+    
+}
+
+void render_target::add_batch(render_batch::batch_t const&batch) {
+    _batches.push_back(batch);
+}
+
+void render_target::do_render(render_context* context) {
     // TODO: profile and logging
     
     if(!bind(context))
@@ -14,6 +24,9 @@ void render_target::do_render(render_context* context, bool clear) {
         it.program()->bind(context, it.uniform());
         it.layout()->draw(context);
     }
+    
+    if(!_batch_retained)
+        _batches.clear();
     
     flush(context);
 }
