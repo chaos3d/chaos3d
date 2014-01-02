@@ -32,6 +32,7 @@ class render_context;
 @property (nonatomic, retain) cViewController* controller;
 @property (retain) CADisplayLink* displayLink;
 
+@property (nonatomic, readonly, assign) screen* mainScreen;
 @property (nonatomic, readonly, assign) render_window* mainWindow;
 @property (nonatomic, readonly, assign) render_device* defaultDevice;
 @property (nonatomic, readonly, assign) render_context* mainContext;

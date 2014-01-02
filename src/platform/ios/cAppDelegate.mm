@@ -19,7 +19,7 @@
 
 @synthesize window, controller, displayLink;
 @synthesize mainWindow = _main_window, defaultDevice = _default_device;
-@synthesize mainContext = _main_context;
+@synthesize mainContext = _main_context, mainScreen = _main_screen;
 
 - (void)dealloc
 {
@@ -36,8 +36,6 @@
     _main_screen->loop();
     _main_window->do_render(_main_context); // clear batch
     
-    glClearColor(1.f, 0.f, 0.f, 1.f);
-    glClear(GL_COLOR_BUFFER_BIT);
 }
 
 - (void) startLoop {
