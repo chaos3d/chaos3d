@@ -1,8 +1,9 @@
 #include "re/gles20/render_device.h"
 
 namespace gles20 {
-    gl_texture* render_device::create_texture() {
-        return new gl_texture();
+    gl_texture* render_device::create_texture(texture::vector2i const&size,
+                                              texture::attribute_t const&attr) {
+        return new gl_texture(size, attr);
     }
 
     gl_vertex_buffer* render_device::create_buffer(size_t size, int type) {

@@ -136,7 +136,7 @@ void png_loader::load(data_stream& ds) {
                  &bitDepth, &colorType, NULL, NULL, NULL);
 	channels = png_get_channels(png_ptr, info_ptr);
     
-    _desc._size = {width, height};
+    _desc.size = {width, height};
     
 	// Create array of pointers to rows in image data
 	row_pointers = new png_bytep[height];

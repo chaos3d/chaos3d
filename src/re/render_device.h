@@ -55,7 +55,7 @@ public:
     virtual render_context* create_context() = 0;
     virtual void release_context(render_context* );
     
-    virtual texture* create_texture() = 0;
+    virtual texture* create_texture(texture::vector2i const&, texture::attribute_t const&) = 0;
     virtual render_texture* create_render_texture() = 0;
     virtual render_window* create_window(render_target::target_size_t const&,
                                          render_window::window_pos_t const& pos = render_window::window_pos_t(0.f,0.f)) = 0;

@@ -8,7 +8,7 @@ struct image_desc {
     typedef Eigen::Vector2i vector2i;
     enum { RGB565, RGBA8888, A8 }; // TODO: probably will support 4-bit channel
     
-    vector2i _size;
+    vector2i size;
     int format;
 };
 
@@ -28,6 +28,8 @@ public:
     data_stream* data() const;
     
     image_desc const& image() const { return _desc; }
+    size_t buf_size() const { return _buf_size; }
+    const char* buffer() const { return _buffer; }
     
 private:
     void load(data_stream&);

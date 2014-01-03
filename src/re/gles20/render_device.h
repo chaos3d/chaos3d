@@ -23,7 +23,7 @@ public:
     virtual bool init_context() override;
     virtual render_context* create_context() override; // TODO: thread-safe
     
-    virtual gl_texture* create_texture() override;
+    virtual gl_texture* create_texture(texture::vector2i const&, texture::attribute_t const&) override;
     virtual render_texture* create_render_texture() override;
     virtual render_window* create_window(render_target::target_size_t const&,
                                          render_window::window_pos_t const&) override;
