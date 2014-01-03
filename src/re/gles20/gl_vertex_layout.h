@@ -15,7 +15,7 @@ public:
         buffer_channel(vertex_buffer* buffer_, int index_)
         : buffer(static_cast<gl_vertex_buffer*>(buffer_)), index(index_)
         {
-            assert(dynamic_cast<gl_vertex_buffer*>(buffer_) != nullptr);
+            assert(buffer_ == nullptr || dynamic_cast<gl_vertex_buffer*>(buffer_) != nullptr);
         }
     };
     

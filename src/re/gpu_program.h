@@ -66,7 +66,7 @@ public:
     uniforms_t const& uniforms() const { return _uniforms; }
 
     // shaders can be safely deleted after linking
-    virtual void link(std::initializer_list<char const*> layout /* vertex attributes layout hints*/,
+    virtual void link(std::initializer_list<char const*> layout /* vertex attributes layout hints, channel name*/,
                       std::initializer_list<gpu_shader*> shaders) = 0;
     
     virtual void bind(render_context*, render_uniform const*) = 0;

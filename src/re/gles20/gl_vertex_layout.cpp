@@ -56,6 +56,9 @@ void gl_vertex_layout::create_vao() {
     
     gl_vertex_buffer* cur = nullptr;
     for(auto& it : _buffers) {
+        if(it.buffer == nullptr)
+            continue;
+        
         if(it.buffer != cur) {
             cur = it.buffer;
             glBindBuffer(GL_ARRAY_BUFFER, it.buffer->buffer_id());

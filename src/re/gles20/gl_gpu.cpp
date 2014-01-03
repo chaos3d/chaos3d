@@ -170,9 +170,12 @@ void gl_gpu_program::link(std::initializer_list<char const*> layout, std::initia
     channels().clear();
     detach_all();
     
-    int idx = 0;
+    int idx = -1;
     for(auto it : layout) {
-        glBindAttribLocation(_program_id, idx++, it);
+        ++idx;
+        if(it == nullptr)
+            continue;
+        glBindAttribLocation(_program_id, idx, it);
     }
     
     for(auto it : shaders) {

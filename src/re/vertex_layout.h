@@ -17,11 +17,11 @@ public:
     enum { Points, Lines, TriangleStrip, TriangleFan, Triangles };
     
     struct channel {
+        vertex_buffer* buffer; // TODO: fix memory issue
         int type;   // unsigned/float
         int unit;   // count
         size_t offset;
         size_t stride;
-        vertex_buffer* buffer; // TODO: fix memory issue
     };
     
     typedef std::vector<channel> channels_t;
