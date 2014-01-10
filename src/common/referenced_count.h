@@ -12,8 +12,6 @@
 
 #include <cassert>
 
-_CHAOS_BEGIN
-
 #define SAFE_DELETE0(obj)   if( (obj) != 0 ) { delete (obj); (obj) = 0; }
 #define SAFE_DELETE(obj)    if( (obj) != 0 ) { delete (obj); }
 
@@ -48,26 +46,27 @@ enum AutoreleasePolicy{
 	AP_GLOBAL,		// released when application ends
 };
 
-class CHAOS_API ReferencedCount{
-private:
-	int		mRefCount;
-
+class referenced_count{
 public:
-	ReferencedCount() : mRefCount( 1 ) {};
-	virtual ~ReferencedCount(){	};
+	referenced_count() : _ref_count( 1 ) {};
+	virtual ~referenced_count() {};
 
-	inline void retain(){ ++ mRefCount; };
-	inline void release(){
-		assert( mRefCount > 0 );
+	void retain() {
+	   	++ _ref_count; 
+	};
+
+	void release() {
+		assert( _ref_count > 0 );
 		
-		if( -- mRefCount == 0 )
+		if( -- _ref_count == 0 )
 			delete this;
 	}
 
-	inline int refCount() const{ return mRefCount; };
-};
+	int ref_count() const { return _ref_count; };
 
-_CHAOS_END
+private:
+	int		_ref_count;
+};
 
 #endif
 
