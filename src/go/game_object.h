@@ -12,7 +12,8 @@
 #include <string>
 #include <memory>
 
-#include "component.h"
+#include "common/utility.h"
+#include "go/component.h"
 
 class component;
 class transform;
@@ -44,45 +45,7 @@ public:
     
     std::string const& tag() const { return _tag; }
     void set_tag(std::string const& tag) { _tag = tag; }
-    
-    template<typename C>
-    typename std::enable_if<find_component_t<C>::value == true, C>::type*
-    find_component() const{
-        typedef typename ::boost::mpl::find<component_list_type, C>::type iter;
-        size_t idx = iter::pos::value;
-        assert(idx >= 0 && idx < component_size::value);
-        return static_cast<C*>(_components[idx].get());
-    }
-    
-    template<typename C>
-    typename std::enable_if<find_component_t<C>::value == false, C>::type*
-    find_component() const {
-        int first = component_size::value;
-        auto r = std::find_if(_components.begin() + first, _components.end(), [](component_ptr const& rhs) {
-            return component_equal<C>(rhs.get());
-        });
-        return r != _components.end() ? static_cast<C*>(r->get()) : nullptr;
-    }
-    
-    template<class C>
-    typename std::enable_if<find_component_t<C>::value == true, C>::type*
-    add_component(std::unique_ptr<C>&& com){
-        typedef typename ::boost::mpl::find<component_list_type, C>::type iter;
-        size_t idx = iter::pos::value;
-        assert(idx >= 0 && idx < component_size::value);
-        _components[idx].reset(com.release());
-        return com.get();
-    }
-    
-    template<class C>
-    typename std::enable_if<find_component_t<C>::value == false, C>::type*
-    add_component(std::unique_ptr<C>&& com) {
-        _components.emplace_back(std::forward<std::unique_ptr<C>>(com));
-        return com.get();
-    }
 
-    // TODO: a separate component?
-    
     // search
     game_object* find_by_tag(char const* tag, bool recursive = true); // only search in children
     size_t child_size() const {
@@ -115,18 +78,6 @@ public:
 	//void relocate_To(game_object* parent, game_object* after = 0);
 
 private:
-    template<class T>
-    typename std::enable_if<component_is_dynamic<T>::value == true, bool>::type
-    static component_equal(component* other) {
-        return dynamic_cast<T*>(other) != nullptr;
-    }
-
-    template<class T>
-    typename std::enable_if<component_is_dynamic<T>::value == false, bool>::type
-    static component_equal(component* other) {
-        return (typeid(T) == typeid(*other));
-    }
-
     // no copy/assignment?
     game_object(game_object const&) = delete;
     game_object& operator =(game_object const&) = delete;
@@ -136,27 +87,8 @@ private:
     
     std::string _tag;
 
-    components_t _components;
-    
     constexpr static game_object* null = __builtin_constant_p((game_object*)0xFF) ? (game_object*)0xFF : (game_object*)0xFF; // diff than nullptr
 };
-
-game_object* game_object::find_by_tag(char const* tag, bool recursive) {
-	game_object *node = nullptr;
-	for(auto *child = _first_child;
-        child != 0 && node == 0;
-        child = child->_next_sibling)
-        if(node->tag() == tag)
-            return node;
-
-    if(recursive) {
-        for(auto *child = _first_child;
-            child != 0 && node == 0;
-            child = child->_next_sibling)
-            node = child->find_by_tag(tag, true);
-    }
-    return node;
-}
 
 #if 0
 game_object* child_at(int idx);
