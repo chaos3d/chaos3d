@@ -1,7 +1,7 @@
 #ifndef _TRANSFORM_H
 #define _TRANSFORM_H
 
-#include "../go/component.h"
+#include "go/component.h"
 #include "Eigen/Geometry"
 #include "go/component_manager.h"
 
@@ -14,13 +14,13 @@ namespace com {
     class transform : public component {
     public:
         // transform the position local to this parent to the global space
-        vector3f& to_global(vector3f &local) const {
-            return local;
+        vector3f to_global(vector3f const& local) const {
+            return _global_affine * local;
         }
         
         // transform from the position global to this parent to the local space
-        vector3f& to_local(vector3f &global) const {
-            return global;
+        vector3f to_local(vector3f const& global) const {
+            return _global_reversed * global;
         }
         
         // update itself using the given parent
@@ -34,12 +34,15 @@ namespace com {
         void relocate(transform const&);
         
         // local transform piece
-        ATTRIBUTE(translation3f, translate);
+        ATTRIBUTE(vector3f, translate);
         ATTRIBUTE(quaternionf, rotate);
         ATTRIBUTE(vector3f, scale);
         
+        affine3f const& global() const { return _global_affine; }
+        
     private:
         affine3f _global_affine; // cached global affine transform
+        affine3f _global_reversed;
     };
     
     class transform_manager : public component_manager_base<transform> {

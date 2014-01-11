@@ -78,7 +78,7 @@ public:
     void pre_order(iterator_t const&) const;
     void post_order(iterator_t const&) const;
     
-    com::transform* get_transform() const { return com::transform_handle::manager::from(_transform); }
+    com::transform* get_transform() const { return com::transform_handle::manager::instance()->from(_transform); }
     
     // change flag
     uint16_t parent_changed() const { return _parent_changed; }
