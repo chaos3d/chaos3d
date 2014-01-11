@@ -1,0 +1,1 @@
+#include "go/component_manager.h"

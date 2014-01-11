@@ -16,6 +16,8 @@
 #include "common/utility.h"
 #include "go/component.h"
 
+#include "sg/transform.h" // or transform_manager.h
+
 class component;
 class transform;
 
@@ -76,7 +78,7 @@ public:
     void pre_order(iterator_t const&) const;
     void post_order(iterator_t const&) const;
     
-    transform* get_transform() const { return _transform.get(); }
+    com::transform* get_transform() const { return com::transform_handle::manager::from(_transform); }
     
     // change flag
     uint16_t parent_changed() const { return _parent_changed; }
@@ -93,7 +95,7 @@ private:
     uint16_t _parent_changed;
     
     std::string _tag;
-    std::unique_ptr<transform> _transform;
+    com::transform_handle _transform;
 
     constexpr static game_object* null = __builtin_constant_p((game_object*)0xFF) ? (game_object*)0xFF : (game_object*)0xFF; // diff than nullptr
 };

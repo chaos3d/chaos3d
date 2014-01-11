@@ -32,31 +32,5 @@ private:
     game_object* _parent;
 };
 
-template<class C>
-class component_manager {
-    template<class ...Cs>
-    friend class component_managers;
-    
-private:
-    // only created from manager's manager
-    component_manager() {};
-    
-public:
-    void create(void*) {};
-    void update() {};
-    
-};
-
-template<class C>
-class cascading_manager{
-public:
-};
-
-class transform;
-template<>
-class component_manager<transform> : public cascading_manager<transform> {
-    
-};
-
 
 #endif
