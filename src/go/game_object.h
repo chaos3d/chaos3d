@@ -40,16 +40,17 @@ public:
         constexpr static bool value = std::is_polymorphic<C>::value == true;
     };
     
+    enum {Parent = 0x1, Order = 0x2 };
 public:
     game_object() : _first_child(null), _parent(nullptr),
-    _next_sibling(null), _pre_sibling(null), _child_size(0){
+    _next_sibling(null), _pre_sibling(null), _child_size(0), _parent_changed(0){
     }
     
     std::string const& tag() const { return _tag; }
     void set_tag(std::string const& tag) { _tag = tag; }
 
     // search
-    game_object* find_by_tag(char const* tag, bool recursive = true); // only search in children
+    game_object* find_by_tag(char const* tag, bool recursive = true) const; // only search in children
     size_t child_size() const { return _child_size; }
     game_object* child_at(int idx) const;
     
@@ -77,6 +78,10 @@ public:
     
     transform* get_transform() const { return _transform.get(); }
     
+    // change flag
+    uint16_t parent_changed() const { return _parent_changed; }
+    void reset_flag() { _parent_changed = 0; }
+    void populate_flag(); // only populate 'Parent' to its immediate children
 private:
     // no copy/assignment?
     game_object(game_object const&) = delete;
@@ -85,8 +90,9 @@ private:
     game_object *_first_child, *_parent;
     game_object *_pre_sibling, *_next_sibling;
     size_t _child_size;
-    std::string _tag;
+    uint16_t _parent_changed;
     
+    std::string _tag;
     std::unique_ptr<transform> _transform;
 
     constexpr static game_object* null = __builtin_constant_p((game_object*)0xFF) ? (game_object*)0xFF : (game_object*)0xFF; // diff than nullptr

@@ -1,7 +1,16 @@
 #include "game_object.h"
 #include <stack>
 
-game_object* game_object::find_by_tag(char const* tag, bool recursive) {
+void game_object::populate_flag() {
+    if(!(_parent_changed & Parent))
+        return;
+    
+    for(game_object* node(_first_child);node != null && node->next_sibling() != null ;
+        node = node->next_sibling() )
+		node->_parent_changed |= Parent;
+}
+
+game_object* game_object::find_by_tag(char const* tag, bool recursive) const{
 	game_object *node = nullptr;
 	for(auto *child = _first_child;
         child != 0 && node == 0;
@@ -100,12 +109,13 @@ game_object& game_object::add_child(game_object* child, game_object* after) {
 		_first_child = child;
     
     ++_child_size;
+    _parent_changed |= Parent;
     return *this;
 }
 
 game_object* game_object::last_child() const{
 	game_object* node(_first_child);
-	for(;node != 0 && node->next_sibling() != null ; node = node->next_sibling() )
+	for(;node != null && node->next_sibling() != null ; node = node->next_sibling() )
 		;
 	return node;
 }
@@ -117,6 +127,7 @@ game_object& game_object::remove_all() {
 		child = child->next_sibling();
         
 		del->_parent = nullptr;
+        del->_parent_changed = true;
         del->_next_sibling = del->_pre_sibling = null;
 		del->release();
 	}
@@ -140,6 +151,7 @@ void game_object::remove_self() {
     --_parent->_child_size;
 	_parent = nullptr;
     _next_sibling = _pre_sibling = null;
+    _parent_changed |= Parent;
     release();
 }
 
@@ -155,6 +167,8 @@ game_object& game_object::move_upward() {
     
 	if( _pre_sibling == null )
 		_parent->_first_child = this;
+    
+    _parent_changed |= Order;
     return *this;
 }
 
@@ -170,6 +184,8 @@ game_object& game_object::move_downward() {
     
 	if( _pre_sibling == 0 )
 		_parent->_first_child = this;
+
+    _parent_changed |= Order;
     return *this;
 }
 
@@ -188,6 +204,7 @@ game_object& game_object::move_top() {
 	last->_next_sibling = this;
 	_pre_sibling = last;
 	_next_sibling = null;
+    _parent_changed |= Order;
     return *this;
 }
 
@@ -201,5 +218,6 @@ game_object& game_object::move_bottom() {
 	remove_self();
 	parent->add_child( this );
 	this->release();
+    _parent_changed |= Order;
     return *this;
 }
