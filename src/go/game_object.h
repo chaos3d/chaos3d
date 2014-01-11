@@ -12,13 +12,14 @@
 #include <string>
 #include <memory>
 
+#include "common/referenced_count.h"
 #include "common/utility.h"
 #include "go/component.h"
 
 class component;
 class transform;
 
-class game_object {
+class game_object : public referenced_count{
 public:
     typedef ::boost::mpl::vector<transform> component_list_type;
     typedef typename ::boost::mpl::end<component_list_type>::type component_list_last;
@@ -66,14 +67,19 @@ public:
     
 	// tree
 	game_object& add_child(game_object* child, game_object* after = nullptr);
-	game_object& remove_all();
-	game_object& remove_self();
 	game_object& move_upward();
 	game_object& move_downward();
 	game_object& move_top();
 	game_object& move_bottom();
-	game_object& move_afterward(game_object*);
+	game_object& remove_all();
+	void remove_self();
 
+    game_object* last_child() const;
+    game_object* first_child() const { return _first_child; }
+    game_object* next_sibling() const { return _next_sibling; }
+    game_object* pre_sibling() const { return _pre_sibling; }
+    game_object* parent() const { return _parent; }
+    
     //transform?
 	//void relocate_To(game_object* parent, game_object* after = 0);
 
