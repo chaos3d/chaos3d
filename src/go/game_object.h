@@ -26,6 +26,7 @@ public:
     typedef typename ::boost::mpl::size<component_list_type>::type component_size;
     typedef std::unique_ptr<component> component_ptr;
     typedef std::vector<component_ptr> components_t;
+    typedef std::function<bool (game_object const&)> iterator_t;
     
     template<class C>
     struct find_component_t {
@@ -70,6 +71,12 @@ public:
     //transform?
 	//void relocate_To(game_object* parent, game_object* after = 0);
 
+    // transversal
+    void pre_order(iterator_t const&) const;
+    void post_order(iterator_t const&) const;
+    
+    transform* get_transform() const { return _transform.get(); }
+    
 private:
     // no copy/assignment?
     game_object(game_object const&) = delete;
@@ -79,24 +86,10 @@ private:
     game_object *_pre_sibling, *_next_sibling;
     size_t _child_size;
     std::string _tag;
+    
+    std::unique_ptr<transform> _transform;
 
     constexpr static game_object* null = __builtin_constant_p((game_object*)0xFF) ? (game_object*)0xFF : (game_object*)0xFF; // diff than nullptr
 };
-
-#if 0
-game_object* child_at(int idx);
-
-// tree
-game_object& add_hild( game_object* child, game_object* after = 0 );
-game_object& remove_all();
-game_object& remove_self();
-//void		relocate_To(game_object* parent, game_object* after = 0);
-game_object& moveUpward();
-game_object& moveDownward();
-game_object& moveTop();
-game_object& moveBottom();
-game_object& moveAfterward(game_object*);
-#endif
-
 
 #endif

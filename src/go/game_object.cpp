@@ -1,4 +1,5 @@
 #include "game_object.h"
+#include <stack>
 
 game_object* game_object::find_by_tag(char const* tag, bool recursive) {
 	game_object *node = nullptr;
@@ -24,6 +25,53 @@ game_object* game_object::child_at(int idx) const {
     for(;child != null && idx > 0; -- idx)
         child = child->_next_sibling;
     return child;
+}
+
+void game_object::pre_order(iterator_t const& iter) const{
+#if 0
+    std::stack<game_object const*> nodes;
+	nodes.push(this);
+    
+	game_object const* node = nodes.top();
+    
+	do{
+		iter(*node);
+        
+		nodes.pop();
+		if( node->next_sibling() != null )
+			nodes.push(node->next_sibling());
+        
+		if( node->first_child() != null )
+			nodes.push(node->first_child());
+        
+		if( nodes.empty() )
+			break;
+		else
+			node = nodes.top();
+	}while(true);
+#else
+    std::stack<game_object const*> nodes;
+    game_object const* node = this;
+
+    do{
+        if( node == null ) {
+            node = nodes.top();
+            nodes.pop();
+            node = node->next_sibling();
+        } else {
+            iter(*node);
+            nodes.emplace(node);
+            node = node->first_child();
+        }
+    } while(node != null || !nodes.empty());
+#endif
+}
+
+void game_object::post_order(iterator_t const& iter) const{
+    std::stack<game_object const*> nodes;
+	nodes.push(this);
+    
+
 }
 
 game_object& game_object::add_child(game_object* child, game_object* after) {
