@@ -41,7 +41,7 @@ public:
     
 public:
     game_object() : _first_child(null), _parent(nullptr),
-    _next_sibling(null), _pre_sibling(null){
+    _next_sibling(null), _pre_sibling(null), _child_size(0){
     }
     
     std::string const& tag() const { return _tag; }
@@ -49,21 +49,8 @@ public:
 
     // search
     game_object* find_by_tag(char const* tag, bool recursive = true); // only search in children
-    size_t child_size() const {
-        size_t size = 0;
-        for(game_object* child = _first_child;child != null;++size)
-            ;
-        return size;
-    }
-    
-    game_object* child_at(int idx) const {
-        game_object* child = _first_child;
-        if(idx < 0)
-            idx = child_size() + idx;
-        for(;child != null && idx > 0; -- idx)
-            child = child->_next_sibling;
-        return child;
-    }
+    size_t child_size() const { return _child_size; }
+    game_object* child_at(int idx) const;
     
 	// tree
 	game_object& add_child(game_object* child, game_object* after = nullptr);
@@ -90,7 +77,7 @@ private:
     
     game_object *_first_child, *_parent;
     game_object *_pre_sibling, *_next_sibling;
-    
+    size_t _child_size;
     std::string _tag;
 
     constexpr static game_object* null = __builtin_constant_p((game_object*)0xFF) ? (game_object*)0xFF : (game_object*)0xFF; // diff than nullptr

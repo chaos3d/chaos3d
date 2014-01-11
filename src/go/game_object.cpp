@@ -17,6 +17,14 @@ game_object* game_object::find_by_tag(char const* tag, bool recursive) {
     return node;
 }
 
+game_object* game_object::child_at(int idx) const {
+    game_object* child = _first_child;
+    if(idx < 0)
+        idx = child_size() + idx;
+    for(;child != null && idx > 0; -- idx)
+        child = child->_next_sibling;
+    return child;
+}
 
 game_object& game_object::add_child(game_object* child, game_object* after) {
 	if( after == nullptr )
@@ -43,6 +51,7 @@ game_object& game_object::add_child(game_object* child, game_object* after) {
 	if( after == _first_child )
 		_first_child = child;
     
+    ++_child_size;
     return *this;
 }
 
@@ -80,6 +89,7 @@ void game_object::remove_self() {
 	if( _parent->_first_child == this )
 		_parent->_first_child = _next_sibling;
 	
+    --_parent->_child_size;
 	_parent = nullptr;
     _next_sibling = _pre_sibling = null;
     release();
