@@ -78,7 +78,7 @@ public:
     void pre_order(iterator_t const&) const;
     void post_order(iterator_t const&) const;
     
-    com::transform* get_transform() const { return com::transform_handle::manager::instance()->from(_transform); }
+    transform* get_transform() const { return _transform; }
     
     // change flag
     uint16_t parent_changed() const { return _parent_changed; }
@@ -95,7 +95,7 @@ private:
     uint16_t _parent_changed;
     
     std::string _tag;
-    com::transform_handle _transform;
+    transform* _transform;
 
     constexpr static game_object* null = __builtin_constant_p((game_object*)0xFF) ? (game_object*)0xFF : (game_object*)0xFF; // diff than nullptr
 };
