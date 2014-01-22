@@ -11,6 +11,8 @@
 #import "app/screen.h"
 #import "re/render_device.h"
 #import "re/render_target.h"
+#import "go/component_manager.h"
+#import "go/game_object.h"
 
 #import <OpenGLES/ES2/gl.h>
 #import <OpenGLES/ES2/glext.h>
@@ -33,6 +35,8 @@
 }
 
 - (void) frameLoop: (CADisplayLink*) _{
+    component_manager::managers().update(&game_object::root());
+    
     _main_screen->loop();
     _main_window->do_render(_main_context); // clear batch
     
