@@ -1,6 +1,8 @@
 #include "game_object.h"
 #include <stack>
 
+uint32_t game_object::_number_of_objects = 0;
+
 void game_object::populate_flag() {
     if(!(_parent_changed & Parent))
         return;
@@ -37,8 +39,8 @@ game_object* game_object::child_at(int idx) const {
 }
 
 void game_object::pre_order(iterator_t const& iter) const{
-#if 0
     std::stack<game_object const*> nodes;
+#if 0
 	nodes.push(this);
     
 	game_object const* node = nodes.top();
@@ -59,7 +61,6 @@ void game_object::pre_order(iterator_t const& iter) const{
 			node = nodes.top();
 	}while(true);
 #else
-    std::stack<game_object const*> nodes;
     game_object const* node = this;
 
     do{

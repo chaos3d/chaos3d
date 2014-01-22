@@ -13,6 +13,8 @@ typedef Eigen::Quaternionf quaternionf;
 namespace com {
     class transform : public component {
     public:
+        transform(game_object* go) : component(go) {}
+        
         // transform the position local to this parent to the global space
         vector3f to_global(vector3f const& local) const {
             return _global_affine * local;
@@ -24,7 +26,7 @@ namespace com {
         }
         
         // update itself using the given parent
-        void update(transform const&);
+        void update(affine3f const&);
         
         // FIXME: this probably should be in manager class
         // it will backward transverse the parent tree and update
@@ -46,12 +48,11 @@ namespace com {
     };
     
     class transform_manager : public component_manager_base<transform> {
+    protected:
+        virtual void update(std::vector<game_object*> const&);
         
+    private:
+        affine3f _global_parent;
     };
-    
-    struct transform_handle : public component_handle {
-        typedef transform_manager manager;
-    };
-
 }
 #endif

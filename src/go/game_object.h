@@ -19,16 +19,19 @@
 #include "sg/transform.h" // or transform_manager.h
 
 class component;
-class transform;
 
+/**
+ * the game object is nothing but the connection for all the components.
+ * it only has the hierachy info (this may be in the component as well?)
+ */
 class game_object : public referenced_count{
 public:
-    typedef ::boost::mpl::vector<transform> component_list_type;
+    typedef ::boost::mpl::vector<com::transform> component_list_type;
     typedef typename ::boost::mpl::end<component_list_type>::type component_list_last;
     typedef typename ::boost::mpl::size<component_list_type>::type component_size;
     typedef std::unique_ptr<component> component_ptr;
     typedef std::vector<component_ptr> components_t;
-    typedef std::function<bool (game_object const&)> iterator_t;
+    typedef std::function<void (game_object const&)> iterator_t;
     
     template<class C>
     struct find_component_t {
@@ -46,6 +49,11 @@ public:
 public:
     game_object() : _first_child(null), _parent(nullptr),
     _next_sibling(null), _pre_sibling(null), _child_size(0), _parent_changed(0){
+        ++ _number_of_objects;
+    }
+    
+    virtual ~game_object() {
+        -- _number_of_objects;
     }
     
     std::string const& tag() const { return _tag; }
@@ -78,12 +86,27 @@ public:
     void pre_order(iterator_t const&) const;
     void post_order(iterator_t const&) const;
     
-    transform* get_transform() const { return _transform; }
+    com::transform* get_transform() const { return _transform; }
     
     // change flag
     uint16_t parent_changed() const { return _parent_changed; }
     void reset_flag() { _parent_changed = 0; }
     void populate_flag(); // only populate 'Parent' to its immediate children
+    
+    // --
+    // some helper functions
+    
+    // track number of lived objects
+    static uint32_t number_of_objects() { return _number_of_objects; }
+    
+    // a pre-allocated root object, so the client won't bother when
+    // and where to create one. however, you can choose not to use it
+    // if you have special requirements
+    static game_object& root() {
+        static game_object _root;
+        return _root;
+    }
+    
 private:
     // no copy/assignment?
     game_object(game_object const&) = delete;
@@ -92,12 +115,14 @@ private:
     game_object *_first_child, *_parent;
     game_object *_pre_sibling, *_next_sibling;
     size_t _child_size;
-    uint16_t _parent_changed;
+    
+    uint8_t _parent_changed;
     
     std::string _tag;
-    transform* _transform;
+    com::transform* _transform;
 
     constexpr static game_object* null = __builtin_constant_p((game_object*)0xFF) ? (game_object*)0xFF : (game_object*)0xFF; // diff than nullptr
+    static uint32_t _number_of_objects;
 };
 
 #endif

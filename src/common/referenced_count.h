@@ -65,7 +65,7 @@ public:
 	int ref_count() const { return _ref_count; };
 
 private:
-	int		_ref_count;
+	int _ref_count;
 };
 
 #endif
