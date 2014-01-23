@@ -51,19 +51,25 @@ public:
     
 public:
     game_object(game_object* parent = &root())
-    : _first_child(null), _parent(parent),
+    : _first_child(null), _parent(nullptr),
     _next_sibling(null), _pre_sibling(null), _child_size(0), _flag(0U){
-        _components.fill(nullptr);
         ++ _number_of_objects;
+        _components.fill(nullptr);
+        if(parent)
+            parent->add_child(this);
     }
     
     virtual ~game_object() {
         -- _number_of_objects;
     }
     
+    // tag
     std::string const& tag() const { return _tag; }
     void set_tag(std::string const& tag) { _tag = tag; }
 
+    // clone
+    virtual game_object* clone() const;
+    
     // search
     game_object* find_by_tag(char const* tag, bool recursive = true) const; // only search in children
     size_t child_size() const { return _child_size; }
