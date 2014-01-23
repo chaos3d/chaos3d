@@ -22,15 +22,25 @@ class game_object;
 class component {
 public:
     component(game_object* go) : _parent(go)
-    {
-    }
-
-    game_object* parent() const { return _parent;}
+    {}
+    
+    virtual ~component() {};
+    
+    game_object* parent() const{ return _parent; }
     
 private:
-    bool _dirty;
     game_object* _parent;
 };
 
-
+#if 0
+class component_dirty : public component {
+public:
+    bool dirty() const { return _dirty; }
+    void mark_dirty() { _dirty = true; }
+    void clear_dirty() { _dirty = false; }
+    
+private:
+    bool _dirty;
+};
+#endif
 #endif

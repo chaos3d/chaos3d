@@ -4,12 +4,9 @@
 uint32_t game_object::_number_of_objects = 0;
 
 void game_object::populate_flag() {
-    if(!(_parent_changed & Parent))
-        return;
-    
     for(game_object* node(_first_child);node != null && node->next_sibling() != null ;
         node = node->next_sibling() )
-		node->_parent_changed |= Parent;
+		node->_flag |= flag();
 }
 
 game_object* game_object::find_by_tag(char const* tag, bool recursive) const{
@@ -77,12 +74,12 @@ void game_object::pre_order(iterator_t const& iter) const{
 #endif
 }
 
+#if 0
 void game_object::post_order(iterator_t const& iter) const{
     std::stack<game_object const*> nodes;
 	nodes.push(this);
-    
-
 }
+#endif
 
 game_object& game_object::add_child(game_object* child, game_object* after) {
 	if( after == nullptr )
@@ -110,7 +107,6 @@ game_object& game_object::add_child(game_object* child, game_object* after) {
 		_first_child = child;
     
     ++_child_size;
-    _parent_changed |= Parent;
     return *this;
 }
 
@@ -128,7 +124,6 @@ game_object& game_object::remove_all() {
 		child = child->next_sibling();
         
 		del->_parent = nullptr;
-        del->_parent_changed = true;
         del->_next_sibling = del->_pre_sibling = null;
 		del->release();
 	}
@@ -152,7 +147,6 @@ void game_object::remove_self() {
     --_parent->_child_size;
 	_parent = nullptr;
     _next_sibling = _pre_sibling = null;
-    _parent_changed |= Parent;
     release();
 }
 
@@ -169,7 +163,6 @@ game_object& game_object::move_upward() {
 	if( _pre_sibling == null )
 		_parent->_first_child = this;
     
-    _parent_changed |= Order;
     return *this;
 }
 
@@ -186,7 +179,6 @@ game_object& game_object::move_downward() {
 	if( _pre_sibling == 0 )
 		_parent->_first_child = this;
 
-    _parent_changed |= Order;
     return *this;
 }
 
@@ -205,7 +197,6 @@ game_object& game_object::move_top() {
 	last->_next_sibling = this;
 	_pre_sibling = last;
 	_next_sibling = null;
-    _parent_changed |= Order;
     return *this;
 }
 
@@ -219,6 +210,5 @@ game_object& game_object::move_bottom() {
 	remove_self();
 	parent->add_child( this );
 	this->release();
-    _parent_changed |= Order;
     return *this;
 }

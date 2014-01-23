@@ -46,8 +46,16 @@ private:
             gos.emplace_back(const_cast<game_object*>(&go));
         });
         
+        for(auto& it : gos) {
+            it->populate_flag();
+        }
+        
         for(auto& it : _mgrs) {
             it->update(gos);
+        }
+
+        for(auto& it : gos) {
+            it->reset_flag();
         }
     };
     

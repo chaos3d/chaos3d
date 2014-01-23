@@ -12,15 +12,19 @@ void transform::update(affine3f const& parent) {
 #pragma mark - the manager
 void transform_manager::update(std::vector<game_object*> const& gos) {
     for(auto& it : gos) {
-        auto* com = it->get_transform();
+        if(!it->is_set(flag_offset()))
+            continue;
+        
+        auto* com = it->get_component<transform>(component_idx());
         if(!com)
             continue;
         
         transform* parent = nullptr;
         if(it->parent())
-            parent = it->parent()->get_transform();
+            parent = it->parent()->get_component<transform>(component_idx());
         
         // if the parent breaks/skips, it won't populate to its descendents
         com->update(parent ? parent->global() : _global_parent);
     }
+    
 }
