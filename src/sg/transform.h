@@ -34,7 +34,7 @@ namespace com {
         void force_update();
         
         // keep the global transform, re-compute the local
-        void relocate(transform const&);
+        void relocate(game_object*);
         
         // local transform piece
         quaternionf const& rotate() const { return _rotate; }
@@ -46,6 +46,7 @@ namespace com {
         void set_translate(vector3f const& translate) { _translate = translate; mark_dirty(); }
         
         affine3f const& global() const { return _global_affine; }
+        affine3f const& global_reversed() const { return _global_reversed; }
         
         inline void mark_dirty();
     

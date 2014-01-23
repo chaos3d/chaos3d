@@ -87,12 +87,12 @@ public:
     static uint32_t flag_offset() { return _flag_offset; }
     
 private:
-    virtual void set_component_idx(uint32_t idx) {
+    virtual void set_component_idx(uint32_t idx) override {
         assert(_component_idx == -1); // only set once for now
         _component_idx = idx;
     };
     
-    virtual void set_component_offset(uint32_t offset) {
+    virtual void set_component_offset(uint32_t offset) override {
         assert(_flag_offset == -1); // only set once for now
         _flag_offset = offset;
     };

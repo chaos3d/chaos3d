@@ -9,6 +9,16 @@ void transform::update(affine3f const& parent) {
     _global_reversed = _global_affine.matrix().reverse();
 }
 
+void transform::relocate(game_object* go) {
+    auto* com = go->get_component<transform>(transform_manager::component_idx());
+    affine3f const& local = com ? com->global_reversed() * global() : global();
+    affine3f::LinearMatrixType rotMatrix, scaleMatrix;
+    local.computeRotationScaling(&rotMatrix, &scaleMatrix);
+    _scale = scaleMatrix.diagonal();
+    _rotate = quaternionf(rotMatrix);
+    _translate = local.translation();
+}
+
 #pragma mark - the manager
 void transform_manager::update(std::vector<game_object*> const& gos) {
     for(auto& it : gos) {
