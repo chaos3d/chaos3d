@@ -15,7 +15,9 @@ namespace com {
     class transform : public component {
     public:
         transform(game_object* go) : component(go)  {}
-        
+
+        virtual transform* clone(game_object*) const override;
+
         // transform the position local to this parent to the global space
         vector3f to_global(vector3f const& local) const {
             return _global_affine * local;
@@ -49,7 +51,8 @@ namespace com {
         affine3f const& global_reversed() const { return _global_reversed; }
         
         inline void mark_dirty();
-    
+        inline bool is_dirty() const;
+        
     private:
         quaternionf _rotate;
         vector3f _translate, _scale;
@@ -71,7 +74,11 @@ namespace com {
     inline void transform::mark_dirty() {
         parent()->set_flag(transform_manager::flag_offset());
     }
-
+    
+    inline bool transform::is_dirty() const {
+        return parent()->is_set(transform_manager::flag_offset());
+    }
+    
 }
 
 #endif

@@ -3,6 +3,17 @@
 
 using namespace com;
 
+transform* transform::clone(game_object* go) const {
+    transform* com = new transform(go);
+    *com = *this;
+
+    // if it belongs to a different parent, re-compute the local
+    if(!is_dirty() && parent()->parent() != go->parent()) {
+        com->relocate(go);
+    }
+    return com;
+}
+
 void transform::update(affine3f const& parent) {
     _global_affine = parent;
     _global_affine.translate(_translate).scale(_scale).rotate(_rotate);

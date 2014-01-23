@@ -8,6 +8,7 @@
 #include <type_traits>
 #include <cassert>
 #include <vector>
+#include <array>
 #include <string>
 #include <memory>
 
@@ -49,9 +50,10 @@ public:
     typedef std::array<component_ptr, ComponentSize> components_t;
     
 public:
-    game_object() : _first_child(null), _parent(nullptr),
-    _next_sibling(null), _pre_sibling(null), _child_size(0), _flag(0U),
-    _components(nullptr){
+    game_object(game_object* parent = &root())
+    : _first_child(null), _parent(parent),
+    _next_sibling(null), _pre_sibling(null), _child_size(0), _flag(0U){
+        _components.fill(nullptr);
         ++ _number_of_objects;
     }
     
@@ -119,7 +121,7 @@ public:
     // and where to create one. however, you can choose not to use it
     // if you have special requirements
     static game_object& root() {
-        static game_object _root;
+        static game_object _root(nullptr);
         return _root;
     }
     

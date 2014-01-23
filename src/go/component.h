@@ -26,6 +26,9 @@ public:
     
     virtual ~component() {};
     
+    // clone to the new game object
+    virtual component* clone(game_object*) const = 0;
+    
     game_object* parent() const{ return _parent; }
     
 private:
