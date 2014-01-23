@@ -41,14 +41,17 @@ public:
         constexpr static bool value = std::is_polymorphic<C>::value == true;
     };
 #endif
+    enum {Parent = 0, Order = 1, Offset = 2 };
+    enum {ComponentSize = 16 }; // before we figure out a better way...
+
     typedef component* component_ptr;
     typedef std::function<void (game_object const&)> iterator_t;
-    typedef std::vector<component_ptr> components_t;
+    typedef std::array<component_ptr, ComponentSize> components_t;
     
-    enum {Parent = 0, Order = 1, Offset = 2 };
 public:
     game_object() : _first_child(null), _parent(nullptr),
-    _next_sibling(null), _pre_sibling(null), _child_size(0), _flag(0U){
+    _next_sibling(null), _pre_sibling(null), _child_size(0), _flag(0U),
+    _components(nullptr){
         ++ _number_of_objects;
     }
     
