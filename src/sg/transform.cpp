@@ -21,7 +21,7 @@ void transform::update(affine3f const& parent) {
 }
 
 void transform::relocate(game_object* go) {
-    auto* com = go->get_component<transform>(transform_manager::component_idx());
+    auto* com = go->get_component<transform>();
     affine3f const& local = com ? com->global_reversed() * global() : global();
     affine3f::LinearMatrixType rotMatrix, scaleMatrix;
     local.computeRotationScaling(&rotMatrix, &scaleMatrix);
@@ -36,13 +36,13 @@ void transform_manager::update(std::vector<game_object*> const& gos) {
         if(!it->is_set(flag_offset()))
             continue;
         
-        auto* com = it->get_component<transform>(component_idx());
+        auto* com = it->get_component<transform>();
         if(!com)
             continue;
         
         transform* parent = nullptr;
         if(it->parent())
-            parent = it->parent()->get_component<transform>(component_idx());
+            parent = it->parent()->get_component<transform>();
         
         // if the parent breaks/skips, it won't populate to its descendents
         com->update(parent ? parent->global() : _global_parent);

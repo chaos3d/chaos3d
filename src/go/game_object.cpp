@@ -1,4 +1,5 @@
 #include "game_object.h"
+#include "component.h"
 #include <stack>
 
 uint32_t game_object::_number_of_objects = 0;
@@ -13,9 +14,8 @@ game_object* game_object::clone() const {
 }
 
 void game_object::populate_flag() {
-    for(game_object* node(_first_child);node != null && node->next_sibling() != null ;
-        node = node->next_sibling() )
-		node->_flag |= flag();
+    assert(parent()); // need a parent
+    _flag |= parent()->flag();
 }
 
 game_object* game_object::find_by_tag(char const* tag, bool recursive) const{

@@ -14,9 +14,10 @@
 
 #include "common/referenced_count.h"
 #include "common/utility.h"
-#include "go/component.h"
+#include "go/component_manager.h"
 
 class component;
+class component_meta;
 
 /**
  * the game object is nothing but the connection for all the components.
@@ -52,7 +53,8 @@ public:
 public:
     game_object(game_object* parent = &root())
     : _first_child(null), _parent(nullptr),
-    _next_sibling(null), _pre_sibling(null), _child_size(0), _flag(0U){
+    _next_sibling(null), _pre_sibling(null), _child_size(0),
+    _flag(-1U){
         ++ _number_of_objects;
         _components.fill(nullptr);
         if(parent)
@@ -97,17 +99,68 @@ public:
     void pre_order(iterator_t const&) const;
     void post_order(iterator_t const&) const;
 
+    
+    // get component - fixed version
     template<typename C>
-    typename std::enable_if<std::is_base_of<component, C>::value, C*>::type get_component(int idx) const {
-        assert(idx >= 0 && idx < _components.size());
-        assert(_components[idx] == nullptr || dynamic_cast<C*>(_components[idx]) != nullptr);
-        return static_cast<C*>(_components[idx]);
+    typename std::enable_if<std::is_base_of<component, C>::value &&
+    C::manager_t::component_fixed_t::value, C*>::type get_component() const {
+        return static_cast<C*>(_components[C::manager_t::component_idx()]);
     }
     
-    void set_component(int idx, component* com) {
-        assert(idx >= 0 && idx < _components.size());
-        assert(_components[idx] == nullptr);
-        _components[idx] = com;
+    // get component - non-fixed version
+    template<typename C>
+    typename std::enable_if<std::is_base_of<component, C>::value &&
+    !C::manager_t::component_fixed_t::value, C*>::type get_component() const {
+        typedef typename C::manager_t trait; // manager class is a trait for the component
+        if(trait::sealed_t::value) {
+            for(auto it = _components.begin() + component_manager::fixed_component();
+                it != _components.end() && *it != nullptr; ++it) {
+                if(typeid(*it) == typeid(C))
+                    return static_cast<C*>(*it);
+            }
+        }
+        else {
+            for(auto it = _components.begin() + component_manager::fixed_component();
+                it != _components.end() && *it != nullptr; ++it) {
+                if(dynamic_cast<C*>(*it) != nullptr)
+                    return static_cast<C*>(*it);
+            }
+        }
+        return nullptr;
+    }
+    
+    // add component - fixed version
+    template<typename C>
+    typename std::enable_if<std::is_base_of<component, C>::value &&
+    C::manager_t::component_fixed_t::value, C*>::type add_component(component_meta const& meta) {
+        auto*& existed = _components[C::manager_t::component_idx()];
+        if(existed == nullptr)
+            existed = C::manager_t::create(this, meta);
+        return static_cast<C*>(existed);
+    }
+    
+    // add component - non-fixed version
+    template<typename C>
+    typename std::enable_if<std::is_base_of<component, C>::value &&
+    !C::manager_t::component_fixed_t::value, C*>::type add_component(component_meta const& meta) {
+        typedef typename C::manager_t trait; // manager class is a trait for the component
+        uint32_t existed = component_manager::fixed_component();
+        if(trait::sealed_t::value) {
+            for(auto it = _components.begin() + component_manager::fixed_component();
+                it != _components.end() && *it != nullptr; ++it, ++ existed) {
+                if(typeid(*it) == typeid(C))
+                    return static_cast<C*>(*it);
+            }
+        }
+        else {
+            for(auto it = _components.begin() + component_manager::fixed_component();
+                it != _components.end() && *it != nullptr; ++it, ++ existed) {
+                if(dynamic_cast<C*>(*it) != nullptr)
+                    return static_cast<C*>(*it);
+            }
+        }
+        assert(existed < _components.size()); // components overflow...
+        return static_cast<C*>(_components[existed] = C::manager_t::create(this, meta));
     }
     
     // change flag
@@ -115,7 +168,7 @@ public:
     void reset_flag() { _flag = 0; }
     void set_flag(uint32_t offset) { _flag |= 1U << offset; }
     bool is_set(uint32_t offset) const { return (_flag & 1U << offset) != 0; }
-    void populate_flag(); // only populate 'Parent' to its immediate children
+    void populate_flag(); // populate from the 'Parent'
     
     // --
     // some helper functions

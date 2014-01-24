@@ -12,7 +12,12 @@ typedef Eigen::Translation3f translation3f;
 typedef Eigen::Quaternionf quaternionf;
 
 namespace com {
+    class transform_manager;
+    
     class transform : public component {
+    public:
+        typedef transform_manager manager_t;
+        
     public:
         transform(game_object* go) : component(go)  {}
 

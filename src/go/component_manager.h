@@ -4,6 +4,7 @@
 #include "common/singleton.h"
 #include <vector>
 
+class component_meta;
 class game_object;
 
 /**
@@ -41,6 +42,10 @@ public:
     virtual ~component_manager();
     
     virtual void update(std::vector<game_object*> const&) = 0;
+    // TODO: those two not integrated yet
+    virtual void pre_update(std::vector<game_object*> const&) {};
+    virtual void post_update(std::vector<game_object*> const&) {};
+    
     virtual void set_component_idx(uint32_t idx) = 0;
     virtual void set_component_offset(uint32_t offset) = 0;
     
@@ -53,22 +58,33 @@ public:
     //
     
     // helper function to initialize/construct all the component managers
-    template<typename Mgr>
-    static void manager_initializer(uint32_t flag_bit = 0) {
+    template<typename Mgr> // recursive termination, last manager
+    static void manager_initializer(uint32_t idx = 0, uint32_t flag_bit = 0) {
         auto* mgr = Mgr::initialize();
-        mgr->set_component_idx(0);
-        mgr->set_component_offset(flag_bit);
+        if(Mgr::component_fixed_t::value)
+            mgr->set_component_idx(idx);
+        if(Mgr::flag_bit_t::value > 0)
+            mgr->set_component_offset(flag_bit);
+        _fixed_component = idx + (Mgr::component_fixed_t::value ? 1 : 0);
     };
     
     template<typename Mgr, typename... Others>
-    static typename std::enable_if<(sizeof...(Others) > 0)>::type manager_initializer(uint32_t flag_bit = 0) {
+    static typename std::enable_if<(sizeof...(Others) > 0)>::type manager_initializer(uint32_t idx = 0,
+                                                                                      uint32_t flag_bit = 0) {
         auto* mgr = Mgr::initialize();
-        mgr->set_component_idx(sizeof...(Others));
-        mgr->set_component_offset(flag_bit);
-        manager_initializer<Others...>(flag_bit + Mgr::flag_bit_t::value);
+        if(Mgr::component_fixed_t::value)
+            mgr->set_component_idx(idx);
+        if(Mgr::flag_bit_t::value > 0)
+            mgr->set_component_offset(flag_bit);
+        manager_initializer<Others...>(idx + (Mgr::component_fixed_t::value ? 1 : 0),
+                                       flag_bit + Mgr::flag_bit_t::value);
     };
     
     static managers_t& managers();
+    
+    static uint32_t fixed_component() { return _fixed_component; }
+private:
+    static uint32_t _fixed_component;
 };
 
 // base class for generic functions
@@ -76,10 +92,16 @@ template<class Mgr, class C>
 class component_manager_base : public component_manager, public singleton<component_manager_base<Mgr, C>>{
 public:
     typedef std::integral_constant<uint32_t, 0> flag_bit_t; // by default, no flag
-
+    typedef std::true_type component_fixed_t; // by default, the component index is fixed as the manager is initiazlied
+    typedef std::true_type sealed_t; // no subclass
+    
 public:
     static component_manager* initialize() {
         return new Mgr(); // create in the heap
+    }
+    
+    static C* create(game_object* go, component_meta const&) {
+        return new C(go);
     }
     
     // attributes on the game object
