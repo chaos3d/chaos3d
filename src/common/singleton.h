@@ -11,6 +11,7 @@
 #define _CHAOS_SINGLETON_H
 
 #include "common.h"
+#include <type_traits>
 
 _CHAOS_BEGIN
 
@@ -25,17 +26,18 @@ _CHAOS_BEGIN
 	initialization to create singletons.
 */
 
-template<typename T>
+enum {
+    Static_Instance, // the class holds a static variable
+    Client_Instance, // the client manually creates the instance
+};
+
+template<typename T, int _Type = Client_Instance>
 class singleton
 {
-protected:
-    static T*	__singleton;
-    
 public:
-    
     singleton()
     {
-        ASSERT( __singleton == NULL && "Singleton has been Created.");
+        assert( __singleton == NULL && "Singleton has been Created.");
         
         // Singleton will automatically save its location into __msSingleton
         // when it's first initialized.
@@ -50,19 +52,29 @@ public:
     
     virtual ~singleton()
     {
-        ASSERT(__singleton != NULL && "Singleton has not been Created!");
+        assert(__singleton != NULL && "Singleton has not been Created!");
         __singleton = NULL;
     }
     
-    inline static T* instance()
+    template<class U = T, typename std::enable_if<_Type == Client_Instance, U*>::type = 0>
+    inline static T* instance(T*)
     {
-        //ASSERT(__msSingleton != NULL && "Singleton has not been Created!");
         return __singleton;
     }
+    
+    template<class U = T, typename std::enable_if<_Type == Static_Instance, U*>::type = 0>
+    inline static T* instance(T*)
+    {
+        static T _instance;
+        return __singleton;
+    }
+    
+private:
+    static T* __singleton;
 };
 
-template<typename T>
-    T* singleton<T>::__singleton = NULL;
+template<typename T, int _Type>
+    T* singleton<T, _Type>::__singleton = NULL;
 
 _CHAOS_END
 
