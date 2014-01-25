@@ -25,24 +25,6 @@ class component_meta;
  */
 class game_object : public referenced_count{
 public:
-#if 0
-    typedef ::boost::mpl::vector<com::transform> component_list_type;
-    typedef typename ::boost::mpl::end<component_list_type>::type component_list_last;
-    typedef typename ::boost::mpl::size<component_list_type>::type component_size;
-    typedef std::vector<component_ptr> components_t;
-    
-    template<class C>
-    struct find_component_t {
-        constexpr static bool value = std::is_same<typename boost::mpl::find<component_list_type, C>::type,
-        component_list_last>::value == false;
-    };
-    
-    // TODO: maybe component manager traits?
-    template<class C>
-    struct component_is_dynamic {
-        constexpr static bool value = std::is_polymorphic<C>::value == true;
-    };
-#endif
     enum {Parent = 0, Order = 1, Offset = 2 };
     enum {ComponentSize = 16 }; // before we figure out a better way...
 
@@ -61,9 +43,7 @@ public:
             parent->add_child(this);
     }
     
-    virtual ~game_object() {
-        -- _number_of_objects;
-    }
+    virtual ~game_object();
     
     // tag
     std::string const& tag() const { return _tag; }
@@ -135,7 +115,7 @@ public:
     C::manager_t::component_fixed_t::value, C*>::type add_component(Args&&... args) {
         auto*& existed = _components[C::manager_t::component_idx()];
         if(existed == nullptr)
-            existed = C::manager_t::create(this, std::forward<Args>(args)...);
+            existed = C::template create<C>(this, std::forward<Args>(args)...);
         return static_cast<C*>(existed);
     }
     
@@ -160,7 +140,7 @@ public:
             }
         }
         assert(existed < _components.size()); // components overflow...
-        return static_cast<C*>(_components[existed] = C::manager_t::create(this, std::forward<Args>(args)...));
+        return static_cast<C*>(_components[existed] = C::template create<C>(this, std::forward<Args>(args)...));
     }
     
     // change flag

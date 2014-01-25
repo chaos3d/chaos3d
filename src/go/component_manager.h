@@ -101,10 +101,12 @@ public:
         return new Mgr(); // create in the heap
     }
     
+#if 0
     template<typename ...Args>
     static C* create(game_object* go, Args&&... args) {
         return new C(go, std::forward<Args>(args)...);
     }
+#endif
     
     // attributes on the game object
     static uint32_t component_idx() { return _component_idx; }

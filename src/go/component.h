@@ -31,6 +31,15 @@ public:
     
     game_object* parent() const{ return _parent; }
     
+    template<typename C, typename ...Args>
+    static C* create(game_object* go, Args&&... args) {
+        return new C(go, std::forward<Args>(args)...);
+    }
+    
+    virtual void destroy() {
+        delete this;
+    }
+    
 private:
     game_object* _parent;
 };
