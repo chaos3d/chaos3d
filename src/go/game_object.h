@@ -130,19 +130,19 @@ public:
     }
     
     // add component - fixed version
-    template<typename C>
+    template<typename C, typename... Args>
     typename std::enable_if<std::is_base_of<component, C>::value &&
-    C::manager_t::component_fixed_t::value, C*>::type add_component(component_meta const& meta) {
+    C::manager_t::component_fixed_t::value, C*>::type add_component(Args&&... args) {
         auto*& existed = _components[C::manager_t::component_idx()];
         if(existed == nullptr)
-            existed = C::manager_t::create(this, meta);
+            existed = C::manager_t::create(this, std::forward<Args>(args)...);
         return static_cast<C*>(existed);
     }
     
     // add component - non-fixed version
-    template<typename C>
+    template<typename C, typename... Args>
     typename std::enable_if<std::is_base_of<component, C>::value &&
-    !C::manager_t::component_fixed_t::value, C*>::type add_component(component_meta const& meta) {
+    !C::manager_t::component_fixed_t::value, C*>::type add_component(Args&&... args) {
         typedef typename C::manager_t trait; // manager class is a trait for the component
         uint32_t existed = component_manager::fixed_component();
         if(trait::sealed_t::value) {
@@ -160,7 +160,7 @@ public:
             }
         }
         assert(existed < _components.size()); // components overflow...
-        return static_cast<C*>(_components[existed] = C::manager_t::create(this, meta));
+        return static_cast<C*>(_components[existed] = C::manager_t::create(this, std::forward<Args>(args)...));
     }
     
     // change flag

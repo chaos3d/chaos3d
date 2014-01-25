@@ -4,7 +4,6 @@
 #include "common/singleton.h"
 #include <vector>
 
-class component_meta;
 class game_object;
 
 /**
@@ -30,6 +29,8 @@ public:
      * this is only an interface for the client to use.
      */
     struct managers_t {
+        // this is becoming a mastery manager... for game objects and everything
+        // auto-release could happen here then
         virtual ~managers_t() {};
         virtual void update(game_object* /*root*/) = 0;
     };
@@ -100,8 +101,9 @@ public:
         return new Mgr(); // create in the heap
     }
     
-    static C* create(game_object* go, component_meta const&) {
-        return new C(go);
+    template<typename ...Args>
+    static C* create(game_object* go, Args&&... args) {
+        return new C(go, std::forward<Args>(args)...);
     }
     
     // attributes on the game object

@@ -19,12 +19,6 @@
 
 class game_object;
 
-// used as a construction data to create a component
-class component_meta {
-public:
-    virtual ~component_meta() {};
-};
-
 class component {
 public:
     component(game_object* go) : _parent(go)
