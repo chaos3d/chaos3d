@@ -17,6 +17,7 @@ namespace com {
         typedef render_device* render_device_ptr;
 
     public:
+        render_component_mgr(render_device_ptr);
         ~render_component_mgr();
         
     protected:
