@@ -84,6 +84,7 @@ public:
     template<typename C>
     typename std::enable_if<std::is_base_of<component, C>::value &&
     C::manager_t::component_fixed_t::value, C*>::type get_component() const {
+        assert(C::manager_t::component_idx() != -1); // manager is not initializer properly?
         return static_cast<C*>(_components[C::manager_t::component_idx()]);
     }
     
@@ -113,6 +114,7 @@ public:
     template<typename C, typename... Args>
     typename std::enable_if<std::is_base_of<component, C>::value &&
     C::manager_t::component_fixed_t::value, C*>::type add_component(Args&&... args) {
+        assert(C::manager_t::component_idx() != -1); // manager is not initializer properly?
         auto*& existed = _components[C::manager_t::component_idx()];
         if(existed == nullptr)
             existed = C::template create<C>(this, std::forward<Args>(args)...);

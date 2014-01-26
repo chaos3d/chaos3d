@@ -65,7 +65,7 @@ namespace com {
         affine3f _global_reversed;
     };
     
-    class transform_manager : public component_manager_base<transform_manager, transform> {
+    class transform_manager : public component_manager_base<transform_manager> {
     public:
         typedef std::integral_constant<uint32_t, 1> flag_bit_t; // the dirty flag
 

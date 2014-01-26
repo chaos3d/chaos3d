@@ -3,6 +3,7 @@
 
 #include <Eigen/Dense>
 #include <vector>
+#include <memory>
 #include "re/render_batch.h"
 
 class render_context;
@@ -12,12 +13,14 @@ public:
     typedef Eigen::Vector2f target_size_t;
     typedef Eigen::Vector4f color_t;
     typedef std::vector<render_batch> batches_t;
+    typedef std::shared_ptr<render_target> ptr;
     
     enum { RGB565, RGBA8888, SRGBA8888 };
     enum { NODEPTH, DEPTH16, DEPTH24 };
     enum { NOSTENCIL, STENCIL8 };
     enum { NOMULTISAMPLE, MULTISAMPLE4X };
     
+public:
     render_target(target_size_t const& size);
     virtual ~render_target() {};
     

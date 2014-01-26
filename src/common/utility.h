@@ -15,4 +15,14 @@
     public: void set_##name (type const& name) { _##name = name; } 
 
 
+// unpacking to a list of numbers...
+// usage:
+//template<typename... Args>
+//void callFunc(Args... args) {
+//    func(std::get<typename tuple_gens<sizeof...(Args)>::type()>(args) ...);
+//}
+template<int ...> struct tuple_seq { };
+template<int N, int ...S> struct tuple_gens : tuple_gens<N-1, N-1, S...> { };
+template<int ...S> struct tuple_gens<0, S...> { typedef tuple_seq<S...> type; };
+
 #endif

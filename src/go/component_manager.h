@@ -2,6 +2,7 @@
 #define _COMPONENT_MANAGER_H
 
 #include "common/singleton.h"
+#include "common/utility.h"
 #include <vector>
 
 class game_object;
@@ -59,9 +60,11 @@ public:
     //
     
     // helper function to initialize/construct all the component managers
-    template<typename Mgr> // recursive termination, last manager
-    static void manager_initializer(uint32_t idx = 0, uint32_t flag_bit = 0) {
-        auto* mgr = Mgr::initialize();
+    template<typename Mgrs, typename Tuple = std::tuple<>> // recursive termination, last manager
+    static void manager_initializer(Tuple const& param = Tuple(), uint32_t idx = 0, uint32_t flag_bit = 0) {
+        typedef typename std::tuple_element<0, Mgrs>::type Mgr;
+        auto* mgr = Mgr::template initialize_tuple<Tuple>(param,
+                                                          typename tuple_gens<std::tuple_size<Tuple>::value>::type());
         if(Mgr::component_fixed_t::value)
             mgr->set_component_idx(idx);
         if(Mgr::flag_bit_t::value > 0)
@@ -69,16 +72,20 @@ public:
         _fixed_component = idx + (Mgr::component_fixed_t::value ? 1 : 0);
     };
     
-    template<typename Mgr, typename... Others>
-    static typename std::enable_if<(sizeof...(Others) > 0)>::type manager_initializer(uint32_t idx = 0,
-                                                                                      uint32_t flag_bit = 0) {
-        auto* mgr = Mgr::initialize();
+    template<typename Mgrs, typename Tuple = std::tuple<>, typename... ParamTuple>
+    static typename std::enable_if<(sizeof...(ParamTuple) > 0)>::type
+    manager_initializer(Tuple&& first, ParamTuple&&... params,
+                        uint32_t idx = 0,
+                        uint32_t flag_bit = 0) {
+        typedef typename std::tuple_element<sizeof...(ParamTuple), Mgrs>::type Mgr;
+        auto* mgr = Mgr::template initialize_tuple<Tuple>(first,
+                                                          tuple_gens<std::tuple_size<Tuple>::value>::type());
         if(Mgr::component_fixed_t::value)
             mgr->set_component_idx(idx);
         if(Mgr::flag_bit_t::value > 0)
             mgr->set_component_offset(flag_bit);
-        manager_initializer<Others...>(idx + (Mgr::component_fixed_t::value ? 1 : 0),
-                                       flag_bit + Mgr::flag_bit_t::value);
+        manager_initializer<Mgrs, ParamTuple...>(params..., idx + (Mgr::component_fixed_t::value ? 1 : 0),
+                                                 flag_bit + Mgr::flag_bit_t::value);
     };
     
     static managers_t& managers();
@@ -89,16 +96,34 @@ private:
 };
 
 // base class for generic functions
-template<class Mgr, class C>
-class component_manager_base : public component_manager, public singleton<component_manager_base<Mgr, C>>{
+template<class Mgr>
+class component_manager_base : public component_manager, public singleton<component_manager_base<Mgr>>{
 public:
-    typedef std::integral_constant<uint32_t, 0> flag_bit_t; // by default, no flag
-    typedef std::true_type component_fixed_t; // by default, the component index is fixed as the manager is initiazlied
-    typedef std::true_type sealed_t; // no subclass
+    // use a certain bits of the flag in the game object,
+    // usually to condionally/lazily update values
+    //  no flag by default
+    typedef std::integral_constant<uint32_t, 0> flag_bit_t;
+    
+    // fix the index in the component list so to search it is fast
+    // (only access the indexed component). this is helpful if the
+    // component will be accessed by others or in a certain order
+    //  fixed as the manager is initiazlied by default
+    typedef std::true_type component_fixed_t;
+    
+    // whether to check only the type or to try casting when searching
+    // in the component list
+    //  don't check subclasses by default
+    typedef std::true_type sealed_t;
     
 public:
-    static component_manager* initialize() {
-        return new Mgr(); // create in the heap
+    template<typename... Args>
+    static component_manager* initialize(Args&&... args) {
+        return new Mgr(std::forward<Args>(args)...); // create in the heap
+    }
+    
+    template<typename Tuple, int... S>
+    static component_manager* initialize_tuple(Tuple const& params, tuple_seq<S...>) {
+        return initialize(std::get<S>(params)...); // create in the heap
     }
     
 #if 0
@@ -129,6 +154,6 @@ private:
     static uint32_t _flag_offset;
 };
 
-template<class Mgr, class C> uint32_t component_manager_base<Mgr, C>::_component_idx = -1;
-template<class Mgr, class C> uint32_t component_manager_base<Mgr, C>::_flag_offset = -1;
+template<class Mgr> uint32_t component_manager_base<Mgr>::_component_idx = -1;
+template<class Mgr> uint32_t component_manager_base<Mgr>::_flag_offset = -1;
 #endif

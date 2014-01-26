@@ -11,6 +11,8 @@
 #define	_CHAOS_REFERENCEDCOUNT_H
 
 #include <cassert>
+#include <memory>
+#include <type_traits>
 
 #define SAFE_DELETE0(obj)   if( (obj) != 0 ) { delete (obj); (obj) = 0; }
 #define SAFE_DELETE(obj)    if( (obj) != 0 ) { delete (obj); }
@@ -47,6 +49,12 @@ enum AutoreleasePolicy{
 };
 
 class referenced_count{
+public:
+    struct release_deleter {
+        void operator()(referenced_count* obj) const {
+            obj->release();
+        }
+    };
 public:
 	referenced_count() : _ref_count( 1 ) {};
 	virtual ~referenced_count() {};

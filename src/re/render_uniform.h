@@ -17,7 +17,7 @@ public:
     typedef Eigen::Vector2f vector2f;
     typedef Eigen::Vector3f vector3f;
     typedef Eigen::Vector4f vector4f;
-
+    typedef std::unique_ptr<render_uniform> ptr;
     
     struct uniform
     { std::string name; };
@@ -82,6 +82,8 @@ public:
     
     // walk through all the uniforms, from the parent to the child
     void apply_to(visitor_t const&) const;
+    
+    uniforms_t const& uniforms() const { return _uniforms; }
     
 protected:
     uniforms_t::iterator find(std::string const&);
