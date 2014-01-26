@@ -1,11 +1,18 @@
 #ifndef _RESOURCE_H
 #define _RESOURCE_H
 
+// not sure yet, use shared_ptr for now
+//#include "common/referenced_count.h"
+#include <memory>
+
 /**
  * load expensive data from IO i.e. file/network to memory
  * keeping the lightweight data
  */
 class resource {
+public:
+    typedef std::shared_ptr<resource> ptr;
+    
 public:
 	virtual ~resource() {};
 
