@@ -13,6 +13,7 @@ namespace com {
     class camera;
     class renderable;
     
+    // probably bad name, it now only deals with cameras
     class render_component_mgr : public component_manager_base<render_component_mgr> {
     public:
         typedef std::unique_ptr<com::camera, component::component_deleter> camera_ptr;
