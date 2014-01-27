@@ -83,25 +83,25 @@ public:
     // get component - fixed version
     template<typename C>
     typename std::enable_if<std::is_base_of<component, C>::value &&
-    C::manager_t::component_fixed_t::value, C*>::type get_component() const {
-        assert(C::manager_t::component_idx() != -1); // manager is not initializer properly?
-        return static_cast<C*>(_components[C::manager_t::component_idx()]);
+    C::manager_t::component_fixed_t::value, C*>::type get_component(int idx = C::manager_t::component_idx()) const {
+        assert(idx != -1); // manager is not initializer properly?
+        return static_cast<C*>(_components[idx]);
     }
     
     // get component - non-fixed version
     template<typename C>
     typename std::enable_if<std::is_base_of<component, C>::value &&
-    !C::manager_t::component_fixed_t::value, C*>::type get_component() const {
+    !C::manager_t::component_fixed_t::value, C*>::type get_component(int start = component_manager::fixed_component()) const {
         typedef typename C::manager_t trait; // manager class is a trait for the component
         if(trait::sealed_t::value) {
-            for(auto it = _components.begin() + component_manager::fixed_component();
+            for(auto it = std::next(_components.begin(), start);
                 it != _components.end() && *it != nullptr; ++it) {
                 if(typeid(*it) == typeid(C))
                     return static_cast<C*>(*it);
             }
         }
         else {
-            for(auto it = _components.begin() + component_manager::fixed_component();
+            for(auto it = std::next(_components.begin(), start);
                 it != _components.end() && *it != nullptr; ++it) {
                 if(dynamic_cast<C*>(*it) != nullptr)
                     return static_cast<C*>(*it);

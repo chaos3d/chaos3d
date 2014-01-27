@@ -51,7 +51,7 @@ public:
     
     virtual void set_component_idx(uint32_t idx) = 0;
     virtual void set_component_offset(uint32_t offset) = 0;
-    
+
     // TODO: add other managing functions
     //
     
@@ -94,6 +94,7 @@ public:
     static managers_t& managers();
     
     static uint32_t fixed_component() { return _fixed_component; }
+    
 private:
     static uint32_t _fixed_component;
 };
