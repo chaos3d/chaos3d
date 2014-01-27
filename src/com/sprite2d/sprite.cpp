@@ -1,0 +1,1 @@
+#include "com/sprite2d/sprite.h"

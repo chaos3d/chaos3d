@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		880BA3251895131E002542E2 /* render_component_mgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 880BA3241895131E002542E2 /* render_component_mgr.cpp */; };
+		880BA3271895D261002542E2 /* camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 880BA3261895D261002542E2 /* camera.cpp */; };
+		880BA32D189654A6002542E2 /* camera2d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 880BA329189654A6002542E2 /* camera2d.cpp */; };
+		880BA32E189654A6002542E2 /* sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 880BA32B189654A6002542E2 /* sprite.cpp */; };
 		8812C289185DA722001C4D0B /* memory_stream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8812C287185DA722001C4D0B /* memory_stream.cpp */; };
 		8812C28C185DB235001C4D0B /* png_loader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8812C28A185DB235001C4D0B /* png_loader.cpp */; };
 		8812C28F185DB7F8001C4D0B /* file_stream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8812C28D185DB7F8001C4D0B /* file_stream.cpp */; };
@@ -69,6 +73,17 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		880BA31F189505FC002542E2 /* material.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = material.h; sourceTree = "<group>"; };
+		880BA320189505FC002542E2 /* mesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mesh.h; sourceTree = "<group>"; };
+		880BA321189512CE002542E2 /* renderable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = renderable.h; sourceTree = "<group>"; };
+		880BA322189512CE002542E2 /* camera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = camera.h; sourceTree = "<group>"; };
+		880BA323189512CE002542E2 /* render_component_mgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = render_component_mgr.h; sourceTree = "<group>"; };
+		880BA3241895131E002542E2 /* render_component_mgr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = render_component_mgr.cpp; sourceTree = "<group>"; };
+		880BA3261895D261002542E2 /* camera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = camera.cpp; sourceTree = "<group>"; };
+		880BA329189654A6002542E2 /* camera2d.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = camera2d.cpp; sourceTree = "<group>"; };
+		880BA32A189654A6002542E2 /* camera2d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = camera2d.h; sourceTree = "<group>"; };
+		880BA32B189654A6002542E2 /* sprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sprite.cpp; sourceTree = "<group>"; };
+		880BA32C189654A6002542E2 /* sprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sprite.h; sourceTree = "<group>"; };
 		8812C287185DA722001C4D0B /* memory_stream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = memory_stream.cpp; path = io/memory_stream.cpp; sourceTree = "<group>"; };
 		8812C288185DA722001C4D0B /* memory_stream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = memory_stream.h; path = io/memory_stream.h; sourceTree = "<group>"; };
 		8812C28A185DB235001C4D0B /* png_loader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = png_loader.cpp; path = asset/png_loader.cpp; sourceTree = "<group>"; };
@@ -505,6 +520,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		880BA31E189505FC002542E2 /* render */ = {
+			isa = PBXGroup;
+			children = (
+				880BA3261895D261002542E2 /* camera.cpp */,
+				880BA322189512CE002542E2 /* camera.h */,
+				880BA31F189505FC002542E2 /* material.h */,
+				880BA320189505FC002542E2 /* mesh.h */,
+				880BA3241895131E002542E2 /* render_component_mgr.cpp */,
+				880BA323189512CE002542E2 /* render_component_mgr.h */,
+				880BA321189512CE002542E2 /* renderable.h */,
+			);
+			path = render;
+			sourceTree = "<group>";
+		};
+		880BA328189654A6002542E2 /* sprite2d */ = {
+			isa = PBXGroup;
+			children = (
+				880BA329189654A6002542E2 /* camera2d.cpp */,
+				880BA32A189654A6002542E2 /* camera2d.h */,
+				880BA32B189654A6002542E2 /* sprite.cpp */,
+				880BA32C189654A6002542E2 /* sprite.h */,
+			);
+			path = sprite2d;
+			sourceTree = "<group>";
+		};
 		8812C2A21861788F001C4D0B /* app */ = {
 			isa = PBXGroup;
 			children = (
@@ -567,6 +607,15 @@
 				8812C2D11866E1EB001C4D0B /* utility.h */,
 			);
 			path = common;
+			sourceTree = "<group>";
+		};
+		8827623418912A4800B1291B /* com */ = {
+			isa = PBXGroup;
+			children = (
+				880BA328189654A6002542E2 /* sprite2d */,
+				880BA31E189505FC002542E2 /* render */,
+			);
+			path = com;
 			sourceTree = "<group>";
 		};
 		8832453518321FE90022EA4A /* external */ = {
@@ -1291,6 +1340,7 @@
 		88A84AD11830652F009F7ECD /* chaos3d */ = {
 			isa = PBXGroup;
 			children = (
+				8827623418912A4800B1291B /* com */,
 				8812C2CB1866E1EB001C4D0B /* common */,
 				8812C2A918618A8C001C4D0B /* platform */,
 				8812C2A21861788F001C4D0B /* app */,
@@ -1446,10 +1496,13 @@
 				8812C295185E6359001C4D0B /* render_device.cpp in Sources */,
 				8812C2AF18618ACE001C4D0B /* cAppDelegate.mm in Sources */,
 				8812C298185EF4FA001C4D0B /* resource_manager.cpp in Sources */,
+				880BA3271895D261002542E2 /* camera.cpp in Sources */,
 				883246CF183CC04C0022EA4A /* render_target.cpp in Sources */,
+				880BA3251895131E002542E2 /* render_component_mgr.cpp in Sources */,
 				8812C289185DA722001C4D0B /* memory_stream.cpp in Sources */,
 				883246C8183237220022EA4A /* render_view_ios.mm in Sources */,
 				8812C28F185DB7F8001C4D0B /* file_stream.cpp in Sources */,
+				880BA32E189654A6002542E2 /* sprite.cpp in Sources */,
 				8812C2A818618055001C4D0B /* action.cpp in Sources */,
 				88A84B121830B6D9009F7ECD /* game_object.cpp in Sources */,
 				8827622E1881482F00B1291B /* component_manager.cpp in Sources */,
@@ -1465,6 +1518,7 @@
 				882762111870F9E600B1291B /* gl_gpu.cpp in Sources */,
 				8812C2D518683BE0001C4D0B /* render_utility2d.cpp in Sources */,
 				883246CC183A01730022EA4A /* vertex_buffer.cpp in Sources */,
+				880BA32D189654A6002542E2 /* camera2d.cpp in Sources */,
 				882762211873945A00B1291B /* gl_context.mm in Sources */,
 				882762141872D50D00B1291B /* vertex_layout.cpp in Sources */,
 				8812C2BD18644221001C4D0B /* gl_vertex_buffer.cpp in Sources */,
