@@ -21,10 +21,16 @@ class game_object;
 
 class component {
 public:
+    struct component_deleter {
+        void operator() (component* com) const {
+            com->destroy();
+        }
+    };
+public:
+    component(component const&) = delete;
+    
     component(game_object* go) : _parent(go)
     {}
-    
-    virtual ~component() {};
     
     // clone to the new game object
     virtual component* clone(game_object*) const = 0;
@@ -39,10 +45,19 @@ public:
     virtual void destroy() {
         delete this;
     }
+ 
+protected:
+    virtual ~component() {};
     
 private:
     game_object* _parent;
 };
+
+#define SIMPLE_CLONE(type)  protected: virtual type* clone(game_object* go) const override {\
+type* com = new type(go); \
+*com = *this; \
+return com; \
+}
 
 #if 0
 class component_dirty : public component {

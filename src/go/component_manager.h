@@ -40,7 +40,8 @@ public:
     // the constructor will add itself to the managers singleton.
     // once a comoponent manager is created of some sort, it will
     // be automatically managed by the global manager
-    component_manager();
+    // note, one can choose not to be managed. (i.e. camera)
+    explicit component_manager(bool managed = true);
     virtual ~component_manager();
     
     virtual void update(std::vector<game_object*> const&) = 0;
@@ -60,34 +61,34 @@ public:
     //
     
     // helper function to initialize/construct all the component managers
-    template<typename Mgrs, typename Tuple = std::tuple<>> // recursive termination, last manager
-    static void manager_initializer(Tuple const& param = Tuple(), uint32_t idx = 0, uint32_t flag_bit = 0) {
-        typedef typename std::tuple_element<0, Mgrs>::type Mgr;
+    template<typename Mgrs, typename Tuple, uint32_t _Idx = 0, uint32_t _Bit = 0> // recursive termination, last manager
+    static void manager_initializer(Tuple const& param) {
+        typedef typename std::tuple_element<std::tuple_size<Mgrs>::value - 1, Mgrs>::type Mgr;
         auto* mgr = Mgr::template initialize_tuple<Tuple>(param,
                                                           typename tuple_gens<std::tuple_size<Tuple>::value>::type());
         if(Mgr::component_fixed_t::value)
-            mgr->set_component_idx(idx);
+            mgr->set_component_idx(_Idx);
         if(Mgr::flag_bit_t::value > 0)
-            mgr->set_component_offset(flag_bit);
-        _fixed_component = idx + (Mgr::component_fixed_t::value ? 1 : 0);
+            mgr->set_component_offset(_Bit);
+        _fixed_component = _Idx + (Mgr::component_fixed_t::value ? 1 : 0);
     };
     
-    template<typename Mgrs, typename... ParamTuple, typename Last = std::tuple<>>
+    template<typename Mgrs, typename First, typename... ParamTuple, uint32_t _Idx = 0, uint32_t _Bit = 0>
     static typename std::enable_if<(sizeof...(ParamTuple) > 0)>::type
-    manager_initializer(ParamTuple&&... params, Last&& last = Last(),
-                        uint32_t idx = 0,
-                        uint32_t flag_bit = 0) {
-        typedef typename std::tuple_element<sizeof...(ParamTuple), Mgrs>::type Mgr;
+    manager_initializer(First const& first, ParamTuple const&... params) {
+        constexpr size_t mgrs_size = std::tuple_size<Mgrs>::value;
+        typedef typename std::tuple_element<mgrs_size - sizeof...(ParamTuple) - 1, Mgrs>::type Mgr;
 
-        manager_initializer<Mgrs, ParamTuple...>(params..., idx + (Mgr::component_fixed_t::value ? 1 : 0),
-                                                 flag_bit + Mgr::flag_bit_t::value);
-
-        auto* mgr = Mgr::template initialize_tuple<Last>(last,
-                                                         tuple_gens<std::tuple_size<Last>::value>::type());
+        auto* mgr = Mgr::template initialize_tuple<First>(first,
+                                                          typename tuple_gens<std::tuple_size<First>::value>::type());
         if(Mgr::component_fixed_t::value)
-            mgr->set_component_idx(idx);
+            mgr->set_component_idx(_Idx);
         if(Mgr::flag_bit_t::value > 0)
-            mgr->set_component_offset(flag_bit);
+            mgr->set_component_offset(_Bit);
+        
+        manager_initializer<Mgrs, ParamTuple...,
+        _Idx + (Mgr::component_fixed_t::value ? 1 : 0), _Bit + Mgr::flag_bit_t::value >
+        (params...);
     };
     
     static managers_t& managers();
@@ -99,7 +100,7 @@ private:
 
 // base class for generic functions
 template<class Mgr>
-class component_manager_base : public component_manager, public singleton<component_manager_base<Mgr>>{
+class component_manager_base : public component_manager, public singleton<Mgr>{
 public:
     // use a certain bits of the flag in the game object,
     // usually to condionally/lazily update values
@@ -139,6 +140,11 @@ public:
     static uint32_t component_idx() { return _component_idx; }
     static uint32_t flag_offset() { return _flag_offset; }
     
+protected:
+    component_manager_base(component_manager_base const&) = delete;
+    explicit component_manager_base(bool managed = true) : component_manager(managed)
+    {}
+    
 private:
     virtual void set_component_idx(uint32_t idx) override {
         assert(_component_idx == -1); // only set once for now
@@ -158,4 +164,35 @@ private:
 
 template<class Mgr> uint32_t component_manager_base<Mgr>::_component_idx = -1;
 template<class Mgr> uint32_t component_manager_base<Mgr>::_flag_offset = -1;
+
+// a "nil" component manager contains minimum requirements for a
+// non-fixed component.
+template<typename Sealed = std::true_type>
+class nil_component_mgr : public component_manager_base<nil_component_mgr<Sealed> > {
+public:
+    typedef std::false_type component_fixed_t;
+    typedef Sealed sealed_t;
+    
+protected:
+    nil_component_mgr(): component_manager_base<nil_component_mgr<Sealed>>(false)
+    {}
+    
+    void update(std::vector<game_object*> const&) {};
+};
+
+// an "empty" component manager for a fixed component, it does nothing
+// but saves the idx and offset if needed
+template<typename Tag, typename Sealed = std::false_type>
+class empty_component_mgr : public component_manager_base<empty_component_mgr<Tag, Sealed> > {
+public:
+    typedef std::false_type component_fixed_t;
+    typedef Sealed sealed_t;
+    
+protected:
+    empty_component_mgr(): component_manager_base<empty_component_mgr<Tag, Sealed>>(false)
+    {}
+    
+    void update(std::vector<game_object*> const&) {};
+};
+
 #endif

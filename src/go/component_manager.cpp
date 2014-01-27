@@ -77,8 +77,9 @@ component_manager::managers_t& component_manager::managers() {
 
 uint32_t component_manager::_fixed_component = 0;
 
-component_manager::component_manager() {
-    global.add(this);
+component_manager::component_manager(bool managed) {
+    if(managed)
+        global.add(this);
 }
 
 component_manager::~component_manager() {
