@@ -26,12 +26,11 @@ _CHAOS_BEGIN
 	initialization to create singletons.
 */
 
-enum {
-    Static_Instance, // the class holds a static variable
-    Client_Instance, // the client manually creates the instance
-};
 
-template<typename T, int _Type = Client_Instance>
+struct Static_Instance {}; // the class holds a static variable
+struct Client_Instance {}; // the client manually creates the instance
+
+template<typename T, typename Type = Client_Instance>
 class singleton
 {
 public:
@@ -56,25 +55,26 @@ public:
         __singleton = NULL;
     }
     
-    template<class U = T, typename std::enable_if<_Type == Client_Instance, U*>::type = 0>
-    inline static T* instance(T*)
+    // FIXME: a elegant way?
+    template<typename _Type = Type>
+    inline static typename std::enable_if<std::is_same<_Type,Client_Instance>::value, T&>::type instance(Client_Instance = Client_Instance())
     {
-        return __singleton;
+        return *__singleton;
     }
     
-    template<class U = T, typename std::enable_if<_Type == Static_Instance, U*>::type = 0>
-    inline static T* instance(T*)
+    template<typename _Type = Type>
+    inline static typename std::enable_if<std::is_same<_Type,Static_Instance>::value, T&>::type instance(Static_Instance = Static_Instance())
     {
         static T _instance;
-        return __singleton;
+        return *__singleton;
     }
     
 private:
     static T* __singleton;
 };
 
-template<typename T, int _Type>
-    T* singleton<T, _Type>::__singleton = NULL;
+template<typename T, typename Type>
+    T* singleton<T, Type>::__singleton = NULL;
 
 _CHAOS_END
 

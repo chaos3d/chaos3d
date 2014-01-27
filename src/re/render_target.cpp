@@ -17,7 +17,8 @@ void render_target::do_render(render_context* context) {
     
     if(!bind(context))
         return;
-    sort();
+    // sorting should be done by the client level
+    //sort();
     
     for(auto& it : _batches) {
         context->set_state(*it.state());

@@ -3,27 +3,28 @@
 
 #include "Eigen/Dense"
 #include "go/component.h"
+#include "go/component_manager.h"
 #include "common/common.h"
 #include "re/render_target.h"
 #include <vector>
 #include <forward_list>
 
-class game_object;
-
 namespace com {
     class renderable;
     class render_component_mgr;
+    // TODO: culling interface
     
     // represent a rendering algorithm
     // it will collect all visible renderables, and render to the
     // target
     class camera : public component {
     public:
+        typedef nil_component_mgr<std::false_type> manager_t;
         typedef std::forward_list<renderable*> renderables_t;
         typedef Eigen::Matrix4f matrix4f;
         
     public:
-        camera();
+        camera(game_object*, int priority = 0);
         
         // collect all the visual components (renderables)
         // there can be various algorithms (aabb-tree, or bullet3d?)
@@ -37,6 +38,16 @@ namespace com {
         void set_orthographic();
         void set_perspective();
         
+        bool operator< (camera const& rhs) const {
+            return _priority < rhs.priority();
+        }
+        
+    protected:
+        camera& operator=(camera const&);
+        virtual ~camera();
+        renderables_t& renderables() { return _renderables; };
+        render_target::ptr target() const { return _target; };
+        
     private:
         matrix4f _project_mat;
         matrix4f _view_mat;
@@ -44,6 +55,10 @@ namespace com {
         renderables_t _renderables;
         
         ATTRIBUTE(bool, disabled);
+        ATTRIBUTE(int, priority); // render order, smaller is higher
+
+        SIMPLE_CLONE(camera);
     };
+    
 }
 #endif
