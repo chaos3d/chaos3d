@@ -48,8 +48,10 @@ public:
 
     typedef std::vector<std::unique_ptr<uniform>> uniforms_t;
     typedef std::function<void(uniform const&)> visitor_t;
-    
+    typedef std::tuple<char const*, uniform const&> init_t;
+
 public:
+    render_uniform(std::initializer_list<init_t> const&, render_uniform* parent = nullptr);
     render_uniform(render_uniform* parent = nullptr);
     
     void set_vector(std::string const& name, float v) {
@@ -85,6 +87,10 @@ public:
     
     uniforms_t const& uniforms() const { return _uniforms; }
     
+    // this only compares its own level
+    bool equal_to(render_uniform const&) const;
+  
+    // TODO: hash code
 protected:
     uniforms_t::iterator find(std::string const&);
     uniform* find(std::string const&, bool);

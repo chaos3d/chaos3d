@@ -11,8 +11,9 @@ namespace com {
 class render_device;
 class vertex_layout;
 class vertex_index_buffer;
-class gpu_program;
 class render_uniform;
+class render_state;
+class gpu_program;
 
 namespace sprite2d {
     class sprite_mgr;
@@ -24,6 +25,9 @@ namespace sprite2d {
         vertex_index_buffer* indices; // the bound indice buffer
     };
     
+    // TODO: mutable uniforms per sprite, how?
+    typedef std::tuple<gpu_program *, const render_state *, const render_uniform *> sprite_material;
+    
     // 2d sprite
     // it can be more than 1 sprite in a single component, or rather
     // the whole 2d skeleton, so it could generate more than more
@@ -32,9 +36,10 @@ namespace sprite2d {
     public:
         typedef sprite_mgr manager_t;
         typedef std::vector<uint16_t> indices_t;
-        struct data_t{
+        struct data_t{ //TODO: combine static and dynamic
             vertices_buffer* buffer;
-            data_t() : buffer(nullptr)
+            sprite_material* material;
+            data_t() : buffer(nullptr), material(nullptr)
             {}
         };
         
@@ -52,6 +57,7 @@ namespace sprite2d {
         
         data_t const& data() const { return _data; }
         
+        //TODO: customized materials
     protected:
         virtual void fill_buffer(com::transform*);
 
@@ -79,10 +85,13 @@ namespace sprite2d {
                 return type == rhs.type && count == rhs.type && name == rhs.name;
             }
         };
+        typedef std::unique_ptr<sprite_material> spt_mat_ptr;
         typedef std::vector<sprite_vertex> vertices_t;
         typedef std::vector<vertices_t> types_t;
+        typedef std::vector<std::tuple<gpu_program*, const render_state*>> materials_t; // static material data
+        typedef std::vector<spt_mat_ptr> sprite_materials_t;
         
-        enum { // a few default layouts
+        enum { // a few default layouts and material
             position_uv = 0,
         };
         
@@ -93,8 +102,10 @@ namespace sprite2d {
         
     public:
         sprite_mgr(render_device*);
+        virtual ~sprite_mgr();
         
-        vertices_buffer* request_buffer(uint32_t count, int type_idx = 0);
+        // vertices buffer
+        vertices_buffer* request_buffer(uint32_t count, int = 0);
         void release_buffer(vertices_buffer*);
         
         // add a vertice layout/type, returned value to be used
@@ -104,6 +115,10 @@ namespace sprite2d {
         // id will be returned w/o creating new one
         uint8_t add_type(vertices_t const&);
 
+        // sprite material
+        // TODO: add custom shaders/materials
+        sprite_material* get_material(std::unique_ptr<render_uniform>&, int = 0);
+        
     protected:
         virtual void update(std::vector<game_object*> const&);
         
@@ -112,7 +127,9 @@ namespace sprite2d {
         
     private:
         render_device* _device;
+        materials_t _materials;
         types_t _types;
+        sprite_materials_t _sprite_materials;
     };
 }
 #endif

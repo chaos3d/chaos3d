@@ -3,13 +3,22 @@
 #include "go/game_object.h"
 #include "re/vertex_layout.h"
 #include "re/render_device.h"
+#include "io/memory_stream.h"
+#include "re/render_uniform.h"
 
 using namespace sprite2d;
 
 #pragma mark - the sprite
 sprite::sprite(game_object* go)
 : component(go) {
+#if 1
+    // FIXME with real data
     _data.buffer = sprite_mgr::instance().request_buffer(4);
+    std::unique_ptr<render_uniform> uniform(new render_uniform({
+        {"tex1", render_uniform::uniform_texture(nullptr)}
+    }));
+    _data.material = sprite_mgr::instance().get_material(uniform);
+#endif
 }
 
 sprite::~sprite() {
@@ -27,6 +36,59 @@ sprite_mgr::sprite_mgr(render_device* dev) : _types({
     {{"position", vertex_layout::Float, 4}, {"uv", vertex_layout::Float, 2}},
 }), _device(dev){
     assert(dev != nullptr); // needs a device
+
+#if 1 // QUICK TEST
+    const char* vs_source = R"shader(
+    attribute vec4 position;
+    attribute lowp vec2 uv;
+    varying lowp vec2 uvVaring;
+    void main() {
+        gl_Position = position;
+        uvVaring = uv;
+    }
+    )shader";
+    
+    const char* ps_source = R"shader(
+    uniform sampler2D tex1;
+    varying lowp vec2 uvVaring;
+    
+    void main(void)
+    {
+        gl_FragColor = texture2D(tex1, uvVaring);
+    }
+    )shader";
+
+    auto vs = std::unique_ptr<gpu_shader>(_device->create_shader(gpu_shader::Vertex));
+    vs->compile(WRAP_PTR(new memory_stream(vs_source, strlen(vs_source))));
+    
+    auto fs = std::unique_ptr<gpu_shader>(_device->create_shader(gpu_shader::Fragment));
+    fs->compile(WRAP_PTR(new memory_stream(ps_source, strlen(ps_source))));
+    
+    auto* gpu = _device->create_program();
+    gpu->link({"position", "uv"}, {vs.get(), fs.get()});
+    
+    _materials.emplace_back(gpu, &render_state::default_state());
+#endif
+}
+
+sprite_mgr::~sprite_mgr() {
+    
+}
+
+sprite_material* sprite_mgr::get_material(std::unique_ptr<render_uniform>& uniform, int type) {
+    assert(type >= 0 && type < _materials.size());
+    auto& mat = _materials[type];
+    auto it = std::find_if(_sprite_materials.begin(), _sprite_materials.end(), [&] (spt_mat_ptr const& mat) {
+        return std::get<2>(*mat)->equal_to(*uniform);
+    });
+    if(it == _sprite_materials.end()) {
+        auto* spt = new sprite_material(std::tuple_cat(mat,
+                                                       std::make_tuple(uniform.release())
+                                                       ));
+        _sprite_materials.emplace_back(spt);
+        return _sprite_materials.back().get();
+    }else
+        return it->get();
 }
 
 void sprite_mgr::update(goes_t const& gos) {

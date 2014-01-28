@@ -22,9 +22,8 @@ public:
         int unit;   // count
         size_t offset;
         size_t stride;
-        
     };
-    
+
     typedef std::vector<channel> channels_t;
     
 public:
