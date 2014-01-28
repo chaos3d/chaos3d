@@ -34,6 +34,7 @@ public:
     }
     
     render_batch& operator=(render_batch const&) {
+        assert(0);
         return *this; // TODO: just fixed linking
     };
     

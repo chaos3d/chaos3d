@@ -12,11 +12,19 @@ camera2d::camera2d(game_object* go, int priority)
 
 void camera2d::collect(const std::vector<game_object *> &goes) {
     const int idx = sprite_mgr::component_idx();
-    for(auto it = goes.rbegin(); it != goes.rend(); ++it) {
-        auto* spt = (*it)->get_component<sprite>(idx);
-        if(!spt)
+    auto it = goes.begin();
+    auto* spt = (*it)->get_component<sprite>(idx);
+    render_batch::batch_t batch;
+    for(++it; it != goes.end(); ++it) {
+        auto* next = (*it)->get_component<sprite>(idx);
+        if(!next)
             continue;
         
+        if(next->batchable(*spt)) {
+            
+        } else {
+            //target()->add_batch(const  &)
+        }
     }
 }
 

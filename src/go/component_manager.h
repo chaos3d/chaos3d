@@ -21,6 +21,8 @@ class game_object;
  */
 class component_manager {
 public:
+    typedef std::vector<game_object*> goes_t;
+    
     /**
      * the manager of the managers - when a component manager
      * is initialized, it will be added to this list in order
@@ -44,7 +46,7 @@ public:
     explicit component_manager(bool managed = true);
     virtual ~component_manager();
     
-    virtual void update(std::vector<game_object*> const&) = 0;
+    virtual void update(goes_t const&) = 0;
     // TODO: those two not integrated yet
     virtual void pre_update(std::vector<game_object*> const&) {};
     virtual void post_update(std::vector<game_object*> const&) {};
@@ -173,12 +175,13 @@ class nil_component_mgr : public component_manager_base<nil_component_mgr<Sealed
 public:
     typedef std::false_type component_fixed_t;
     typedef Sealed sealed_t;
+    using component_manager::goes_t;
     
 protected:
     nil_component_mgr(): component_manager_base<nil_component_mgr<Sealed>>(false)
     {}
     
-    void update(std::vector<game_object*> const&) {};
+    void update(goes_t const&) {};
 };
 
 // an "empty" component manager for a fixed component, it does nothing
@@ -186,14 +189,15 @@ protected:
 template<typename Tag, typename Sealed = std::false_type>
 class empty_component_mgr : public component_manager_base<empty_component_mgr<Tag, Sealed> > {
 public:
-    typedef std::false_type component_fixed_t;
+    typedef std::true_type component_fixed_t;
     typedef Sealed sealed_t;
+    using component_manager::goes_t;
     
 protected:
     empty_component_mgr(): component_manager_base<empty_component_mgr<Tag, Sealed>>(false)
     {}
     
-    void update(std::vector<game_object*> const&) {};
+    void update(goes_t const&) {};
 };
 
 #endif

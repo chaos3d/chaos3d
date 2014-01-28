@@ -13,7 +13,7 @@ class render_context;
 // sent to the driver, and it will send the data
 class vertex_layout {
 public:
-    enum { U8, Float };
+    enum { U8, Float, TypeMax };
     enum { Points, Lines, TriangleStrip, TriangleFan, Triangles };
     
     struct channel {
@@ -22,6 +22,7 @@ public:
         int unit;   // count
         size_t offset;
         size_t stride;
+        
     };
     
     typedef std::vector<channel> channels_t;
@@ -37,6 +38,12 @@ public:
     
     vertex_index_buffer* index_buffer() const { return _index_buffer; }
     channels_t const& channels() const { return _channels; }
+
+    static size_t type_size(int type) {
+        assert(type >= 0 && type < TypeMax);
+        static size_t _size[] = {sizeof(char), sizeof(float)};
+        return _size[type];
+    }
     
 private:
     channels_t _channels;

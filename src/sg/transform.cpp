@@ -32,11 +32,12 @@ void transform::relocate(game_object* go) {
 
 #pragma mark - the manager
 void transform_manager::update(std::vector<game_object*> const& gos) {
+    auto idx = transform_manager::component_idx();
     for(auto& it : gos) {
         if(!it->is_set(flag_offset()))
             continue;
         
-        auto* com = it->get_component<transform>();
+        auto* com = it->get_component<transform>(idx);
         if(!com)
             continue;
         
@@ -47,5 +48,4 @@ void transform_manager::update(std::vector<game_object*> const& gos) {
         // if the parent breaks/skips, it won't populate to its descendents
         com->update(parent ? parent->global() : _global_parent);
     }
-    
 }
