@@ -19,7 +19,7 @@ public:
     
     virtual void* lock(size_t offset, size_t size) = 0;
     virtual void unlock() = 0;
-    virtual void load(void*, size_t offset, size_t size) = 0;
+    virtual void load(const void*, size_t offset, size_t size) = 0;
     
     size_t size() const { return _size; }
     int type() const { return _type; }
@@ -44,36 +44,4 @@ public:
     virtual ~vertex_index_buffer() {};
 };
 
-// TODO
-// an array of vertex buffers
-//  mapping channels to buffers
-class vertex_channels {
-public:
-    enum { U8, Float };
-    struct channel_desc {
-        int type;   // unsigned/float
-        int unit;   // count
-        size_t offset;
-        std::string name;
-    };
-    
-    typedef std::vector<channel_desc> channels_t;
-    
-    typedef vertex_buffer* vertex_buffer_ptr;
-    //typedef std::vector<vertex_buffer_ptr> buffers_t;
-    typedef std::unordered_map<vertex_buffer_ptr, channels_t> buffers_t;
-public:
-    vertex_channels(std::initializer_list<vertex_buffer_ptr> buffers);
-
-    virtual void bind_to(gpu_program*) = 0;
-    
-    buffers_t const& buffers() const { return _buffers; }
-    
-    void set_channels(std::initializer_list<channel_desc> desc);
-    channels_t const& channels() const { return _channels; }
-    
-private:
-    channels_t _channels;
-    buffers_t _buffers;
-};
 #endif

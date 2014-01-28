@@ -52,7 +52,7 @@ void gl_vertex_buffer::unlock() {
 #endif
 }
 
-void gl_vertex_buffer::load(void* data, size_t offset, size_t size) {
+void gl_vertex_buffer::load(const void* data, size_t offset, size_t size) {
     GLASSERT1(glIsBuffer(_buffer_id) == GL_TRUE);
     assert(offset + size <= vertex_buffer::size());
     glBindBuffer(GL_ARRAY_BUFFER, _buffer_id);
@@ -105,7 +105,7 @@ void gl_vertex_index_buffer::unlock() {
 #endif
 }
 
-void gl_vertex_index_buffer::load(void* data, size_t offset, size_t size) {
+void gl_vertex_index_buffer::load(const void* data, size_t offset, size_t size) {
     GLASSERT1(glIsBuffer(_buffer_id) == GL_TRUE);
     assert(offset + size <= vertex_buffer::size());
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffer_id);

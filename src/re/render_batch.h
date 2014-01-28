@@ -25,7 +25,7 @@ public:
     struct batch_t {
         const render_state* state;
         const render_uniform* uniform;
-        vertex_layout* layout;
+        const vertex_layout* layout;
         gpu_program* program;
     };
     

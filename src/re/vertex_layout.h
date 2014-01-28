@@ -48,6 +48,7 @@ public:
 private:
     channels_t _channels;
     vertex_index_buffer *_index_buffer;
+    
     ATTRIBUTE(uint8_t, mode);
     ATTRIBUTE(size_t, size);
 };
