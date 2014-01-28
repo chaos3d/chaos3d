@@ -5,17 +5,19 @@
 #include "re/render_device.h"
 #include "io/memory_stream.h"
 #include "re/render_uniform.h"
+#include "re/texture.h"
 
 using namespace sprite2d;
 
 #pragma mark - the sprite
-sprite::sprite(game_object* go)
+sprite::sprite(game_object* go, texture* tex)
 : component(go) {
 #if 1
     // FIXME with real data
     _data.buffer = sprite_mgr::instance().request_buffer(4);
+    //auto tex_uniform = render_uniform::uniform_texture(tex);
     std::unique_ptr<render_uniform> uniform(new render_uniform({
-        {"tex1", render_uniform::uniform_texture(nullptr)}
+        {"tex1", render_uniform::uniform_texture(tex)},
     }));
     _data.material = sprite_mgr::instance().get_material(uniform);
 #endif
@@ -23,6 +25,11 @@ sprite::sprite(game_object* go)
 
 sprite::~sprite() {
     sprite_mgr::instance().release_buffer(_data.buffer);
+}
+
+void sprite::set_texture(texture *tex) {
+    assert(0);
+    // TODO: get a new uniform
 }
 
 void sprite::fill_buffer(com::transform* transform) {

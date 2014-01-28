@@ -8,12 +8,15 @@
 namespace com {
     class transform;
 }
+
+// TODO: in forward declare headers
 class render_device;
 class vertex_layout;
 class vertex_index_buffer;
 class render_uniform;
 class render_state;
 class gpu_program;
+class texture;
 
 namespace sprite2d {
     class sprite_mgr;
@@ -33,6 +36,9 @@ namespace sprite2d {
     // the whole 2d skeleton, so it could generate more than more
     // batches especially it uses more textures
     class sprite : public component {
+        
+        // TODO: this should be a base class, the subclass may
+        // have different types of sprites and be templatized
     public:
         typedef sprite_mgr manager_t;
         typedef std::vector<uint16_t> indices_t;
@@ -44,7 +50,7 @@ namespace sprite2d {
         };
         
     public:
-        sprite(game_object*);
+        sprite(game_object*, texture*);
         ~sprite();
         
         std::tuple<const void*, size_t> indics_buffer() const {
@@ -57,6 +63,8 @@ namespace sprite2d {
         
         data_t const& data() const { return _data; }
         
+        void set_texture(texture*);
+
         //TODO: customized materials
     protected:
         virtual void fill_buffer(com::transform*);
@@ -71,6 +79,10 @@ namespace sprite2d {
         friend class sprite_mgr;
     };
     
+    // sprite manager
+    //  update the vertices data
+    //  manage the buffer caches
+    //  manage the materials
     class sprite_mgr : public component_manager_base<sprite_mgr> {
     public:
         typedef std::integral_constant<uint32_t, 1> flag_bit_t;

@@ -48,11 +48,12 @@ public:
 
     typedef std::vector<std::unique_ptr<uniform>> uniforms_t;
     typedef std::function<void(uniform const&)> visitor_t;
-    typedef std::tuple<char const*, uniform const&> init_t;
+    typedef std::tuple<char const*, uniform const&&> init_t;
 
 public:
     render_uniform(std::initializer_list<init_t> const&, render_uniform* parent = nullptr);
     render_uniform(render_uniform* parent = nullptr);
+    //render_uniform(render_uniform const&); // TODO: copy
     
     void set_vector(std::string const& name, float v) {
         set_vector<uniform_float>(name, v);
