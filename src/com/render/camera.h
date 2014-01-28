@@ -36,10 +36,14 @@ namespace com {
         virtual void do_render(render_component_mgr const&);
         
         void set_orthographic();
-        void set_perspective();
+        void set_perspective(float fovY, float aspect, float near, float far);
         
         bool operator< (camera const& rhs) const {
             return _priority < rhs.priority();
+        }
+        
+        void set_clear(render_target::color_t const& color) {
+            _target->set_clear_color(color);
         }
         
     protected:

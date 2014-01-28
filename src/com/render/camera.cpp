@@ -27,3 +27,18 @@ void camera::collect(std::vector<game_object*> const&) {
 void camera::do_render(render_component_mgr const&) {
     
 }
+
+void camera::set_orthographic() {
+    assert(0);
+}
+
+void camera::set_perspective(float fovY, float aspect, float near, float far){
+    float theta = fovY*0.5;
+    float range = far - near;
+    float invtan = 1./tan(theta);
+    
+    _project_mat << invtan / aspect, 0.f, 0.f, 0.f,
+                    0.f, invtan / aspect, 0.f, 0.f,
+                    0.f, 0.f, -(near + far) / range, -2 * near * far / range,
+    0.f, 0.f, -1.f, 0.f;
+}

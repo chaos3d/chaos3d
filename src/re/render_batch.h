@@ -60,9 +60,9 @@ private:
     sort_key _sort_key;
     
     vertex_layout* _layout;
+    gpu_program* _program;
     const render_state* _state;
     const render_uniform* _uniform;
-    gpu_program* _program;
     // TODO: memory management?
 };
 
