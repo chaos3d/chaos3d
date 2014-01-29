@@ -16,10 +16,15 @@ sprite::sprite(game_object* go, texture* tex)
     // FIXME with real data
     _data.buffer = sprite_mgr::instance().request_buffer(4);
     //auto tex_uniform = render_uniform::uniform_texture(tex);
-    std::unique_ptr<render_uniform> uniform(new render_uniform({
+    render_uniform::ptr uniform(new render_uniform({
         make_uniform("tex1", tex),
     }));
-    _data.material = sprite_mgr::instance().get_material(uniform);
+    _data.material = sprite_mgr::instance().get_material(std::move(uniform));
+#if 0
+    _data.material = sprite_mgr::instance().get_material(render_uniform::ptr(new render_uniform({
+        make_uniform("tex1", tex),
+    })));
+#endif
 #endif
 }
 
@@ -82,7 +87,7 @@ sprite_mgr::~sprite_mgr() {
     
 }
 
-sprite_material* sprite_mgr::get_material(std::unique_ptr<render_uniform>& uniform, int type) {
+sprite_material* sprite_mgr::get_material(std::unique_ptr<render_uniform>&& uniform, int type) {
     assert(type >= 0 && type < _materials.size());
     auto& mat = _materials[type];
     auto it = std::find_if(_sprite_materials.begin(), _sprite_materials.end(), [&] (spt_mat_ptr const& mat) {

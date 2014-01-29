@@ -129,7 +129,7 @@ namespace sprite2d {
 
         // sprite material
         // TODO: add custom shaders/materials
-        sprite_material* get_material(std::unique_ptr<render_uniform>&, int = 0);
+        sprite_material* get_material(std::unique_ptr<render_uniform>&&, int = 0);
         
     protected:
         virtual void update(std::vector<game_object*> const&);

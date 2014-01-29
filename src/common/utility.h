@@ -2,6 +2,7 @@
 #define _UTILITY_H
 
 #include <type_traits>
+#include <memory>
 
 // one-liner that the function returns the pointer and it will be only used once
 //  it is wrapped by a unique_ptr that it'll be released in its destructor
@@ -14,6 +15,10 @@
     public: type & name () { return _##name; } \
     public: void set_##name (type const& name) { _##name = name; } 
 
+template<class T, class... Args>
+std::unique_ptr<T> make_unique(Args&&... args) {
+    return std::unique_ptr<T>(new T(std::forward<Args>(args)...));
+}
 
 // unpacking to a list of numbers...
 // usage:
