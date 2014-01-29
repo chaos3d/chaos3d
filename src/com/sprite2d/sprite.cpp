@@ -71,10 +71,10 @@ sprite_mgr::sprite_mgr(render_device* dev) : _types({
     )shader";
 
     auto vs = std::unique_ptr<gpu_shader>(_device->create_shader(gpu_shader::Vertex));
-    vs->compile(WRAP_PTR(new memory_stream(vs_source, strlen(vs_source))));
+    vs->compile(make_unique<memory_stream>(vs_source, strlen(vs_source)).get());
     
     auto fs = std::unique_ptr<gpu_shader>(_device->create_shader(gpu_shader::Fragment));
-    fs->compile(WRAP_PTR(new memory_stream(ps_source, strlen(ps_source))));
+    fs->compile(make_unique<memory_stream>(ps_source, strlen(ps_source)).get());
     
     auto* gpu = _device->create_program();
     gpu->link({"position", "uv"}, {vs.get(), fs.get()});
@@ -91,7 +91,7 @@ sprite_material* sprite_mgr::get_material(std::unique_ptr<render_uniform>&& unif
     assert(type >= 0 && type < _materials.size());
     auto& mat = _materials[type];
     auto it = std::find_if(_sprite_materials.begin(), _sprite_materials.end(), [&] (spt_mat_ptr const& mat) {
-        return std::get<2>(*mat)->equal_to(*uniform);
+        return *std::get<2>(*mat) == (*uniform);
     });
     if(it == _sprite_materials.end()) {
         auto* spt = new sprite_material(std::tuple_cat(mat,

@@ -28,6 +28,13 @@ public:
             return name() < rhs.name();
         }
         
+        bool operator==(uniform const& lhs) const {
+            return size() == lhs.size() &&
+            std::memcmp(reinterpret_cast<char const*>(&_size) + sizeof(_size),
+                        reinterpret_cast<char const*>(&lhs._size) + sizeof(_size),
+                        size()) == 0 &&
+            name() == lhs.name();
+        }
         std::string const& name() const {return _name; }
         size_t size() const { return _size; }
     private:
@@ -98,13 +105,13 @@ public:
     enum { Float, Vec2, Vec3, Vec4, Mat2, Mat3, Mat4, Texture };
     
 public:
-    render_uniform(uniforms_t &&);
+    render_uniform(uniforms_t &&); // this might not be really useful...
     render_uniform(render_uniform* parent = nullptr);
-
-    // this could hardly be useful... but...
     render_uniform(std::initializer_list<init_t> const&, render_uniform* parent = nullptr);
+    render_uniform(render_uniform const& rhs) : _parent(nullptr)
+    { *this = rhs; }
     
-    //render_uniform(render_uniform const&); // TODO: copy
+    render_uniform& operator=(render_uniform const&);
     
     void set_vector(std::string const& name, float v) {
         set_vector<uniform_float>(name, v);
@@ -140,7 +147,7 @@ public:
     uniforms_t const& uniforms() const { return _uniforms; }
     
     // this only compares its own level
-    bool equal_to(render_uniform const&) const;
+    bool operator==(render_uniform const&) const;
   
     // TODO: hash code
 protected:

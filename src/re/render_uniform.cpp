@@ -43,16 +43,37 @@ render_uniform::render_uniform(uniforms_t&& uniforms)
 }
 
 
-bool render_uniform::equal_to(render_uniform const& rhs) const {
+bool render_uniform::operator==(render_uniform const& rhs) const {
     if(rhs.uniforms().size() != uniforms().size())
         return false;
     
-#if 0
-    // FIXME: not right...
     return std::mismatch(_uniforms.begin(), _uniforms.end(), rhs.uniforms().begin()).first == _uniforms.end();
-#else
-    return false;
-#endif
+}
+
+render_uniform& render_uniform::operator=(render_uniform const& rhs) {
+    _uniforms.clear();
+    for(auto& ptr : rhs._uniforms) {
+        auto it = *ptr.get();
+        if(typeid(it) == typeid(uniform_float)) {
+            _uniforms.emplace_back(new uniform_float(it.name(), static_cast<uniform_float const&>(it).value));
+        } else if(typeid(it) == typeid(uniform_mat2)) {
+            _uniforms.emplace_back(new uniform_mat2(it.name(), static_cast<uniform_mat2 const&>(it).value));
+        } else if(typeid(it) == typeid(uniform_mat3)) {
+            _uniforms.emplace_back(new uniform_mat3(it.name(), static_cast<uniform_mat3 const&>(it).value));
+        } else if(typeid(it) == typeid(uniform_mat4)) {
+            _uniforms.emplace_back(new uniform_mat4(it.name(), static_cast<uniform_mat4 const&>(it).value));
+        } else if(typeid(it) == typeid(uniform_vector2)) {
+            _uniforms.emplace_back(new uniform_vector2(it.name(), static_cast<uniform_vector2 const&>(it).value));
+        } else if(typeid(it) == typeid(uniform_vector3)) {
+            _uniforms.emplace_back(new uniform_vector3(it.name(), static_cast<uniform_vector3 const&>(it).value));
+        } else if(typeid(it) == typeid(uniform_vector4)) {
+            _uniforms.emplace_back(new uniform_vector4(it.name(), static_cast<uniform_vector4 const&>(it).value));
+        } else if(typeid(it) == typeid(uniform_texture)) {
+            _uniforms.emplace_back(new uniform_texture(it.name(), static_cast<uniform_texture const&>(it).value));
+        } else
+            assert(0); // not supported type?
+    }
+    return *this;
 }
 
 render_uniform::uniforms_t::iterator render_uniform::find(std::string const& name){

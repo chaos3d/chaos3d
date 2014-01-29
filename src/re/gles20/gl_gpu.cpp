@@ -235,10 +235,10 @@ void gl_gpu_program::bind(render_context* context, render_uniform const* uniform
         return;
     int unit = 0;
     uniform->apply_to([=, &unit] (render_uniform::uniform const& uniform) {
-        auto it = std::lower_bound(uniforms().begin(), uniforms().end(), uniform.name, [=] (gpu_program::uniform const&u, std::string const& name){
+        auto it = std::lower_bound(uniforms().begin(), uniforms().end(), uniform.name(), [=] (gpu_program::uniform const&u, std::string const& name){
             return u.name < name;
         });
-        if(it == uniforms().end() || it->name != uniform.name)
+        if(it == uniforms().end() || it->name != uniform.name())
             return;
         
         if(typeid(uniform) == typeid(render_uniform::uniform_texture)) {
