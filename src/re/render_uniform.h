@@ -110,6 +110,7 @@ public:
     render_uniform(std::initializer_list<init_t> const&, render_uniform* parent = nullptr);
     render_uniform(render_uniform const& rhs) : _parent(nullptr)
     { *this = rhs; }
+    render_uniform(render_uniform&& rhs) = default;
     
     render_uniform& operator=(render_uniform const&);
     

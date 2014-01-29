@@ -29,6 +29,7 @@ public:
     
 protected:
     void detach_all();
+    void assign_uniforms(render_context* context, render_uniform::uniforms_t const&);
     void update_uniform(uniform const&, render_uniform::uniform const&);
     void load_attributes();
     void load_uniforms();

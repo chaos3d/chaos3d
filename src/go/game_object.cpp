@@ -53,7 +53,7 @@ game_object* game_object::child_at(int idx) const {
     return child;
 }
 
-void game_object::pre_order(iterator_t const& iter) const{
+void game_object::pre_order(uint32_t mark, iterator_t const& iter) const{
     std::stack<game_object const*> nodes;
 #if 0
 	nodes.push(this);
@@ -84,6 +84,7 @@ void game_object::pre_order(iterator_t const& iter) const{
             nodes.pop();
             node = node->next_sibling();
         } else {
+            node->_mark = mark;
             iter(*node);
             nodes.emplace(node);
             node = node->first_child();

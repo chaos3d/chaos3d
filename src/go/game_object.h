@@ -76,7 +76,7 @@ public:
 	//void relocate_To(game_object* parent, game_object* after = 0);
 
     // transversal
-    void pre_order(iterator_t const&) const;
+    void pre_order(uint32_t mark, iterator_t const&) const;
     void post_order(iterator_t const&) const;
 
     
@@ -166,6 +166,9 @@ public:
         return _root;
     }
     
+    // being set during transversal
+    uint32_t mark() const { return _mark; }
+    
 private:
     // no copy/assignment?
     game_object(game_object const&) = delete;
@@ -176,6 +179,7 @@ private:
     size_t _child_size;
     
     uint32_t _flag;
+    mutable uint32_t _mark;
     
     std::string _tag;
     components_t _components;

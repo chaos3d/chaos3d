@@ -40,7 +40,7 @@ private:
         std::vector<game_object*> gos;
         gos.reserve(game_object::number_of_objects());
         
-        go->pre_order([&](game_object const& go) {
+        go->pre_order(_active_mark++, [&](game_object const& go) {
             // const cast here is fine since we would use it
             // after processing
             gos.emplace_back(const_cast<game_object*>(&go));
@@ -64,6 +64,7 @@ private:
     };
     
     mgrs_t _mgrs;
+    uint32_t _active_mark = 0;
 };
 
 component_manager::managers_t& component_manager::managers() {

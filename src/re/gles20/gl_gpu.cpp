@@ -228,26 +228,37 @@ void gl_gpu_program::update_uniform(uniform const& g_uniform, render_uniform::un
     }
 }
 
+void gl_gpu_program::assign_uniforms(render_context* context, render_uniform::uniforms_t const& rd_uniforms) {
+    auto rd_begin = rd_uniforms.begin(), rd_end = rd_uniforms.end();
+    auto gpu_begin = uniforms().begin(), gpu_end = uniforms().end();
+    int unit = 0;
+    
+    while (rd_begin != rd_end && gpu_begin != gpu_end) {
+        if (rd_begin->get()->name() < gpu_begin->name) {
+            ++rd_begin;
+        } else  {
+            if (!(gpu_begin->name < rd_begin->get()->name())) {
+                if(typeid(uniform) == typeid(render_uniform::uniform_texture)) {
+                    // TODO: sanity check, unit less than max units
+                    glUniform1i(gpu_begin->location, unit);
+                    context->set_texture(unit++,
+                                         static_cast<render_uniform::uniform_texture const&>(*rd_begin->get()).value);
+                } else
+                    update_uniform(*gpu_begin, *rd_begin->get());
+            }
+            ++gpu_begin;
+        }
+    }
+    
+}
+
 void gl_gpu_program::bind(render_context* context, render_uniform const* uniform) {
     glUseProgram(_program_id);
     
     if(!uniform)
         return;
-    int unit = 0;
-    uniform->apply_to([=, &unit] (render_uniform::uniform const& uniform) {
-        auto it = std::lower_bound(uniforms().begin(), uniforms().end(), uniform.name(), [=] (gpu_program::uniform const&u, std::string const& name){
-            return u.name < name;
-        });
-        if(it == uniforms().end() || it->name != uniform.name())
-            return;
-        
-        if(typeid(uniform) == typeid(render_uniform::uniform_texture)) {
-            // TODO: sanity check, unit less than max units
-            glUniform1i(it->location, unit);
-            context->set_texture(unit++, static_cast<render_uniform::uniform_texture const&>(uniform).value);
-        } else
-            update_uniform(*it, uniform);
-    });
+
+    assign_uniforms(context, uniform->uniforms());
 }
 
 void gl_gpu_program::unbind() {
