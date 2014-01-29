@@ -6,6 +6,7 @@
 #include "go/component_manager.h"
 #include "go/game_object.h"
 
+typedef Eigen::Vector2f vector2f;
 typedef Eigen::Vector3f vector3f;
 typedef Eigen::Affine3f affine3f;
 typedef Eigen::Translation3f translation3f;
@@ -26,6 +27,10 @@ namespace com {
         // transform the position local to this parent to the global space
         vector3f to_global(vector3f const& local) const {
             return _global_affine * local;
+        }
+        
+        vector3f to_global(vector2f const& local) const {
+            return _global_affine * vector3f(local.x(), local.y(), 0.f);
         }
         
         // transform from the position global to this parent to the local space

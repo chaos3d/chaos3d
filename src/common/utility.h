@@ -13,7 +13,9 @@
     private: type _##name; \
     public: type const& name () const { return _##name; } \
     public: type & name () { return _##name; } \
-    public: void set_##name (type const& name) { _##name = name; } 
+    public: void set_##name (type const& name) { _##name = name; } \
+    public: template<class... Types> void set_##name(Types&&... args) { \
+            _##name = type(std::forward<Types>(args)...); }
 
 template<class T, class... Args>
 std::unique_ptr<T> make_unique(Args&&... args) {

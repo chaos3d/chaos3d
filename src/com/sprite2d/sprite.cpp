@@ -37,12 +37,6 @@ void sprite::set_texture(texture *tex) {
     // TODO: get a new uniform
 }
 
-void sprite::fill_buffer(void*, com::transform* transform) const {
-    assert(transform != nullptr); // needs transform component
-    
-    transform->global();
-}
-
 void sprite::generate_batch(render_target *target, size_t batched) const{
     _data.buffer->layout->set_size(batched);
     target->add_batch({
@@ -122,7 +116,11 @@ void sprite_mgr::update(goes_t const& gos) {
         if(!com)
             continue;
         
-        com->fill_buffer(nullptr, it->get_component<com::transform>(transform_idx));
+        auto* transform = it->get_component<com::transform>(transform_idx);
+        if(!transform)
+            continue; // TODO: log
+        
+        com->fill_buffer(nullptr, *transform);
     }
 }
 
@@ -141,6 +139,7 @@ vertices_buffer* sprite_mgr::create_buffer(vertices_t const& layout) {
         it.buffer = buffer;
         it.stride = offset;
     }
+    offset = (offset + 3) & ~(0x3); // align to multiple of 4 bytes
     
     auto* indices = _device->create_index_buffer(Indices_Capacity, vertex_buffer::Stream);
     auto* vlayout = _device->create_layout(channels, vertex_layout::Triangles, indices);

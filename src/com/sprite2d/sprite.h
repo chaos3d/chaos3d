@@ -75,7 +75,7 @@ namespace sprite2d {
     protected:
         // fill the vertices into the buffer
         // one shouldn't use more than it requested
-        virtual void fill_buffer(void* buffer, com::transform*) const;
+        virtual void fill_buffer(void* buffer, com::transform const&) const = 0;
 
         // generate batch/batches
         //  batched is the number of indices being shared among
@@ -111,9 +111,12 @@ namespace sprite2d {
                 return type == rhs.type && count == rhs.type && name == rhs.name;
             }
         };
-        typedef std::unique_ptr<sprite_material> spt_mat_ptr;
         typedef std::vector<sprite_vertex> vertices_t;
         typedef std::vector<vertices_t> types_t;
+        typedef std::vector<vertex_layout*> buffers_t;
+        typedef std::vector<buffers_t> typed_buffers_t;
+
+        typedef std::unique_ptr<sprite_material> spt_mat_ptr;
         typedef std::vector<std::tuple<gpu_program*, const render_state*>> materials_t; // static material data
         typedef std::vector<spt_mat_ptr> sprite_materials_t;
         
@@ -132,6 +135,7 @@ namespace sprite2d {
         
         // vertices buffer
         vertices_buffer* request_buffer(uint32_t count, int = 0);
+        uint32_t request_buffer(sprite*, uint32_t count, int = 0);
         void release_buffer(vertices_buffer*);
         
         // add a vertice layout/type, returned value to be used
