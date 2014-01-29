@@ -3,7 +3,7 @@
 
 #include <vector>
 #include "go/component_manager.h"
-#include "com/render/renderable.h"
+#include "go/component.h"
 
 namespace com {
     class transform;
@@ -15,11 +15,13 @@ class vertex_layout;
 class vertex_index_buffer;
 class render_uniform;
 class render_state;
+class render_target;
 class gpu_program;
 class texture;
 
 namespace sprite2d {
     class sprite_mgr;
+    class camera2d;
 
     struct vertices_buffer {
         // probably we could create two buffers, one for static like uv
@@ -51,23 +53,34 @@ namespace sprite2d {
         
     public:
         sprite(game_object*, texture*);
-        ~sprite();
+        virtual ~sprite();
         
-        std::tuple<const void*, size_t> indics_buffer() const {
+        // buffer data
+        std::tuple<const void*, size_t> index_data() const {
             return std::make_tuple(_indices.data(), _indices.size());
         }
         
+        // batching operation
         bool batchable(sprite const& rhs) const {
             return std::memcmp(&rhs._data, & _data, sizeof(_data)) == 0;
         }
         
-        data_t const& data() const { return _data; }
-        
+        vertex_layout* layout() const { return _data.buffer->layout; }
+        vertex_index_buffer* index_buffer() const { return _data.buffer->indices; }
+
         void set_texture(texture*);
 
         //TODO: customized materials
+        
     protected:
-        virtual void fill_buffer(com::transform*);
+        // fill the vertices into the buffer
+        // one shouldn't use more than it requested
+        virtual void fill_buffer(void* buffer, com::transform*) const;
+
+        // generate batch/batches
+        //  batched is the number of indices being shared among
+        //  batchable sprites in the same vertices layout
+        virtual void generate_batch(render_target*, size_t batched) const;
 
     private:
         indices_t _indices;
@@ -76,7 +89,8 @@ namespace sprite2d {
         // uniform: texture, params, etc
         // raw vertices buffer
         
-        friend class sprite_mgr;
+        friend class sprite_mgr;    // fill_buffer
+        friend class camera2d;      // generate_batch
     };
     
     // sprite manager

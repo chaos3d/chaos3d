@@ -37,10 +37,18 @@ void sprite::set_texture(texture *tex) {
     // TODO: get a new uniform
 }
 
-void sprite::fill_buffer(com::transform* transform) {
+void sprite::fill_buffer(void*, com::transform* transform) const {
     assert(transform != nullptr); // needs transform component
     
     transform->global();
+}
+
+void sprite::generate_batch(render_target *target, size_t batched) const{
+    _data.buffer->layout->set_size(batched);
+    target->add_batch({
+        std::get<1>(*_data.material), std::get<2>(*_data.material),
+        _data.buffer->layout, std::get<0>(*_data.material)
+    });
 }
 
 #pragma mark - the manager
@@ -114,7 +122,7 @@ void sprite_mgr::update(goes_t const& gos) {
         if(!com)
             continue;
         
-        com->fill_buffer(it->get_component<com::transform>(transform_idx));
+        com->fill_buffer(nullptr, it->get_component<com::transform>(transform_idx));
     }
 }
 

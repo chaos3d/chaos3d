@@ -15,13 +15,12 @@ void camera2d::collect(const std::vector<game_object *> &goes) {
     const int idx = sprite_mgr::component_idx();
     auto it = goes.begin();
     auto* spt = (*it)->get_component<sprite>(idx);
-    vertex_layout* cur = spt->data().buffer->layout;
-    vertex_index_buffer* buffer = cur->index_buffer();
+    vertex_index_buffer* buffer = spt->index_buffer();
     
     const void* raw = nullptr;
     size_t raw_size = 0;
     
-    std::tie(raw, raw_size) = spt->indics_buffer();
+    std::tie(raw, raw_size) = spt->index_data();
     buffer->load(raw, 0, raw_size);
     size_t offset = raw_size;
 
@@ -30,34 +29,24 @@ void camera2d::collect(const std::vector<game_object *> &goes) {
         if(!next)
             continue;
         
-        if(next->batchable(*spt)) {
-            std::tie(raw, raw_size) = spt->indics_buffer();
-            buffer->load(raw, offset, raw_size);
-            offset += raw_size;
-        } else {
-            auto& data = spt->data();
-            cur->set_size(offset);
-            target()->add_batch({
-                std::get<1>(*data.material), std::get<2>(*data.material),
-                data.buffer->layout, std::get<0>(*data.material)
-            });
+        if(!next->batchable(*spt)) {
+            spt->generate_batch(target().get(), offset);
             
             spt = next;
-            cur = spt->data().buffer->layout;
-            buffer = cur->index_buffer();
-            
-            std::tie(raw, raw_size) = spt->indics_buffer();
-            offset = raw_size;
-            // TODO: alternative, use lock where applicable like iOS, also test performance
-            buffer->load(raw, 0, raw_size);
+            buffer = spt->index_buffer();
+            offset = 0;
+        } else { // in order to batch, at least ...
+            assert(next->index_buffer() == spt->index_buffer()); // index buffer has to be the same
+            assert(next->layout() == spt->layout()); // layout needs to be the same
         }
+        
+        std::tie(raw, raw_size) = next->index_data();
+        // TODO: alternative, use lock where applicable like iOS, also test performance
+        buffer->load(raw, offset, raw_size);
+        offset += raw_size;
     }
     
-    auto& data = spt->data();
-    target()->add_batch({
-        std::get<1>(*data.material), std::get<2>(*data.material),
-        data.buffer->layout, std::get<0>(*data.material)
-    });
+    spt->generate_batch(target().get(), offset);
     target()->set_batch_retained(false);
 }
 
