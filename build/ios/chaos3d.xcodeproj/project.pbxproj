@@ -40,6 +40,7 @@
 		883246C9183237220022EA4A /* render_device.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 883246B5183237220022EA4A /* render_device.cpp */; };
 		883246CC183A01730022EA4A /* vertex_buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 883246CA183A01730022EA4A /* vertex_buffer.cpp */; };
 		883246CF183CC04C0022EA4A /* render_target.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 883246CD183CC04C0022EA4A /* render_target.cpp */; };
+		8882D8D218990BD900B00DCD /* quad_sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8882D8D018990BD800B00DCD /* quad_sprite.cpp */; };
 		88A84AD01830652F009F7ECD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88A84ACF1830652F009F7ECD /* Foundation.framework */; };
 		88A84ADE1830652F009F7ECD /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88A84ADD1830652F009F7ECD /* XCTest.framework */; };
 		88A84ADF1830652F009F7ECD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88A84ACF1830652F009F7ECD /* Foundation.framework */; };
@@ -478,6 +479,8 @@
 		883246CB183A01730022EA4A /* vertex_buffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vertex_buffer.h; sourceTree = "<group>"; };
 		883246CD183CC04C0022EA4A /* render_target.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = render_target.cpp; sourceTree = "<group>"; };
 		883246CE183CC04C0022EA4A /* render_target.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = render_target.h; sourceTree = "<group>"; };
+		8882D8D018990BD800B00DCD /* quad_sprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = quad_sprite.cpp; sourceTree = "<group>"; };
+		8882D8D118990BD900B00DCD /* quad_sprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = quad_sprite.h; sourceTree = "<group>"; };
 		88A84ACC1830652F009F7ECD /* libchaos3d.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libchaos3d.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		88A84ACF1830652F009F7ECD /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		88A84ADC1830652F009F7ECD /* chaos3dTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = chaos3dTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -539,6 +542,8 @@
 			children = (
 				880BA329189654A6002542E2 /* camera2d.cpp */,
 				880BA32A189654A6002542E2 /* camera2d.h */,
+				8882D8D018990BD800B00DCD /* quad_sprite.cpp */,
+				8882D8D118990BD900B00DCD /* quad_sprite.h */,
 				880BA32B189654A6002542E2 /* sprite.cpp */,
 				880BA32C189654A6002542E2 /* sprite.h */,
 			);
@@ -1517,6 +1522,7 @@
 				8812C29B185EF887001C4D0B /* asset_locator.cpp in Sources */,
 				882762111870F9E600B1291B /* gl_gpu.cpp in Sources */,
 				8812C2D518683BE0001C4D0B /* render_utility2d.cpp in Sources */,
+				8882D8D218990BD900B00DCD /* quad_sprite.cpp in Sources */,
 				883246CC183A01730022EA4A /* vertex_buffer.cpp in Sources */,
 				880BA32D189654A6002542E2 /* camera2d.cpp in Sources */,
 				882762211873945A00B1291B /* gl_context.mm in Sources */,
@@ -1551,7 +1557,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -1598,7 +1603,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -1678,7 +1682,6 @@
 		88A84AF31830652F009F7ECD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -1699,7 +1702,6 @@
 		88A84AF41830652F009F7ECD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
