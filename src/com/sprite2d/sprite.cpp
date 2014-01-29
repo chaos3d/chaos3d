@@ -17,7 +17,7 @@ sprite::sprite(game_object* go, texture* tex)
     _data.buffer = sprite_mgr::instance().request_buffer(4);
     //auto tex_uniform = render_uniform::uniform_texture(tex);
     std::unique_ptr<render_uniform> uniform(new render_uniform({
-        {"tex1", render_uniform::uniform_texture(tex)},
+        make_uniform("tex1", tex),
     }));
     _data.material = sprite_mgr::instance().get_material(uniform);
 #endif

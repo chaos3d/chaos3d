@@ -25,4 +25,24 @@ template<int ...> struct tuple_seq { };
 template<int N, int ...S> struct tuple_gens : tuple_gens<N-1, N-1, S...> { };
 template<int ...S> struct tuple_gens<0, S...> { typedef tuple_seq<S...> type; };
 
+// get the index of a type in a tuplle
+template<int Index, class Search, class First, class... Types>
+struct tuple_get_index
+{
+    typedef typename tuple_get_index<Index + 1, Search, Types...>::type type;
+    static constexpr int index = Index;
+};
+
+template<int Index, class Search, class... Types>
+struct tuple_get_index<Index, Search, Search, Types...>
+{
+    typedef tuple_get_index type;
+    static constexpr int index = Index;
+};
+
+template<class T, class... Types>
+T tuple_get(std::tuple<Types...> const& tuple)
+{
+    return std::get<tuple_get_index<0,T,Types...>::type::index>(tuple);
+}
 #endif
