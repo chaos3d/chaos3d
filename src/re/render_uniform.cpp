@@ -80,10 +80,10 @@ std::pair<bool, bool> render_uniform::contains(render_uniform const& rhs) const 
     bool value_equal = true;
     return std::make_pair(std::includes(_uniforms.begin(), _uniforms.end(),
                                         rhs.uniforms().begin(), rhs.uniforms().end(),
-                                        [&value_equal] (uniform const& lhs, uniform const& rhs) {
-                                            int ret = lhs.name().compare(rhs.name());
+                                        [&value_equal] (uniform_ptr const& lhs, uniform_ptr const& rhs) {
+                                            int ret = lhs->name().compare(rhs->name());
                                             if(ret == 0 && value_equal) {
-                                                value_equal = lhs.data_equal(rhs);
+                                                value_equal = lhs->data_equal(*rhs);
                                             }
                                             return ret < 0;
                                         }),
