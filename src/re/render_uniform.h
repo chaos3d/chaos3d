@@ -35,6 +35,14 @@ public:
                         size()) == 0 &&
             name() == lhs.name();
         }
+        
+        bool data_equal(uniform const& rhs) const {
+            return size() == rhs.size() && typeid(*this) == typeid(rhs) &&
+            std::memcmp(reinterpret_cast<char const*>(&_size) + sizeof(_size),
+                               reinterpret_cast<char const*>(&rhs._size) + sizeof(_size),
+                               size()) == 0;
+        }
+        
         std::string const& name() const {return _name; }
         size_t size() const { return _size; }
     private:
@@ -113,6 +121,10 @@ public:
     render_uniform(render_uniform&& rhs) = default;
     
     render_uniform& operator=(render_uniform const&);
+    
+    // whether the two contain the uniforms with the same name
+    // and the same value
+    std::pair<bool, bool> contains(render_uniform const&) const;
     
     void set_vector(std::string const& name, float v) {
         set_vector<uniform_float>(name, v);

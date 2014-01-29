@@ -76,6 +76,20 @@ render_uniform& render_uniform::operator=(render_uniform const& rhs) {
     return *this;
 }
 
+std::pair<bool, bool> render_uniform::contains(render_uniform const& rhs) const {
+    bool value_equal = true;
+    return std::make_pair(std::includes(_uniforms.begin(), _uniforms.end(),
+                                        rhs.uniforms().begin(), rhs.uniforms().end(),
+                                        [&value_equal] (uniform const& lhs, uniform const& rhs) {
+                                            int ret = lhs.name().compare(rhs.name());
+                                            if(ret == 0 && value_equal) {
+                                                value_equal = lhs.data_equal(rhs);
+                                            }
+                                            return ret < 0;
+                                        }),
+                          value_equal);
+}
+
 render_uniform::uniforms_t::iterator render_uniform::find(std::string const& name){
     return std::lower_bound(_uniforms.begin(), _uniforms.end(), name,
                             [] (std::unique_ptr<uniform> const& u, std::string const& name) {
