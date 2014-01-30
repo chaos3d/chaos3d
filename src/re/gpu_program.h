@@ -58,7 +58,8 @@ public:
     
     typedef std::vector<channel> channels_t;
     typedef std::vector<uniform> uniforms_t;
-
+    typedef std::shared_ptr<gpu_program> ptr;
+    
 public:
     virtual ~gpu_program() {};
     

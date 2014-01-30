@@ -22,7 +22,7 @@ public:
     typedef std::vector<buffer_channel> buffer_channels_t;
     
 public:
-    gl_vertex_layout(channels_t const&, uint8_t mode, vertex_index_buffer*);
+    gl_vertex_layout(channels_t&&, uint8_t mode, vertex_index_buffer::ptr&&);
     virtual ~gl_vertex_layout();
     
     virtual void draw(render_context*) override;

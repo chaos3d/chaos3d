@@ -1,15 +1,18 @@
 #ifndef _VERTEX_BUFFER_H
 #define _VERTEX_BUFFER_H
 
-#include <vector>
-#include <unordered_map>
+#include "common/referenced_count.h"
+#include <memory>
 
 class gpu_program;
 
-class vertex_buffer {
+class vertex_buffer : public referenced_count {
 public:
     enum { Static, Dynamic, Stream };
-
+    
+    typedef std::unique_ptr<vertex_buffer, referenced_count::release_deleter> ptr;
+    typedef std::unique_ptr<vertex_buffer const, referenced_count::release_deleter> const_ptr;
+    
 public:
     vertex_buffer(size_t size, int type);
     virtual ~vertex_buffer() {};
@@ -33,12 +36,19 @@ private:
 // which can be interleaved
 class vertex_data_buffer : public vertex_buffer {
 public:
+    typedef std::unique_ptr<vertex_data_buffer, referenced_count::release_deleter> ptr;
+    typedef std::unique_ptr<vertex_data_buffer const, referenced_count::release_deleter> const_ptr;
+    
+public:
     vertex_data_buffer(size_t size, int type);
     virtual ~vertex_data_buffer() {};
-    
 };
 
 class vertex_index_buffer : public vertex_buffer {
+public:
+    typedef std::unique_ptr<vertex_index_buffer, referenced_count::release_deleter> ptr;
+    typedef std::unique_ptr<vertex_index_buffer const, referenced_count::release_deleter> const_ptr;
+    
 public:
     vertex_index_buffer(size_t size, int type);
     virtual ~vertex_index_buffer() {};

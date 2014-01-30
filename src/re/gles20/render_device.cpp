@@ -6,12 +6,12 @@ namespace gles20 {
         return new gl_texture(size, attr);
     }
 
-    gl_vertex_buffer* render_device::create_buffer(size_t size, int type) {
-        return new gl_vertex_buffer(size, type);
+    vertex_buffer::ptr render_device::create_buffer(size_t size, int type) {
+        return gl_vertex_buffer::ptr(new gl_vertex_buffer(size, type));
     }
     
-    gl_vertex_index_buffer* render_device::create_index_buffer(size_t size, int type) {
-        return new gl_vertex_index_buffer(size, type);
+    vertex_index_buffer::ptr render_device::create_index_buffer(size_t size, int type) {
+        return gl_vertex_index_buffer::ptr(new gl_vertex_index_buffer(size, type));
     }
 
     gl_gpu_program* render_device::create_program() {
@@ -22,9 +22,10 @@ namespace gles20 {
         return new gl_gpu_shader(type);
     }
     
-    gl_vertex_layout* render_device::create_layout(vertex_layout::channels_t const& channels,
-                                                uint8_t mode, vertex_index_buffer* idx_buffer){
-        return new gl_vertex_layout(channels, mode, idx_buffer);
+    vertex_layout::ptr create_layout(vertex_layout::channels_t&& channels,
+                                     vertex_index_buffer::ptr&&idx_buffer, uint8_t mode) {
+        return vertex_layout::ptr(new gl_vertex_layout(std::move(channels),
+                                                       mode, std::move(idx_buffer)));
     }
 
 }

@@ -41,7 +41,7 @@ void sprite::generate_batch(render_target *target, size_t batched) const{
     _data.buffer->layout->set_size(batched);
     target->add_batch({
         std::get<1>(*_data.material), std::get<2>(*_data.material),
-        _data.buffer->layout, std::get<0>(*_data.material)
+        _data.buffer->layout.get(), std::get<0>(*_data.material)
     });
 }
 
@@ -134,16 +134,17 @@ vertices_buffer* sprite_mgr::create_buffer(vertices_t const& layout) {
         offset += vertex_layout::type_size(it.type) * it.count;
     }
     
-    auto* buffer = _device->create_buffer(Vertex_Capacity * offset, vertex_buffer::Dynamic);
+    auto buffer = _device->create_buffer(Vertex_Capacity * offset, vertex_buffer::Dynamic);
     for(auto& it : channels) {
-        it.buffer = buffer;
+        it.buffer = buffer->retain<vertex_buffer>();
         it.stride = offset;
     }
     offset = (offset + 3) & ~(0x3); // align to multiple of 4 bytes
     
-    auto* indices = _device->create_index_buffer(Indices_Capacity, vertex_buffer::Stream);
-    auto* vlayout = _device->create_layout(channels, vertex_layout::Triangles, indices);
-    return new vertices_buffer({vlayout, indices});
+    auto vlayout = _device->create_layout(std::move(channels),
+                                           _device->create_index_buffer(Indices_Capacity, vertex_buffer::Stream),
+                                           vertex_layout::Triangles);
+    return new vertices_buffer({std::move(vlayout), vlayout->index_buffer()});
 }
 
 vertices_buffer* sprite_mgr::request_buffer(uint32_t count, int type_idx) {

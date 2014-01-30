@@ -15,7 +15,7 @@ void camera2d::collect(const std::vector<game_object *> &goes) {
     const int idx = sprite_mgr::component_idx();
     auto it = goes.begin();
     auto* spt = (*it)->get_component<sprite>(idx);
-    vertex_index_buffer* buffer = spt->index_buffer();
+    auto buffer = spt->index_buffer();
     
     const void* raw = nullptr;
     size_t raw_size = 0;

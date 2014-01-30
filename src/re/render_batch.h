@@ -59,7 +59,7 @@ public:
 private:
     sort_key _sort_key;
     
-    vertex_layout* _layout;
+    vertex_layout* _layout; // FIXME: use layout::ptr
     gpu_program* _program;
     const render_state* _state;
     const render_uniform* _uniform;

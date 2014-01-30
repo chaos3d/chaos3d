@@ -15,8 +15,8 @@ static GLenum _type_map [] = {
     GL_FLOAT,           // Float
 };
 
-gl_vertex_layout::gl_vertex_layout(channels_t const& channels, uint8_t mode, vertex_index_buffer* buffer)
-: vertex_layout(channels, mode, buffer)
+gl_vertex_layout::gl_vertex_layout(channels_t&& channels, uint8_t mode, vertex_index_buffer::ptr&& buffer)
+: vertex_layout(std::move(channels), std::move(buffer), mode)
 {
     build_buffers();
     create_vao();
@@ -37,7 +37,7 @@ void gl_vertex_layout::draw(render_context *context) {
     if(index_buffer()) {
         assert(typeid(*index_buffer()) == typeid(gl_vertex_index_buffer));
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,
-                     static_cast<gl_vertex_index_buffer*>(index_buffer())->buffer_id());
+                     static_cast<gl_vertex_index_buffer*>(index_buffer_raw())->buffer_id());
         glDrawElements(_mode_map[mode()], size(), GL_UNSIGNED_SHORT, NULL); // FIXME: index type
     } else {
         glDrawArrays(_mode_map[mode()], 0, size());
@@ -77,7 +77,7 @@ void gl_vertex_layout::build_buffers() {
     _buffers.reserve(channels().size());
     int idx = 0;
     for(auto& it : channels()) {
-        _buffers.emplace_back(it.buffer, idx++);
+        _buffers.emplace_back(it.buffer.get(), idx++);
     }
     
     std::sort(_buffers.begin(), _buffers.end(), [=] (buffer_channel const& lhs, buffer_channel const rhs) {

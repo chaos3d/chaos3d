@@ -51,7 +51,7 @@ enum AutoreleasePolicy{
 class referenced_count{
 public:
     struct release_deleter {
-        void operator()(referenced_count* obj) const {
+        void operator()(referenced_count const* obj) const {
             obj->release();
         }
     };
@@ -59,11 +59,25 @@ public:
 	referenced_count() : _ref_count( 1 ) {};
 	virtual ~referenced_count() {};
 
-	void retain() {
-	   	++ _ref_count; 
+    template<class T,
+    typename std::enable_if<std::is_base_of<referenced_count, T>::value>::type* = nullptr>
+    std::unique_ptr<T const, referenced_count::release_deleter> retain() const {
+	   	++ _ref_count;
+        return std::unique_ptr<T const, referenced_count::release_deleter>(static_cast<T*>(this));
 	};
 
-	void release() {
+    template<class T,
+    typename std::enable_if<std::is_base_of<referenced_count, T>::value>::type* = nullptr>
+    std::unique_ptr<T, referenced_count::release_deleter> retain() {
+	   	++ _ref_count;
+        return std::unique_ptr<T, referenced_count::release_deleter>(static_cast<T*>(this));
+	};
+    
+    void retain() const {
+	   	++ _ref_count;
+    }
+
+	void release() const {
 		assert( _ref_count > 0 );
 		
 		if( -- _ref_count == 0 )
@@ -71,18 +85,21 @@ public:
 	}
 
 	int ref_count() const { return _ref_count; };
-
+    bool unique() const { return _ref_count == 0; }
+    
 private:
-	int _ref_count;
+	mutable int _ref_count;
 };
 
 template<class T, class... Args>
 std::unique_ptr<T, referenced_count::release_deleter> make_unique_ref(Args&&... args) {
+    static_assert(std::is_base_of<referenced_count, T>::value, "T is not derived from referenced_count");
     return std::unique_ptr<T, referenced_count::release_deleter>(new T(std::forward<Args>(args)...));
 }
 
 template<class T, class... Args>
 std::shared_ptr<T> make_shared_ref(Args&&... args) {
+    static_assert(std::is_base_of<referenced_count, T>::value, "T is not derived from referenced_count");
     return std::shared_ptr<T>(new T(std::forward<Args>(args)...), referenced_count::release_deleter());
 }
 

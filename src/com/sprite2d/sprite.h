@@ -4,6 +4,7 @@
 #include <vector>
 #include "go/component_manager.h"
 #include "go/component.h"
+#include "re/vertex_layout.h"
 
 namespace com {
     class transform;
@@ -11,7 +12,6 @@ namespace com {
 
 // TODO: in forward declare headers
 class render_device;
-class vertex_layout;
 class vertex_index_buffer;
 class render_uniform;
 class render_state;
@@ -26,8 +26,8 @@ namespace sprite2d {
     struct vertices_buffer {
         // probably we could create two buffers, one for static like uv
         // and one for dynamic like position
-        vertex_layout* layout;
-        vertex_index_buffer* indices; // the bound indice buffer
+        vertex_layout::ptr layout;
+        vertex_index_buffer::ptr indices; // the bound indice buffer
     };
     
     // TODO: mutable uniforms per sprite, how?
@@ -65,8 +65,13 @@ namespace sprite2d {
             return std::memcmp(&rhs._data, & _data, sizeof(_data)) == 0;
         }
         
-        vertex_layout* layout() const { return _data.buffer->layout; }
-        vertex_index_buffer* index_buffer() const { return _data.buffer->indices; }
+        vertex_layout::ptr layout() const {
+            return _data.buffer->layout->retain<vertex_layout>();
+        }
+        
+        vertex_index_buffer::ptr index_buffer() const {
+            return _data.buffer->indices->retain<vertex_index_buffer>();
+        }
 
         void set_texture(texture*);
 
@@ -99,6 +104,7 @@ namespace sprite2d {
     //  manage the materials
     class sprite_mgr : public component_manager_base<sprite_mgr> {
     public:
+        // 1 bit, dirty bound/frame
         typedef std::integral_constant<uint32_t, 1> flag_bit_t;
         
         // this can be esculated to the generic mgr
@@ -111,6 +117,15 @@ namespace sprite2d {
                 return type == rhs.type && count == rhs.type && name == rhs.name;
             }
         };
+        
+        // batching layout
+        class layout_buffer {
+        public:
+            
+        private:
+            vertex_layout::ptr _layout;
+        };
+        
         typedef std::vector<sprite_vertex> vertices_t;
         typedef std::vector<vertices_t> types_t;
         typedef std::vector<vertex_layout*> buffers_t;

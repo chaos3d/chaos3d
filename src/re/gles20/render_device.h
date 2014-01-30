@@ -34,10 +34,10 @@ public:
     virtual gl_gpu_shader* create_shader(int type) override;
 
     // create a single multi-channel vertex buffer
-    virtual gl_vertex_buffer* create_buffer(size_t size, int type) override;
-    virtual gl_vertex_index_buffer* create_index_buffer(size_t size, int type) override;
-    virtual gl_vertex_layout* create_layout(vertex_layout::channels_t const&,
-                                         uint8_t mode, vertex_index_buffer*) override;
+    virtual vertex_buffer::ptr create_buffer(size_t size, int type) override;
+    virtual vertex_index_buffer::ptr create_index_buffer(size_t size, int type) override;
+    virtual vertex_layout::ptr create_layout(vertex_layout::channels_t&&,
+                                             vertex_index_buffer::ptr&&, uint8_t mode) override;
     
 
 private:

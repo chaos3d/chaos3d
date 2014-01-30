@@ -60,16 +60,16 @@ public:
     virtual render_window* create_window(render_target::target_size_t const&,
                                          render_window::window_pos_t const& pos = render_window::window_pos_t(0.f,0.f)) = 0;
     
-    virtual vertex_layout* create_layout(vertex_layout::channels_t const&,
-                                         uint8_t mode, vertex_index_buffer*) = 0;
+    virtual vertex_layout::ptr create_layout(vertex_layout::channels_t&&,
+                                             vertex_index_buffer::ptr&&, uint8_t mode) = 0;
 
     // shaders
     virtual gpu_program* create_program() = 0;
     virtual gpu_shader* create_shader(int type) = 0;
     
     // create a single multi-channel vertex buffer
-    virtual vertex_buffer* create_buffer(size_t size, int type) = 0;
-    virtual vertex_index_buffer* create_index_buffer(size_t size, int type) = 0;
+    virtual vertex_buffer::ptr create_buffer(size_t size, int type) = 0;
+    virtual vertex_index_buffer::ptr create_index_buffer(size_t size, int type) = 0;
 
     // helper method for GP
     template<class T> void release(T* obj);
