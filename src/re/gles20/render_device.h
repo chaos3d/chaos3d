@@ -23,7 +23,7 @@ public:
     virtual bool init_context() override;
     virtual render_context* create_context() override; // TODO: thread-safe
     
-    virtual gl_texture* create_texture(texture::vector2i const&, texture::attribute_t const&) override;
+    virtual texture::ptr create_texture(texture::vector2i const&, texture::attribute_t const&) override;
     virtual render_texture* create_render_texture() override;
     virtual render_window* create_window(render_target::target_size_t const&,
                                          render_window::window_pos_t const&) override;
@@ -36,15 +36,15 @@ public:
     // create a single multi-channel vertex buffer
     virtual vertex_buffer::ptr create_buffer(size_t size, int type) override;
     virtual vertex_index_buffer::ptr create_index_buffer(size_t size, int type) override;
+
     virtual vertex_layout::ptr create_layout(vertex_layout::channels_t&&,
                                              vertex_index_buffer::ptr&&, uint8_t mode) override;
     
 
 private:
-#if defined(__OBJC__)
-    EAGLSharegroup* _sharegroup;
-#else
-#endif
+    struct internal;
+    
+    std::unique_ptr<internal> _internal;
 };
 
 }

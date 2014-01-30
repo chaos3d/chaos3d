@@ -9,7 +9,7 @@ render_target::render_target(target_size_t const& size)
 }
 
 void render_target::add_batch(render_batch::batch_t const&batch) {
-    _batches.push_back(batch);
+    _batches.emplace_back(batch);
 }
 
 void render_target::do_render(render_context* context) {

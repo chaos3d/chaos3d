@@ -15,7 +15,7 @@ static GLenum _type_map [] = {
     GL_FLOAT,           // Float
 };
 
-gl_vertex_layout::gl_vertex_layout(channels_t&& channels, uint8_t mode, vertex_index_buffer::ptr&& buffer)
+gl_vertex_layout::gl_vertex_layout(channels_t&& channels, vertex_index_buffer::ptr&& buffer, uint8_t mode)
 : vertex_layout(std::move(channels), std::move(buffer), mode)
 {
     build_buffers();
@@ -30,11 +30,11 @@ void gl_vertex_layout::delete_vao() {
     glDeleteVertexArraysOES(1, &_vao_id);
 }
 
-void gl_vertex_layout::draw(render_context *context) {
+void gl_vertex_layout::draw(render_context *context) const{
     context->apply();
     bind_vao();
     
-    if(index_buffer()) {
+    if(index_buffer_raw()) {
         assert(typeid(*index_buffer()) == typeid(gl_vertex_index_buffer));
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,
                      static_cast<gl_vertex_index_buffer*>(index_buffer_raw())->buffer_id());
@@ -46,7 +46,7 @@ void gl_vertex_layout::draw(render_context *context) {
     assert(glGetError() == GL_NO_ERROR);
 }
 
-void gl_vertex_layout::bind_vao() {
+void gl_vertex_layout::bind_vao() const {
     glBindVertexArrayOES(_vao_id);
 }
 

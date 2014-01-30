@@ -22,16 +22,16 @@ public:
     typedef std::vector<buffer_channel> buffer_channels_t;
     
 public:
-    gl_vertex_layout(channels_t&&, uint8_t mode, vertex_index_buffer::ptr&&);
+    gl_vertex_layout(channels_t&&, vertex_index_buffer::ptr&&, uint8_t mode);
     virtual ~gl_vertex_layout();
     
-    virtual void draw(render_context*) override;
+    virtual void draw(render_context*) const override;
     
 protected:
     void create_vao();
     void delete_vao();
     void build_buffers();
-    void bind_vao();
+    void bind_vao() const;
     
 private:
     GLuint _vao_id;

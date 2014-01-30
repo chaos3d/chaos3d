@@ -8,6 +8,10 @@
 
 namespace gles20 {
 
+struct render_device::internal {
+    EAGLSharegroup* sharegroup;
+};
+
 ::render_device* create_device() {
     return new render_device();
 }
@@ -17,7 +21,7 @@ render_device::~render_device() {
 }
 
 render_device::render_device() :
-    _sharegroup(nil) {
+    _internal(new internal({nullptr})) {
 }
     
 bool render_device::init_context() {
@@ -25,23 +29,25 @@ bool render_device::init_context() {
     if([EAGLContext currentContext] != nil)
         return true;
     
-    EAGLContext* context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2 sharegroup: _sharegroup];
+    EAGLContext* context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2
+                                                 sharegroup: _internal->sharegroup];
     
     if(context == nil)
         return false;
     
-    _sharegroup = context.sharegroup;
+    _internal->sharegroup = context.sharegroup;
     [EAGLContext setCurrentContext: context];
     return true;
 }
 
 render_context* render_device::create_context() {
-    EAGLContext* context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2 sharegroup: _sharegroup];
+    EAGLContext* context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2
+                                                 sharegroup: _internal->sharegroup];
     
     if(context == nil)
         return nullptr;
     
-    _sharegroup = context.sharegroup;
+    _internal->sharegroup = context.sharegroup;
     
     [EAGLContext setCurrentContext: context];
     GLint texture_units = 0;

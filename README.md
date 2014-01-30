@@ -2,9 +2,13 @@ chaos3d
 =======
 
 ### Memory Management
-* Returning pointers will give up the ownership unless specified otherwise
-* Passing pointers will still have the ownership unless specified otherwise
-* Objects crossing boundaries should use shared\_ptr if not referenced counting
+* Use unique\_ptr and shared\_ptr wherever possible  
+  unique\_ptr\<referenced\_count\> uses referenced\_count::release\_deleter
+* Returning pointers shall be prevented  
+  it will however not release the ownership; it might be only available within the caller's scope
+* Use move semantics to pass pointers; const pointers (T \*const) can be used, indicating the callee will not be able to take over the onwership, that is, (T \*) is *disallowed*.
+* Reference-counted objects should use unique\_ptr instead of shared\_ptr; because of C++'s RAII, it naturally solves auto-releasing issue
+* Objects shall define type _ptr_ and const\_ptr
 
 ### Layer
 * io

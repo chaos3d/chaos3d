@@ -59,6 +59,10 @@ public:
 	referenced_count() : _ref_count( 1 ) {};
 	virtual ~referenced_count() {};
 
+    // no need to move
+    referenced_count(referenced_count&& rhs) = delete;
+    referenced_count& operator=(referenced_count&& rhs) = delete;
+    
     template<class T,
     typename std::enable_if<std::is_base_of<referenced_count, T>::value>::type* = nullptr>
     std::unique_ptr<T const, referenced_count::release_deleter> retain() const {

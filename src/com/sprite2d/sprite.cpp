@@ -40,8 +40,10 @@ void sprite::set_texture(texture *tex) {
 void sprite::generate_batch(render_target *target, size_t batched) const{
     _data.buffer->layout->set_size(batched);
     target->add_batch({
-        std::get<1>(*_data.material), std::get<2>(*_data.material),
-        _data.buffer->layout.get(), std::get<0>(*_data.material)
+        _data.buffer->layout->retain<vertex_layout const>(),
+        std::get<2>(*_data.material),
+        std::get<1>(*_data.material),
+        std::get<0>(*_data.material)
     });
 }
 
@@ -89,16 +91,14 @@ sprite_mgr::~sprite_mgr() {
     
 }
 
-sprite_material* sprite_mgr::get_material(std::unique_ptr<render_uniform>&& uniform, int type) {
+sprite_material* sprite_mgr::get_material(render_uniform::const_ptr const& uniform, int type) {
     assert(type >= 0 && type < _materials.size());
     auto& mat = _materials[type];
     auto it = std::find_if(_sprite_materials.begin(), _sprite_materials.end(), [&] (spt_mat_ptr const& mat) {
         return *std::get<2>(*mat) == (*uniform);
     });
     if(it == _sprite_materials.end()) {
-        auto* spt = new sprite_material(std::tuple_cat(mat,
-                                                       std::make_tuple(uniform.release())
-                                                       ));
+        auto* spt = new sprite_material(std::get<0>(mat), std::get<1>(mat), uniform);
         _sprite_materials.emplace_back(spt);
         return _sprite_materials.back().get();
     }else

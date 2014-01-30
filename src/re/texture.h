@@ -1,9 +1,15 @@
 #ifndef _TEXTURE_H
 #define _TEXTURE_H
 
+#include <memory>
 #include <Eigen/Dense>
+#include "common/referenced_count.h"
 
-class texture{
+class texture : public referenced_count {
+public:
+    typedef std::unique_ptr<texture, referenced_count::release_deleter> ptr;
+    typedef std::unique_ptr<texture const, referenced_count::release_deleter> const_ptr;
+    
 public:
     typedef Eigen::Vector2i vector2i;
     

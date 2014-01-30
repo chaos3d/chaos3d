@@ -1,9 +1,9 @@
 #include "re/gles20/render_device.h"
 
 namespace gles20 {
-    gl_texture* render_device::create_texture(texture::vector2i const&size,
+    texture::ptr render_device::create_texture(texture::vector2i const&size,
                                               texture::attribute_t const&attr) {
-        return new gl_texture(size, attr);
+        return texture::ptr(new gl_texture(size, attr));
     }
 
     vertex_buffer::ptr render_device::create_buffer(size_t size, int type) {
@@ -22,10 +22,11 @@ namespace gles20 {
         return new gl_gpu_shader(type);
     }
     
-    vertex_layout::ptr create_layout(vertex_layout::channels_t&& channels,
-                                     vertex_index_buffer::ptr&&idx_buffer, uint8_t mode) {
+    vertex_layout::ptr render_device::create_layout(vertex_layout::channels_t&& channels,
+                                                    vertex_index_buffer::ptr&&idx_buffer,
+                                                    uint8_t mode) {
         return vertex_layout::ptr(new gl_vertex_layout(std::move(channels),
-                                                       mode, std::move(idx_buffer)));
+                                                       std::move(idx_buffer), mode));
     }
 
 }

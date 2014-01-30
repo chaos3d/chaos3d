@@ -3,8 +3,8 @@
 
 #include <Eigen/Dense>
 #include <vector>
+#include "re/texture.h"
 
-class texture;
 class gpu_program;
 
 // a.k.a render_parameter/render_environment
@@ -17,12 +17,15 @@ public:
     typedef Eigen::Vector2f vector2f;
     typedef Eigen::Vector3f vector3f;
     typedef Eigen::Vector4f vector4f;
-    typedef std::unique_ptr<render_uniform> ptr;
+    typedef std::shared_ptr<render_uniform> ptr;
+    typedef std::shared_ptr<render_uniform const> const_ptr;
     
     struct uniform {
         uniform(std::string const& name, size_t size)
         : _name(name), _size(size)
         {}
+        
+        virtual ~uniform() {};
         
         bool operator<(uniform const& rhs) const {
             return name() < rhs.name();
@@ -46,12 +49,33 @@ public:
         std::string const& name() const {return _name; }
         size_t size() const { return _size; }
     private:
-        std::string _name; size_t _size;
+        std::string _name; size_t _size; // FIXME: might need a data pointer because of non-POD?
     };
     
     struct uniform_texture : public uniform {
         uniform_texture(std::string const&name, texture* v)
-        : uniform(name, sizeof(texture*)), value(v) {};
+        : uniform(name, sizeof(texture*)), value(v)
+        { value->retain(); };
+        
+        uniform_texture(uniform_texture const& rhs)
+        : uniform_texture(rhs.name(), rhs.value)
+        { value->retain(); };
+        
+        uniform_texture& operator=(uniform_texture const& rhs)
+        {
+            uniform::operator=(rhs);
+            value = rhs.value;
+            value->retain();
+            return *this;
+        };
+        
+        uniform_texture(uniform_texture&&) = default;
+        uniform_texture& operator=(uniform_texture&&) = default;
+        
+        virtual ~uniform_texture() {
+            value->release();
+        }
+        
         texture* value;
     };
     
@@ -113,12 +137,13 @@ public:
     enum { Float, Vec2, Vec3, Vec4, Mat2, Mat3, Mat4, Texture };
     
 public:
-    render_uniform(uniforms_t &&); // this might not be really useful...
+    render_uniform(uniforms_t &&); // this might not be really useful or even wrong...
     render_uniform(render_uniform* parent = nullptr);
     render_uniform(std::initializer_list<init_t> const&, render_uniform* parent = nullptr);
     render_uniform(render_uniform const& rhs) : _parent(nullptr)
     { *this = rhs; }
     render_uniform(render_uniform&& rhs) = default;
+    render_uniform& operator=(render_uniform&&) = default;
     
     render_uniform& operator=(render_uniform const&);
     
@@ -182,6 +207,10 @@ private:
     render_uniform* _parent;
     uniforms_t _uniforms;
 };
+
+inline render_uniform::ptr make_uniforms_ptr(std::initializer_list<render_uniform::init_t> const& list) {
+    return render_uniform::ptr(new render_uniform(list));
+}
 
 // helper function to initialize the uniforms
 template<class U, class... Args>
