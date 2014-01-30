@@ -76,5 +76,15 @@ private:
 	int _ref_count;
 };
 
+template<class T, class... Args>
+std::unique_ptr<T, referenced_count::release_deleter> make_unique_ref(Args&&... args) {
+    return std::unique_ptr<T, referenced_count::release_deleter>(new T(std::forward<Args>(args)...));
+}
+
+template<class T, class... Args>
+std::shared_ptr<T> make_shared_ref(Args&&... args) {
+    return std::shared_ptr<T>(new T(std::forward<Args>(args)...), referenced_count::release_deleter());
+}
+
 #endif
 
