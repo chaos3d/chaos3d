@@ -24,13 +24,15 @@ public:
     virtual ~gl_gpu_program();
     
     virtual void link(std::initializer_list<char const*>, std::initializer_list<gpu_shader*>) override;
-    virtual void bind(render_context*, render_uniform const*) override;
-    virtual void unbind() override;
+    virtual void bind(render_context*, render_uniform const*) const override;
     
 protected:
     void detach_all();
-    void assign_uniforms(render_context* context, render_uniform::uniforms_t const&);
-    void update_uniform(uniform const&, render_uniform::uniform const&);
+
+    // assign/update to the hardware buffer
+    void assign_uniforms(render_context* context, render_uniform::uniforms_t const&) const;
+    void update_uniform(uniform const&, render_uniform::uniform const&) const;
+    
     void load_attributes();
     void load_uniforms();
     void add_attribute(char* name, GLenum type, GLint size);

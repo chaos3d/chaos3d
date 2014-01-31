@@ -14,12 +14,12 @@ namespace gles20 {
         return gl_vertex_index_buffer::ptr(new gl_vertex_index_buffer(size, type));
     }
 
-    gl_gpu_program* render_device::create_program() {
-        return new gl_gpu_program();
+    gpu_program::ptr render_device::create_program() {
+        return gpu_program::ptr(new gl_gpu_program());
     }
     
-    gl_gpu_shader* render_device::create_shader(int type) {
-        return new gl_gpu_shader(type);
+    gpu_shader::ptr render_device::create_shader(int type) {
+        return gpu_shader::ptr(new gl_gpu_shader(type));
     }
     
     vertex_layout::ptr render_device::create_layout(vertex_layout::channels_t&& channels,

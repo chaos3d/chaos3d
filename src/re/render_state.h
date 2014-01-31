@@ -4,6 +4,7 @@
 #include "common/utility.h"
 #include <unordered_map>
 #include <Eigen/Dense>
+#include <memory>
 
 // fixed pipeline state
 class render_state{
@@ -25,10 +26,13 @@ public:
         BlendDstAlpha, BlendSrcAlpha,
         BlendOneMinusDstAlpha, BlendOneMinusSrcAlpha
     };
+    
+    typedef std::shared_ptr<render_state> ptr;
+    typedef std::shared_ptr<render_state const> const_ptr;
 
 public:
-    static render_state const& default_state() {
-        static render_state state;
+    static render_state::const_ptr default_state() {
+        static render_state::const_ptr state(new render_state());
         return state;
     }
 

@@ -39,12 +39,12 @@ void sprite::set_texture(texture *tex) {
 
 void sprite::generate_batch(render_target *target, size_t batched) const{
     _data.buffer->layout->set_size(batched);
-    target->add_batch({
+    target->add_batch(
         _data.buffer->layout->retain<vertex_layout const>(),
         std::get<2>(*_data.material),
         std::get<1>(*_data.material),
         std::get<0>(*_data.material)
-    });
+    );
 }
 
 #pragma mark - the manager

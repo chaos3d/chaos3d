@@ -30,8 +30,8 @@ public:
 
     //virtual vertex_array* create_vertex(std::initializer_list<vertex_buffer*> const&) override;
     
-    virtual gl_gpu_program* create_program() override;
-    virtual gl_gpu_shader* create_shader(int type) override;
+    virtual gpu_program::ptr create_program() override;
+    virtual gpu_shader::ptr create_shader(int type) override;
 
     // create a single multi-channel vertex buffer
     virtual vertex_buffer::ptr create_buffer(size_t size, int type) override;

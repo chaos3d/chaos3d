@@ -18,8 +18,9 @@ class render_context;
 class render_batch {
 public:
     typedef uint64_t sort_key;
-    typedef std::tuple<vertex_layout::const_ptr&&, render_uniform::const_ptr const&,
-    const render_state*, gpu_program*> batch_t;
+    typedef std::tuple<vertex_layout::const_ptr&&,
+    render_uniform::const_ptr const&,
+    render_state::const_ptr const&, gpu_program::const_ptr&&> batch_t;
     
 public:
     bool operator<(render_batch const&rhs) const {
@@ -34,31 +35,33 @@ public:
     render_batch(render_batch&&) = default;
     render_batch& operator=(render_batch&&) = default;
     
-    render_batch(vertex_layout::const_ptr&& layout,
-                 render_uniform::const_ptr const& uniform,
-                 const render_state* state,
-                 gpu_program* program)
+    render_batch(init_ptr<vertex_layout::const_ptr>::type layout,
+                 init_ptr<render_uniform::const_ptr>::type uniform,
+                 init_ptr<render_state::const_ptr>::type state,
+                 init_ptr<gpu_program::const_ptr>::type program)
     : _uniform(uniform), _state(state),
-    _layout(std::move(layout)), _program(program)
+    _layout(std::move(layout)), _program(std::move(program))
     {}
     
     render_batch(batch_t const& batch)
-    : render_batch(std::move(std::get<0>(batch)), std::get<1>(batch),
-                   std::get<2>(batch), std::get<3>(batch))
+    : render_batch(std::forward<vertex_layout::const_ptr>(std::get<0>(batch)),
+                   std::forward<render_uniform::const_ptr const>(std::get<1>(batch)),
+                   std::forward<render_state::const_ptr const>(std::get<2>(batch)),
+                   std::forward<gpu_program::const_ptr>(std::get<3>(batch)))
     {}
         
     const vertex_layout* layout() const { return _layout.get(); };
-    const render_state* state() const { return _state; };
+    const render_state* state() const { return _state.get(); };
     const render_uniform* uniform() const { return _uniform.get(); };
-    gpu_program* program() const { return _program; };
+    const gpu_program* program() const { return _program.get(); };
     
 private:
     sort_key _sort_key;
     
     vertex_layout::const_ptr _layout;
     render_uniform::const_ptr _uniform;
-    gpu_program* _program;
-    const render_state* _state;
+    gpu_program::const_ptr _program;
+    render_state::const_ptr _state;
     // TODO: memory management?
 };
 

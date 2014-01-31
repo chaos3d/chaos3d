@@ -22,6 +22,19 @@ std::unique_ptr<T> make_unique(Args&&... args) {
     return std::unique_ptr<T>(new T(std::forward<Args>(args)...));
 }
 
+// move/copy ptr detector
+template<class P, class C = void> struct init_ptr;
+
+template<class P>
+struct init_ptr<P, typename std::enable_if<std::is_copy_constructible<P>::value>::type> {
+    typedef P const& type;
+};
+
+template<class P>
+struct init_ptr<P, typename std::enable_if<std::is_move_constructible<P>::value && !std::is_copy_constructible<P>::value>::type> {
+    typedef P && type;
+};
+
 // unpacking to a list of numbers...
 // usage:
 //template<typename... Args>

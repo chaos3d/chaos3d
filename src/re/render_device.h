@@ -64,8 +64,8 @@ public:
                                              vertex_index_buffer::ptr&&, uint8_t mode) = 0;
 
     // shaders
-    virtual gpu_program* create_program() = 0;
-    virtual gpu_shader* create_shader(int type) = 0;
+    virtual gpu_program::ptr create_program() = 0;
+    virtual gpu_shader::ptr create_shader(int type) = 0;
     
     // create a single multi-channel vertex buffer
     virtual vertex_buffer::ptr create_buffer(size_t size, int type) = 0;

@@ -26,7 +26,11 @@ public:
     
     target_size_t const& size() const { return _size; };
     
-    void add_batch(render_batch::batch_t const&);
+    template<class... Args>
+    void add_batch(Args&&... args) {
+        _batches.emplace_back(std::forward<Args>(args)...);
+    }
+
     void do_render(render_context*);
     void sort(); // TODO: comparor
     

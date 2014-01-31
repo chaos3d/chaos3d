@@ -3,6 +3,7 @@
 
 #include <initializer_list>
 #include <vector>
+#include "common/referenced_count.h"
 
 class vertex_channels;
 class render_uniform;
@@ -13,6 +14,8 @@ class render_context;
 class gpu_shader {
 public:
     enum { Vertex, Fragment };
+    typedef std::unique_ptr<gpu_shader> ptr;
+    typedef std::unique_ptr<const gpu_shader> const_ptr;
     
 public:
     gpu_shader(int type) : _type(type)
@@ -26,7 +29,7 @@ private:
     int _type;
 };
 
-class gpu_program {
+class gpu_program : public referenced_count {
 public:
     enum {
         // starting with those supports
@@ -58,7 +61,8 @@ public:
     
     typedef std::vector<channel> channels_t;
     typedef std::vector<uniform> uniforms_t;
-    typedef std::shared_ptr<gpu_program> ptr;
+    typedef std::unique_ptr<gpu_program, referenced_count::release_deleter> ptr;
+    typedef std::unique_ptr<gpu_program const, referenced_count::release_deleter> const_ptr;
     
 public:
     virtual ~gpu_program() {};
@@ -70,8 +74,8 @@ public:
     virtual void link(std::initializer_list<char const*> layout /* vertex attributes layout hints, channel name*/,
                       std::initializer_list<gpu_shader*> shaders) = 0;
     
-    virtual void bind(render_context*, render_uniform const*) = 0;
-    virtual void unbind() = 0;
+    // bind to the hardware
+    virtual void bind(render_context*, render_uniform const*) const = 0;
  
 protected:
     channels_t& channels() { return _channels; }

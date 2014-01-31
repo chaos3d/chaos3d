@@ -207,7 +207,7 @@ void gl_gpu_program::link(std::initializer_list<char const*> layout, std::initia
     load_uniforms();
 }
 
-void gl_gpu_program::update_uniform(uniform const& g_uniform, render_uniform::uniform const& uniform) {
+void gl_gpu_program::update_uniform(uniform const& g_uniform, render_uniform::uniform const& uniform) const {
     if(typeid(uniform) == typeid(render_uniform::uniform_vector4)) {
         glUniform4fv(g_uniform.location, 1, static_cast<render_uniform::uniform_vector4 const&>(uniform).value.data());
     } else if(typeid(uniform) == typeid(render_uniform::uniform_mat4)) {
@@ -228,7 +228,7 @@ void gl_gpu_program::update_uniform(uniform const& g_uniform, render_uniform::un
     }
 }
 
-void gl_gpu_program::assign_uniforms(render_context* context, render_uniform::uniforms_t const& rd_uniforms) {
+void gl_gpu_program::assign_uniforms(render_context* context, render_uniform::uniforms_t const& rd_uniforms) const {
     auto rd_begin = rd_uniforms.begin(), rd_end = rd_uniforms.end();
     auto gpu_begin = uniforms().begin(), gpu_end = uniforms().end();
     int unit = 0;
@@ -252,7 +252,7 @@ void gl_gpu_program::assign_uniforms(render_context* context, render_uniform::un
     
 }
 
-void gl_gpu_program::bind(render_context* context, render_uniform const* uniform) {
+void gl_gpu_program::bind(render_context* context, render_uniform const* uniform) const{
     glUseProgram(_program_id);
     
     if(!uniform)
@@ -261,6 +261,3 @@ void gl_gpu_program::bind(render_context* context, render_uniform const* uniform
     assign_uniforms(context, uniform->uniforms());
 }
 
-void gl_gpu_program::unbind() {
-    
-}
