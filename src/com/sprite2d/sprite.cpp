@@ -1,10 +1,8 @@
 #include "com/sprite2d/sprite.h"
 #include "sg/transform.h"
 #include "go/game_object.h"
-#include "re/vertex_layout.h"
 #include "re/render_device.h"
 #include "io/memory_stream.h"
-#include "re/render_uniform.h"
 #include "re/texture.h"
 
 using namespace sprite2d;
@@ -43,7 +41,7 @@ void sprite::generate_batch(render_target *target, size_t batched) const{
         _data.buffer->layout->retain<vertex_layout const>(),
         std::get<2>(*_data.material),
         std::get<1>(*_data.material),
-        std::get<0>(*_data.material)
+        std::get<0>(*_data.material)->retain<gpu_program const>()
     );
 }
 
@@ -74,16 +72,16 @@ sprite_mgr::sprite_mgr(render_device* dev) : _types({
     }
     )shader";
 
-    auto vs = std::unique_ptr<gpu_shader>(_device->create_shader(gpu_shader::Vertex));
+    auto vs = _device->create_shader(gpu_shader::Vertex);
     vs->compile(make_unique<memory_stream>(vs_source, strlen(vs_source)).get());
     
-    auto fs = std::unique_ptr<gpu_shader>(_device->create_shader(gpu_shader::Fragment));
+    auto fs = _device->create_shader(gpu_shader::Fragment);
     fs->compile(make_unique<memory_stream>(ps_source, strlen(ps_source)).get());
     
-    auto* gpu = _device->create_program();
+    auto gpu = _device->create_program();
     gpu->link({"position", "uv"}, {vs.get(), fs.get()});
     
-    _materials.emplace_back(gpu, &render_state::default_state());
+    _materials.emplace_back(gpu->retain<gpu_program>(), render_state::default_state());
 #endif
 }
 
@@ -98,7 +96,7 @@ sprite_material* sprite_mgr::get_material(render_uniform::const_ptr const& unifo
         return *std::get<2>(*mat) == (*uniform);
     });
     if(it == _sprite_materials.end()) {
-        auto* spt = new sprite_material(std::get<0>(mat), std::get<1>(mat), uniform);
+        auto* spt = new sprite_material(std::get<0>(mat)->retain<gpu_program const>(), std::get<1>(mat), uniform);
         _sprite_materials.emplace_back(spt);
         return _sprite_materials.back().get();
     }else

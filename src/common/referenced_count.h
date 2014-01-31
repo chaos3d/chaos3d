@@ -40,14 +40,7 @@ them using new operator.
 
 */
 
-// TODO: move to autorelease pool
-enum AutoreleasePolicy{
-	AP_SINGLE,		// released at the end of each frame
-	AP_DOUBLE,		// released every second frame
-	AP_STACKED,		// released after poping up the stack
-	AP_GLOBAL,		// released when application ends
-};
-
+//template<class R = std::nullptr_t>
 class referenced_count{
 public:
     struct release_deleter {
@@ -55,6 +48,10 @@ public:
             obj->release();
         }
     };
+    
+//    typedef std::unique_ptr<R, referenced_count::release_deleter> ptr;
+//    typedef std::unique_ptr<R const, referenced_count::release_deleter> const_ptr;
+    
 public:
 	referenced_count() : _ref_count( 1 ) {};
 	virtual ~referenced_count() {};
@@ -76,6 +73,20 @@ public:
 	   	++ _ref_count;
         return std::unique_ptr<T, referenced_count::release_deleter>(static_cast<T*>(this));
 	};
+    
+#if 0
+    template<typename std::enable_if<std::is_base_of<referenced_count, R>::value>::type* = nullptr>
+    ptr retain() {
+	   	++ _ref_count;
+        return ptr(static_cast<R*>(this));
+	};
+    
+    template<typename std::enable_if<std::is_base_of<referenced_count, R>::value>::type* = nullptr>
+    const_ptr retain() const {
+	   	++ _ref_count;
+        return const_ptr(static_cast<R*>(this));
+	};
+#endif
     
     void retain() const {
 	   	++ _ref_count;

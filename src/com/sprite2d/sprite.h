@@ -6,6 +6,8 @@
 #include "go/component.h"
 #include "re/vertex_layout.h"
 #include "re/render_uniform.h"
+#include "re/gpu_program.h"
+#include "re/render_state.h"
 
 namespace com {
     class transform;
@@ -14,9 +16,7 @@ namespace com {
 // TODO: in forward declare headers
 class render_device;
 class vertex_index_buffer;
-class render_state;
 class render_target;
-class gpu_program;
 class texture;
 
 namespace sprite2d {
@@ -31,7 +31,7 @@ namespace sprite2d {
     };
     
     // TODO: mutable uniforms per sprite, how?
-    typedef std::tuple<gpu_program *, const render_state *, render_uniform::const_ptr> sprite_material;
+    typedef std::tuple<gpu_program::const_ptr, render_state::const_ptr, render_uniform::const_ptr> sprite_material;
     
     // 2d sprite
     // it can be more than 1 sprite in a single component, or rather
@@ -132,7 +132,7 @@ namespace sprite2d {
         typedef std::vector<buffers_t> typed_buffers_t;
 
         typedef std::unique_ptr<sprite_material> spt_mat_ptr;
-        typedef std::vector<std::tuple<gpu_program*, const render_state*>> materials_t; // static material data
+        typedef std::vector<std::tuple<gpu_program::const_ptr, render_state::const_ptr> > materials_t; // static material data
         typedef std::vector<spt_mat_ptr> sprite_materials_t;
         
         enum { // a few default layouts and material
