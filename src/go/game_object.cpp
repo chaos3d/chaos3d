@@ -5,11 +5,6 @@
 uint32_t game_object::_number_of_objects = 0;
 
 game_object::~game_object() {
-    for(auto it : _components) {
-        if(it)
-            it->destroy();
-    }
-    
     -- _number_of_objects;
 }
 
@@ -17,7 +12,7 @@ game_object* game_object::clone() const {
     game_object* go = new game_object(parent());
     for(int i = 0; i < _components.size(); ++i) {
         if(_components[i])
-            go->_components[i] = _components[i]->clone(go);
+            go->_components[i].reset(_components[i]->clone(go));
     }
     return go;
 }
