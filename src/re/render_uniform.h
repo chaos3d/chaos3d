@@ -69,7 +69,7 @@ public:
             return *this;
         };
         
-        uniform_texture(uniform_texture&&) = default;
+        uniform_texture(uniform_texture&&) = default; // FIXME: might need to fix this, probably use texture::const_ptr
         uniform_texture& operator=(uniform_texture&&) = default;
         
         virtual ~uniform_texture() {
@@ -147,9 +147,15 @@ public:
     
     render_uniform& operator=(render_uniform const&);
     
-    // whether the two contain the uniforms with the same name
+    // whether it contains the uniforms with the same name
     // and the same value
     std::pair<bool, bool> contains(render_uniform const&) const;
+    
+    // whether it "intersects" with the other
+    bool compatible(render_uniform const& rhs) const {
+        auto equal = _uniforms.size() > rhs._uniforms.size() ? contains(rhs) : rhs.contains(*this);
+        return equal.first && equal.second;
+    }
     
     void set_vector(std::string const& name, float v) {
         set_vector<uniform_float>(name, v);
@@ -213,6 +219,7 @@ inline render_uniform::ptr make_uniforms_ptr(std::initializer_list<render_unifor
 }
 
 // helper function to initialize the uniforms
+// create the uniform from the uniform type
 template<class U, class... Args>
 render_uniform::uniform_ptr make_uniform(std::string const& name, Args&&... args) {
     return render_uniform::uniform_ptr(new U(name, std::forward<Args>(args)...));
@@ -224,6 +231,8 @@ render_uniform::uniform_ptr make_uniform(std::string const& name, Args&&... args
     return std::move(render_uniform::uniform_ptr(new U(name, std::forward<Args>(args)...)));
 }
 
+// create the uniform from the value
+// uses uniform-value types mapping to iterate and find the proper uniform
 template<class Value, size_t _Type = 0,
 typename std::enable_if<std::is_same<
     typename std::tuple_element<_Type, render_uniform::value_types>::type,
