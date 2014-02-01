@@ -10,15 +10,19 @@ class render_device;
 /**
  * the per-thread render context saving the state
  */
+// FIXME: memory managemant
 class render_context {
     friend class render_device;
 public:
-    typedef std::vector<texture*> textures_t;
+    typedef std::vector<texture::const_ptr> textures_t;
     
 public:
     render_context(size_t max_tex)
-    : _textures(max_tex, nullptr), _bound_textures(max_tex, nullptr)
-    {}
+    : _textures(), _bound_textures()
+    {
+        _textures.reserve(max_tex);
+        _bound_textures.reserve(max_tex);
+    }
     
     virtual void set_current() = 0;
     virtual void apply() = 0;
@@ -28,11 +32,12 @@ public:
     
     void set_texture(int unit, texture* tex) {
         assert(unit < _textures.size());
-        _textures[unit] = tex;
+        _textures[unit] = tex->retain<texture>();
     }
     
     void clear_textures() {
-        _textures.assign(_textures.size(), nullptr);
+        for(auto& it : _textures)
+            it.reset();
     }
     
 protected:

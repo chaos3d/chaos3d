@@ -31,9 +31,6 @@ void gl_context::set_current() {
 }
 
 void gl_context::apply() {
-    if(_cur_state == _bound_state)
-        return;
-    
     render_state const& cur = _cur_state;
     render_state const& bound = _bound_state;
     
@@ -65,13 +62,14 @@ void gl_context::apply() {
         }
     }
     
-    glBlendColor(cur.blend_color()[0], cur.blend_color()[1], cur.blend_color()[2], cur.blend_color()[3]);
+    if(cur.blend_color() != bound.blend_color())
+        glBlendColor(cur.blend_color()[0], cur.blend_color()[1], cur.blend_color()[2], cur.blend_color()[3]);
     
     int unit = 0;
     auto bound_it = _bound_textures.begin();
     for(auto it = _textures.begin(); it != _textures.end();
         ++bound_it, ++unit, ++it) {
-        if(*it == *bound_it)
+        if(it->get() == bound_it->get())
             continue;
         
         glActiveTexture(GL_TEXTURE0 + unit);
@@ -79,7 +77,7 @@ void gl_context::apply() {
             glDisable(GL_TEXTURE_2D); // FIXME: texture type
         } else {
             glEnable(GL_TEXTURE_2D);
-            glBindTexture(GL_TEXTURE_2D, static_cast<gles20::gl_texture*>(*it)->tex_id());
+            glBindTexture(GL_TEXTURE_2D, static_cast<gles20::gl_texture const*>(it->get())->tex_id());
         
             // TODO: texture parameters
         }
@@ -87,7 +85,10 @@ void gl_context::apply() {
     
     glActiveTexture(GL_TEXTURE0);
     _bound_state = _cur_state;
-    _bound_textures = _textures;
+    std::transform(_textures.begin(), _textures.end(), _bound_textures.begin(), [](texture::const_ptr const&t) {
+        return t->retain<texture>();
+    });
+    //_bound_textures = std::move(_textures);
 }
 
 #pragma mark - move up

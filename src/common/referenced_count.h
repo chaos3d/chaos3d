@@ -49,9 +49,71 @@ public:
         }
     };
     
+    class weak_ref_ctrl_base {
+    public:
+        struct weak_releaser {
+            void operator()(weak_ref_ctrl_base const* weak_ptr) const {
+                weak_ptr->decrease();
+            }
+        };
+        
+        weak_ref_ctrl_base(referenced_count* ref) : _weak_count(1), _strong_ref(ref)
+        {}
+        
+    protected:
+        int weak_count() const { return _weak_count - 1; }
+        
+        void on_zero_release() {
+            _strong_ref = nullptr;
+            decrease();
+        }
+        
+        void increase() const {
+            ++ _weak_count;
+        }
+        
+        void decrease() const {
+            -- _weak_count;
+            if(_weak_count == 0)
+                delete this;
+        };
+        
+        mutable int _weak_count;
+        referenced_count* _strong_ref;
+        friend class referenced_count;
+    };
+    
+    template<class R>
+    class weak_ref_ctrl : public weak_ref_ctrl_base{
+    public:
+        typedef typename std::remove_const<R>::type const const_r_type;
+        typedef typename std::remove_const<R>::type r_type;
+        typedef std::unique_ptr<const_r_type, referenced_count::release_deleter> const_ptr;
+        typedef std::unique_ptr<r_type, referenced_count::release_deleter> ptr;
+        
+        typedef std::unique_ptr<weak_ref_ctrl, weak_ref_ctrl_base::weak_releaser> weak_ptr;
+        typedef std::unique_ptr<weak_ref_ctrl const, weak_ref_ctrl_base::weak_releaser> const_weak_ptr;
+        
+    public:
+        weak_ref_ctrl(referenced_count* ref) : weak_ref_ctrl_base(ref)
+        {}
+        
+        const_ptr lock() const {
+            return _strong_ref ? _strong_ref->retain<R const>() : const_ptr();
+        };
+        
+        ptr lock() {
+            return _strong_ref ? _strong_ref->retain<R>() : ptr();
+        };
+    };
+    
 public:
-	referenced_count() : _ref_count( 1 ) {};
-	virtual ~referenced_count() {};
+	referenced_count() : _ref_count(1), _weak_ctrl(nullptr){};
+	virtual ~referenced_count() {
+        if(_weak_ctrl) {
+            _weak_ctrl->on_zero_release();
+        }
+    };
 
     // no need to move
     referenced_count(referenced_count&& rhs) = delete;
@@ -71,6 +133,24 @@ public:
         return std::unique_ptr<T, referenced_count::release_deleter>(static_cast<T*>(this));
 	};
     
+    template<class T,
+    typename std::enable_if<std::is_base_of<referenced_count, T>::value>::type* = nullptr>
+    typename weak_ref_ctrl<T>::const_weak_ptr get() const{
+	   	if(_weak_ctrl == nullptr)
+            _weak_ctrl = new weak_ref_ctrl<T const>(const_cast<T*>(this));
+        _weak_ctrl->increase();
+        return typename weak_ref_ctrl<T>::const_weak_ptr(static_cast<weak_ref_ctrl<T>*>(const_cast<T*>(_weak_ctrl)));
+	};
+    
+    template<class T,
+    typename std::enable_if<std::is_base_of<referenced_count, T>::value>::type* = nullptr>
+    typename weak_ref_ctrl<T>::weak_ptr get() {
+	   	if(_weak_ctrl == nullptr)
+            _weak_ctrl = new weak_ref_ctrl<T>(this);
+        _weak_ctrl->increase();
+        return typename weak_ref_ctrl<T>::weak_ptr(static_cast<weak_ref_ctrl<T>*>(_weak_ctrl));
+	};
+    
     void retain() const {
 	   	++ _ref_count;
     }
@@ -83,10 +163,13 @@ public:
 	}
 
 	int ref_count() const { return _ref_count; };
-    bool unique() const { return _ref_count == 0; }
+    bool unique() const {
+        return _ref_count == 1 && (!_weak_ctrl || _weak_ctrl->weak_count() == 0);
+    }
     
 private:
 	mutable int _ref_count;
+    mutable weak_ref_ctrl_base* _weak_ctrl;
 };
 
 #if 0
