@@ -42,6 +42,8 @@ public:
         return new C(go, std::forward<Args>(args)...);
     }
     
+    // destroy is needed so we will have a second chance
+    // to not delete the object or recycle it
     virtual void destroy() {
         delete this;
     }

@@ -82,6 +82,10 @@ namespace sprite2d {
         // one shouldn't use more than it requested
         virtual void fill_buffer(void* buffer, com::transform const&) const = 0;
 
+        // vertices are moved around the buffer, indices needs updating to
+        // point to the right place without re-computing the buffer
+        virtual void fill_indices() {};
+        
         // generate batch/batches
         //  batched is the number of indices being shared among
         //  batchable sprites in the same vertices layout
@@ -91,6 +95,8 @@ namespace sprite2d {
         indices_t _indices;
         
         data_t _data;
+        
+        bool _mark_for_remove;
         // uniform: texture, params, etc
         // raw vertices buffer
         
@@ -121,9 +127,13 @@ namespace sprite2d {
         // batching layout
         class layout_buffer {
         public:
+            // sprite, start, count (number of vertices),
+            typedef std::tuple<sprite*, size_t, size_t> sprite;
+            typedef std::vector<sprite> sprites_t;
             
         private:
             vertex_layout::ptr _layout;
+            sprites_t _sprites;
         };
         
         typedef std::vector<sprite_vertex> vertices_t;
