@@ -3,24 +3,29 @@
 
 using namespace sprite2d;
 
-void quad_sprite::fill_buffer(void* raw, com::transform const& trans) const {
+quad_sprite::quad_sprite(game_object* go, int type)
+: sprite(go, nullptr)
+{
+    sprite_mgr::instance().request_buffer(this, 4, type);
+}
+
+void quad_sprite::fill_buffer(void* raw, size_t stride, com::transform const& trans) const {
     // FIXME:
     // stride, and index
     char* buffer = reinterpret_cast<char*>(raw);
     constexpr int vertice_size = sizeof(float) * 3;
     constexpr int uv_size = sizeof(float) * 2;
-    int stride = vertice_size + uv_size;
     box2f const& uv = frame();
 
-    memcpy(buffer, trans.to_global(bound().corner(box2f::BottomLeft)).data(), sizeof(float)*3);
-    memcpy(buffer + vertice_size, uv.corner(box2f::TopLeft).data(), sizeof(float)*2);
+    memcpy(buffer, trans.to_global(bound().corner(box2f::BottomLeft)).data(), vertice_size);
+    memcpy(buffer + vertice_size, uv.corner(box2f::TopLeft).data(), uv_size);
     
-    memcpy(buffer+=stride, trans.to_global(bound().corner(box2f::TopLeft)).data(), sizeof(float)*3);
-    memcpy(buffer + vertice_size, uv.corner(box2f::BottomLeft).data(), sizeof(float)*2);
+    memcpy(buffer+=stride, trans.to_global(bound().corner(box2f::TopLeft)).data(), vertice_size);
+    memcpy(buffer + vertice_size, uv.corner(box2f::BottomLeft).data(), uv_size);
     
-    memcpy(buffer+=stride, trans.to_global(bound().corner(box2f::TopRight)).data(), sizeof(float)*3);
-    memcpy(buffer + vertice_size, uv.corner(box2f::BottomRight).data(), sizeof(float)*2);
+    memcpy(buffer+=stride, trans.to_global(bound().corner(box2f::TopRight)).data(), vertice_size);
+    memcpy(buffer + vertice_size, uv.corner(box2f::BottomRight).data(), uv_size);
     
-    memcpy(buffer, trans.to_global(bound().corner(box2f::BottomRight)).data(), sizeof(float)*3);
-    memcpy(buffer + vertice_size, uv.corner(box2f::TopRight).data(), sizeof(float)*2);
+    memcpy(buffer, trans.to_global(bound().corner(box2f::BottomRight)).data(), vertice_size);
+    memcpy(buffer + vertice_size, uv.corner(box2f::TopRight).data(), uv_size);
 }

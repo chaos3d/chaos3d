@@ -32,6 +32,8 @@ void gl_vertex_buffer::unbind() {
 
 void* gl_vertex_buffer::lock(size_t offset, size_t size) {
 #if GL_OES_mapbuffer
+    if(size == 0)
+        size = vertex_buffer::size();
     assert(offset + size <= vertex_buffer::size());
     GLASSERT1(glIsBuffer(_buffer_id) == GL_TRUE);
     glBindBuffer(GL_ARRAY_BUFFER, _buffer_id);

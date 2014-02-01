@@ -12,7 +12,7 @@ sprite::sprite(game_object* go, texture* tex)
 : component(go) {
 #if 1
     // FIXME with real data
-    _data.buffer = sprite_mgr::instance().request_buffer(4);
+    //_data.buffer = sprite_mgr::instance().request_buffer(4);
     //auto tex_uniform = render_uniform::uniform_texture(tex);
     render_uniform::ptr uniform(new render_uniform({
         make_uniform("tex1", tex),
@@ -118,7 +118,39 @@ void sprite_mgr::update(goes_t const& gos) {
         if(!transform)
             continue; // TODO: log
         
-        com->fill_buffer(nullptr, *transform);
+        assert(0);
+        com->fill_buffer(nullptr, 0, *transform);
+    }
+    
+    auto mark = gos.front()->mark();
+    // step 1: update all the indices, remove invisible or deleted sprites
+    for(auto& it : _buffers) {
+        for(auto& sprite : it.sprites) {
+            auto* spt = std::get<0>(sprite);
+            if(spt->_mark_for_remove || spt->parent()->mark() != mark) {
+                // TODO: remove, update index
+            }
+        }
+    }
+
+    // step 2: update the position if needed
+    auto offset = flag_offset();
+    for(auto& it : _buffers) {
+        // uses the first buffer
+        // TODO: asynch locking?
+        void* buffer = it.layout->channels()[0].buffer.get()->lock();
+        auto stride = it.layout->channels()[0].stride;
+        for(auto& sprite : it.sprites) {
+            auto* spt = std::get<0>(sprite);
+
+            auto* transform = spt->parent()->get_component<com::transform>(transform_idx);
+            if(!transform)
+                continue; // TODO: log
+
+            if(spt->parent()->is_set(offset)) {
+                spt->fill_buffer(buffer, stride, *transform);
+            }
+        }
     }
 }
 
@@ -143,6 +175,10 @@ vertices_buffer* sprite_mgr::create_buffer(vertices_t const& layout) {
                                            _device->create_index_buffer(Indices_Capacity, vertex_buffer::Stream),
                                            vertex_layout::Triangles);
     return new vertices_buffer({std::move(vlayout), vlayout->index_buffer()});
+}
+
+void sprite_mgr::request_buffer(sprite*, uint32_t count, int typeIdx) {
+    assert(0);
 }
 
 vertices_buffer* sprite_mgr::request_buffer(uint32_t count, int type_idx) {

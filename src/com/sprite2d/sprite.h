@@ -80,7 +80,7 @@ namespace sprite2d {
     protected:
         // fill the vertices into the buffer
         // one shouldn't use more than it requested
-        virtual void fill_buffer(void* buffer, com::transform const&) const = 0;
+        virtual void fill_buffer(void* buffer, size_t stride, com::transform const&) const = 0;
 
         // vertices are moved around the buffer, indices needs updating to
         // point to the right place without re-computing the buffer
@@ -91,11 +91,10 @@ namespace sprite2d {
         //  batchable sprites in the same vertices layout
         virtual void generate_batch(render_target*, size_t batched) const;
 
-    private:
         indices_t _indices;
-        
         data_t _data;
-        
+
+    private:
         bool _mark_for_remove;
         // uniform: texture, params, etc
         // raw vertices buffer
@@ -123,23 +122,23 @@ namespace sprite2d {
                 return type == rhs.type && count == rhs.type && name == rhs.name;
             }
         };
-        
+        typedef std::vector<sprite_vertex> vertices_t;
+        typedef std::vector<vertices_t> types_t;
+       
         // batching layout
-        class layout_buffer {
-        public:
+        // the shared vertex buffer contains all the sprites that're using
+        // the same layout. the batching command would just update the indices
+        // (whether it's visible or not) to the index buffer.
+        struct layout_buffer {
             // sprite, start, count (number of vertices),
             typedef std::tuple<sprite*, size_t, size_t> sprite;
             typedef std::vector<sprite> sprites_t;
             
-        private:
-            vertex_layout::ptr _layout;
-            sprites_t _sprites;
+            vertex_layout::ptr layout; // FIXME: support multi-buffers?
+            sprites_t sprites;
+            uint32_t type_idx; // index for vertice types
         };
-        
-        typedef std::vector<sprite_vertex> vertices_t;
-        typedef std::vector<vertices_t> types_t;
-        typedef std::vector<vertex_layout*> buffers_t;
-        typedef std::vector<buffers_t> typed_buffers_t;
+        typedef std::vector<layout_buffer> buffers_t; // sorted by types
 
         typedef std::unique_ptr<sprite_material> spt_mat_ptr;
         typedef std::vector<std::tuple<gpu_program::const_ptr, render_state::const_ptr> > materials_t; // static material data
@@ -148,6 +147,8 @@ namespace sprite2d {
         enum { // a few default layouts and material
             position_uv = 0,
         };
+        struct position_uv_t {};
+        struct position_uv_color_t {};
         
         enum { // buffer configs
             Vertex_Capacity = 8096,  // number of vertices
@@ -157,10 +158,14 @@ namespace sprite2d {
     public:
         sprite_mgr(render_device*);
         virtual ~sprite_mgr();
-        
+
+        // add the sprite to the vertex buffer, the manager will "ask" the sprite
+        // to fill out the buffer and then the index buffer
+        void request_buffer(sprite*, uint32_t count, int typeIdx);
+
         // vertices buffer
         vertices_buffer* request_buffer(uint32_t count, int = 0);
-        uint32_t request_buffer(sprite*, uint32_t count, int = 0);
+        //uint32_t request_buffer(sprite*, uint32_t count, int = 0);
         void release_buffer(vertices_buffer*);
         
         // add a vertice layout/type, returned value to be used
@@ -185,6 +190,8 @@ namespace sprite2d {
         materials_t _materials;
         types_t _types;
         sprite_materials_t _sprite_materials;
+        
+        buffers_t _buffers;
     };
 }
 #endif

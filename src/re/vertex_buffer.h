@@ -20,7 +20,7 @@ public:
     virtual void bind() = 0;
     virtual void unbind() = 0;
     
-    virtual void* lock(size_t offset, size_t size) = 0; //TODO: async locking
+    virtual void* lock(size_t offset = 0, size_t size = 0) = 0; //TODO: async locking
     virtual void unlock() = 0;
     virtual void load(const void*, size_t offset, size_t size) = 0;
     

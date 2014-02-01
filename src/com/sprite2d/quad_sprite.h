@@ -10,13 +10,15 @@ namespace sprite2d {
         typedef Eigen::AlignedBox2f box2f;
         
     public:
+        quad_sprite(game_object*, int type);
+        
         ATTRIBUTE(box2f, frame);
         ATTRIBUTE(box2f, bound);
         
     private:
         // fill the vertices into the buffer
         // one shouldn't use more than it requested
-        virtual void fill_buffer(void* buffer, com::transform const&) const override;
+        virtual void fill_buffer(void* buffer, size_t stride, com::transform const&) const override;
         
     };
 }
