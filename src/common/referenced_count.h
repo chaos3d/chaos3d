@@ -49,9 +49,6 @@ public:
         }
     };
     
-//    typedef std::unique_ptr<R, referenced_count::release_deleter> ptr;
-//    typedef std::unique_ptr<R const, referenced_count::release_deleter> const_ptr;
-    
 public:
 	referenced_count() : _ref_count( 1 ) {};
 	virtual ~referenced_count() {};
@@ -64,7 +61,7 @@ public:
     typename std::enable_if<std::is_base_of<referenced_count, T>::value>::type* = nullptr>
     std::unique_ptr<T const, referenced_count::release_deleter> retain() const {
 	   	++ _ref_count;
-        return std::unique_ptr<T const, referenced_count::release_deleter>(static_cast<T*>(this));
+        return std::unique_ptr<T const, referenced_count::release_deleter>(static_cast<T const*>(this));
 	};
 
     template<class T,
@@ -73,20 +70,6 @@ public:
 	   	++ _ref_count;
         return std::unique_ptr<T, referenced_count::release_deleter>(static_cast<T*>(this));
 	};
-    
-#if 0
-    template<typename std::enable_if<std::is_base_of<referenced_count, R>::value>::type* = nullptr>
-    ptr retain() {
-	   	++ _ref_count;
-        return ptr(static_cast<R*>(this));
-	};
-    
-    template<typename std::enable_if<std::is_base_of<referenced_count, R>::value>::type* = nullptr>
-    const_ptr retain() const {
-	   	++ _ref_count;
-        return const_ptr(static_cast<R*>(this));
-	};
-#endif
     
     void retain() const {
 	   	++ _ref_count;
@@ -105,6 +88,27 @@ public:
 private:
 	mutable int _ref_count;
 };
+
+#if 0
+// not useful...
+template<class R = std::nullptr_t>
+class referenced_count_base : public referenced_count{
+public:
+    typedef std::unique_ptr<R, referenced_count::release_deleter> ptr;
+    typedef std::unique_ptr<R const, referenced_count::release_deleter> const_ptr;
+    
+public:
+    ptr retain() {
+        referenced_count::retain();
+        return ptr(static_cast<R*>(this));
+	};
+    
+    const_ptr retain() const {
+        referenced_count::retain();
+        return const_ptr(static_cast<R*>(this));
+	};
+};
+#endif
 
 template<class T, class... Args>
 std::unique_ptr<T, referenced_count::release_deleter> make_unique_ref(Args&&... args) {

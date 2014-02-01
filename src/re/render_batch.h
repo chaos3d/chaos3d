@@ -10,26 +10,31 @@ class render_state;
 class gpu_program;
 class render_context;
 
-// a lightweight 'function call' that renders vertices
-// into the bound target
-//  input: vertices, state, uniforms, etc
-//  function: shader
-//  output: the bound target
+// the batch that will be queued to the render target
+// and defered to be fired
+// the render algorithm determines how to create or sort
+// the batches
 class render_batch {
 public:
-    typedef uint64_t sort_key;
-    typedef std::tuple<vertex_layout::const_ptr&&,
-    render_uniform::const_ptr const&,
-    render_state::const_ptr const&, gpu_program::const_ptr&&> batch_t;
+    typedef std::tuple<init_ptr<vertex_layout::const_ptr>::type,
+    init_ptr<render_uniform::const_ptr>::type,
+    init_ptr<render_state::const_ptr>::type,
+    init_ptr<gpu_program::const_ptr>::type> batch_t;
     
 public:
-    bool operator<(render_batch const&rhs) const {
-        return _sort_key < rhs._sort_key;
-    }
+    render_batch(render_batch const& rhs)
+    :_layout(rhs._layout->retain<vertex_layout>()),
+    _program(rhs._program->retain<gpu_program>()),
+    _uniform(rhs._uniform),
+    _state(rhs._state)
+    {};
     
-    render_batch& operator=(render_batch const&) {
-        assert(0);
-        return *this; // TODO: just fixed linking
+    render_batch& operator=(render_batch const& rhs) {
+        _layout = rhs._layout->retain<vertex_layout>();
+        _program = rhs._program->retain<gpu_program>();
+        _uniform = rhs._uniform;
+        _state = rhs._state;
+        return *this;
     };
     
     render_batch(render_batch&&) = default;
@@ -44,10 +49,10 @@ public:
     {}
     
     render_batch(batch_t const& batch)
-    : render_batch(std::forward<vertex_layout::const_ptr>(std::get<0>(batch)),
-                   std::forward<render_uniform::const_ptr const>(std::get<1>(batch)),
-                   std::forward<render_state::const_ptr const>(std::get<2>(batch)),
-                   std::forward<gpu_program::const_ptr>(std::get<3>(batch)))
+    : render_batch(std::forward<init_ptr<vertex_layout::const_ptr>::type>(std::get<0>(batch)),
+                   std::forward<init_ptr<render_uniform::const_ptr>::type>(std::get<1>(batch)),
+                   std::forward<init_ptr<render_state::const_ptr>::type>(std::get<2>(batch)),
+                   std::forward<init_ptr<gpu_program::const_ptr>::type>(std::get<3>(batch)))
     {}
         
     const vertex_layout* layout() const { return _layout.get(); };
@@ -56,8 +61,6 @@ public:
     const gpu_program* program() const { return _program.get(); };
     
 private:
-    sort_key _sort_key;
-    
     vertex_layout::const_ptr _layout;
     render_uniform::const_ptr _uniform;
     gpu_program::const_ptr _program;

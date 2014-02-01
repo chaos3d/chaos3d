@@ -23,16 +23,17 @@ std::unique_ptr<T> make_unique(Args&&... args) {
 }
 
 // move/copy ptr detector
+// it helps to detect how to initialize pointers (unique/shared, move/copy)
 template<class P, class C = void> struct init_ptr;
+
+template<class P>
+struct init_ptr<P, typename std::enable_if<!std::is_copy_constructible<P>::value>::type> {
+    typedef P && type;
+};
 
 template<class P>
 struct init_ptr<P, typename std::enable_if<std::is_copy_constructible<P>::value>::type> {
     typedef P const& type;
-};
-
-template<class P>
-struct init_ptr<P, typename std::enable_if<std::is_move_constructible<P>::value && !std::is_copy_constructible<P>::value>::type> {
-    typedef P && type;
 };
 
 // unpacking to a list of numbers...

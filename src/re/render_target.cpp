@@ -29,5 +29,5 @@ void render_target::do_render(render_context* context) {
 }
 
 void render_target::sort() {
-    std::sort(_batches.begin(), _batches.end(), std::less<render_batch>());
+    //std::sort(_batches.begin(), _batches.end(), std::less<render_batch>());
 }
