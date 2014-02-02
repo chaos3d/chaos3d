@@ -63,25 +63,27 @@ public:
     //
     
     // helper function to initialize/construct all the component managers
+    template<typename Mgrs, typename... ParamTuple>
+    static void manager_initializer(ParamTuple const&... params ) {
+        return manager_initializer_internal<0, 0, Mgrs, ParamTuple...>(params...);
+    }
+    
+    static managers_t& managers();
+    
+    static uint32_t fixed_component() { return _fixed_component; }
+    
+private:
     template<uint32_t _Idx, uint32_t _Bit, typename Mgrs> // recursive termination, last manager
-    static void manager_initializer(/*Tuple const& param*/) {
-        typedef typename std::tuple_element<std::tuple_size<Mgrs>::value - 1, Mgrs>::type Mgr;
-#if 0
-        auto* mgr = Mgr::template initialize_tuple<Tuple>(param,
-                                                          typename tuple_gens<std::tuple_size<Tuple>::value>::type());
-        if(Mgr::component_fixed_t::value)
-            mgr->set_component_idx(_Idx);
-        if(Mgr::flag_bit_t::value > 0)
-            mgr->set_component_offset(_Bit);
-#endif
-        _fixed_component = _Idx + (Mgr::component_fixed_t::value ? 1 : 0);
+    static void manager_initializer_internal(/*Tuple const& param*/) {
+        //typedef typename std::tuple_element<std::tuple_size<Mgrs>::value - 1, Mgrs>::type Mgr;
+        _fixed_component = _Idx;// + (Mgr::component_fixed_t::value ? 1 : 0);
     };
     
     template<uint32_t _Idx, uint32_t _Bit, typename Mgrs, typename First, typename... ParamTuple>
-    static void manager_initializer(First const&first, ParamTuple const&... params ) {
+    static void manager_initializer_internal(First const&first, ParamTuple const&... params ) {
         constexpr size_t mgrs_size = std::tuple_size<Mgrs>::value;
         typedef typename std::tuple_element<mgrs_size - sizeof...(ParamTuple) - 1, Mgrs>::type Mgr;
-
+        
         auto* mgr = Mgr::template initialize_tuple<First>(first,
                                                           typename tuple_gens<std::tuple_size<First>::value>::type());
         if(Mgr::component_fixed_t::value)
@@ -89,15 +91,11 @@ public:
         if(Mgr::flag_bit_t::value > 0)
             mgr->set_component_offset(_Bit);
         
-        manager_initializer<_Idx + (Mgr::component_fixed_t::value ? 1 : 0), _Bit + Mgr::flag_bit_t::value, Mgrs, ParamTuple...>
+        manager_initializer_internal<_Idx + (Mgr::component_fixed_t::value ? 1 : 0), _Bit + Mgr::flag_bit_t::value,
+        Mgrs, ParamTuple...>
         (params...);
     };
     
-    static managers_t& managers();
-    
-    static uint32_t fixed_component() { return _fixed_component; }
-    
-private:
     static uint32_t _fixed_component;
 };
 
