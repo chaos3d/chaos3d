@@ -22,15 +22,23 @@ class texture;
 namespace sprite2d {
     class sprite_mgr;
     class camera2d;
-
-    struct vertices_buffer {
-        // probably we could create two buffers, one for static like uv
-        // and one for dynamic like position
-        vertex_layout::ptr layout;
-        vertex_index_buffer::ptr indices; // the bound indice buffer
+    class sprite;
+    
+    // batching layout
+    // the shared vertex buffer contains all the sprites that're using
+    // the same layout. the batching command would just update the indices
+    // (whether it's visible or not) to the index buffer.
+    struct layout_buffer {
+        // sprite, start, count (number of vertices),
+        typedef std::tuple<sprite*, size_t, size_t> sprite_t;
+        typedef std::vector<sprite_t> sprites_t;
+        
+        vertex_layout::ptr layout; // FIXME: support multi-buffers?
+        sprites_t sprites;
+        uint32_t type_idx; // index for vertice types
     };
 
-    // "constant" sprite material
+    // "constant" sprite material, owned by sprite_mgr
     // the batched sprites will shared the same material, so any change
     // to the material will affect all the other sprites; a new material
     // can be created based on the same settings with upated uniforms.
@@ -82,8 +90,11 @@ namespace sprite2d {
     public:
         typedef sprite_mgr manager_t;
         typedef std::vector<uint16_t> indices_t;
-        struct data_t{ //TODO: combine static and dynamic
-            vertices_buffer* buffer;
+        
+        // collected batching info
+        // those two are managed by sprite_mgr
+        struct data_t{
+            layout_buffer* buffer;
             sprite_material* material;
             data_t() : buffer(nullptr), material(nullptr)
             {}
@@ -108,13 +119,9 @@ namespace sprite2d {
         }
         
         vertex_index_buffer::ptr index_buffer() const {
-            return _data.buffer->indices->retain<vertex_index_buffer>();
+            return _data.buffer->layout->index_buffer();
         }
 
-        void set_texture(texture*);
-
-        //TODO: customized materials
-        
     protected:
         
         // only mark for the removal, the sprite_mgr owns it
@@ -167,19 +174,6 @@ namespace sprite2d {
         typedef std::vector<sprite_vertex> vertices_t;
         typedef std::vector<vertices_t> types_t;
        
-        // batching layout
-        // the shared vertex buffer contains all the sprites that're using
-        // the same layout. the batching command would just update the indices
-        // (whether it's visible or not) to the index buffer.
-        struct layout_buffer {
-            // sprite, start, count (number of vertices),
-            typedef std::tuple<sprite*, size_t, size_t> sprite;
-            typedef std::vector<sprite> sprites_t;
-            
-            vertex_layout::ptr layout; // FIXME: support multi-buffers?
-            sprites_t sprites;
-            uint32_t type_idx; // index for vertice types
-        };
         typedef std::vector<layout_buffer> buffers_t; // sorted by types
 
         typedef std::unique_ptr<sprite_material> spt_mat_ptr;
@@ -206,11 +200,6 @@ namespace sprite2d {
         // note: the mgr will take over the ownership
         void assign_buffer(sprite*, uint32_t count, int typeIdx);
 
-        // vertices buffer
-        vertices_buffer* request_buffer(uint32_t count, int = 0);
-        //uint32_t request_buffer(sprite*, uint32_t count, int = 0);
-        void release_buffer(vertices_buffer*);
-        
         // add a vertice layout/type, returned value to be used
         // to request the buffer
         // if the layout exists, (exactly the same while the order won't
@@ -226,7 +215,7 @@ namespace sprite2d {
         virtual void update(std::vector<game_object*> const&);
         
     private:
-        vertices_buffer* create_buffer(vertices_t const&);
+        layout_buffer* create_buffer(vertices_t const&);
         
     private:
         render_device* _device;

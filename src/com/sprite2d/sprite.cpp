@@ -36,11 +36,6 @@ void sprite::destroy() {
     assert(0); // FIXME: delete this in sprite mgr
 }
 
-void sprite::set_texture(texture *tex) {
-    assert(0);
-    // TODO: get a new uniform
-}
-
 void sprite::generate_batch(render_target *target, size_t batched) const{
     _data.buffer->layout->set_size(batched);
     target->add_batch(
@@ -158,7 +153,7 @@ void sprite_mgr::update(goes_t const& gos) {
     }
 }
 
-vertices_buffer* sprite_mgr::create_buffer(vertices_t const& layout) {
+layout_buffer* sprite_mgr::create_buffer(vertices_t const& layout) {
     vertex_layout::channels_t channels;
     channels.reserve(layout.size());
     
@@ -178,20 +173,10 @@ vertices_buffer* sprite_mgr::create_buffer(vertices_t const& layout) {
     auto vlayout = _device->create_layout(std::move(channels),
                                            _device->create_index_buffer(Indices_Capacity, vertex_buffer::Stream),
                                            vertex_layout::Triangles);
-    return new vertices_buffer({std::move(vlayout), vlayout->index_buffer()});
+    return new layout_buffer({std::move(vlayout), {}, 0});
 }
 
 void sprite_mgr::assign_buffer(sprite*, uint32_t count, int typeIdx) {
-    assert(0);
-}
-
-vertices_buffer* sprite_mgr::request_buffer(uint32_t count, int type_idx) {
-    assert(type_idx >= 0 && type_idx < _types.size());
-    assert(0);
-    return nullptr;
-}
-
-void sprite_mgr::release_buffer(vertices_buffer*) {
     assert(0);
 }
 
