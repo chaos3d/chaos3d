@@ -43,6 +43,17 @@ void sprite::generate_batch(render_target* target, size_t batched) const {
                       _data.material->program()->retain<gpu_program const>());
 }
 
+void sprite::set_material(std::initializer_list<render_uniform::init_t> const& list,
+                          render_state::ptr const& state) {
+    auto* mat = _data.material;
+    if(!mat)
+        return; // TODO: log
+    
+    mat->set_uniforms(list, state);
+    // TODO: test if it is changed?
+    _data.material = sprite_mgr::instance().add_material(std::unique_ptr<sprite_material>(mat));
+}
+
 #pragma mark - sprite material
 sprite_material sprite_material::set_uniforms(const std::initializer_list<render_uniform::init_t> &list,
                                               const render_state::ptr & state_new) const{
@@ -105,7 +116,12 @@ sprite_mgr::~sprite_mgr() {
 sprite_material* sprite_mgr::add_material(gpu_program::const_ptr && program,
                                           render_state::ptr && state,
                                           render_uniform::ptr && uniform) {
-    auto mat = make_unique<sprite_material>(std::move(program), std::move(state), std::move(uniform));
+    return add_material(make_unique<sprite_material>(std::move(program),
+                                                     std::move(state), std::move(uniform)));
+}
+
+sprite_material* sprite_mgr::add_material(std::unique_ptr<sprite_material>&& mat) {
+    // TODO: sorted by ???
     auto it = std::find_if(_materials.begin(), _materials.end(), [&] (spt_mat_ptr const& other) {
         return *mat == *other;
     });

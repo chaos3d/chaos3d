@@ -124,6 +124,13 @@ namespace sprite2d {
             return _data.buffer->layout->index_buffer();
         }
 
+        void set_material(sprite_material* mat) {
+            _data.material = mat;
+        }
+        
+        void set_material(std::initializer_list<render_uniform::init_t> const&,
+                          render_state::ptr const&);
+        
         // generate batch/batches
         //  batched is the number of indices being shared among
         //  batchable sprites in the same vertices layout
@@ -215,7 +222,8 @@ namespace sprite2d {
         sprite_material* add_material(gpu_program::const_ptr && program,
                                       render_state::ptr && state,
                                       render_uniform::ptr && uniform);
-
+        sprite_material* add_material(std::unique_ptr<sprite_material>&&);
+        
     protected:
         virtual void update(std::vector<game_object*> const&);
         
