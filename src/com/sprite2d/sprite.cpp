@@ -90,7 +90,11 @@ sprite_mgr::sprite_mgr(render_device* dev) : _types({
     auto gpu = _device->create_program();
     gpu->link({"position", "uv"}, {vs.get(), fs.get()});
     
-    //_materials.emplace_back(gpu->retain<gpu_program>(), render_state::default_state());
+    _materials.emplace_back(new sprite_material(gpu->retain<gpu_program>(),
+                                                render_state::default_state_copy(),
+                                                make_uniforms_ptr({
+        make_uniform("tex1", texture::null())
+    })));
 #endif
 }
 
@@ -98,23 +102,18 @@ sprite_mgr::~sprite_mgr() {
     
 }
 
-sprite_material* sprite_mgr::get_material(render_uniform::const_ptr const& uniform, int type) {
-#if 0
-    assert(type >= 0 && type < _materials.size());
-    auto& mat = _materials[type];
-    auto it = std::find_if(_sprite_materials.begin(), _sprite_materials.end(), [&] (spt_mat_ptr const& mat) {
-        return *mat->_uniform == (*uniform);
+sprite_material* sprite_mgr::add_material(gpu_program::const_ptr && program,
+                                          render_state::ptr && state,
+                                          render_uniform::ptr && uniform) {
+    auto mat = make_unique<sprite_material>(std::move(program), std::move(state), std::move(uniform));
+    auto it = std::find_if(_materials.begin(), _materials.end(), [&] (spt_mat_ptr const& other) {
+        return *mat == *other;
     });
-    if(it == _sprite_materials.end()) {
-        assert(0);
-        sprite_material* spt = nullptr;//new sprite_material(std::get<0>(mat)->retain<gpu_program const>(), std::get<1>(mat), uniform);
-        _sprite_materials.emplace_back(spt);
-        return _sprite_materials.back().get();
+    if(it == _materials.end()) {
+        _materials.emplace_back(std::move(mat));
+        return _materials.back().get();
     }else
         return it->get();
-#else
-    return nullptr;
-#endif
 }
 
 void sprite_mgr::update(goes_t const& gos) {

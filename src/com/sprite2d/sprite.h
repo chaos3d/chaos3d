@@ -179,7 +179,7 @@ namespace sprite2d {
         typedef std::vector<layout_buffer> buffers_t; // layout buffers, sorted by types
 
         typedef std::unique_ptr<sprite_material> spt_mat_ptr; // mgr owns the materials
-        typedef std::vector<spt_mat_ptr> materials_t; // shared materials
+        typedef std::vector<spt_mat_ptr> materials_t; // shared materials, TODO: sorted by ???
         
         enum { // a few default layouts and material
             position_uv = 0,
@@ -209,9 +209,13 @@ namespace sprite2d {
         uint8_t add_type(vertices_t const&);
 
         // sprite material
-        // TODO: add custom shaders/materials
-        sprite_material* get_material(render_uniform::const_ptr const&, int = 0);
-        
+        // like layout types, it won't create a new one if it finds an exact same
+        // one, so when do batching, it's faster
+        // note, the paramters are moved away to the result
+        sprite_material* add_material(gpu_program::const_ptr && program,
+                                      render_state::ptr && state,
+                                      render_uniform::ptr && uniform);
+
     protected:
         virtual void update(std::vector<game_object*> const&);
         

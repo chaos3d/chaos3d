@@ -36,6 +36,10 @@ public:
         return state;
     }
 
+    static render_state::ptr default_state_copy() {
+        return render_state::ptr(new render_state(*default_state()));
+    }
+    
     ATTRIBUTE(uint8_t, depth_func);
     ATTRIBUTE(uint8_t, blending);
     ATTRIBUTE(uint8_t, src_blend);
