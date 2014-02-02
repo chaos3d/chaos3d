@@ -8,16 +8,18 @@
 using namespace sprite2d;
 
 #pragma mark - the sprite
-sprite::sprite(game_object* go, texture* tex)
-: component(go) {
+sprite::sprite(game_object* go, size_t count, int type)
+: component(go), _mark_for_remove(false) {
+    // always give away the ownership to the manager
+    sprite_mgr::instance().assign_buffer(this, count, type);
 #if 1
     // FIXME with real data
     //_data.buffer = sprite_mgr::instance().request_buffer(4);
     //auto tex_uniform = render_uniform::uniform_texture(tex);
-    render_uniform::ptr uniform(new render_uniform({
-        make_uniform("tex1", tex),
-    }));
-    _data.material = sprite_mgr::instance().get_material(std::move(uniform));
+//    render_uniform::ptr uniform(new render_uniform({
+//        make_uniform("tex1", tex),
+//    }));
+//    _data.material = sprite_mgr::instance().get_material(std::move(uniform));
 #if 0
     _data.material = sprite_mgr::instance().get_material(render_uniform::ptr(new render_uniform({
         make_uniform("tex1", tex),
@@ -27,7 +29,10 @@ sprite::sprite(game_object* go, texture* tex)
 }
 
 sprite::~sprite() {
-    sprite_mgr::instance().release_buffer(_data.buffer);
+}
+
+void sprite::destroy() {
+    _mark_for_remove = true;
 }
 
 void sprite::set_texture(texture *tex) {
@@ -104,30 +109,16 @@ sprite_material* sprite_mgr::get_material(render_uniform::const_ptr const& unifo
 }
 
 void sprite_mgr::update(goes_t const& gos) {
-    auto idx = component_idx();
     auto transform_idx = com::transform_manager::component_idx();
-    for(auto& it : gos) {
-        if(!it->is_set(flag_offset()))
-            continue;
-        
-        auto* com = it->get_component<sprite>(idx);
-        if(!com)
-            continue;
-        
-        auto* transform = it->get_component<com::transform>(transform_idx);
-        if(!transform)
-            continue; // TODO: log
-        
-        assert(0);
-        com->fill_buffer(nullptr, 0, *transform);
-    }
     
-    auto mark = gos.front()->mark();
+    //auto mark = gos.front()->mark();
     // step 1: update all the indices, remove invisible or deleted sprites
     for(auto& it : _buffers) {
         for(auto& sprite : it.sprites) {
             auto* spt = std::get<0>(sprite);
-            if(spt->_mark_for_remove || spt->parent()->mark() != mark) {
+            if(spt->_mark_for_remove
+               //|| spt->parent()->mark() != mark // only move sprites when it gets deleted?
+               ) {
                 // TODO: remove, update index
             }
         }
@@ -177,7 +168,7 @@ vertices_buffer* sprite_mgr::create_buffer(vertices_t const& layout) {
     return new vertices_buffer({std::move(vlayout), vlayout->index_buffer()});
 }
 
-void sprite_mgr::request_buffer(sprite*, uint32_t count, int typeIdx) {
+void sprite_mgr::assign_buffer(sprite*, uint32_t count, int typeIdx) {
     assert(0);
 }
 

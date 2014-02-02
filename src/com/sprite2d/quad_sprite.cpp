@@ -4,9 +4,8 @@
 using namespace sprite2d;
 
 quad_sprite::quad_sprite(game_object* go, int type)
-: sprite(go, nullptr)
+: sprite(go, 4, type)
 {
-    sprite_mgr::instance().request_buffer(this, 4, type);
 }
 
 void quad_sprite::fill_buffer(void* raw, size_t stride, com::transform const& trans) const {

@@ -52,7 +52,7 @@ namespace sprite2d {
         };
         
     public:
-        sprite(game_object*, texture*);
+        sprite(game_object*, size_t count /*number of vertices*/, int type/*layout*/);
         virtual ~sprite();
         
         // buffer data
@@ -78,6 +78,10 @@ namespace sprite2d {
         //TODO: customized materials
         
     protected:
+        
+        // only mark for the removal, the sprite_mgr owns it
+        virtual void destroy();
+        
         // fill the vertices into the buffer
         // one shouldn't use more than it requested
         virtual void fill_buffer(void* buffer, size_t stride, com::transform const&) const = 0;
@@ -161,7 +165,8 @@ namespace sprite2d {
 
         // add the sprite to the vertex buffer, the manager will "ask" the sprite
         // to fill out the buffer and then the index buffer
-        void request_buffer(sprite*, uint32_t count, int typeIdx);
+        // note: the mgr will take over the ownership
+        void assign_buffer(sprite*, uint32_t count, int typeIdx);
 
         // vertices buffer
         vertices_buffer* request_buffer(uint32_t count, int = 0);
@@ -193,5 +198,6 @@ namespace sprite2d {
         
         buffers_t _buffers;
     };
+
 }
 #endif
