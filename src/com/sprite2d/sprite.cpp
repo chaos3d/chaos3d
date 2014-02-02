@@ -33,7 +33,6 @@ sprite::~sprite() {
 
 void sprite::destroy() {
     _mark_for_remove = true;
-    assert(0); // FIXME: delete this in sprite mgr
 }
 
 render_batch sprite::associated_batch(size_t batched) const {
@@ -152,6 +151,10 @@ void sprite_mgr::update(goes_t const& gos) {
     }
 }
 
+void sprite_mgr::assign_buffer(sprite*, uint32_t count, int typeIdx) {
+    assert(0);
+}
+
 layout_buffer* sprite_mgr::create_buffer(vertices_t const& layout) {
     vertex_layout::channels_t channels;
     channels.reserve(layout.size());
@@ -162,7 +165,8 @@ layout_buffer* sprite_mgr::create_buffer(vertices_t const& layout) {
         offset += vertex_layout::type_size(it.type) * it.count;
     }
     
-    auto buffer = _device->create_buffer(Vertex_Capacity * offset, vertex_buffer::Dynamic);
+    auto buffer = _device->create_buffer(Vertex_Capacity * offset,
+                                         vertex_buffer::Dynamic);
     for(auto& it : channels) {
         it.buffer = buffer->retain<vertex_buffer>();
         it.stride = offset;
@@ -170,13 +174,10 @@ layout_buffer* sprite_mgr::create_buffer(vertices_t const& layout) {
     offset = (offset + 3) & ~(0x3); // align to multiple of 4 bytes
     
     auto vlayout = _device->create_layout(std::move(channels),
-                                           _device->create_index_buffer(Indices_Capacity, vertex_buffer::Stream),
+                                           _device->create_index_buffer(Indices_Capacity,
+                                                                        vertex_buffer::Stream),
                                            vertex_layout::Triangles);
     return new layout_buffer({std::move(vlayout), {}, 0});
-}
-
-void sprite_mgr::assign_buffer(sprite*, uint32_t count, int typeIdx) {
-    assert(0);
 }
 
 uint8_t sprite_mgr::add_type(vertices_t const& layout) {
@@ -184,15 +185,15 @@ uint8_t sprite_mgr::add_type(vertices_t const& layout) {
     if(it != _types.end())
         return it - _types.begin();
     _types.push_back(layout);
-    std::sort(_types.back().begin(), _types.back().end(), [] (sprite_vertex const& lhs,
-                                                              sprite_vertex const& rhs) {
-        return lhs.name < rhs.name;
-    });
+    std::sort(_types.back().begin(), _types.back().end(),
+              [] (sprite_vertex const& lhs, sprite_vertex const& rhs) {
+                  return lhs.name < rhs.name;
+              });
     
     // no identical name
-    assert(std::adjacent_find(_types.back().begin(), _types.back().end(),[] (sprite_vertex const& lhs,
-                                                                             sprite_vertex const& rhs) {
-        return lhs.name == rhs.name;
-    }) == _types.back().end());
+    assert(std::adjacent_find(_types.back().begin(), _types.back().end(),
+                              [] (sprite_vertex const& lhs, sprite_vertex const& rhs) {
+                                  return lhs.name == rhs.name;
+                              }) == _types.back().end());
     return _types.size() - 1;
 }

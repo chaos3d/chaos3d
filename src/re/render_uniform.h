@@ -55,17 +55,20 @@ public:
     struct uniform_texture : public uniform {
         uniform_texture(std::string const&name, texture* v)
         : uniform(name, sizeof(texture*)), value(v)
-        { value->retain(); };
+        { SAFE_RETAIN(value); };
         
         uniform_texture(uniform_texture const& rhs)
         : uniform_texture(rhs.name(), rhs.value)
-        { value->retain(); };
+        { SAFE_RETAIN(value); };
         
         uniform_texture& operator=(uniform_texture const& rhs)
         {
             uniform::operator=(rhs);
+            if(value == rhs.value)
+                return *this;
+            SAFE_RELEASE(value);
             value = rhs.value;
-            value->retain();
+            SAFE_RETAIN(value);
             return *this;
         };
         
@@ -73,7 +76,7 @@ public:
         uniform_texture& operator=(uniform_texture&&) = default;
         
         virtual ~uniform_texture() {
-            value->release();
+            SAFE_RELEASE(value);
         }
         
         texture* value;

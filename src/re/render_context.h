@@ -32,7 +32,8 @@ public:
     
     void set_texture(int unit, texture* tex) {
         assert(unit < _textures.size());
-        _textures[unit] = tex->retain<texture>();
+        if(tex)
+            _textures[unit] = tex->retain<texture>();
     }
     
     void clear_textures() {

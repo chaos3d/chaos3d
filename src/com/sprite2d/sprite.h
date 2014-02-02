@@ -173,9 +173,9 @@ namespace sprite2d {
             }
         };
         typedef std::vector<sprite_vertex> vertices_t;
-        typedef std::vector<vertices_t> types_t;
+        typedef std::vector<vertices_t> types_t; // vertex layout types
        
-        typedef std::vector<layout_buffer> buffers_t; // sorted by types
+        typedef std::vector<layout_buffer> buffers_t; // layout buffers, sorted by types
 
         typedef std::unique_ptr<sprite_material> spt_mat_ptr;
         typedef std::vector<std::tuple<gpu_program::const_ptr, render_state::const_ptr> > materials_t; // static material data
