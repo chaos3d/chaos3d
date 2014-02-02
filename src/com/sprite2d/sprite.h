@@ -29,7 +29,11 @@ namespace sprite2d {
         vertex_layout::ptr layout;
         vertex_index_buffer::ptr indices; // the bound indice buffer
     };
-    
+
+    // "constant" sprite material
+    // the batched sprites will shared the same material, so any change
+    // to the material will affect all the other sprites; a new material
+    // can be created based on the same settings with upated uniforms.
     class sprite_material {
     public:
         template<class P, class S, class U>
@@ -47,11 +51,24 @@ namespace sprite2d {
         
         // create a new material by replacing uniforms and the state
         sprite_material set_uniforms(std::initializer_list<render_uniform::init_t> const&,
-                                     render_state::const_ptr const&) const;
+                                     render_state::ptr const&) const;
+
+        gpu_program::const_ptr const& program() const { return _program; }
+        render_uniform::const_ptr uniform() const { return _uniform; }
+        render_state::const_ptr state() const { return _state; }
+        
+        // uniforms/states can be modified with caution
+        // that those changes will be applied to all batched
+        // sprites, hence shared.
+        render_uniform* shared_uniform() { return _uniform.get(); }
+        render_state* shared_state() { return _state.get(); }
+        
     private:
         gpu_program::const_ptr _program;
-        render_state::const_ptr _state;
-        render_uniform::const_ptr _uniform;
+        render_state::ptr _state;
+        render_uniform::ptr _uniform;
+        
+        friend class sprite_mgr;
     };
     
     // 2d sprite

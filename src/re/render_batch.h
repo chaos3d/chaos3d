@@ -40,12 +40,13 @@ public:
     render_batch(render_batch&&) = default;
     render_batch& operator=(render_batch&&) = default;
     
-    render_batch(init_ptr<vertex_layout::const_ptr>::type layout,
-                 init_ptr<render_uniform::const_ptr>::type uniform,
-                 init_ptr<render_state::const_ptr>::type state,
-                 init_ptr<gpu_program::const_ptr>::type program)
-    : _uniform(uniform), _state(state),
-    _layout(std::move(layout)), _program(std::move(program))
+    template<class V, class U, class S, class P>
+    render_batch(V&& layout,
+                 U&& uniform,
+                 S&& state,
+                 P&& program)
+    : _uniform(std::forward<U>(uniform)), _state(std::forward<S>(state)),
+    _layout(std::forward<V>(layout)), _program(std::forward<P>(program))
     {}
     
     render_batch(batch_t const& batch)

@@ -90,8 +90,27 @@ std::pair<bool, bool> render_uniform::contains(render_uniform const& rhs) const 
                           value_equal);
 }
 
+render_uniform& render_uniform::merge(std::initializer_list<init_t> const& list, bool append) {
+    assert(0);
+    return *this;
+}
+
 render_uniform& render_uniform::merge(render_uniform const& rhs, bool append) {
-    
+    assert(0); //FIXME
+    auto first1 = _uniforms.begin(), last1 = _uniforms.end();
+    auto first2 = rhs.uniforms().begin(), last2 = rhs.uniforms().end();
+    for (; first1 != last1;) {
+        if (first2 == last2) {
+            break;
+        }
+        if (*first2 < *first1) {
+            //*d_first = *first2;
+            ++first2;
+        } else {
+            //*d_first = *first1;
+            ++first1;
+        }
+    }
     return *this;
 }
 

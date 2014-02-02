@@ -45,20 +45,21 @@ void sprite::generate_batch(render_target *target, size_t batched) const{
     _data.buffer->layout->set_size(batched);
     target->add_batch(
         _data.buffer->layout->retain<vertex_layout const>(),
-        std::get<2>(*_data.material),
-        std::get<1>(*_data.material),
-        std::get<0>(*_data.material)->retain<gpu_program const>()
+        _data.material->uniform(),
+        _data.material->state(),
+        _data.material->program()->retain<gpu_program const>()
     );
 }
 
 #pragma mark - sprite material
 sprite_material sprite_material::set_uniforms(const std::initializer_list<render_uniform::init_t> &list,
-                                              const render_state::const_ptr & state) const{
-    render_uniform::ptr uniform(new render_uniform(list));
-    
+                                              const render_state::ptr & state_new) const{
+    // FIXME: test intercetion first?
+    render_uniform::ptr uniform_new(new render_uniform(*_uniform));
+    uniform_new->merge(list, false);
     return sprite_material(_program->retain<gpu_program>(),
-                           state.get() == nullptr ? _state : state,
-                           uniform);
+                           state_new.get() == nullptr ? _state : state_new,
+                           std::move(uniform_new));
 }
 
 #pragma mark - the manager
@@ -109,10 +110,11 @@ sprite_material* sprite_mgr::get_material(render_uniform::const_ptr const& unifo
     assert(type >= 0 && type < _materials.size());
     auto& mat = _materials[type];
     auto it = std::find_if(_sprite_materials.begin(), _sprite_materials.end(), [&] (spt_mat_ptr const& mat) {
-        return *std::get<2>(*mat) == (*uniform);
+        return *mat->_uniform == (*uniform);
     });
     if(it == _sprite_materials.end()) {
-        auto* spt = new sprite_material(std::get<0>(mat)->retain<gpu_program const>(), std::get<1>(mat), uniform);
+        assert(0);
+        sprite_material* spt = nullptr;//new sprite_material(std::get<0>(mat)->retain<gpu_program const>(), std::get<1>(mat), uniform);
         _sprite_materials.emplace_back(spt);
         return _sprite_materials.back().get();
     }else
