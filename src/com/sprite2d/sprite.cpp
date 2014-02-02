@@ -36,14 +36,12 @@ void sprite::destroy() {
     assert(0); // FIXME: delete this in sprite mgr
 }
 
-void sprite::generate_batch(render_target *target, size_t batched) const{
+render_batch sprite::associated_batch(size_t batched) const {
     _data.buffer->layout->set_size(batched);
-    target->add_batch(
-        _data.buffer->layout->retain<vertex_layout const>(),
-        _data.material->uniform(),
-        _data.material->state(),
-        _data.material->program()->retain<gpu_program const>()
-    );
+    return render_batch(_data.buffer->layout->retain<vertex_layout const>(),
+                        _data.material->uniform(),
+                        _data.material->state(),
+                        _data.material->program()->retain<gpu_program const>());
 }
 
 #pragma mark - sprite material
@@ -123,11 +121,12 @@ void sprite_mgr::update(goes_t const& gos) {
     // step 1: update all the indices, remove invisible or deleted sprites
     for(auto& it : _buffers) {
         for(auto& sprite : it.sprites) {
-            auto* spt = std::get<0>(sprite);
+            auto* spt = std::get<0>(sprite).get();
             if(spt->_mark_for_remove
                //|| spt->parent()->mark() != mark // only move sprites when it gets deleted?
                ) {
                 // TODO: remove, update index
+                assert(0);
             }
         }
     }
@@ -140,7 +139,7 @@ void sprite_mgr::update(goes_t const& gos) {
         void* buffer = it.layout->channels()[0].buffer.get()->lock();
         auto stride = it.layout->channels()[0].stride;
         for(auto& sprite : it.sprites) {
-            auto* spt = std::get<0>(sprite);
+            auto* spt = std::get<0>(sprite).get();
 
             auto* transform = spt->parent()->get_component<com::transform>(transform_idx);
             if(!transform)

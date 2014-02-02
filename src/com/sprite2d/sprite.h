@@ -8,6 +8,7 @@
 #include "re/render_uniform.h"
 #include "re/gpu_program.h"
 #include "re/render_state.h"
+#include "re/render_batch.h"
 
 namespace com {
     class transform;
@@ -30,7 +31,7 @@ namespace sprite2d {
     // (whether it's visible or not) to the index buffer.
     struct layout_buffer {
         // sprite, start, count (number of vertices),
-        typedef std::tuple<sprite*, size_t, size_t> sprite_t;
+        typedef std::tuple<std::unique_ptr<sprite>, size_t, size_t> sprite_t; // the buffer owns the sprite proxy
         typedef std::vector<sprite_t> sprites_t;
         
         vertex_layout::ptr layout; // FIXME: support multi-buffers?
@@ -122,6 +123,11 @@ namespace sprite2d {
             return _data.buffer->layout->index_buffer();
         }
 
+        // generate batch/batches
+        //  batched is the number of indices being shared among
+        //  batchable sprites in the same vertices layout
+        virtual render_batch associated_batch(size_t batched) const;
+        
     protected:
         
         // only mark for the removal, the sprite_mgr owns it
@@ -135,11 +141,6 @@ namespace sprite2d {
         // point to the right place without re-computing the buffer
         virtual void fill_indices() {};
         
-        // generate batch/batches
-        //  batched is the number of indices being shared among
-        //  batchable sprites in the same vertices layout
-        virtual void generate_batch(render_target*, size_t batched) const;
-
         indices_t _indices;
         data_t _data;
 
