@@ -30,7 +30,7 @@ void camera2d::collect(const std::vector<game_object *> &goes) {
             continue;
         
         if(!next->batchable(*spt)) {
-            target()->add_batch(spt->associated_batch(offset));
+            spt->generate_batch(target().get(), offset);
             
             spt = next;
             buffer = spt->index_buffer();
@@ -46,7 +46,7 @@ void camera2d::collect(const std::vector<game_object *> &goes) {
         offset += raw_size;
     }
     
-    target()->add_batch(spt->associated_batch(offset));
+    spt->generate_batch(target().get(), offset);
     target()->set_batch_retained(false);
 }
 

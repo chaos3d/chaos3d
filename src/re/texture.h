@@ -52,6 +52,7 @@ public:
     virtual bool load(void const*, size_t, int color, int level = 0) = 0;
     virtual bool generate_mipmap() { return false; };
     
+    constexpr static texture* null() { return nullptr; }
 private:
     vector2i _size;
     attribute_t _attribute;

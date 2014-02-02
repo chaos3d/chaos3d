@@ -46,6 +46,10 @@ public:
                                size()) == 0;
         }
         
+        virtual uniform& assign(uniform const& rhs) { // TODO: all subclasses
+            return *this = rhs;
+        }
+        
         std::string const& name() const {return _name; }
         size_t size() const { return _size; }
     private:

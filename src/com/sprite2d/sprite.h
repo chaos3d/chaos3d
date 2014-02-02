@@ -72,6 +72,10 @@ namespace sprite2d {
         render_uniform* shared_uniform() { return _uniform.get(); }
         render_state* shared_state() { return _state.get(); }
         
+        // exact the same
+        bool operator==(sprite_material const& rhs) const {
+            return _program == rhs._program && *_state == *rhs._state && *_uniform == *rhs._uniform;
+        }
     private:
         gpu_program::const_ptr _program;
         render_state::ptr _state;
@@ -85,9 +89,6 @@ namespace sprite2d {
     // the whole 2d skeleton, so it could generate more than more
     // batches especially it uses more textures
     class sprite : public component {
-        
-        // TODO: this should be a base class, the subclass may
-        // have different types of sprites and be templatized
     public:
         typedef sprite_mgr manager_t;
         typedef std::vector<uint16_t> indices_t;
@@ -126,7 +127,7 @@ namespace sprite2d {
         // generate batch/batches
         //  batched is the number of indices being shared among
         //  batchable sprites in the same vertices layout
-        virtual render_batch associated_batch(size_t batched) const;
+        virtual void generate_batch(render_target*, size_t batched) const;
         
     protected:
         
@@ -177,9 +178,8 @@ namespace sprite2d {
        
         typedef std::vector<layout_buffer> buffers_t; // layout buffers, sorted by types
 
-        typedef std::unique_ptr<sprite_material> spt_mat_ptr;
-        typedef std::vector<std::tuple<gpu_program::const_ptr, render_state::const_ptr> > materials_t; // static material data
-        typedef std::vector<spt_mat_ptr> sprite_materials_t;
+        typedef std::unique_ptr<sprite_material> spt_mat_ptr; // mgr owns the materials
+        typedef std::vector<spt_mat_ptr> materials_t; // shared materials
         
         enum { // a few default layouts and material
             position_uv = 0,
@@ -220,11 +220,9 @@ namespace sprite2d {
         
     private:
         render_device* _device;
-        materials_t _materials;
         types_t _types;
-        sprite_materials_t _sprite_materials;
-        
         buffers_t _buffers;
+        materials_t _materials;
     };
 
 }

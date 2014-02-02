@@ -35,12 +35,12 @@ void sprite::destroy() {
     _mark_for_remove = true;
 }
 
-render_batch sprite::associated_batch(size_t batched) const {
+void sprite::generate_batch(render_target* target, size_t batched) const {
     _data.buffer->layout->set_size(batched);
-    return render_batch(_data.buffer->layout->retain<vertex_layout const>(),
-                        _data.material->uniform(),
-                        _data.material->state(),
-                        _data.material->program()->retain<gpu_program const>());
+    target->add_batch(_data.buffer->layout->retain<vertex_layout const>(),
+                      _data.material->uniform(),
+                      _data.material->state(),
+                      _data.material->program()->retain<gpu_program const>());
 }
 
 #pragma mark - sprite material
@@ -90,7 +90,7 @@ sprite_mgr::sprite_mgr(render_device* dev) : _types({
     auto gpu = _device->create_program();
     gpu->link({"position", "uv"}, {vs.get(), fs.get()});
     
-    _materials.emplace_back(gpu->retain<gpu_program>(), render_state::default_state());
+    //_materials.emplace_back(gpu->retain<gpu_program>(), render_state::default_state());
 #endif
 }
 
@@ -99,6 +99,7 @@ sprite_mgr::~sprite_mgr() {
 }
 
 sprite_material* sprite_mgr::get_material(render_uniform::const_ptr const& uniform, int type) {
+#if 0
     assert(type >= 0 && type < _materials.size());
     auto& mat = _materials[type];
     auto it = std::find_if(_sprite_materials.begin(), _sprite_materials.end(), [&] (spt_mat_ptr const& mat) {
@@ -111,6 +112,9 @@ sprite_material* sprite_mgr::get_material(render_uniform::const_ptr const& unifo
         return _sprite_materials.back().get();
     }else
         return it->get();
+#else
+    return nullptr;
+#endif
 }
 
 void sprite_mgr::update(goes_t const& gos) {
