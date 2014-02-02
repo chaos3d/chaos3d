@@ -90,6 +90,11 @@ std::pair<bool, bool> render_uniform::contains(render_uniform const& rhs) const 
                           value_equal);
 }
 
+render_uniform& render_uniform::merge(render_uniform const& rhs, bool append) {
+    
+    return *this;
+}
+
 render_uniform::uniforms_t::iterator render_uniform::find(std::string const& name){
     return std::lower_bound(_uniforms.begin(), _uniforms.end(), name,
                             [] (std::unique_ptr<uniform> const& u, std::string const& name) {

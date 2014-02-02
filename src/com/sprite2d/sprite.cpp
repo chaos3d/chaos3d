@@ -33,6 +33,7 @@ sprite::~sprite() {
 
 void sprite::destroy() {
     _mark_for_remove = true;
+    assert(0); // FIXME: delete this in sprite mgr
 }
 
 void sprite::set_texture(texture *tex) {
@@ -48,6 +49,16 @@ void sprite::generate_batch(render_target *target, size_t batched) const{
         std::get<1>(*_data.material),
         std::get<0>(*_data.material)->retain<gpu_program const>()
     );
+}
+
+#pragma mark - sprite material
+sprite_material sprite_material::set_uniforms(const std::initializer_list<render_uniform::init_t> &list,
+                                              const render_state::const_ptr & state) const{
+    render_uniform::ptr uniform(new render_uniform(list));
+    
+    return sprite_material(_program->retain<gpu_program>(),
+                           state.get() == nullptr ? _state : state,
+                           uniform);
 }
 
 #pragma mark - the manager

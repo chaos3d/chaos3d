@@ -60,6 +60,10 @@ public:
         weak_ref_ctrl_base(referenced_count* ref) : _weak_count(1), _strong_ref(ref)
         {}
         
+        bool expired() const {
+            return _strong_ref == nullptr;
+        }
+        
     protected:
         int weak_count() const { return _weak_count - 1; }
         

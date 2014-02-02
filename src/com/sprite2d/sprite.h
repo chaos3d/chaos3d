@@ -30,8 +30,29 @@ namespace sprite2d {
         vertex_index_buffer::ptr indices; // the bound indice buffer
     };
     
-    // TODO: mutable uniforms per sprite, how?
-    typedef std::tuple<gpu_program::const_ptr, render_state::const_ptr, render_uniform::const_ptr> sprite_material;
+    class sprite_material {
+    public:
+        template<class P, class S, class U>
+        sprite_material(P&& p, S&& s, U&& u)
+        : _program(std::forward<P>(p)),
+        _state(std::forward<S>(s)),
+        _uniform(std::forward<U>(u))
+        { }
+        
+        sprite_material(sprite_material const&rhs)
+        : _program(rhs._program->retain<gpu_program>()),
+        _state(rhs._state),
+        _uniform(rhs._uniform)
+        { }
+        
+        // create a new material by replacing uniforms and the state
+        sprite_material set_uniforms(std::initializer_list<render_uniform::init_t> const&,
+                                     render_state::const_ptr const&) const;
+    private:
+        gpu_program::const_ptr _program;
+        render_state::const_ptr _state;
+        render_uniform::const_ptr _uniform;
+    };
     
     // 2d sprite
     // it can be more than 1 sprite in a single component, or rather

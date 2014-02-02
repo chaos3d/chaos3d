@@ -157,6 +157,9 @@ public:
         return equal.first && equal.second;
     }
     
+    // merge/move the right side to itself, with or without the new uniforms
+    render_uniform& merge(render_uniform const& rhs, bool = false);
+    
     void set_vector(std::string const& name, float v) {
         set_vector<uniform_float>(name, v);
     }
