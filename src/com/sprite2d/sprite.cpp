@@ -43,10 +43,21 @@ void sprite::generate_batch(render_target* target, size_t batched) const {
                       _data.material->program()->retain<gpu_program const>());
 }
 
-void sprite::set_material(std::initializer_list<render_uniform::init_t> const& list,
+bool sprite::set_material(const std::string & name,
+                          std::initializer_list<render_uniform::init_t> const& list,
+                          render_state::ptr const& state) {
+    auto* mat = sprite_mgr::instance().find_first_material(name);
+    if(mat == nullptr)
+        return false;
+    _data.material = mat;
+    mod_material(list, state);
+    return true;
+}
+
+void sprite::mod_material(std::initializer_list<render_uniform::init_t> const& list,
                           render_state::ptr const& state) {
     auto* mat = _data.material;
-    if(!mat)
+    if(!mat || (list.size() == 0 && state.get() == nullptr))
         return; // TODO: log
     
     auto mat_new = make_unique<sprite_material>(mat->set_uniforms(list, state));
@@ -61,7 +72,8 @@ sprite_material sprite_material::set_uniforms(const std::initializer_list<render
     // FIXME: test intercetion first?
     render_uniform::ptr uniform_new(new render_uniform(*_uniform));
     uniform_new->merge(render_uniform(list), false);
-    return sprite_material(_program->retain<gpu_program>(),
+    return sprite_material(name(),
+                           _program->retain<gpu_program>(),
                            state_new.get() == nullptr ? _state : state_new,
                            std::move(uniform_new));
 }
@@ -102,7 +114,14 @@ sprite_mgr::sprite_mgr(render_device* dev) : _types({
     auto gpu = _device->create_program();
     gpu->link({"position", "uv"}, {vs.get(), fs.get()});
     
-    add_material(gpu->retain<gpu_program>(),
+    add_material("basic",
+                 gpu->retain<gpu_program>(),
+                 render_state::default_state_copy(),
+                 make_uniforms_ptr({
+        make_uniform("tex1", texture::null())
+    }));
+    add_material("casio",
+                 gpu->retain<gpu_program>(),
                  render_state::default_state_copy(),
                  make_uniforms_ptr({
         make_uniform("tex1", texture::null())
@@ -114,23 +133,47 @@ sprite_mgr::~sprite_mgr() {
     
 }
 
-sprite_material* sprite_mgr::add_material(gpu_program::const_ptr && program,
+sprite_material* sprite_mgr::add_material(std::string const& name,
+                                          gpu_program::const_ptr && program,
                                           render_state::ptr && state,
                                           render_uniform::ptr && uniform) {
-    return add_material(make_unique<sprite_material>(std::move(program),
-                                                     std::move(state), std::move(uniform)));
+    return add_material(make_unique<sprite_material>(name, std::move(program),
+                                                           std::move(state), std::move(uniform)));
+}
+
+sprite_material* sprite_mgr::find_first_material(std::string const& name) const {
+    auto it = std::lower_bound(_materials.begin(), _materials.end(), name,
+                               [] (spt_mat_ptr const& other, std::string const& name) {
+        return other->name() < name;
+    });
+    if(it == _materials.end() || (*it)->name() != name){
+        return nullptr;
+    }else
+        return it->get();
 }
 
 sprite_material* sprite_mgr::add_material(std::unique_ptr<sprite_material>&& mat) {
-    // TODO: sorted by ???
-    auto it = std::find_if(_materials.begin(), _materials.end(), [&] (spt_mat_ptr const& other) {
-        return *mat == *other;
+    auto it = std::lower_bound(_materials.begin(), _materials.end(), mat->name(),
+                               [] (spt_mat_ptr const& other, std::string const& name) {
+        return other->name() < name;
     });
-    if(it == _materials.end()) {
-        _materials.emplace_back(std::move(mat));
-        return _materials.back().get();
-    }else
+    bool same = false;
+    if(it != _materials.end() && (*it)->name() == mat->name()){
+        do{
+            if((*it)->compatible(*mat)){
+                same = true;
+                break;
+            }
+            ++it;
+        }while(it != _materials.end() && (*it)->name() == mat->name());
+    }
+    
+    if(same) {
         return it->get();
+    } else {
+        _materials.emplace(it, std::move(mat));
+        return _materials.back().get();
+    }
 }
 
 void sprite_mgr::update(goes_t const& gos) {

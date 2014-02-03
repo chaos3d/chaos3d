@@ -50,15 +50,17 @@ namespace sprite2d {
     // can be created based on the same settings with upated uniforms.
     class sprite_material {
     public:
-        template<class P, class S, class U>
-        sprite_material(P&& p, S&& s, U&& u)
-        : _program(std::forward<P>(p)),
+        template<class N, class P, class S, class U>
+        sprite_material(N&& n, P&& p, S&& s, U&& u)
+        :_name(std::forward<N>(n)),
+        _program(std::forward<P>(p)),
         _state(std::forward<S>(s)),
         _uniform(std::forward<U>(u))
         { }
         
         sprite_material(sprite_material const&rhs)
-        : _program(rhs._program->retain<gpu_program>()),
+        :_name(rhs._name),
+        _program(rhs._program->retain<gpu_program>()),
         _state(rhs._state),
         _uniform(rhs._uniform)
         { }
@@ -67,6 +69,7 @@ namespace sprite2d {
         sprite_material set_uniforms(std::initializer_list<render_uniform::init_t> const&,
                                      render_state::ptr const&) const;
 
+        std::string const& name() const { return _name; }
         gpu_program::const_ptr const& program() const { return _program; }
         render_uniform::const_ptr uniform() const { return _uniform; }
         render_state::const_ptr state() const { return _state; }
@@ -77,11 +80,22 @@ namespace sprite2d {
         render_uniform* shared_uniform() { return _uniform.get(); }
         render_state* shared_state() { return _state.get(); }
         
-        // exact the same
-        bool operator==(sprite_material const& rhs) const {
+        // compatible/batchable
+        bool compatible(sprite_material const& rhs) const {
             return _program == rhs._program && *_state == *rhs._state && *_uniform == *rhs._uniform;
         }
+        
+        // exact the same
+        bool operator==(sprite_material const& rhs) const {
+            return _name == rhs._name && compatible(rhs);
+        }
+        
+        // material order by names
+        bool operator<(sprite_material const& rhs) const {
+            return _name < rhs._name;
+        }
     private:
+        std::string _name;
         gpu_program::const_ptr _program;
         render_state::ptr _state;
         render_uniform::ptr _uniform;
@@ -133,6 +147,11 @@ namespace sprite2d {
             return _data.buffer->layout->index_buffer();
         }
 
+        // reset a material from a given name by replacing with the given uniforms
+        bool set_material(std::string const&,
+                          std::initializer_list<render_uniform::init_t> const& = {},
+                          render_state::ptr const& = render_state::ptr());
+        
         void set_material(sprite_material* mat) {
             if(_data.material != mat) {
                 mark_dirty();
@@ -140,7 +159,8 @@ namespace sprite2d {
             }
         }
         
-        void set_material(std::initializer_list<render_uniform::init_t> const&,
+        // reset a new material by modifying the current one using the given uniforms
+        void mod_material(std::initializer_list<render_uniform::init_t> const&,
                           render_state::ptr const& = render_state::ptr());
         
         void mark_dirty() const;
@@ -236,10 +256,12 @@ namespace sprite2d {
         // like layout types, it won't create a new one if it finds an exact same
         // one, so when do batching, it's faster
         // note, the paramters are moved away to the result
-        sprite_material* add_material(gpu_program::const_ptr && program,
+        sprite_material* add_material(std::string const&,
+                                      gpu_program::const_ptr && program,
                                       render_state::ptr && state,
                                       render_uniform::ptr && uniform);
         sprite_material* add_material(std::unique_ptr<sprite_material>&&);
+        sprite_material* find_first_material(std::string const&) const;
         
         materials_t const& materials() const { return _materials; }
         
