@@ -38,7 +38,7 @@
     component_manager::managers().update(&game_object::root());
     
     _main_screen->loop();
-    _main_window->do_render(_main_context); // clear batch
+    //_main_window->do_render(_main_context); // clear batch
     
 }
 
