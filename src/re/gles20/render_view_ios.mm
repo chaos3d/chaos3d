@@ -1,5 +1,6 @@
 #include "render_view_ios.h"
 #include "re/gles20/gl_context.h"
+#include "re/gles20/gles2.h"
 
 #import <OpenGLES/EAGLDrawable.h>
 #import <QuartzCore/QuartzCore.h>
@@ -108,12 +109,15 @@ bool render_view::bind(render_context*) {
     glClear(GL_COLOR_BUFFER_BIT);
     
     glViewport(0, 0, size()[0], size()[1]);
+    
+    GLNOERROR;
     return true;
 }
     
 bool render_view::flush(render_context* context) {
     assert(typeid(*context) == typeid(gl_context));
     glBindRenderbuffer(GL_RENDERBUFFER, _colorbuffer_id);
+    GLNOERROR;
     return [static_cast<gl_context*>(context)->context() presentRenderbuffer:GL_RENDERBUFFER];
 }
 

@@ -34,6 +34,10 @@ void gl_context::apply() {
     render_state const& cur = _cur_state;
     render_state const& bound = _bound_state;
     
+    //TODO: add to the state
+    glDisable(GL_CULL_FACE);
+    glFrontFace(GL_CCW);
+    
     if(cur.depth_func() != bound.depth_func()) {
         if(cur.depth_func() == render_state::DepthNone) {
             glDisable(GL_DEPTH_TEST);
@@ -41,6 +45,7 @@ void gl_context::apply() {
             glEnable(GL_DEPTH_TEST);
             glDepthFunc(_depth_func_map[cur.depth_func()]);
         }
+        GLNOERROR;
     }
 
     if(cur.src_blend() != bound.src_blend()
@@ -60,6 +65,7 @@ void gl_context::apply() {
                                 _blend_func_map[cur.src_alpha_blend()],
                                 _blend_func_map[cur.dst_alpha_blend()]);
         }
+        GLNOERROR;
     }
     
     if(cur.blend_color() != bound.blend_color())
@@ -81,6 +87,7 @@ void gl_context::apply() {
         
             // TODO: texture parameters
         }
+        GLNOERROR;
     }
     
     glActiveTexture(GL_TEXTURE0);
@@ -88,6 +95,7 @@ void gl_context::apply() {
     std::transform(_textures.begin(), _textures.end(), _bound_textures.begin(), [](texture::const_ptr const&t) {
         return t->retain<texture>();
     });
+
     //_bound_textures = std::move(_textures);
 }
 

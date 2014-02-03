@@ -32,6 +32,7 @@ protected:
     void delete_vao();
     void build_buffers();
     void bind_vao() const;
+    void unbind_vao() const;
     
 private:
     GLuint _vao_id;

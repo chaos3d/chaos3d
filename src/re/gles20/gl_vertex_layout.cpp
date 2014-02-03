@@ -31,6 +31,9 @@ void gl_vertex_layout::delete_vao() {
 }
 
 void gl_vertex_layout::draw(render_context *context) const{
+    if(size() == 0)
+        return;
+        
     context->apply();
     bind_vao();
     
@@ -39,15 +42,23 @@ void gl_vertex_layout::draw(render_context *context) const{
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,
                      static_cast<gl_vertex_index_buffer*>(index_buffer_raw())->buffer_id());
         glDrawElements(_mode_map[mode()], size(), GL_UNSIGNED_SHORT, NULL); // FIXME: index type
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     } else {
         glDrawArrays(_mode_map[mode()], 0, size());
     }
+    GLNOERROR;
     
-    assert(glGetError() == GL_NO_ERROR);
+    unbind_vao();
 }
 
 void gl_vertex_layout::bind_vao() const {
     glBindVertexArrayOES(_vao_id);
+    GLNOERROR;
+}
+
+void gl_vertex_layout::unbind_vao() const{
+    glBindVertexArrayOES(0);
+    GLNOERROR;
 }
 
 void gl_vertex_layout::create_vao() {
@@ -71,6 +82,7 @@ void gl_vertex_layout::create_vao() {
     
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArrayOES(0);
+    GLNOERROR;
 }
 
 void gl_vertex_layout::build_buffers() {
