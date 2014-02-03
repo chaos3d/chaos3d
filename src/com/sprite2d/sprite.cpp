@@ -11,7 +11,7 @@ using namespace sprite2d;
 sprite::sprite(game_object* go, size_t count, int type)
 : component(go), _mark_for_remove(false) {
     // always give away the ownership to the manager
-    sprite_mgr::instance().assign_buffer(this, count, type);
+    _data.buffer = sprite_mgr::instance().assign_buffer(this, count, type);
 #if 1
     // FIXME with real data
     //_data.buffer = sprite_mgr::instance().request_buffer(4);
@@ -49,9 +49,10 @@ void sprite::set_material(std::initializer_list<render_uniform::init_t> const& l
     if(!mat)
         return; // TODO: log
     
-    mat->set_uniforms(list, state);
+    auto mat_new = make_unique<sprite_material>(mat->set_uniforms(list, state));
+    
     // TODO: test if it is changed?
-    _data.material = sprite_mgr::instance().add_material(std::unique_ptr<sprite_material>(mat));
+    set_material(sprite_mgr::instance().add_material(std::move(mat_new)));
 }
 
 #pragma mark - sprite material
@@ -59,7 +60,7 @@ sprite_material sprite_material::set_uniforms(const std::initializer_list<render
                                               const render_state::ptr & state_new) const{
     // FIXME: test intercetion first?
     render_uniform::ptr uniform_new(new render_uniform(*_uniform));
-    uniform_new->merge(list, false);
+    uniform_new->merge(render_uniform(list), false);
     return sprite_material(_program->retain<gpu_program>(),
                            state_new.get() == nullptr ? _state : state_new,
                            std::move(uniform_new));
@@ -67,7 +68,7 @@ sprite_material sprite_material::set_uniforms(const std::initializer_list<render
 
 #pragma mark - the manager
 sprite_mgr::sprite_mgr(render_device* dev) : _types({
-    {{"position", vertex_layout::Float, 4}, {"uv", vertex_layout::Float, 2}},
+    {{"position", vertex_layout::Float, 2}, {"uv", vertex_layout::Float, 2}},
 }), _device(dev){
     assert(dev != nullptr); // needs a device
 
@@ -154,7 +155,8 @@ void sprite_mgr::update(goes_t const& gos) {
     for(auto& it : _buffers) {
         // uses the first buffer
         // TODO: asynch locking?
-        void* buffer = it.layout->channels()[0].buffer.get()->lock();
+        auto* vb = it.layout->channels()[0].buffer.get();
+        void* buffer = vb->lock();
         auto stride = it.layout->channels()[0].stride;
         for(auto& sprite : it.sprites) {
             auto* spt = std::get<0>(sprite).get();
@@ -167,14 +169,22 @@ void sprite_mgr::update(goes_t const& gos) {
                 spt->fill_buffer(buffer, stride, *transform);
             }
         }
+        vb->unlock();
     }
 }
 
-void sprite_mgr::assign_buffer(sprite*, uint32_t count, int typeIdx) {
-    assert(0);
+layout_buffer* sprite_mgr::assign_buffer(sprite* spt, uint32_t count, int typeIdx) {
+    // FIXME, test only
+    _buffers.emplace_back(create_buffer(_types[typeIdx]));
+    auto& buf = _buffers.back();
+    buf.type_idx = typeIdx;
+
+    buf.sprites.emplace_back(spt, 0, count);
+    
+    return &buf;
 }
 
-layout_buffer* sprite_mgr::create_buffer(vertices_t const& layout) {
+layout_buffer sprite_mgr::create_buffer(vertices_t const& layout) {
     vertex_layout::channels_t channels;
     channels.reserve(layout.size());
     
@@ -183,6 +193,7 @@ layout_buffer* sprite_mgr::create_buffer(vertices_t const& layout) {
         channels.push_back({nullptr, it.type, it.count, offset, 0});
         offset += vertex_layout::type_size(it.type) * it.count;
     }
+    offset = (offset + 3) & ~(0x3); // align to multiple of 4 bytes
     
     auto buffer = _device->create_buffer(Vertex_Capacity * offset,
                                          vertex_buffer::Dynamic);
@@ -190,13 +201,12 @@ layout_buffer* sprite_mgr::create_buffer(vertices_t const& layout) {
         it.buffer = buffer->retain<vertex_buffer>();
         it.stride = offset;
     }
-    offset = (offset + 3) & ~(0x3); // align to multiple of 4 bytes
     
     auto vlayout = _device->create_layout(std::move(channels),
-                                           _device->create_index_buffer(Indices_Capacity,
+                                           _device->create_index_buffer(Indices_Capacity * sizeof(uint16_t),
                                                                         vertex_buffer::Stream),
                                            vertex_layout::Triangles);
-    return new layout_buffer({std::move(vlayout), {}, 0});
+    return layout_buffer({std::move(vlayout), {}, 0});
 }
 
 uint8_t sprite_mgr::add_type(vertices_t const& layout) {

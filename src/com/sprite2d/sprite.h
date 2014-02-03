@@ -4,6 +4,7 @@
 #include <vector>
 #include "go/component_manager.h"
 #include "go/component.h"
+#include "go/game_object.h"
 #include "re/vertex_layout.h"
 #include "re/render_uniform.h"
 #include "re/gpu_program.h"
@@ -116,7 +117,7 @@ namespace sprite2d {
         
         // buffer data
         std::tuple<const void*, size_t> index_data() const {
-            return std::make_tuple(_indices.data(), _indices.size());
+            return std::make_tuple(_indices.data(), _indices.size() * sizeof(uint16_t));
         }
         
         // batching operation
@@ -133,11 +134,16 @@ namespace sprite2d {
         }
 
         void set_material(sprite_material* mat) {
-            _data.material = mat;
+            if(_data.material != mat) {
+                mark_dirty();
+                _data.material = mat;
+            }
         }
         
         void set_material(std::initializer_list<render_uniform::init_t> const&,
-                          render_state::ptr const&);
+                          render_state::ptr const& = render_state::ptr());
+        
+        void mark_dirty() const;
         
         // generate batch/batches
         //  batched is the number of indices being shared among
@@ -217,7 +223,7 @@ namespace sprite2d {
         // add the sprite to the vertex buffer, the manager will "ask" the sprite
         // to fill out the buffer and then the index buffer
         // note: the mgr will take over the ownership
-        void assign_buffer(sprite*, uint32_t count, int typeIdx);
+        layout_buffer* assign_buffer(sprite*, uint32_t count, int typeIdx);
 
         // add a vertice layout/type, returned value to be used
         // to request the buffer
@@ -241,7 +247,7 @@ namespace sprite2d {
         virtual void update(std::vector<game_object*> const&);
         
     private:
-        layout_buffer* create_buffer(vertices_t const&);
+        layout_buffer create_buffer(vertices_t const&);
         
     private:
         render_device* _device;
@@ -249,6 +255,8 @@ namespace sprite2d {
         buffers_t _buffers;
         materials_t _materials;
     };
+
+    inline void sprite::mark_dirty() const { parent()->set_flag(sprite_mgr::flag_offset()); }
 
 }
 #endif
