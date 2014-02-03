@@ -53,23 +53,23 @@ bool render_uniform::operator==(render_uniform const& rhs) const {
 render_uniform& render_uniform::operator=(render_uniform const& rhs) {
     _uniforms.clear();
     for(auto& ptr : rhs._uniforms) {
-        auto it = *ptr.get();
-        if(typeid(it) == typeid(uniform_float)) {
-            _uniforms.emplace_back(new uniform_float(it.name(), static_cast<uniform_float const&>(it).value));
-        } else if(typeid(it) == typeid(uniform_mat2)) {
-            _uniforms.emplace_back(new uniform_mat2(it.name(), static_cast<uniform_mat2 const&>(it).value));
-        } else if(typeid(it) == typeid(uniform_mat3)) {
-            _uniforms.emplace_back(new uniform_mat3(it.name(), static_cast<uniform_mat3 const&>(it).value));
-        } else if(typeid(it) == typeid(uniform_mat4)) {
-            _uniforms.emplace_back(new uniform_mat4(it.name(), static_cast<uniform_mat4 const&>(it).value));
-        } else if(typeid(it) == typeid(uniform_vector2)) {
-            _uniforms.emplace_back(new uniform_vector2(it.name(), static_cast<uniform_vector2 const&>(it).value));
-        } else if(typeid(it) == typeid(uniform_vector3)) {
-            _uniforms.emplace_back(new uniform_vector3(it.name(), static_cast<uniform_vector3 const&>(it).value));
-        } else if(typeid(it) == typeid(uniform_vector4)) {
-            _uniforms.emplace_back(new uniform_vector4(it.name(), static_cast<uniform_vector4 const&>(it).value));
-        } else if(typeid(it) == typeid(uniform_texture)) {
-            _uniforms.emplace_back(new uniform_texture(it.name(), static_cast<uniform_texture const&>(it).value));
+        auto* it = ptr.get();
+        if(typeid(*it) == typeid(uniform_float)) {
+            _uniforms.emplace_back(new uniform_float(it->name(), static_cast<uniform_float const&>(*it).value));
+        } else if(typeid(*it) == typeid(uniform_mat2)) {
+            _uniforms.emplace_back(new uniform_mat2(it->name(), static_cast<uniform_mat2 const&>(*it).value));
+        } else if(typeid(*it) == typeid(uniform_mat3)) {
+            _uniforms.emplace_back(new uniform_mat3(it->name(), static_cast<uniform_mat3 const&>(*it).value));
+        } else if(typeid(*it) == typeid(uniform_mat4)) {
+            _uniforms.emplace_back(new uniform_mat4(it->name(), static_cast<uniform_mat4 const&>(*it).value));
+        } else if(typeid(*it) == typeid(uniform_vector2)) {
+            _uniforms.emplace_back(new uniform_vector2(it->name(), static_cast<uniform_vector2 const&>(*it).value));
+        } else if(typeid(*it) == typeid(uniform_vector3)) {
+            _uniforms.emplace_back(new uniform_vector3(it->name(), static_cast<uniform_vector3 const&>(*it).value));
+        } else if(typeid(*it) == typeid(uniform_vector4)) {
+            _uniforms.emplace_back(new uniform_vector4(it->name(), static_cast<uniform_vector4 const&>(*it).value));
+        } else if(typeid(*it) == typeid(uniform_texture)) {
+            _uniforms.emplace_back(new uniform_texture(it->name(), static_cast<uniform_texture const&>(*it).value));
         } else
             assert(0); // not supported type?
     }
@@ -90,25 +90,24 @@ std::pair<bool, bool> render_uniform::contains(render_uniform const& rhs) const 
                           value_equal);
 }
 
-render_uniform& render_uniform::merge(std::initializer_list<init_t> const& list, bool append) {
-    assert(0);
-    return *this;
-}
-
 render_uniform& render_uniform::merge(render_uniform const& rhs, bool append) {
-    assert(0); //FIXME
+    assert(append == false); //FIXME
     auto first1 = _uniforms.begin(), last1 = _uniforms.end();
     auto first2 = rhs.uniforms().begin(), last2 = rhs.uniforms().end();
     for (; first1 != last1;) {
         if (first2 == last2) {
             break;
         }
-        if (*first2 < *first1) {
-            //*d_first = *first2;
+        int ret = (*first1)->name().compare((*first2)->name());
+        if (ret > 0) {
+            //*d_first = *first2; // FIXME: merge if appending
             ++first2;
-        } else {
-            //*d_first = *first1;
+        } else if (ret < 0) {
+            //*d_first = *first1; // FIXME: merge if appending
             ++first1;
+        } else {
+            (*first1)->assign(**first2);
+            ++first1, ++first2;
         }
     }
     return *this;

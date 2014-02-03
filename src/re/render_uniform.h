@@ -47,7 +47,12 @@ public:
         }
         
         virtual uniform& assign(uniform const& rhs) { // TODO: all subclasses
-            return *this = rhs;
+            assert(typeid(*this) == typeid(*(&rhs)));
+            *this = rhs;
+            std::memcpy(reinterpret_cast<char *>(&_size) + sizeof(_size),
+                        reinterpret_cast<char const*>(&rhs._size) + sizeof(_size),
+                        _size);
+            return *this;
         }
         
         std::string const& name() const {return _name; }
@@ -78,6 +83,10 @@ public:
         
         uniform_texture(uniform_texture&&) = default; // FIXME: might need to fix this, probably use texture::const_ptr
         uniform_texture& operator=(uniform_texture&&) = default;
+        
+        virtual uniform& assign(uniform const& rhs) override{
+            return *this = static_cast<uniform_texture const&>(rhs);
+        }
         
         virtual ~uniform_texture() {
             SAFE_RELEASE(value);
@@ -166,7 +175,6 @@ public:
     
     // merge/move the right side to itself, with or without the new uniforms
     render_uniform& merge(render_uniform const& rhs, bool = false);
-    render_uniform& merge(std::initializer_list<init_t> const& list, bool = false);
     
     void set_vector(std::string const& name, float v) {
         set_vector<uniform_float>(name, v);
