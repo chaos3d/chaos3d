@@ -182,40 +182,63 @@ sprite_material* sprite_mgr::add_material(std::unique_ptr<sprite_material>&& mat
 void sprite_mgr::update(goes_t const& gos) {
     auto transform_idx = com::transform_manager::component_idx();
     
-    //auto mark = gos.front()->mark();
-    // step 1: update all the indices, remove invisible or deleted sprites
+    // TODO: remove invisible sprites? test performance
+    // auto mark = gos.front()->mark();
+    
+    // step 1: update all the indices, remove deleted sprites
     for(auto& it : _buffers) {
+        auto size = it.sprites.size();
+        std::remove_if(it.sprites.begin(), it.sprites.end(),
+                       [] (layout_buffer::sprite_t const& spt) {
+                           return std::get<0>(spt)->_mark_for_remove;
+                       });
+        if(size == it.sprites.size() && !it.need_update)
+            continue;
+        
+        uint16_t idx = 0;
         for(auto& sprite : it.sprites) {
-            auto* spt = std::get<0>(sprite).get();
-            if(spt->_mark_for_remove
-               //|| spt->parent()->mark() != mark // only move sprites when it gets deleted?
-               ) {
-                // TODO: remove, update index
-                assert(0);
+            if(std::get<3>(sprite) != std::get<1>(sprite)
+               || std::get<1>(sprite) != idx) {
+                std::get<0>(sprite)->fill_indices(idx);
+                std::get<1>(sprite) = idx;
             }
+            idx += std::get<2>(sprite);
         }
+        it.need_update = true;
     }
 
     // step 2: update the position if needed
     auto offset = flag_offset();
     for(auto& it : _buffers) {
+        if(!it.need_update)
+            continue;
+        
         // uses the first buffer
         // TODO: asynch locking?
         auto* vb = it.layout->channels()[0].buffer.get();
-        void* buffer = vb->lock();
+        char* buffer = reinterpret_cast<char*>(vb->lock());
+        char* buffer_start = buffer;
         auto stride = it.layout->channels()[0].stride;
         for(auto& sprite : it.sprites) {
             auto* spt = std::get<0>(sprite).get();
-
+            
             auto* transform = spt->parent()->get_component<com::transform>(transform_idx);
-            if(!transform)
-                continue; // TODO: log
-
-            if(spt->parent()->is_set(offset)) {
-                spt->fill_buffer(buffer, stride, *transform);
+            if(transform) {
+                if(spt->parent()->is_set(offset)) {
+                    spt->fill_buffer(buffer, stride, *transform);
+                }else if(std::get<3>(sprite) != std::get<1>(sprite)) {
+                    std::memcpy(buffer, buffer_start + std::get<3>(sprite) * stride,
+                                stride * std::get<2>(sprite));
+                }
+            } else {
+                ; // TODO: log
             }
+            
+            std::get<3>(sprite) = std::get<1>(sprite);  // data synced
+            buffer += stride * std::get<2>(sprite);
         }
         vb->unlock();
+        it.need_update = false;
     }
 }
 
@@ -225,8 +248,8 @@ layout_buffer* sprite_mgr::assign_buffer(sprite* spt, uint32_t count, int typeId
     auto& buf = _buffers.back();
     buf.type_idx = typeIdx;
 
-    buf.sprites.emplace_back(spt, 0, count);
-    
+    buf.sprites.emplace_back(spt, 0, count, -1L);
+    buf.need_update = true;
     return &buf;
 }
 
@@ -252,7 +275,7 @@ layout_buffer sprite_mgr::create_buffer(vertices_t const& layout) {
                                            _device->create_index_buffer(Indices_Capacity * sizeof(uint16_t),
                                                                         vertex_buffer::Stream),
                                            vertex_layout::Triangles);
-    return layout_buffer({std::move(vlayout), {}, 0});
+    return layout_buffer({std::move(vlayout), {}, 0, true});
 }
 
 uint16_t sprite_mgr::add_type(vertices_t const& layout) {

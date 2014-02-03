@@ -22,6 +22,7 @@ namespace sprite2d {
         
     private:
         virtual void fill_buffer(void* buffer, size_t stride, com::transform const&) const override;
+        virtual void fill_indices(uint16_t) override;
         
     };
 }

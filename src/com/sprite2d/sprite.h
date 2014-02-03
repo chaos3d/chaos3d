@@ -39,13 +39,14 @@ namespace sprite2d {
     // the same layout. the batching command would just update the indices
     // (whether it's visible or not) to the index buffer.
     struct layout_buffer {
-        // sprite, start, count (number of vertices),
-        typedef std::tuple<std::unique_ptr<sprite>, size_t, size_t> sprite_t; // the buffer owns the sprite proxy
+        // sprite, start, count (number of vertices), old_start(moved)
+        typedef std::tuple<std::unique_ptr<sprite>, uint16_t, uint16_t, uint16_t> sprite_t; // the buffer owns the sprite proxy
         typedef std::vector<sprite_t> sprites_t;
                 
         vertex_layout::ptr layout; // FIXME: support multi-buffers?
         sprites_t sprites;
         uint32_t type_idx; // index for vertice types
+        bool need_update; // update vertex indices due to adding sprites
     };
     
 
@@ -188,7 +189,7 @@ namespace sprite2d {
 
         // vertices are moved around the buffer, indices needs updating to
         // point to the right place without re-computing the buffer
-        virtual void fill_indices() {};
+        virtual void fill_indices(uint16_t start_index) = 0;
         
         indices_t _indices;
         data_t _data;

@@ -6,7 +6,7 @@ using namespace sprite2d;
 quad_sprite::quad_sprite(game_object* go, int type)
 : sprite(go, 4, type)
 {
-    _indices = {0,1,2,1,2,3};
+    
 }
 
 quad_sprite* quad_sprite::clone(game_object* go) const {
@@ -19,6 +19,12 @@ quad_sprite* quad_sprite::clone(game_object* go) const {
     return quad;
 }
 
+void quad_sprite::fill_indices(uint16_t start_idx) {
+    _indices = {
+        start_idx, start_idx+1, start_idx+2,
+        start_idx+1, start_idx+2, start_idx+3
+    };
+}
 
 void quad_sprite::fill_buffer(void* raw, size_t stride, com::transform const& trans) const {
     // FIXME:
