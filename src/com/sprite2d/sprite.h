@@ -250,7 +250,11 @@ namespace sprite2d {
         // if the layout exists, (exactly the same while the order won't
         // matter because they will be sorted by the name), the previous
         // id will be returned w/o creating new one
-        uint8_t add_type(vertices_t const&);
+        uint16_t add_type(vertices_t const&);
+        
+        // vertex layout for a given type
+        // i.e. {"position", "uv"}
+        std::vector<std::string> vertex_layout(uint16_t type_idx) const;
 
         // sprite material
         // like layout types, it won't create a new one if it finds an exact same

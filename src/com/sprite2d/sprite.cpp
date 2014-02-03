@@ -112,15 +112,9 @@ sprite_mgr::sprite_mgr(render_device* dev) : _types({
     fs->compile(make_unique<memory_stream>(ps_source, strlen(ps_source)).get());
     
     auto gpu = _device->create_program();
-    gpu->link({"position", "uv"}, {vs.get(), fs.get()});
+    gpu->link(vertex_layout(0), {vs.get(), fs.get()});
     
     add_material("basic",
-                 gpu->retain<gpu_program>(),
-                 render_state::default_state_copy(),
-                 make_uniforms_ptr({
-        make_uniform("tex1", texture::null())
-    }));
-    add_material("casio",
                  gpu->retain<gpu_program>(),
                  render_state::default_state_copy(),
                  make_uniforms_ptr({
@@ -252,7 +246,7 @@ layout_buffer sprite_mgr::create_buffer(vertices_t const& layout) {
     return layout_buffer({std::move(vlayout), {}, 0});
 }
 
-uint8_t sprite_mgr::add_type(vertices_t const& layout) {
+uint16_t sprite_mgr::add_type(vertices_t const& layout) {
     auto it = std::find(_types.begin(), _types.end(), layout);
     if(it != _types.end())
         return it - _types.begin();
@@ -268,4 +262,15 @@ uint8_t sprite_mgr::add_type(vertices_t const& layout) {
                                   return lhs.name == rhs.name;
                               }) == _types.back().end());
     return _types.size() - 1;
+}
+
+std::vector<std::string> sprite_mgr::vertex_layout(uint16_t type_idx) const {
+    assert(type_idx >= 0 && type_idx < _types.size());
+    auto& t = _types[type_idx];
+    std::vector<std::string> layout;
+    layout.reserve(t.size());
+    std::transform(t.begin(), t.end(), layout.begin(), [] (sprite_vertex const& v) {
+        return v.name;
+    });
+    return std::move(layout);
 }
