@@ -40,8 +40,15 @@ public:
         return render_state::ptr(new render_state(*default_state()));
     }
     
+    render_state()
+    : _depth_func(DepthNone),
+    _src_blend(BlendNone), _dst_blend(BlendNone),
+    _src_alpha_blend(BlendNone), _dst_alpha_blend(BlendNone),
+    _blend_color(1.f,1.f,1.f,1.f), _blend_op(0), _alpha_blend_op(0),
+    _culling(0)
+    {}
+    
     ATTRIBUTE(uint8_t, depth_func);
-    ATTRIBUTE(uint8_t, blending);
     ATTRIBUTE(uint8_t, src_blend);
     ATTRIBUTE(uint8_t, dst_blend);
     ATTRIBUTE(uint8_t, src_alpha_blend);

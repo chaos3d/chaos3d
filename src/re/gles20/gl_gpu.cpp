@@ -1,4 +1,5 @@
 #include "re/gles20/gl_gpu.h"
+#include "re/gles20/gles2.h"
 #include "re/render_context.h"
 #include "io/data_stream.h"
 #include <algorithm>
@@ -254,10 +255,12 @@ void gl_gpu_program::assign_uniforms(render_context* context, render_uniform::un
 
 void gl_gpu_program::bind(render_context* context, render_uniform const* uniform) const{
     glUseProgram(_program_id);
-    
+    GLNOERROR;
+
     if(!uniform)
         return;
 
     assign_uniforms(context, uniform->uniforms());
+    GLNOERROR;
 }
 

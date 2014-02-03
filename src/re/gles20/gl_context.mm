@@ -95,6 +95,7 @@ void gl_context::apply() {
     std::transform(_textures.begin(), _textures.end(), _bound_textures.begin(), [](texture::const_ptr const&t) {
         return t->retain<texture>();
     });
+    GLNOERROR;
 
     //_bound_textures = std::move(_textures);
 }
