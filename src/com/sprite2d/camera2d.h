@@ -10,6 +10,8 @@ namespace sprite2d {
         camera2d(game_object*, int priority = 0);
         
     protected:
+        camera2d& operator=(camera2d const& rhs);
+
         virtual void collect(std::vector<game_object*> const&) override;
         virtual void do_render(com::render_component_mgr const&) override;
         
