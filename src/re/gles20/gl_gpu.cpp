@@ -165,7 +165,7 @@ void gl_gpu_program::load_uniforms() {
     });
 }
 
-void gl_gpu_program::link(std::initializer_list<char const*> layout, std::initializer_list<gpu_shader*> shaders) {
+void gl_gpu_program::link(std::vector<std::string> layout, std::initializer_list<gpu_shader*> shaders) {
     uniforms().clear();
     channels().clear();
     detach_all();
@@ -173,9 +173,9 @@ void gl_gpu_program::link(std::initializer_list<char const*> layout, std::initia
     int idx = -1;
     for(auto it : layout) {
         ++idx;
-        if(it == nullptr)
+        if(it.empty())
             continue;
-        glBindAttribLocation(_program_id, idx, it);
+        glBindAttribLocation(_program_id, idx, it.c_str());
     }
     
     for(auto it : shaders) {

@@ -23,7 +23,7 @@ public:
     gl_gpu_program();
     virtual ~gl_gpu_program();
     
-    virtual void link(std::initializer_list<char const*>, std::initializer_list<gpu_shader*>) override;
+    virtual void link(std::vector<std::string>, std::initializer_list<gpu_shader*>) override;
     virtual void bind(render_context*, render_uniform const*) const override;
     
 protected:
