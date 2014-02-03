@@ -268,7 +268,7 @@ std::vector<std::string> sprite_mgr::vertex_layout(uint16_t type_idx) const {
     assert(type_idx >= 0 && type_idx < _types.size());
     auto& t = _types[type_idx];
     std::vector<std::string> layout;
-    layout.reserve(t.size());
+    layout.resize(t.size());
     std::transform(t.begin(), t.end(), layout.begin(), [] (sprite_vertex const& v) {
         return v.name;
     });
