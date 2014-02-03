@@ -8,6 +8,17 @@ quad_sprite::quad_sprite(game_object* go, int type)
 {
 }
 
+quad_sprite* quad_sprite::clone(game_object* go) const {
+    quad_sprite* quad = new quad_sprite(go, 0); //FIXME: type
+    quad->_data.material = _data.material;
+    quad->_frame = _frame;
+    quad->_bound = _bound;
+    quad->set_dirty();
+    
+    return quad;
+}
+
+
 void quad_sprite::fill_buffer(void* raw, size_t stride, com::transform const& trans) const {
     // FIXME:
     // stride, and index

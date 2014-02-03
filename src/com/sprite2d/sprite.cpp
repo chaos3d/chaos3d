@@ -101,11 +101,11 @@ sprite_mgr::sprite_mgr(render_device* dev) : _types({
     auto gpu = _device->create_program();
     gpu->link({"position", "uv"}, {vs.get(), fs.get()});
     
-    _materials.emplace_back(new sprite_material(gpu->retain<gpu_program>(),
-                                                render_state::default_state_copy(),
-                                                make_uniforms_ptr({
+    add_material(gpu->retain<gpu_program>(),
+                 render_state::default_state_copy(),
+                 make_uniforms_ptr({
         make_uniform("tex1", texture::null())
-    })));
+    }));
 #endif
 }
 

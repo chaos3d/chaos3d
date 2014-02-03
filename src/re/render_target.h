@@ -8,12 +8,13 @@
 
 class render_context;
 
-class render_target {
+class render_target : public referenced_count {
 public:
     typedef Eigen::Vector2f target_size_t;
     typedef Eigen::Vector4f color_t;
     typedef std::vector<render_batch> batches_t;
-    typedef std::shared_ptr<render_target> ptr;
+    typedef std::unique_ptr<render_target, referenced_count::release_deleter> ptr;
+    typedef std::unique_ptr<render_target const, referenced_count::release_deleter> const_ptr;
     
     enum { RGB565, RGBA8888, SRGBA8888 };
     enum { NODEPTH, DEPTH16, DEPTH24 };
@@ -60,7 +61,7 @@ public:
     texture* get_texture() const { return _texture; };
     
 private:
-    texture* _texture;
+    texture* _texture; // FIXME: texture ptr
 };
 
 class render_window : public render_target {

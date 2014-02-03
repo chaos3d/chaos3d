@@ -46,11 +46,15 @@ namespace com {
             _target->set_clear_color(color);
         }
         
+        void set_target(render_target* target) {
+            _target = target->retain<render_target>();
+        }
+        
     protected:
         camera& operator=(camera const&);
         virtual ~camera();
         renderables_t& renderables() { return _renderables; };
-        render_target::ptr target() const { return _target; };
+        render_target::ptr target() const { return _target->retain<render_target>(); };
         
     private:
         matrix4f _project_mat;

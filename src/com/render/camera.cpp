@@ -15,7 +15,7 @@ camera::~camera() {
 camera& camera::operator=(camera const& rhs) {
     _project_mat = rhs._project_mat;
     _view_mat = rhs._view_mat;
-    _target = rhs._target;
+    _target = rhs._target->retain<render_target>();
     _disabled = rhs._disabled;
     return *this;
 }

@@ -38,6 +38,10 @@ namespace sprite2d {
         sprites_t sprites;
         uint32_t type_idx; // index for vertice types
     };
+    
+    class locked_buffer {
+        
+    };
 
     // "constant" sprite material, owned by sprite_mgr
     // the batched sprites will shared the same material, so any change
@@ -100,6 +104,10 @@ namespace sprite2d {
             sprite_material* material;
             data_t() : buffer(nullptr), material(nullptr)
             {}
+            
+            bool operator==(data_t const& rhs) const {
+                return std::memcmp(this, &rhs, sizeof(*this)) == 0;
+            }
         };
         
     public:
@@ -113,7 +121,7 @@ namespace sprite2d {
         
         // batching operation
         bool batchable(sprite const& rhs) const {
-            return std::memcmp(&rhs._data, & _data, sizeof(_data)) == 0;
+            return _data == rhs._data;
         }
         
         vertex_layout::ptr layout() const {
@@ -137,12 +145,14 @@ namespace sprite2d {
         virtual void generate_batch(render_target*, size_t batched) const;
         
     protected:
+        sprite(sprite const& rhs);
         
         // only mark for the removal, the sprite_mgr owns it
         virtual void destroy();
         
         // fill the vertices into the buffer
         // one shouldn't use more than it requested
+        // TODO: locked_buffer
         virtual void fill_buffer(void* buffer, size_t stride, com::transform const&) const = 0;
 
         // vertices are moved around the buffer, indices needs updating to
@@ -180,6 +190,7 @@ namespace sprite2d {
                 return type == rhs.type && count == rhs.type && name == rhs.name;
             }
         };
+        
         typedef std::vector<sprite_vertex> vertices_t;
         typedef std::vector<vertices_t> types_t; // vertex layout types
        
@@ -223,6 +234,8 @@ namespace sprite2d {
                                       render_state::ptr && state,
                                       render_uniform::ptr && uniform);
         sprite_material* add_material(std::unique_ptr<sprite_material>&&);
+        
+        materials_t const& materials() const { return _materials; }
         
     protected:
         virtual void update(std::vector<game_object*> const&);
