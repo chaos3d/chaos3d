@@ -31,6 +31,10 @@ void transform::relocate(game_object* go) {
 }
 
 #pragma mark - the manager
+transform_manager::transform_manager()
+: _global_parent(affine3f::Identity())
+{}
+
 void transform_manager::update(std::vector<game_object*> const& gos) {
     auto idx = transform_manager::component_idx();
     for(auto& it : gos) {

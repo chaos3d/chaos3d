@@ -20,7 +20,12 @@ namespace com {
         typedef transform_manager manager_t;
         
     public:
-        transform(game_object* go) : component(go)  {}
+        transform(game_object* go)
+        : component(go),
+        _rotate(1.f, 0.f, 0.f, 0.f),
+        _scale(1.f, 1.f, 1.f),
+        _translate(0.f, 0.f, 0.f)
+        {}
 
         virtual transform* clone(game_object*) const override;
 
@@ -74,6 +79,9 @@ namespace com {
     public:
         typedef std::integral_constant<uint32_t, 1> flag_bit_t; // the dirty flag
 
+    public:
+        transform_manager();
+        
     protected:
         virtual void update(std::vector<game_object*> const&);
         
