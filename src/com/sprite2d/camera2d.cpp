@@ -41,11 +41,11 @@ void camera2d::collect(const std::vector<game_object *> &goes) {
 
     for(sprite* next = next_sprite(); next != nullptr; next = next_sprite()) {        
         if(!next->batchable(*spt)) {
+            buffer->unlock();
             spt->generate_batch(target().get(), offset / sizeof(uint16_t));
             
             spt = next;
             
-            buffer->unlock();
             buffer = spt->index_buffer();
             buffer_raw = reinterpret_cast<char*>(buffer->lock());
             offset = 0;
