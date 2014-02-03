@@ -239,7 +239,7 @@ namespace sprite2d {
         struct position_uv_color_t {};
         
         enum { // buffer configs
-            Vertex_Capacity = 8096,  // number of vertices
+            Vertex_Capacity = 4096,  // number of vertices
             Indices_Capacity = 6 * 1024, // number of indices
         };
         
@@ -250,7 +250,7 @@ namespace sprite2d {
         // add the sprite to the vertex buffer, the manager will "ask" the sprite
         // to fill out the buffer and then the index buffer
         // note: the mgr will take over the ownership
-        layout_buffer* assign_buffer(sprite*, uint32_t count, int typeIdx);
+        layout_buffer* assign_buffer(sprite*, uint32_t count, uint32_t typeIdx);
 
         // add a vertice layout/type, returned value to be used
         // to request the buffer

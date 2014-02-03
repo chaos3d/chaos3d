@@ -36,6 +36,7 @@ void sprite::destroy() {
 }
 
 void sprite::generate_batch(render_target* target, size_t batched) const {
+    assert(_data.buffer != nullptr && _data.material != nullptr);
     _data.buffer->layout->set_size(batched);
     target->add_batch(_data.buffer->layout->retain<vertex_layout const>(),
                       _data.material->uniform(),
@@ -242,15 +243,34 @@ void sprite_mgr::update(goes_t const& gos) {
     }
 }
 
-layout_buffer* sprite_mgr::assign_buffer(sprite* spt, uint32_t count, int typeIdx) {
-    // FIXME, test only
-    _buffers.emplace_back(create_buffer(_types[typeIdx]));
-    auto& buf = _buffers.back();
-    buf.type_idx = typeIdx;
-
-    buf.sprites.emplace_back(spt, 0, count, -1L);
-    buf.need_update = true;
-    return &buf;
+layout_buffer* sprite_mgr::assign_buffer(sprite* spt, uint32_t count, uint32_t typeIdx) {
+    layout_buffer *buf = nullptr;
+    auto it = std::lower_bound(_buffers.begin(), _buffers.end(), typeIdx,
+                               [] (layout_buffer const& buf, uint32_t type) {
+                                   return buf.type_idx < type;
+                               });
+    do{
+        if(it == _buffers.end() || it->type_idx != typeIdx)
+            break;
+            
+        auto& spt = it->sprites.back();
+        if(std::get<1>(spt) + std::get<2>(spt) + count > Vertex_Capacity)
+            break;
+        buf = &*it;
+    }while(0);
+    
+    if(buf == nullptr) {
+        _buffers.emplace(it, std::move(create_buffer(_types[typeIdx])));
+        buf = &_buffers.back();
+    }
+    
+    buf->type_idx = typeIdx;
+    buf->sprites.emplace_back(spt,
+                              buf->sprites.size() > 0 ?
+                              std::get<1>(buf->sprites.back()) + std::get<2>(buf->sprites.back()) : 0,
+                              count, -1U);
+    buf->need_update = true;
+    return buf;
 }
 
 layout_buffer sprite_mgr::create_buffer(vertices_t const& layout) {
