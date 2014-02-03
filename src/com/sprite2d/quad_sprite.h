@@ -2,7 +2,6 @@
 #define _SPRITE2D_QUAD_SPRITE_H
 
 #include "com/sprite2d/sprite.h"
-#include "go/game_object.h"
 #include "Eigen/Geometry"
 
 namespace sprite2d {
@@ -15,10 +14,8 @@ namespace sprite2d {
     public:
         quad_sprite(game_object*, int type);
         
-        ATTRIBUTE(box2f, frame);
-        ATTRIBUTE(box2f, bound);
-        
-        void set_dirty() const { parent()->set_flag(sprite_mgr::flag_offset()); }
+        ATTRIBUTE(box2f, frame); // texture uv
+        ATTRIBUTE(box2f, bound); // position and size
         
     protected:
         virtual quad_sprite* clone(game_object*) const override;

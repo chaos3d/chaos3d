@@ -26,6 +26,14 @@ namespace sprite2d {
     class camera2d;
     class sprite;
     
+    // helper struct for locked buffers
+    struct locked_buffer {
+        char* buffer;       // buffer address
+        uint8_t type;       // data type, always being FLOAT?
+        uint8_t count;      // unit counts
+        uint16_t stride;    // data stride
+    };
+
     // batching layout
     // the shared vertex buffer contains all the sprites that're using
     // the same layout. the batching command would just update the indices
@@ -34,15 +42,12 @@ namespace sprite2d {
         // sprite, start, count (number of vertices),
         typedef std::tuple<std::unique_ptr<sprite>, size_t, size_t> sprite_t; // the buffer owns the sprite proxy
         typedef std::vector<sprite_t> sprites_t;
-        
+                
         vertex_layout::ptr layout; // FIXME: support multi-buffers?
         sprites_t sprites;
         uint32_t type_idx; // index for vertice types
     };
     
-    class locked_buffer {
-        
-    };
 
     // "constant" sprite material, owned by sprite_mgr
     // the batched sprites will shared the same material, so any change
@@ -226,8 +231,9 @@ namespace sprite2d {
         typedef std::vector<spt_mat_ptr> materials_t; // shared materials, TODO: sorted by ???
         
         enum { // a few default layouts and material
-            position_uv = 0,
+            position_uv = 0,    // pos*4 (forth element being alpha, uv*2
         };
+        
         struct position_uv_t {};
         struct position_uv_color_t {};
         

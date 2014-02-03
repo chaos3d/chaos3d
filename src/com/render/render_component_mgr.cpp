@@ -1,6 +1,5 @@
 #include "com/render/render_component_mgr.h"
 #include "com/render/camera.h"
-
 using namespace com;
 
 render_component_mgr::render_component_mgr(render_device_ptr device, render_context_ptr context)

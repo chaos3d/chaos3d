@@ -80,7 +80,7 @@ sprite_material sprite_material::set_uniforms(const std::initializer_list<render
 
 #pragma mark - the manager
 sprite_mgr::sprite_mgr(render_device* dev) : _types({
-    {{"position", vertex_layout::Float, 2}, {"uv", vertex_layout::Float, 2}},
+    {{"position", vertex_layout::Float, 4}, {"uv", vertex_layout::Float, 2}},
 }), _device(dev){
     assert(dev != nullptr); // needs a device
 
@@ -89,19 +89,22 @@ sprite_mgr::sprite_mgr(render_device* dev) : _types({
     attribute vec4 position;
     attribute lowp vec2 uv;
     varying lowp vec2 uvVaring;
+    varying lowp float alpha;
     void main() {
-        gl_Position = position;
+        gl_Position = vec4(position.xyz, 1.);
         uvVaring = uv;
+        alpha = position.w;
     }
     )shader";
     
     const char* ps_source = R"shader(
     uniform sampler2D tex1;
     varying lowp vec2 uvVaring;
+    varying lowp float alpha;
     
     void main(void)
     {
-        gl_FragColor = texture2D(tex1, uvVaring);
+        gl_FragColor = texture2D(tex1, uvVaring) * vec4(1.0, 1.0, 1.0, alpha);
     }
     )shader";
 
@@ -114,9 +117,15 @@ sprite_mgr::sprite_mgr(render_device* dev) : _types({
     auto gpu = _device->create_program();
     gpu->link(vertex_layout(0), {vs.get(), fs.get()});
     
+    render_state state;
+    state.set_src_alpha_blend(render_state::BlendSrcAlpha);
+    state.set_src_blend(render_state::BlendSrcColor);
+    state.set_dst_alpha_blend(render_state::BlendOneMinusSrcAlpha);
+    state.set_dst_blend(render_state::BlendOneMinusSrcColor);
+    
     add_material("basic",
                  gpu->retain<gpu_program>(),
-                 render_state::default_state_copy(),
+                 std::make_shared<render_state>(state),
                  make_uniforms_ptr({
         make_uniform("tex1", texture::null())
     }));

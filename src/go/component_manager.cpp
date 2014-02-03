@@ -37,6 +37,7 @@ private:
             return;
         
         // TODO: cached the results
+        // TODO2: wrap with a collection result with helper functions
         std::vector<game_object*> gos;
         gos.reserve(game_object::number_of_objects());
         

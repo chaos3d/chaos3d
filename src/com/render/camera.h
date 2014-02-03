@@ -47,7 +47,7 @@ namespace com {
         }
         
         void set_target(render_target* target) {
-            _target = target->retain<render_target>();
+            _target = target->retain<render_target>(); // TODO: weak reference?
         }
         
     protected:
