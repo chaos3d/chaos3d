@@ -165,6 +165,11 @@ namespace sprite2d {
             }
         }
         
+        // shared material
+        sprite_material* shared_material() const {
+            return _data.material;
+        }
+        
         // reset a new material by modifying the current one using the given uniforms
         void mod_material(std::initializer_list<render_uniform::init_t> const&,
                           render_state::ptr const& = render_state::ptr());
