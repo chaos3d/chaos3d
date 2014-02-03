@@ -281,10 +281,16 @@ namespace sprite2d {
         
         materials_t const& materials() const { return _materials; }
         
+        // TODO: sort sprites in the game object order so it could be
+        // cache effecient
+        void sort_sprites(goes_t const& gos);
+        
     protected:
         virtual void update(std::vector<game_object*> const&);
         
     private:
+        template<class F>
+        void update_buffer(layout_buffer&, F const&);
         layout_buffer create_buffer(vertices_t const&);
         
     private:

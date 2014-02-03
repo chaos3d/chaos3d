@@ -180,33 +180,65 @@ sprite_material* sprite_mgr::add_material(std::unique_ptr<sprite_material>&& mat
     }
 }
 
+template<class F>
+void sprite_mgr::update_buffer(sprite2d::layout_buffer &buffer, const F &remove_or_update) {
+    auto first = buffer.sprites.begin(), last = buffer.sprites.end();
+    for (; first != last; ++first) {
+        if (remove_or_update(*first)) {
+            break;
+        }
+    }
+    
+    if(first != last) {
+        for(auto current = first; ++current != last;) {
+            if (!remove_or_update(*current))
+                *first++ = std::move(*current);
+        }
+    }
+    
+    buffer.need_update = buffer.need_update || first != last;
+    buffer.sprites.erase(first, buffer.sprites.end());
+}
+
+void sprite_mgr::sort_sprites(const goes_t &gos) {
+    // TODO: remove invisible sprites? test performance
+    //auto mark = gos.front()->mark();
+    
+}
+
 void sprite_mgr::update(goes_t const& gos) {
     auto transform_idx = com::transform_manager::component_idx();
     
-    // TODO: remove invisible sprites? test performance
-    // auto mark = gos.front()->mark();
-    
     // step 1: update all the indices, remove deleted sprites
     for(auto& it : _buffers) {
-        auto size = it.sprites.size();
-        std::remove_if(it.sprites.begin(), it.sprites.end(),
-                       [] (layout_buffer::sprite_t const& spt) {
-                           return std::get<0>(spt)->_mark_for_remove;
-                       });
-        if(size == it.sprites.size() && !it.need_update)
-            continue;
-        
+        bool& update = it.need_update;
         uint16_t idx = 0;
-        for(auto& sprite : it.sprites) {
+
+        update_buffer(it, [&update, &idx] (layout_buffer::sprite_t& sprite) {
+            if(std::get<0>(sprite)->_mark_for_remove)
+                return true;
+            
+#if 0
+            // TODO: move the invisible sprites to the end?
+            // this can also be done by re-ordering the sprites in
+            // a separate function
+            if(std::get<0>(sprite)->parent()->mark() != mark)
+                return true;
+#endif
+            
             if(std::get<3>(sprite) != std::get<1>(sprite)
                || std::get<1>(sprite) != idx) {
                 std::get<0>(sprite)->fill_indices(idx);
                 std::get<1>(sprite) = idx;
             }
             idx += std::get<2>(sprite);
-        }
-        it.need_update = true;
+            return false;
+        });
     }
+    
+    // step 1.1: re-order the sprites, remove the invisible sprites
+    // to make it cache efficient
+    sort_sprites(gos);
 
     // step 2: update the position if needed
     auto offset = flag_offset();
@@ -220,6 +252,7 @@ void sprite_mgr::update(goes_t const& gos) {
         char* buffer = reinterpret_cast<char*>(vb->lock());
         char* buffer_start = buffer;
         auto stride = it.layout->channels()[0].stride;
+        bool no_read = true; // oes extend doesn't allow us to read
         for(auto& sprite : it.sprites) {
             auto* spt = std::get<0>(sprite).get();
             
@@ -228,8 +261,11 @@ void sprite_mgr::update(goes_t const& gos) {
                 if(spt->parent()->is_set(offset)) {
                     spt->fill_buffer(buffer, stride, *transform);
                 }else if(std::get<3>(sprite) != std::get<1>(sprite)) {
-                    std::memcpy(buffer, buffer_start + std::get<3>(sprite) * stride,
-                                stride * std::get<2>(sprite));
+                    if(!no_read)
+                        std::memcpy(buffer, buffer_start + std::get<3>(sprite) * stride,
+                                    stride * std::get<2>(sprite));
+                    else
+                        spt->fill_buffer(buffer, stride, *transform);
                 }
             } else {
                 ; // TODO: log
