@@ -35,13 +35,14 @@ void sprite::destroy() {
     _mark_for_remove = true;
 }
 
-void sprite::generate_batch(render_target* target, size_t batched) const {
+void sprite::generate_batch(render_target* target, size_t start, size_t count) const {
     assert(_data.buffer != nullptr && _data.material != nullptr);
-    _data.buffer->layout->set_size(batched);
     target->add_batch(_data.buffer->layout->retain<vertex_layout const>(),
                       _data.material->uniform(),
                       _data.material->state(),
-                      _data.material->program()->retain<gpu_program const>());
+                      _data.material->program()->retain<gpu_program const>(),
+                      start,
+                      count);
 }
 
 bool sprite::set_material(const std::string & name,

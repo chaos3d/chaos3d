@@ -38,17 +38,23 @@ void camera2d::collect(const std::vector<game_object *> &goes) {
     std::memcpy(buffer_raw, raw, raw_size);
     buffer_raw += raw_size;
     size_t offset = raw_size;
+    size_t start = 0;
 
     for(sprite* next = next_sprite(); next != nullptr; next = next_sprite()) {        
         if(!next->batchable(*spt)) {
-            buffer->unlock();
-            spt->generate_batch(target().get(), offset / sizeof(uint16_t));
+            spt->generate_batch(target().get(), start, (offset - start) / sizeof(uint16_t));
             
-            spt = next;
-            
-            buffer = spt->index_buffer();
-            buffer_raw = reinterpret_cast<char*>(buffer->lock());
-            offset = 0;
+            spt = next;            
+            auto next_buf = spt->index_buffer();
+            if(next_buf != buffer) {
+                buffer->unlock();
+                buffer = std::move(next_buf);
+                buffer_raw = reinterpret_cast<char*>(buffer->lock());
+                offset = 0;
+                start = 0;
+            } else {
+                start = offset;
+            }
         } else { // in order to batch, at least ...
             assert(next->index_buffer() == spt->index_buffer()); // index buffer has to be the same
             assert(next->layout() == spt->layout()); // layout needs to be the same
@@ -63,7 +69,7 @@ void camera2d::collect(const std::vector<game_object *> &goes) {
     }
     
     buffer->unlock();
-    spt->generate_batch(target().get(), offset / sizeof(uint16_t));
+    spt->generate_batch(target().get(), start, (offset - start) / sizeof(uint16_t));
     target()->set_batch_retained(false);
 }
 

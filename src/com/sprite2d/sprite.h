@@ -179,7 +179,7 @@ namespace sprite2d {
         // generate batch/batches
         //  batched is the number of indices being shared among
         //  batchable sprites in the same vertices layout
-        virtual void generate_batch(render_target*, size_t batched) const;
+        virtual void generate_batch(render_target*, size_t start, size_t count) const;
         
     protected:
         sprite(sprite const& rhs);
