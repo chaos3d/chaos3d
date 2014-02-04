@@ -22,6 +22,7 @@ public:
     
     virtual void* lock(size_t offset = 0, size_t size = 0) = 0; //TODO: async locking
     virtual void unlock() = 0;
+    virtual bool is_locked() const = 0;
     virtual void load(const void*, size_t offset, size_t size) = 0;
     
     size_t size() const { return _size; }

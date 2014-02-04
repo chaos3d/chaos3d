@@ -31,12 +31,26 @@ void gl_vertex_buffer::unbind() {
     GLNOERROR;
 }
 
+bool gl_vertex_buffer::is_locked() const {
+#if GL_OES_mapbuffer
+    assert(glIsBuffer(_buffer_id) == GL_TRUE);
+    GLint r = GL_FALSE;
+    glBindBuffer(GL_ARRAY_BUFFER, _buffer_id);
+    glGetBufferParameteriv(GL_ARRAY_BUFFER, GL_BUFFER_MAPPED_OES, &r);
+    GLNOERROR;
+    return r == GL_TRUE;
+#else
+    assert(0);
+    return false;
+#endif
+}
+
 void* gl_vertex_buffer::lock(size_t offset, size_t size) {
 #if GL_OES_mapbuffer
     if(size == 0)
         size = vertex_buffer::size();
     assert(offset + size <= vertex_buffer::size());
-    GLASSERT1(glIsBuffer(_buffer_id) == GL_TRUE);
+    assert(glIsBuffer(_buffer_id) == GL_TRUE);
     glBindBuffer(GL_ARRAY_BUFFER, _buffer_id);
     void* buf = (char*)glMapBufferOES(GL_ARRAY_BUFFER, GL_WRITE_ONLY_OES) + offset;
     GLNOERROR;
@@ -88,6 +102,20 @@ void gl_vertex_index_buffer::bind() {
 void gl_vertex_index_buffer::unbind() {
 	glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 );
     GLNOERROR;
+}
+
+bool gl_vertex_index_buffer::is_locked() const {
+#if GL_OES_mapbuffer
+    assert(glIsBuffer(_buffer_id) == GL_TRUE);
+    GLint r = GL_FALSE;
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffer_id);
+    glGetBufferParameteriv(GL_ELEMENT_ARRAY_BUFFER, GL_BUFFER_MAPPED_OES, &r);
+    GLNOERROR;
+    return r == GL_TRUE;
+#else
+    assert(0);
+    return false;
+#endif
 }
 
 void* gl_vertex_index_buffer::lock(size_t offset, size_t size) {

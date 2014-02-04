@@ -33,10 +33,59 @@ public:
         offset(offset_), stride(stride_)
         {}
     };
-
     typedef std::vector<channel> channels_t;
     typedef std::unique_ptr<vertex_layout, referenced_count::release_deleter> ptr;
     typedef std::unique_ptr<vertex_layout const, referenced_count::release_deleter> const_ptr;
+    
+    // the layout lock
+    // all the vertex buffers will be locked and unlocked at destruction time
+    // help to access channel data (buffer/stride/type) easily
+    // move offsets will affect all the buffers such that getting buffers for
+    // each channel will consider the offset
+    class locked_buffer {
+    public:
+        explicit locked_buffer(vertex_layout::ptr&& layout)
+        : _layout(std::move(layout)), _offset(0) {
+            _buffer.reserve(_layout->channels().size());
+        }
+        
+        char* buffer(int idx) const {
+            assert(idx >= 0 && idx < _buffer.size());
+            return _buffer[idx] + _offset * stride(idx);
+        }
+        
+        size_t stride(int idx) const {
+            assert(idx >= 0 && idx < _buffer.size());
+            return _layout->channels()[idx].stride;
+        }
+        
+        int type(int idx) const{
+            assert(idx >= 0 && idx < _buffer.size());
+            return _layout->channels()[idx].type;
+        }
+        
+        int unit(int idx) const{
+            assert(idx >= 0 && idx < _buffer.size());
+            return _layout->channels()[idx].unit;
+        }
+        
+        void unlock();
+        
+        ~locked_buffer() { unlock(); }
+        locked_buffer(locked_buffer&&) = default;
+        
+        locked_buffer(locked_buffer const&) = delete;
+        locked_buffer() = delete;
+        locked_buffer& operator=(locked_buffer const&) = delete;
+        locked_buffer& operator=(locked_buffer &&) = delete;
+        
+    private:
+        std::vector<char*> _buffer; // buffer address
+        vertex_layout::ptr _layout;
+        
+        ATTRIBUTE(size_t, offset);
+        friend class vertex_layout;
+    };
     
 public:
     vertex_layout(channels_t&& channels,
@@ -61,6 +110,9 @@ public:
     
     channels_t const& channels() const { return _channels; }
 
+    // TODO: asynch locking? more options? per buffer locking?
+    locked_buffer lock_channels();
+    
     static size_t type_size(int type) {
         assert(type >= 0 && type < TypeMax);
         static size_t _size[] = {sizeof(char), sizeof(float)};

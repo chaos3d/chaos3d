@@ -13,6 +13,7 @@ public:
     
     virtual void* lock(size_t offset, size_t size) override;
     virtual void unlock() override;
+    virtual bool is_locked() const override;
     virtual void load(const void*, size_t offset, size_t size) override;
 
     GLuint buffer_id() const { return _buffer_id; }
@@ -30,6 +31,7 @@ public:
     
     virtual void* lock(size_t offset, size_t size) override;
     virtual void unlock() override;
+    virtual bool is_locked() const override;
     virtual void load(const void*, size_t offset, size_t size) override;
     
     GLuint buffer_id() const { return _buffer_id; }
