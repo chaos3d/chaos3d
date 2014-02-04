@@ -26,14 +26,6 @@ namespace sprite2d {
     class camera2d;
     class sprite;
     
-    // helper struct for locked buffers
-    struct locked_buffer {
-        char* buffer;       // buffer address
-        uint8_t type;       // data type, always being FLOAT?
-        uint8_t count;      // unit counts
-        uint16_t stride;    // data stride
-    };
-
     // batching layout
     // the shared vertex buffer contains all the sprites that're using
     // the same layout. the batching command would just update the indices
@@ -42,11 +34,13 @@ namespace sprite2d {
         // sprite, start, count (number of vertices), old_start(moved)
         typedef std::tuple<std::unique_ptr<sprite>, uint16_t, uint16_t, uint16_t> sprite_t; // the buffer owns the sprite proxy
         typedef std::vector<sprite_t> sprites_t;
-                
-        vertex_layout::ptr layout; // FIXME: support multi-buffers?
+        enum { POSITION, UV, COLOR, MAX }; // common vertex channels
+        
+        vertex_layout::ptr layout;
         sprites_t sprites;
         uint32_t type_idx; // index for vertice types
         bool need_update; // update vertex indices due to adding sprites
+        std::array<int, MAX> channel_indices; // {{-1,-1,-1}};
     };
     
 
@@ -189,8 +183,8 @@ namespace sprite2d {
         
         // fill the vertices into the buffer
         // one shouldn't use more than it requested
-        // TODO: locked_buffer
-        virtual void fill_buffer(void* buffer, size_t stride, com::transform const&) const = 0;
+        virtual void fill_buffer(vertex_layout::locked_buffer const& buffer,
+                                 com::transform const&) const = 0;
 
         // vertices are moved around the buffer, indices needs updating to
         // point to the right place without re-computing the buffer
@@ -250,7 +244,10 @@ namespace sprite2d {
         
     public:
         sprite_mgr(render_device*,
-                   size_t vsize = Vertex_Capacity, size_t isize = Indices_Capacity);
+                   size_t vsize = Vertex_Capacity, size_t isize = Indices_Capacity,
+                   std::array<std::string, layout_buffer::MAX> const& =
+                   {"position", "uv", "color"} // default channel names
+                   );
         virtual ~sprite_mgr();
 
         // add the sprite to the vertex buffer, the manager will "ask" the sprite
@@ -268,6 +265,9 @@ namespace sprite2d {
         // vertex layout for a given type
         // i.e. {"position", "uv"}
         std::vector<std::string> vertex_layout(uint16_t type_idx) const;
+        
+        // retrieve the built-in/default channels indices 
+        std::array<int, layout_buffer::MAX> map_channel(vertices_t const&) const;
 
         // sprite material
         // like layout types, it won't create a new one if it finds an exact same
@@ -296,6 +296,7 @@ namespace sprite2d {
         
     private:
         render_device* _device;
+        std::array<std::string, layout_buffer::MAX> _channel_names;
         types_t _types;
         buffers_t _buffers;
         materials_t _materials;

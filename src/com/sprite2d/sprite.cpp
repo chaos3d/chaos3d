@@ -81,9 +81,15 @@ sprite_material sprite_material::set_uniforms(const std::initializer_list<render
 }
 
 #pragma mark - the manager
-sprite_mgr::sprite_mgr(render_device* dev, size_t vsize, size_t isize) : _types({
-    {{"position", vertex_layout::Float, 4}, {"uv", vertex_layout::Float, 2}},
-}), _device(dev), _vertex_buffer_size(vsize), _index_buffer_size(isize){
+sprite_mgr::sprite_mgr(render_device* dev, size_t vsize, size_t isize,
+                       std::array<std::string, layout_buffer::MAX> const& channels)
+: _types({
+    {
+        {channels[layout_buffer::POSITION], vertex_layout::Float, 4},
+        {channels[layout_buffer::UV], vertex_layout::Float, 2}
+    },
+}), _device(dev), _vertex_buffer_size(vsize), _index_buffer_size(isize),
+_channel_names(channels){
     assert(dev != nullptr); // needs a device
 
 #if 1 // QUICK TEST
@@ -241,40 +247,43 @@ void sprite_mgr::update(goes_t const& gos) {
     sort_sprites(gos);
 
     // step 2: update the position if needed
-    auto offset = flag_offset();
+    auto flag = flag_offset();
     for(auto& it : _buffers) {
         if(!it->need_update)
             continue;
         
         // uses the first buffer
         // TODO: asynch locking?
-        auto* vb = it->layout->channels()[0].buffer.get();
-        char* buffer = reinterpret_cast<char*>(vb->lock());
-        char* buffer_start = buffer;
-        auto stride = it->layout->channels()[0].stride;
-        bool no_read = true; // oes extend doesn't allow us to read
+        auto locked = it->layout->lock_channels();
+        size_t offset = 0;
+        
+        //bool no_read = true; // oes extend doesn't allow us to read
         for(auto& sprite : it->sprites) {
             auto* spt = std::get<0>(sprite).get();
             
             auto* transform = spt->parent()->get_component<com::transform>(transform_idx);
             if(transform) {
-                if(spt->parent()->is_set(offset)) {
-                    spt->fill_buffer(buffer, stride, *transform);
+                if(spt->parent()->is_set(flag)) {
+                    spt->fill_buffer(locked, *transform);
                 }else if(std::get<3>(sprite) != std::get<1>(sprite)) {
+#if 0
+                    // TODO: move data instead of re-building the data??
                     if(!no_read)
                         std::memcpy(buffer, buffer_start + std::get<3>(sprite) * stride,
                                     stride * std::get<2>(sprite));
                     else
-                        spt->fill_buffer(buffer, stride, *transform);
+#endif
+                        spt->fill_buffer(locked, *transform);
                 }
             } else {
                 ; // TODO: log
             }
             
             std::get<3>(sprite) = std::get<1>(sprite);  // data synced
-            buffer += stride * std::get<2>(sprite);
+            locked.set_offset(offset += std::get<2>(sprite));
         }
-        vb->unlock();
+        
+        locked.unlock();
         it->need_update = false;
     }
 }
@@ -334,7 +343,7 @@ std::unique_ptr<layout_buffer> sprite_mgr::create_buffer(vertices_t const& layou
                                            _device->create_index_buffer(_index_buffer_size * sizeof(uint16_t),
                                                                         vertex_buffer::Stream),
                                            vertex_layout::Triangles);
-    return make_unique<layout_buffer>(layout_buffer{std::move(vlayout), {}, 0, true});
+    return make_unique<layout_buffer>(layout_buffer{std::move(vlayout), {}, 0, true, map_channel(layout)});
 }
 
 uint16_t sprite_mgr::add_type(vertices_t const& layout) {
@@ -353,6 +362,20 @@ uint16_t sprite_mgr::add_type(vertices_t const& layout) {
                                   return lhs.name == rhs.name;
                               }) == _types.back().end());
     return _types.size() - 1;
+}
+
+std::array<int, layout_buffer::MAX> sprite_mgr::map_channel(vertices_t const& layout) const {
+    std::array<int, layout_buffer::MAX> indices = {{-1,-1,-1}};
+    for(int i = 0; i<_channel_names.size(); ++i) {
+        auto it = std::lower_bound(layout.begin(), layout.end(), _channel_names[i],
+                                   [] (sprite_vertex const& vtx, std::string const& channel) {
+                                       return vtx.name < channel;
+                                   });
+        if(it != layout.end() && it->name == _channel_names[i]) {
+            indices[i] = std::distance(layout.begin(), it);
+        }
+    }
+    return std::move(indices);
 }
 
 std::vector<std::string> sprite_mgr::vertex_layout(uint16_t type_idx) const {

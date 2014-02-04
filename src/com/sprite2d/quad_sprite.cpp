@@ -4,7 +4,7 @@
 using namespace sprite2d;
 
 quad_sprite::quad_sprite(game_object* go, int type)
-: sprite(go, 4, type)
+: sprite(go, 4, type), _alpha(1.f)
 {
     
 }
@@ -14,6 +14,7 @@ quad_sprite* quad_sprite::clone(game_object* go) const {
     quad->_data.material = _data.material;
     quad->_frame = _frame;
     quad->_bound = _bound;
+    quad->_alpha = _alpha;
     quad->mark_dirty();
     
     return quad;
@@ -26,28 +27,35 @@ void quad_sprite::fill_indices(uint16_t start_idx) {
     };
 }
 
-void quad_sprite::fill_buffer(void* raw, size_t stride, com::transform const& trans) const {
-    // FIXME:
-    // stride, and index
-    char* buffer = reinterpret_cast<char*>(raw);
-    constexpr int vertice_size = sizeof(float) * 4;
-    constexpr int uv_size = sizeof(float) * 2;
-    box2f const& uv = frame();
-    float alpha = .5f;
-
-    memcpy(buffer, trans.to_global(bound().corner(box2f::BottomLeft)).data(), sizeof(float) * 3);
-    memcpy(buffer + vertice_size, uv.corner(box2f::TopLeft).data(), uv_size);
-    memcpy(buffer + sizeof(float) * 3, &alpha, sizeof(float));
+void quad_sprite::fill_buffer(vertex_layout::locked_buffer const& buffer,
+                              com::transform const& trans) const {
+    auto& indices = _data.buffer->channel_indices;
     
-    memcpy(buffer+=stride, trans.to_global(bound().corner(box2f::TopLeft)).data(), sizeof(float) * 3);
-    memcpy(buffer + vertice_size, uv.corner(box2f::BottomLeft).data(), uv_size);
-    memcpy(buffer + sizeof(float) * 3, &alpha, sizeof(float));
-    
-    memcpy(buffer+=stride, trans.to_global(bound().corner(box2f::BottomRight)).data(), sizeof(float) * 3);
-    memcpy(buffer + vertice_size, uv.corner(box2f::TopRight).data(), uv_size);
-    memcpy(buffer + sizeof(float) * 3, &alpha, sizeof(float));
+    if(indices[layout_buffer::POSITION] >= 0) {
+        char* raw = buffer.buffer(indices[layout_buffer::POSITION]);
+        assert(buffer.type(indices[layout_buffer::POSITION]) == vertex_layout::Float); // no conversion
+        size_t data_size = std::min(buffer.unit(indices[layout_buffer::POSITION]), 4) * sizeof(float);
+        size_t stride = buffer.stride(indices[layout_buffer::POSITION]);
+        
+        auto pos = trans.to_global(bound().corner(box2f::BottomLeft));
+        memcpy(raw, (vector4f(pos.x(), pos.y(), pos.z(), _alpha)).data(), data_size);
+        pos = std::move(trans.to_global(bound().corner(box2f::TopLeft)));
+        memcpy(raw+=stride, (vector4f(pos.x(), pos.y(), pos.z(), _alpha)).data(), data_size);
+        pos = std::move(trans.to_global(bound().corner(box2f::BottomRight)));
+        memcpy(raw+=stride, (vector4f(pos.x(), pos.y(), pos.z(), _alpha)).data(), data_size);
+        pos = std::move(trans.to_global(bound().corner(box2f::TopRight)));
+        memcpy(raw+ stride, (vector4f(pos.x(), pos.y(), pos.z(), _alpha)).data(), data_size);
+    }
 
-    memcpy(buffer+=stride, trans.to_global(bound().corner(box2f::TopRight)).data(), sizeof(float) * 3);
-    memcpy(buffer + vertice_size, uv.corner(box2f::BottomRight).data(), uv_size);
-    memcpy(buffer + sizeof(float) * 3, &alpha, sizeof(float));
+    if(indices[layout_buffer::UV] >= 0) {
+        box2f const& uv = frame();
+        char* raw = buffer.buffer(indices[layout_buffer::UV]);
+        assert(buffer.type(indices[layout_buffer::UV]) == vertex_layout::Float); // no conversion
+        size_t data_size = std::min(buffer.unit(indices[layout_buffer::UV]), 2) * sizeof(float);
+        size_t stride = buffer.stride(indices[layout_buffer::UV]);
+        memcpy(raw, uv.corner(box2f::TopLeft).data(), data_size);
+        memcpy(raw+=stride, uv.corner(box2f::BottomLeft).data(), data_size);
+        memcpy(raw+=stride, uv.corner(box2f::TopRight).data(), data_size);
+        memcpy(raw+ stride, uv.corner(box2f::BottomRight).data(), data_size);
+    }
 }
