@@ -21,8 +21,8 @@ public:
     typedef std::shared_ptr<render_uniform const> const_ptr;
     
     struct uniform {
-        uniform(std::string const& name, size_t size)
-        : _name(name), _size(size)
+        uniform(std::string const& name)
+        : _name(name)
         {}
         
         virtual ~uniform() {};
@@ -31,39 +31,26 @@ public:
             return name() < rhs.name();
         }
         
-        bool operator==(uniform const& lhs) const {
-            return size() == lhs.size() &&
-            std::memcmp(reinterpret_cast<char const*>(&_size) + sizeof(_size),
-                        reinterpret_cast<char const*>(&lhs._size) + sizeof(_size),
-                        size()) == 0 &&
-            name() == lhs.name();
+        bool operator==(uniform const& rhs) const {
+            return name() == rhs.name() && data_equal(rhs);
         }
         
-        bool data_equal(uniform const& rhs) const {
-            return size() == rhs.size() && typeid(*this) == typeid(rhs) &&
-            std::memcmp(reinterpret_cast<char const*>(&_size) + sizeof(_size),
-                               reinterpret_cast<char const*>(&rhs._size) + sizeof(_size),
-                               size()) == 0;
-        }
+        virtual bool data_equal(uniform const& rhs) const = 0;
         
-        virtual uniform& assign(uniform const& rhs) { // TODO: all subclasses
+        virtual uniform& assign(uniform const& rhs) {
             assert(typeid(*this) == typeid(*(&rhs)));
             *this = rhs;
-            std::memcpy(reinterpret_cast<char *>(&_size) + sizeof(_size),
-                        reinterpret_cast<char const*>(&rhs._size) + sizeof(_size),
-                        _size);
             return *this;
         }
         
         std::string const& name() const {return _name; }
-        size_t size() const { return _size; }
     private:
-        std::string _name; size_t _size; // FIXME: might need a data pointer because of non-POD?
+        std::string _name;
     };
     
     struct uniform_texture : public uniform {
         uniform_texture(std::string const&name, texture* v)
-        : uniform(name, sizeof(texture*)), value(v)
+        : uniform(name), value(v)
         { SAFE_RETAIN(value); };
         
         uniform_texture(uniform_texture const& rhs)
@@ -81,6 +68,11 @@ public:
             return *this;
         };
         
+        virtual bool data_equal(uniform const& rhs) const{
+            return typeid(rhs) == typeid(uniform_texture)
+            && value == static_cast<uniform_texture const&>(rhs).value;
+        }
+        
         uniform_texture(uniform_texture&&) = default; // FIXME: might need to fix this, probably use texture::const_ptr
         uniform_texture& operator=(uniform_texture&&) = default;
         
@@ -97,44 +89,119 @@ public:
     
     struct uniform_float : public uniform {
         uniform_float(std::string const&name, float v)
-        : uniform(name, sizeof(float)), value(v) {};
+        : uniform(name), value(v) {};
         float value;
+        
+        virtual bool data_equal(uniform const& rhs) const override{
+            return typeid(*&rhs) == typeid(uniform_float)
+            && value == static_cast<uniform_float const&>(rhs).value;
+        }
+        
+        virtual uniform& assign(uniform const& rhs) override {
+            assert(typeid(*this) == typeid(*(&rhs)));
+            return *this = static_cast<uniform_float const&>(rhs);
+        }
     };
     
     struct uniform_vector2 : public uniform {
         uniform_vector2(std::string const&name, vector2f const& v)
-        : uniform(name, sizeof(value)), value(v) {};
+        : uniform(name), value(v) {};
         vector2f value;
+        
+        virtual bool data_equal(uniform const& rhs) const override{
+            return typeid(*&rhs) == typeid(uniform_vector2)
+            && value == static_cast<uniform_vector2 const&>(rhs).value;
+        }
+        
+        virtual uniform& assign(uniform const& rhs) override {
+            assert(typeid(*this) == typeid(*(&rhs)));
+            return *this = static_cast<uniform_vector2 const&>(rhs);
+        }
     };
     
     struct uniform_vector3 : public uniform {
         uniform_vector3(std::string const&name, vector3f const& v)
-        : uniform(name, sizeof(value)), value(v) {};
+        : uniform(name), value(v) {};
+
         vector3f value;
+        
+        virtual bool data_equal(uniform const& rhs) const override{
+            return typeid(*&rhs) == typeid(uniform_vector3)
+            && value == static_cast<uniform_vector3 const&>(rhs).value;
+        }
+        
+        virtual uniform& assign(uniform const& rhs) override {
+            assert(typeid(*this) == typeid(*(&rhs)));
+            return *this = static_cast<uniform_vector3 const&>(rhs);
+        }
     };
     
     struct uniform_vector4 : public uniform {
         uniform_vector4(std::string const&name, vector4f const& v)
-        : uniform(name, sizeof(value)), value(v) {};
+        : uniform(name), value(v) {};
+
         vector4f value;
+
+        virtual bool data_equal(uniform const& rhs) const override{
+            return typeid(*&rhs) == typeid(uniform_vector4)
+            && value == static_cast<uniform_vector4 const&>(rhs).value;
+        }
+        
+        virtual uniform& assign(uniform const& rhs) override {
+            assert(typeid(*this) == typeid(*(&rhs)));
+            return *this = static_cast<uniform_vector4 const&>(rhs);
+        }
     };
     
     struct uniform_mat2 : public uniform {
         uniform_mat2(std::string const&name, matrix2f const& v)
-        : uniform(name, sizeof(value)), value(v) {};
+        : uniform(name), value(v) {};
+
         matrix2f value;
+
+        virtual bool data_equal(uniform const& rhs) const override{
+            return typeid(*&rhs) == typeid(uniform_mat2)
+            && value == static_cast<uniform_mat2 const&>(rhs).value;
+        }
+        
+        virtual uniform& assign(uniform const& rhs) override {
+            assert(typeid(*this) == typeid(*(&rhs)));
+            return *this = static_cast<uniform_mat2 const&>(rhs);
+        }
     };
     
     struct uniform_mat3 : public uniform {
         uniform_mat3(std::string const&name, matrix3f const& v)
-        : uniform(name, sizeof(value)), value(v) {};
+        : uniform(name), value(v) {};
+
         matrix3f value;
+        
+        virtual bool data_equal(uniform const& rhs) const override{
+            return typeid(*&rhs) == typeid(uniform_mat3)
+            && value == static_cast<uniform_mat3 const&>(rhs).value;
+        }
+        
+        virtual uniform& assign(uniform const& rhs) override {
+            assert(typeid(*this) == typeid(*(&rhs)));
+            return *this = static_cast<uniform_mat3 const&>(rhs);
+        }
     };
 
     struct uniform_mat4 : public uniform {
         uniform_mat4(std::string const&name, matrix4f const& v)
-        : uniform(name, sizeof(value)), value(v) {};
+        : uniform(name), value(v) {};
+
         matrix4f value;
+        
+        virtual bool data_equal(uniform const& rhs) const override{
+            return typeid(*&rhs) == typeid(uniform_mat3)
+            && value == static_cast<uniform_mat4 const&>(rhs).value;
+        }
+        
+        virtual uniform& assign(uniform const& rhs) override {
+            assert(typeid(*this) == typeid(*(&rhs)));
+            return *this = static_cast<uniform_mat4 const&>(rhs);
+        }
     };
 
     template<class T>

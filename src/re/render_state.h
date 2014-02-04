@@ -46,7 +46,9 @@ public:
     _src_alpha_blend(BlendNone), _dst_alpha_blend(BlendNone),
     _blend_color(1.f,1.f,1.f,1.f), _blend_op(0), _alpha_blend_op(0),
     _culling(0)
-    {}
+    {
+        memset(&padding, 0, sizeof(padding));
+    }
     
     ATTRIBUTE(uint8_t, depth_func);
     ATTRIBUTE(uint8_t, src_blend);
@@ -56,9 +58,10 @@ public:
     ATTRIBUTE(uint8_t, blend_op);
     ATTRIBUTE(uint8_t, alpha_blend_op);
     ATTRIBUTE(uint8_t, culling);
+    uint8_t padding[8];
     ATTRIBUTE(color_t, blend_color);
     
-    bool operator == (render_state const rhs) const {
+    bool operator == (render_state const& rhs) const {
         return memcmp(this, &rhs, sizeof(render_state)) == 0;
     }
     
