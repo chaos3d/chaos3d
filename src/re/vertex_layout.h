@@ -71,7 +71,7 @@ private:
     channels_t _channels;
     vertex_index_buffer::ptr _index_buffer;
     
-    ATTRIBUTE(uint8_t, mode);
+    ATTRIBUTE(uint8_t, mode); // TODO: this could be in batches too?
 };
 
 extern vertex_layout::channels_t make_channels(std::initializer_list<std::tuple<vertex_buffer::ptr&&, int, int, size_t, size_t>> const& list);
