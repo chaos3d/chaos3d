@@ -176,8 +176,7 @@ sprite_material* sprite_mgr::add_material(std::unique_ptr<sprite_material>&& mat
     if(same) {
         return it->get();
     } else {
-        _materials.emplace(it, std::move(mat));
-        return _materials.back().get();
+        return _materials.emplace(it, std::move(mat))->get();
     }
 }
 

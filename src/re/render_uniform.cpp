@@ -47,7 +47,10 @@ bool render_uniform::operator==(render_uniform const& rhs) const {
     if(rhs.uniforms().size() != uniforms().size())
         return false;
     
-    return std::mismatch(_uniforms.begin(), _uniforms.end(), rhs.uniforms().begin()).first == _uniforms.end();
+    return std::mismatch(_uniforms.begin(), _uniforms.end(), rhs.uniforms().begin(),
+                         [] (uniform_ptr const& lhs, uniform_ptr const& rhs) {
+                             return lhs->data_equal(*rhs);
+                         }).first == _uniforms.end();
 }
 
 render_uniform& render_uniform::operator=(render_uniform const& rhs) {
