@@ -231,7 +231,7 @@ namespace sprite2d {
         typedef std::vector<sprite_vertex> vertices_t;
         typedef std::vector<vertices_t> types_t; // vertex layout types
        
-        typedef std::vector<layout_buffer> buffers_t; // layout buffers, sorted by types
+        typedef std::vector<std::unique_ptr<layout_buffer>> buffers_t; // layout buffers, sorted by types
 
         typedef std::unique_ptr<sprite_material> spt_mat_ptr; // mgr owns the materials
         typedef std::vector<spt_mat_ptr> materials_t; // shared materials, TODO: sorted by ???
@@ -291,7 +291,7 @@ namespace sprite2d {
     private:
         template<class F>
         void update_buffer(layout_buffer&, F const&);
-        layout_buffer create_buffer(vertices_t const&);
+        std::unique_ptr<layout_buffer> create_buffer(vertices_t const&);
         
     private:
         render_device* _device;
