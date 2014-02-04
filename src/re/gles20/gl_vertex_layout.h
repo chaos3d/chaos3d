@@ -25,7 +25,7 @@ public:
     gl_vertex_layout(channels_t&&, vertex_index_buffer::ptr&&, uint8_t mode);
     virtual ~gl_vertex_layout();
     
-    virtual void draw(render_context*) const override;
+    virtual void draw(render_context*, size_t start, size_t count) const override;
     
 protected:
     void create_vao();

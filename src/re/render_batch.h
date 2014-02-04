@@ -26,7 +26,9 @@ public:
     :_layout(rhs._layout->retain<vertex_layout>()),
     _program(rhs._program->retain<gpu_program>()),
     _uniform(rhs._uniform),
-    _state(rhs._state)
+    _state(rhs._state),
+    _start(rhs._start),
+    _count(rhs._count)
     {};
     
     render_batch& operator=(render_batch const& rhs) {
@@ -34,6 +36,8 @@ public:
         _program = rhs._program->retain<gpu_program>();
         _uniform = rhs._uniform;
         _state = rhs._state;
+        _start = rhs._start;
+        _count = rhs._count;
         return *this;
     };
     
@@ -44,10 +48,14 @@ public:
     render_batch(V&& layout,
                  U&& uniform,
                  S&& state,
-                 P&& program)
+                 P&& program,
+                 size_t start = 0,
+                 size_t count = 0)
     : _uniform(std::forward<U>(uniform)), _state(std::forward<S>(state)),
-    _layout(std::forward<V>(layout)), _program(std::forward<P>(program))
-    {}
+    _layout(std::forward<V>(layout)), _program(std::forward<P>(program)),
+    _start(start), _count(count)
+    {
+    }
     
     render_batch(batch_t const& batch)
     : render_batch(std::forward<init_ptr<vertex_layout::const_ptr>::type>(std::get<0>(batch)),
@@ -66,7 +74,8 @@ private:
     render_uniform::const_ptr _uniform;
     gpu_program::const_ptr _program;
     render_state::const_ptr _state;
-    // TODO: memory management?
+    ATTRIBUTE(size_t, start); // buffer to start
+    ATTRIBUTE(size_t, count); // number of elements to draw
 };
 
 #endif

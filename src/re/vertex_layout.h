@@ -43,13 +43,13 @@ public:
                   vertex_index_buffer::ptr&& buf, // make sure we take over the ownership
                   uint8_t mode)
     : _channels(std::move(channels)), _mode(mode),
-    _index_buffer(std::move(buf)), _size(0)
+    _index_buffer(std::move(buf))
     {}
     
     virtual ~vertex_layout() {};
     
     // draw to the "context"
-    virtual void draw(render_context*) const = 0;
+    virtual void draw(render_context*, size_t start, size_t count) const = 0;
     
     vertex_index_buffer::ptr index_buffer() const {
         return _index_buffer->retain<vertex_index_buffer>();
@@ -72,7 +72,6 @@ private:
     vertex_index_buffer::ptr _index_buffer;
     
     ATTRIBUTE(uint8_t, mode);
-    ATTRIBUTE(size_t, size);
 };
 
 extern vertex_layout::channels_t make_channels(std::initializer_list<std::tuple<vertex_buffer::ptr&&, int, int, size_t, size_t>> const& list);

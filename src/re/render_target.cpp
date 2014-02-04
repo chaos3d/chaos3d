@@ -19,7 +19,7 @@ void render_target::do_render(render_context* context) {
     for(auto& it : _batches) {
         context->set_state(*it.state());
         it.program()->bind(context, it.uniform());
-        it.layout()->draw(context);
+        it.layout()->draw(context, it.start(), it.count());
     }
     
     if(!_batch_retained)
