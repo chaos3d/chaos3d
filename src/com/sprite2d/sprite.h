@@ -234,7 +234,7 @@ namespace sprite2d {
         typedef std::vector<std::unique_ptr<layout_buffer>> buffers_t; // layout buffers, sorted by types
 
         typedef std::unique_ptr<sprite_material> spt_mat_ptr; // mgr owns the materials
-        typedef std::vector<spt_mat_ptr> materials_t; // shared materials, TODO: sorted by ???
+        typedef std::vector<spt_mat_ptr> materials_t; // shared materials, sorted by names
         
         enum { // a few default layouts and material
             position_uv = 0,    // pos*4 (forth element being alpha, uv*2
@@ -249,7 +249,8 @@ namespace sprite2d {
         };
         
     public:
-        sprite_mgr(render_device*);
+        sprite_mgr(render_device*,
+                   size_t vsize = Vertex_Capacity, size_t isize = Indices_Capacity);
         virtual ~sprite_mgr();
 
         // add the sprite to the vertex buffer, the manager will "ask" the sprite
@@ -298,6 +299,8 @@ namespace sprite2d {
         types_t _types;
         buffers_t _buffers;
         materials_t _materials;
+        size_t _vertex_buffer_size;
+        size_t _index_buffer_size;
     };
 
     inline void sprite::mark_dirty() const { parent()->set_flag(sprite_mgr::flag_offset()); }

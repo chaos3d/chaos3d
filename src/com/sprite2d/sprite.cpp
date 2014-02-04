@@ -81,9 +81,9 @@ sprite_material sprite_material::set_uniforms(const std::initializer_list<render
 }
 
 #pragma mark - the manager
-sprite_mgr::sprite_mgr(render_device* dev) : _types({
+sprite_mgr::sprite_mgr(render_device* dev, size_t vsize, size_t isize) : _types({
     {{"position", vertex_layout::Float, 4}, {"uv", vertex_layout::Float, 2}},
-}), _device(dev){
+}), _device(dev), _vertex_buffer_size(vsize), _index_buffer_size(isize){
     assert(dev != nullptr); // needs a device
 
 #if 1 // QUICK TEST
@@ -285,15 +285,19 @@ layout_buffer* sprite_mgr::assign_buffer(sprite* spt, uint32_t count, uint32_t t
                                [] (std::unique_ptr<layout_buffer> const & buf, uint32_t type) {
                                    return buf->type_idx < type;
                                });
-    do{
-        if(it == _buffers.end() || (*it)->type_idx != typeIdx)
-            break;
-            
+    for(auto free_it = it; it != _buffers.end() && (*it)->type_idx == typeIdx; ++free_it) {
         auto& spt = (*it)->sprites.back();
-        if(std::get<1>(spt) + std::get<2>(spt) + count > Vertex_Capacity)
+        if(std::get<1>(spt) + std::get<2>(spt) + count <= _vertex_buffer_size) {
+            buf = free_it->get();
             break;
-        buf = it->get();
-    }while(0);
+        }
+#if 0
+        // TODO
+        // stop at the first try
+        // it might be not worthy it, test performance
+        break;
+#endif
+    }
     
     if(buf == nullptr) {
         buf = _buffers.emplace(it, create_buffer(_types[typeIdx]))->get();
@@ -319,7 +323,7 @@ std::unique_ptr<layout_buffer> sprite_mgr::create_buffer(vertices_t const& layou
     }
     offset = (offset + 3) & ~(0x3); // align to multiple of 4 bytes
     
-    auto buffer = _device->create_buffer(Vertex_Capacity * offset,
+    auto buffer = _device->create_buffer(_vertex_buffer_size * offset,
                                          vertex_buffer::Dynamic);
     for(auto& it : channels) {
         it.buffer = buffer->retain<vertex_buffer>();
@@ -327,7 +331,7 @@ std::unique_ptr<layout_buffer> sprite_mgr::create_buffer(vertices_t const& layou
     }
     
     auto vlayout = _device->create_layout(std::move(channels),
-                                           _device->create_index_buffer(Indices_Capacity * sizeof(uint16_t),
+                                           _device->create_index_buffer(_index_buffer_size * sizeof(uint16_t),
                                                                         vertex_buffer::Stream),
                                            vertex_layout::Triangles);
     return make_unique<layout_buffer>(layout_buffer{std::move(vlayout), {}, 0, true});
