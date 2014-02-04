@@ -137,6 +137,13 @@ public:
         matrix4f value;
     };
 
+    template<class T>
+    struct uniform_assigner {
+        void operator()(T& lhs, T && value) const {
+            lhs = std::move(value);
+        }
+    };
+    
     typedef std::unique_ptr<uniform> uniform_ptr;
     typedef std::vector<uniform_ptr> uniforms_t;
     typedef std::function<void(uniform const&)> visitor_t;
@@ -224,13 +231,26 @@ protected:
             _uniforms.emplace(it, new U(name, std::forward<Args>(args)...));
         } else {
             assert(typeid(*it->get()) == typeid(U));
-            static_cast<U*>(it->get())->value = decltype(std::declval<U>().value) (std::forward<Args>(args)...);
+            typedef decltype(std::declval<U>().value) value_type;
+            uniform_assigner<value_type>()(static_cast<U*>(it->get())->value,
+                                           value_type (std::forward<Args>(args)...));
         }
     }
 
 private:
     render_uniform* _parent;
     uniforms_t _uniforms;
+};
+
+template<>
+struct render_uniform::uniform_assigner<texture*> {
+    void operator()(texture*& lhs, texture*&& value) const {
+        if(lhs == value)
+            return;
+        SAFE_RELEASE(lhs);
+        lhs = value;
+        SAFE_RETAIN(value);
+    }
 };
 
 inline render_uniform::ptr make_uniforms_ptr(std::initializer_list<render_uniform::init_t> const& list) {
