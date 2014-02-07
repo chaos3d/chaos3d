@@ -1,6 +1,7 @@
 #include "render_view_ios.h"
 #include "re/gles20/gl_context.h"
 #include "re/gles20/gles2.h"
+#include "event/touch_event.h"
 
 #import <OpenGLES/EAGLDrawable.h>
 #import <QuartzCore/QuartzCore.h>
@@ -22,19 +23,19 @@
 
 // TODO: passing events to host
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    
+    host->dispatch(touch_began_event());
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event{
-    
+    host->dispatch(touch_moved_event());
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
-    
+    host->dispatch(touch_ended_event());
 }
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event{
-    
+    host->dispatch(touch_cancelled_event());
 }
 
 @end

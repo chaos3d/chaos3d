@@ -1,9 +1,9 @@
 #include "event/event_dispatcher.h"
 
 bool event_dispatcher::register_listener(std::initializer_list<std::type_index> types,
-                                         listener_ptr const& listenr) {
+                                         event_listener* listenr) {
     for(auto& it : types) {
-        _listeners.emplace(it, listenr->get());
+        _listeners.emplace(it, listenr->get<event_listener>());
     }
     
     for(auto& it : types) {
@@ -18,11 +18,24 @@ bool event_dispatcher::register_listener(std::initializer_list<std::type_index> 
     return true;
 }
 
-bool event_dispatcher::unregister_listener(listener_ptr const& listener) {
+bool event_dispatcher::unregister_listener(event_listener* listener) {
     for(auto it = _listeners.begin(); it != _listeners.end();) {
         auto del = it ++;
-        if(del->second->raw_pointer() == listener.get()) {
+        if(del->second->raw_pointer() == listener) {
             _listeners.erase(del);
         }
     }
+    return true;
 }
+
+void event_dispatcher::dispatch(event const& evt) {
+    auto range = _listeners.equal_range(typeid(*&evt));
+    for(auto it = range.first; it != range.second; ++it) {
+        if(!it->second->expired()) {
+            auto listener = dynamic_cast<event_listener*>(it->second->raw_pointer());
+            if(listener)
+                listener->on_event(evt);
+        }
+    }
+}
+

@@ -18,6 +18,8 @@ public:
     
     virtual void *native_handle() { return _native_view; };
     
+    using render_window::dispatch;
+    
 protected:
     virtual bool bind(render_context*) override;
     virtual bool flush(render_context*) override;

@@ -8,7 +8,10 @@
 #include "common/referenced_count.h"
 
 // base class for all events
-class event {};
+class event {
+public:
+    virtual ~event() {};
+};
 
 // listener interface: weak referenced
 struct event_listener : virtual public referenced_count {
@@ -25,10 +28,13 @@ public:
 public:
     virtual ~event_dispatcher() {};
     virtual bool register_listener(std::initializer_list<std::type_index> ,
-                                   listener_ptr const&);
+                                   event_listener*);
     
-    virtual bool unregister_listener(listener_ptr const&);
+    virtual bool unregister_listener(event_listener*);
     
+protected:
+    void dispatch(event const&);
+
 private:
     listeners_t _listeners;
 };

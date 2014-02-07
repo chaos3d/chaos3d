@@ -65,6 +65,10 @@ public:
             return _strong_ref == nullptr;
         }
         
+        referenced_count* raw_pointer() const {
+            return _strong_ref;
+        }
+        
     protected:
         int weak_count() const { return _weak_count - 1; }
         
@@ -82,7 +86,7 @@ public:
             if(_weak_count == 0)
                 delete this;
         };
-        
+
         // TODO: thread safe
         mutable int _weak_count;
         referenced_count* _strong_ref;
@@ -122,9 +126,6 @@ public:
             return const_weak_ptr(this);
         };
         
-        R* raw_pointer() const {
-            return static_cast<R*>(_strong_ref);
-        }
     };
     
 public:

@@ -485,6 +485,7 @@
 		8882E49E18A37C040044CFE4 /* event_dispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = event_dispatcher.h; sourceTree = "<group>"; };
 		8882E4A318A381820044CFE4 /* render_window.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = render_window.h; sourceTree = "<group>"; };
 		8882E4A418A382A20044CFE4 /* event_dispatcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = event_dispatcher.cpp; sourceTree = "<group>"; };
+		8882E4A618A4E04D0044CFE4 /* touch_event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = touch_event.h; sourceTree = "<group>"; };
 		88A84ACC1830652F009F7ECD /* libchaos3d.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libchaos3d.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		88A84ACF1830652F009F7ECD /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		88A84ADC1830652F009F7ECD /* chaos3dTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = chaos3dTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1318,6 +1319,7 @@
 		8882E49B18A37C040044CFE4 /* event */ = {
 			isa = PBXGroup;
 			children = (
+				8882E4A618A4E04D0044CFE4 /* touch_event.h */,
 				8882E4A418A382A20044CFE4 /* event_dispatcher.cpp */,
 				8882E49E18A37C040044CFE4 /* event_dispatcher.h */,
 			);
