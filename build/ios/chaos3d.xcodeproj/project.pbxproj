@@ -41,6 +41,7 @@
 		883246CC183A01730022EA4A /* vertex_buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 883246CA183A01730022EA4A /* vertex_buffer.cpp */; };
 		883246CF183CC04C0022EA4A /* render_target.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 883246CD183CC04C0022EA4A /* render_target.cpp */; };
 		8882D8D218990BD900B00DCD /* quad_sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8882D8D018990BD800B00DCD /* quad_sprite.cpp */; };
+		8882E4A518A382A20044CFE4 /* event_dispatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8882E4A418A382A20044CFE4 /* event_dispatcher.cpp */; };
 		88A84AD01830652F009F7ECD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88A84ACF1830652F009F7ECD /* Foundation.framework */; };
 		88A84ADE1830652F009F7ECD /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88A84ADD1830652F009F7ECD /* XCTest.framework */; };
 		88A84ADF1830652F009F7ECD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88A84ACF1830652F009F7ECD /* Foundation.framework */; };
@@ -481,6 +482,9 @@
 		883246CE183CC04C0022EA4A /* render_target.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = render_target.h; sourceTree = "<group>"; };
 		8882D8D018990BD800B00DCD /* quad_sprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = quad_sprite.cpp; sourceTree = "<group>"; };
 		8882D8D118990BD900B00DCD /* quad_sprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = quad_sprite.h; sourceTree = "<group>"; };
+		8882E49E18A37C040044CFE4 /* event_dispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = event_dispatcher.h; sourceTree = "<group>"; };
+		8882E4A318A381820044CFE4 /* render_window.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = render_window.h; sourceTree = "<group>"; };
+		8882E4A418A382A20044CFE4 /* event_dispatcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = event_dispatcher.cpp; sourceTree = "<group>"; };
 		88A84ACC1830652F009F7ECD /* libchaos3d.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libchaos3d.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		88A84ACF1830652F009F7ECD /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		88A84ADC1830652F009F7ECD /* chaos3dTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = chaos3dTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1277,6 +1281,7 @@
 				8812C2D7186841B4001C4D0B /* render_uniform.h */,
 				8812C2D318683BE0001C4D0B /* render_utility2d.cpp */,
 				8812C2D418683BE0001C4D0B /* render_utility2d.h */,
+				8882E4A318A381820044CFE4 /* render_window.h */,
 				883246C3183237220022EA4A /* texture.h */,
 				883246CA183A01730022EA4A /* vertex_buffer.cpp */,
 				883246CB183A01730022EA4A /* vertex_buffer.h */,
@@ -1308,6 +1313,15 @@
 				883246B0183237220022EA4A /* render_view_ios.mm */,
 			);
 			path = gles20;
+			sourceTree = "<group>";
+		};
+		8882E49B18A37C040044CFE4 /* event */ = {
+			isa = PBXGroup;
+			children = (
+				8882E4A418A382A20044CFE4 /* event_dispatcher.cpp */,
+				8882E49E18A37C040044CFE4 /* event_dispatcher.h */,
+			);
+			path = event;
 			sourceTree = "<group>";
 		};
 		88A84AC31830652F009F7ECD = {
@@ -1345,13 +1359,14 @@
 		88A84AD11830652F009F7ECD /* chaos3d */ = {
 			isa = PBXGroup;
 			children = (
-				8827623418912A4800B1291B /* com */,
-				8812C2CB1866E1EB001C4D0B /* common */,
-				8812C2A918618A8C001C4D0B /* platform */,
 				8812C2A21861788F001C4D0B /* app */,
 				AACCE35F185D977C0017CEEE /* asset */,
-				AACCE35C185D89BA0017CEEE /* io */,
+				8827623418912A4800B1291B /* com */,
+				8812C2CB1866E1EB001C4D0B /* common */,
+				8882E49B18A37C040044CFE4 /* event */,
 				88A84B08183067AF009F7ECD /* go */,
+				AACCE35C185D89BA0017CEEE /* io */,
+				8812C2A918618A8C001C4D0B /* platform */,
 				883246A3183237220022EA4A /* re */,
 				88A84B0B183067AF009F7ECD /* sg */,
 			);
@@ -1509,6 +1524,7 @@
 				8812C28F185DB7F8001C4D0B /* file_stream.cpp in Sources */,
 				880BA32E189654A6002542E2 /* sprite.cpp in Sources */,
 				8812C2A818618055001C4D0B /* action.cpp in Sources */,
+				8882E4A518A382A20044CFE4 /* event_dispatcher.cpp in Sources */,
 				88A84B121830B6D9009F7ECD /* game_object.cpp in Sources */,
 				8827622E1881482F00B1291B /* component_manager.cpp in Sources */,
 				8812C2D8186841B4001C4D0B /* render_uniform.cpp in Sources */,
