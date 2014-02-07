@@ -83,6 +83,7 @@ public:
                 delete this;
         };
         
+        // TODO: thread safe
         mutable int _weak_count;
         referenced_count* _strong_ref;
         friend class referenced_count;
@@ -110,6 +111,20 @@ public:
         ptr lock() {
             return _strong_ref ? _strong_ref->retain<R>() : ptr();
         };
+        
+        weak_ptr get() {
+            increase();
+            return weak_ptr(this);
+        };
+        
+        const_weak_ptr get() const {
+            increase();
+            return const_weak_ptr(this);
+        };
+        
+        R* raw_pointer() const {
+            return static_cast<R*>(_strong_ref);
+        }
     };
     
 public:

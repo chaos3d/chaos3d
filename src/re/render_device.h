@@ -6,9 +6,12 @@
 #include "re/texture.h"
 #include "re/vertex_buffer.h"
 #include "re/render_target.h"
+#include "re/render_window.h" // TODO: remove this
 #include "re/gpu_program.h"
 #include "re/render_context.h"
 #include "re/vertex_layout.h"
+
+class render_window;
 
 class render_device {
 public:

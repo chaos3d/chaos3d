@@ -12,20 +12,6 @@ sprite::sprite(game_object* go, size_t count, int type)
 : component(go), _mark_for_remove(false) {
     // always give away the ownership to the manager
     _data.buffer = sprite_mgr::instance().assign_buffer(this, count, type);
-#if 1
-    // FIXME with real data
-    //_data.buffer = sprite_mgr::instance().request_buffer(4);
-    //auto tex_uniform = render_uniform::uniform_texture(tex);
-//    render_uniform::ptr uniform(new render_uniform({
-//        make_uniform("tex1", tex),
-//    }));
-//    _data.material = sprite_mgr::instance().get_material(std::move(uniform));
-#if 0
-    _data.material = sprite_mgr::instance().get_material(render_uniform::ptr(new render_uniform({
-        make_uniform("tex1", tex),
-    })));
-#endif
-#endif
 }
 
 sprite::~sprite() {
