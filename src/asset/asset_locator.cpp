@@ -13,7 +13,7 @@ namespace locator {
             throw std::exception(); // TODO log error or throw exception?
     }
     
-    data_stream* dir_locator::from(std::string const& name) const {
+    std::unique_ptr<data_stream> dir_locator::from(std::string const& name) const {
         struct stat st;
         auto full = _base + name;
         
@@ -21,7 +21,7 @@ namespace locator {
            !S_ISREG(st.st_mode))
             return nullptr;
         
-        return new file_stream(full.c_str());
+        return std::unique_ptr<data_stream>(new file_stream(full.c_str()));
     }
 
 }

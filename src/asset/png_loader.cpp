@@ -21,8 +21,20 @@ png_loader::~png_loader() {
     _buffer = nullptr;
 }
 
-data_stream* png_loader::data() const {
-    return new memory_stream(_buffer, _buf_size);
+class buffer_wrapper_stream : public memory_stream {
+public:
+    buffer_wrapper_stream(png_loader::const_ptr && loader)
+    : _loader(std::move(loader)),
+    memory_stream(loader->buffer(), loader->buf_size()){
+        
+    };
+    
+private:
+    png_loader::const_ptr _loader;
+};
+
+std::unique_ptr<data_stream> png_loader::data() const {
+    return std::unique_ptr<data_stream>(new buffer_wrapper_stream(retain<png_loader>()));
 }
 
 static void PNGAPI user_read_data_fcn(png_structp png_ptr, png_bytep data, png_size_t length){

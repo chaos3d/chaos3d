@@ -12,7 +12,7 @@ public:
     
     virtual ~asset_locator() {};
     
-    virtual data_stream* from(std::string const&) const = 0;
+    virtual std::unique_ptr<data_stream> from(std::string const&) const = 0;
     
     // the priority to look up the asset so the 'local' asset
     // will be able to override. probably change to a different
@@ -27,7 +27,7 @@ namespace locator {
     public:
         dir_locator(std::string const&);
         
-        virtual data_stream* from(std::string const&) const;
+        virtual std::unique_ptr<data_stream> from(std::string const&) const;
         
         static dir_locator* app_dir();
         static dir_locator* home_dir();

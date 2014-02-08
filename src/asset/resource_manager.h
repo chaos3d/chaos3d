@@ -6,9 +6,9 @@
 #include <forward_list>
 #include <memory>
 #include <initializer_list>
+#include "io/data_stream.h"
 
 class resource;
-class data_stream;
 class asset_locator;
 
 class resource_manager {
@@ -17,7 +17,7 @@ public:
     typedef std::type_info resource_type_t;
     typedef std::function<resource*(data_stream*)> resource_creator_t;
     typedef std::unordered_map<std::type_index, resource_creator_t> creators_map_t;
-    typedef std::forward_list<std::auto_ptr<asset_locator>> locators_t;
+    typedef std::forward_list<std::unique_ptr<asset_locator>> locators_t;
 
 public:
 	virtual ~resource_manager() {};
@@ -57,7 +57,7 @@ public:
     
 protected:
     virtual void cache(resource_id_t const&, resource*) = 0;
-    data_stream* locate(resource_id_t const&) const;
+    data_stream::ptr locate(resource_id_t const&) const;
     
 private:
     creators_map_t _creators;

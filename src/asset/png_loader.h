@@ -1,6 +1,9 @@
 #ifndef _ASSET_PNG_LOADER_H
 #define _ASSET_PNG_LOADER_H
 
+#include "common/referenced_count.h"
+#include <memory>
+
 class data_stream;
 
 // TODO: move this up
@@ -14,7 +17,11 @@ struct image_desc {
 
 // decode the png data and load the image
 // into the memory buffer
-class png_loader {
+class png_loader : public referenced_count{
+public:
+    typedef std::unique_ptr<png_loader, referenced_count::release_deleter> ptr;
+    typedef std::unique_ptr<png_loader const, referenced_count::release_deleter> const_ptr;
+    
 public:
     // it will load the data right away
     //  may change this later...
@@ -25,7 +32,7 @@ public:
     // create a stream wrapper
     //  the stream's ownership is transfered, but its
     //  data will only be valid if the loader is valid
-    data_stream* data() const;
+    std::unique_ptr<data_stream> data() const;
     
     image_desc const& image() const { return _desc; }
     size_t buf_size() const { return _buf_size; }

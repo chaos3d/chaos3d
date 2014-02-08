@@ -10,7 +10,13 @@
 #ifndef _DATA_STREAM_H
 #define _DATA_STREAM_H
 
+#include <memory>
+
 class data_stream {
+public:
+    typedef std::unique_ptr<data_stream> ptr;
+    typedef std::unique_ptr<data_stream const> const_ptr;
+    
 public:
     enum{
         SeekCur,

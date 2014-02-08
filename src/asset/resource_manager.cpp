@@ -36,11 +36,11 @@ resource* resource_manager::create_or_retrieve(const resource_id_t &rid, const r
     if(!it->second)
         return nullptr;
     
-    data_stream* stream = locate(rid);
+    data_stream::ptr stream = locate(rid);
     if(!stream)
         return nullptr;
     
-    resource* res = it->second(stream);
+    resource* res = it->second(stream.get());
     if(!res)
         return nullptr;
     
@@ -48,13 +48,13 @@ resource* resource_manager::create_or_retrieve(const resource_id_t &rid, const r
     return res;
 }
 
-data_stream* resource_manager::locate(const resource_id_t & rid) const{
-    data_stream* stream = nullptr;
+data_stream::ptr resource_manager::locate(const resource_id_t & rid) const{
+    data_stream::ptr stream;
     for(auto& it : _locators) {
-        if((stream = it->from(rid)) != nullptr)
+        if((stream = it->from(rid)))
             break;
     }
-    return stream;
+    return std::move(stream);
 }
 
 void resource_manager::add_locators(std::initializer_list<asset_locator*> locators) {
@@ -62,7 +62,7 @@ void resource_manager::add_locators(std::initializer_list<asset_locator*> locato
         _locators.emplace_front(l);
     }
     
-    _locators.sort([=](std::auto_ptr<asset_locator> const& r, std::auto_ptr<asset_locator> const& l) {
+    _locators.sort([=](std::unique_ptr<asset_locator> const& r, std::unique_ptr<asset_locator> const& l) {
         return  r->priority() < l->priority();
     });
 }
