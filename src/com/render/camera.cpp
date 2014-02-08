@@ -20,6 +20,24 @@ camera& camera::operator=(camera const& rhs) {
     return *this;
 }
 
+vector3f camera::unproject(vector3f const& pos) const {
+#if 0
+	Vector4f pos(
+                 (viewPos[0]-vp.pos.x)/vp.size.width *2.f -1.f,
+                 1.f-(viewPos[1]-vp.pos.y)/vp.size.height *2.f,
+                 viewPos[2]*2.f -1.f,
+                 1.f
+                 );
+    
+	pos = mProjMatrixInv * pos;
+    
+	viewPos[0] = pos[0]/pos[3];
+	viewPos[1] = pos[1]/pos[3];
+	viewPos[2] = pos[2]/pos[3];
+#endif
+    return vector3f(); // TODO
+}
+
 void camera::collect(std::vector<game_object*> const&) {
     
 }

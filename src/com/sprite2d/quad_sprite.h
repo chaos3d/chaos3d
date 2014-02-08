@@ -2,7 +2,7 @@
 #define _SPRITE2D_QUAD_SPRITE_H
 
 #include "com/sprite2d/sprite.h"
-#include "Eigen/Geometry"
+#include <Eigen/Geometry>
 
 namespace sprite2d {
     

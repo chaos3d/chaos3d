@@ -1,7 +1,7 @@
 #ifndef _COM_CAMERA_H
 #define _COM_CAMERA_H
 
-#include "Eigen/Dense"
+#include <Eigen/Geometry>
 #include "go/component.h"
 #include "go/component_manager.h"
 #include "common/common.h"
@@ -22,6 +22,8 @@ namespace com {
         typedef nil_component_mgr<std::false_type> manager_t;
         typedef std::forward_list<renderable*> renderables_t;
         typedef Eigen::Matrix4f matrix4f;
+        typedef Eigen::AlignedBox2f rect2d;
+        typedef Eigen::Vector3f vector3f;
         
     public:
         camera(game_object*, int priority = 0);
@@ -42,13 +44,18 @@ namespace com {
             return _priority < rhs.priority();
         }
         
-        void set_clear(render_target::color_t const& color) {
+        camera& set_clear(render_target::color_t const& color) {
             _target->set_clear_color(color);
+            return *this;
         }
         
-        void set_target(render_target* target) {
+        camera& set_target(render_target* target) {
             _target = target->retain<render_target>(); // TODO: weak reference?
+            return *this;
         }
+
+        // client(screen) space to the world space
+        vector3f unproject(vector3f const&) const;
         
     protected:
         camera& operator=(camera const&);
@@ -62,6 +69,7 @@ namespace com {
         render_target::ptr _target;
         renderables_t _renderables;
         
+        ATTRIBUTE(rect2d, viewport);
         ATTRIBUTE(bool, disabled);
         ATTRIBUTE(int, priority); // render order, smaller is higher
 

@@ -62,7 +62,8 @@ void resource_manager::add_locators(std::initializer_list<asset_locator*> locato
         _locators.emplace_front(l);
     }
     
-    _locators.sort([=](std::unique_ptr<asset_locator> const& r, std::unique_ptr<asset_locator> const& l) {
+    _locators.sort([=](std::unique_ptr<asset_locator> const& r,
+                       std::unique_ptr<asset_locator> const& l) {
         return  r->priority() < l->priority();
     });
 }
