@@ -23,19 +23,55 @@
 
 // TODO: passing events to host
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    host->dispatch(touch_began_event());
+    for(UITouch* touch : touches) {
+        if(touch.phase != UITouchPhaseBegan)
+            continue;
+        
+        CGPoint pos = [touch locationInView: self];
+        host->dispatch(touch_began_event(
+            {pos.x, pos.y}, 0.f /*FIXME, time*/,
+            reinterpret_cast<uint32_t>(touch)
+        ));
+    }
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event{
-    host->dispatch(touch_moved_event());
+    for(UITouch* touch : touches) {
+        if(touch.phase != UITouchPhaseMoved)
+            continue;
+        
+        CGPoint pos = [touch locationInView: self];
+        host->dispatch(touch_moved_event(
+                                         {pos.x, pos.y}, 0.f /*FIXME, time*/,
+                                         reinterpret_cast<uint32_t>(touch)
+                                         ));
+    }
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
-    host->dispatch(touch_ended_event());
+    for(UITouch* touch : touches) {
+        if(touch.phase != UITouchPhaseEnded)
+            continue;
+        
+        CGPoint pos = [touch locationInView: self];
+        host->dispatch(touch_ended_event(
+                                         {pos.x, pos.y}, 0.f /*FIXME, time*/,
+                                         reinterpret_cast<uint32_t>(touch)
+                                         ));
+    }
 }
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event{
-    host->dispatch(touch_cancelled_event());
+    for(UITouch* touch : touches) {
+        if(touch.phase != UITouchPhaseCancelled)
+            continue;
+        
+        CGPoint pos = [touch locationInView: self];
+        host->dispatch(touch_cancelled_event(
+                                             {pos.x, pos.y}, 0.f /*FIXME, time*/,
+                                             reinterpret_cast<uint32_t>(touch)
+                                             ));
+    }
 }
 
 @end
