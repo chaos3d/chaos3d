@@ -8,14 +8,17 @@
 //  it is wrapped by a unique_ptr that it'll be released in its destructor
 #define WRAP_PTR(exp) std::unique_ptr<std::remove_pointer<decltype(exp)>::type>(exp).get()
 
-// TODO: move this to utility header
 #define ATTRIBUTE(type, name) \
     private: type _##name; \
     public: type const& name () const { return _##name; } \
     public: type & name () { return _##name; } \
-    public: void set_##name (type const& name) { _##name = name; } \
-    public: template<class... Types> void set_##name(Types&&... args) { \
-            _##name = type(std::forward<Types>(args)...); }
+public: auto set_##name(type const& name) -> decltype(*this) \
+    { _##name = name; return *this; } \
+    public: template<class... Types> \
+    auto set_##name(Types&&... args) -> decltype(*this) { \
+        _##name = type(std::forward<Types>(args)...); \
+        return *this; \
+    }
 
 template<class T, class... Args>
 std::unique_ptr<T> make_unique(Args&&... args) {

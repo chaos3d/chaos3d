@@ -18,7 +18,7 @@ namespace sprite2d {
         ATTRIBUTE(box2f, frame); // texture uv
         ATTRIBUTE(box2f, bound); // position and size
         ATTRIBUTE(float, alpha); // alpha
-        
+
     protected:
         virtual quad_sprite* clone(game_object*) const override;
         

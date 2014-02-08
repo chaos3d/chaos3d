@@ -21,7 +21,6 @@
     return [CAEAGLLayer class];
 }
 
-// TODO: passing events to host
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     for(UITouch* touch : touches) {
         if(touch.phase != UITouchPhaseBegan)
