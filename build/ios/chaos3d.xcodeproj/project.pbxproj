@@ -41,6 +41,7 @@
 		883246C9183237220022EA4A /* render_device.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 883246B5183237220022EA4A /* render_device.cpp */; };
 		883246CC183A01730022EA4A /* vertex_buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 883246CA183A01730022EA4A /* vertex_buffer.cpp */; };
 		883246CF183CC04C0022EA4A /* render_target.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 883246CD183CC04C0022EA4A /* render_target.cpp */; };
+		8879CE1E18A8146400BCBFA6 /* shape_desc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8879CE1D18A8146400BCBFA6 /* shape_desc.cpp */; };
 		8882D8D218990BD900B00DCD /* quad_sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8882D8D018990BD800B00DCD /* quad_sprite.cpp */; };
 		8882E4A518A382A20044CFE4 /* event_dispatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8882E4A418A382A20044CFE4 /* event_dispatcher.cpp */; };
 		8882E4E318A74E2D0044CFE4 /* libBox2D.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8882E4E218A74E2D0044CFE4 /* libBox2D.a */; };
@@ -484,6 +485,9 @@
 		883246CB183A01730022EA4A /* vertex_buffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vertex_buffer.h; sourceTree = "<group>"; };
 		883246CD183CC04C0022EA4A /* render_target.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = render_target.cpp; sourceTree = "<group>"; };
 		883246CE183CC04C0022EA4A /* render_target.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = render_target.h; sourceTree = "<group>"; };
+		8879CE1B18A809C200BCBFA6 /* shape_desc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shape_desc.h; sourceTree = "<group>"; };
+		8879CE1C18A80F0F00BCBFA6 /* base_types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = base_types.h; sourceTree = "<group>"; };
+		8879CE1D18A8146400BCBFA6 /* shape_desc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shape_desc.cpp; sourceTree = "<group>"; };
 		8882D8D018990BD800B00DCD /* quad_sprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = quad_sprite.cpp; sourceTree = "<group>"; };
 		8882D8D118990BD900B00DCD /* quad_sprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = quad_sprite.h; sourceTree = "<group>"; };
 		8882E49E18A37C040044CFE4 /* event_dispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = event_dispatcher.h; sourceTree = "<group>"; };
@@ -584,6 +588,8 @@
 		8804F8CB18A75DC50055322F /* scene2d */ = {
 			isa = PBXGroup;
 			children = (
+				8879CE1D18A8146400BCBFA6 /* shape_desc.cpp */,
+				8879CE1B18A809C200BCBFA6 /* shape_desc.h */,
 				8804F8CC18A75DC50055322F /* world_box2d.cpp */,
 				8804F8CD18A75DC50055322F /* world_box2d.h */,
 			);
@@ -674,6 +680,7 @@
 		8812C2CB1866E1EB001C4D0B /* common */ = {
 			isa = PBXGroup;
 			children = (
+				8879CE1C18A80F0F00BCBFA6 /* base_types.h */,
 				8827622B187FF65300B1291B /* referenced_count.h */,
 				882762321881509800B1291B /* singleton.h */,
 				8812C2D11866E1EB001C4D0B /* utility.h */,
@@ -1741,6 +1748,7 @@
 				8812C2D518683BE0001C4D0B /* render_utility2d.cpp in Sources */,
 				8882D8D218990BD900B00DCD /* quad_sprite.cpp in Sources */,
 				883246CC183A01730022EA4A /* vertex_buffer.cpp in Sources */,
+				8879CE1E18A8146400BCBFA6 /* shape_desc.cpp in Sources */,
 				880BA32D189654A6002542E2 /* camera2d.cpp in Sources */,
 				882762211873945A00B1291B /* gl_context.mm in Sources */,
 				882762141872D50D00B1291B /* vertex_layout.cpp in Sources */,

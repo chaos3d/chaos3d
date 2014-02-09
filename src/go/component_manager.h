@@ -46,7 +46,9 @@ public:
     explicit component_manager(bool managed = true);
     virtual ~component_manager();
     
+    // frame loop
     virtual void update(goes_t const&) = 0;
+    
     // TODO: those two not integrated yet
     virtual void pre_update(std::vector<game_object*> const&) {};
     virtual void post_update(std::vector<game_object*> const&) {};
