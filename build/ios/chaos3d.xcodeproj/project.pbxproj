@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8804F8CE18A75DC50055322F /* world_box2d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8804F8CC18A75DC50055322F /* world_box2d.cpp */; };
 		880BA3251895131E002542E2 /* render_component_mgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 880BA3241895131E002542E2 /* render_component_mgr.cpp */; };
 		880BA3271895D261002542E2 /* camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 880BA3261895D261002542E2 /* camera.cpp */; };
 		880BA32D189654A6002542E2 /* camera2d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 880BA329189654A6002542E2 /* camera2d.cpp */; };
@@ -76,6 +77,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		8804F8CC18A75DC50055322F /* world_box2d.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = world_box2d.cpp; sourceTree = "<group>"; };
+		8804F8CD18A75DC50055322F /* world_box2d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = world_box2d.h; sourceTree = "<group>"; };
 		880BA31F189505FC002542E2 /* material.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = material.h; sourceTree = "<group>"; };
 		880BA320189505FC002542E2 /* mesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mesh.h; sourceTree = "<group>"; };
 		880BA321189512CE002542E2 /* renderable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = renderable.h; sourceTree = "<group>"; };
@@ -578,6 +581,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8804F8CB18A75DC50055322F /* scene2d */ = {
+			isa = PBXGroup;
+			children = (
+				8804F8CC18A75DC50055322F /* world_box2d.cpp */,
+				8804F8CD18A75DC50055322F /* world_box2d.h */,
+			);
+			path = scene2d;
+			sourceTree = "<group>";
+		};
 		880BA31E189505FC002542E2 /* render */ = {
 			isa = PBXGroup;
 			children = (
@@ -672,6 +684,7 @@
 		8827623418912A4800B1291B /* com */ = {
 			isa = PBXGroup;
 			children = (
+				8804F8CB18A75DC50055322F /* scene2d */,
 				880BA328189654A6002542E2 /* sprite2d */,
 				880BA31E189505FC002542E2 /* render */,
 			);
@@ -1731,6 +1744,7 @@
 				880BA32D189654A6002542E2 /* camera2d.cpp in Sources */,
 				882762211873945A00B1291B /* gl_context.mm in Sources */,
 				882762141872D50D00B1291B /* vertex_layout.cpp in Sources */,
+				8804F8CE18A75DC50055322F /* world_box2d.cpp in Sources */,
 				8812C2BD18644221001C4D0B /* gl_vertex_buffer.cpp in Sources */,
 				882762241873FA7100B1291B /* gl_vertex_layout.cpp in Sources */,
 				8812C28C185DB235001C4D0B /* png_loader.cpp in Sources */,
