@@ -20,7 +20,7 @@ camera& camera::operator=(camera const& rhs) {
     return *this;
 }
 
-vector3f camera::unproject(vector3f const& pos) const {
+camera::vector3f camera::unproject(vector3f const& pos) const {
 #if 0
 	Vector4f pos(
                  (viewPos[0]-vp.pos.x)/vp.size.width *2.f -1.f,

@@ -145,7 +145,7 @@ public:
     // change flag
     uint32_t flag() const { return _flag; }
     void reset_flag() { _flag = 0; }
-    void set_flag(uint32_t offset) { _flag |= 1U << offset; }
+    void set_flag(uint32_t offset, uint32_t mask = 1U) { _flag |= mask << offset; }
     bool is_set(uint32_t offset) const { return (_flag & 1U << offset) != 0; }
     void populate_flag(); // populate from the 'Parent'
     

@@ -8,21 +8,20 @@ transform* transform::clone(game_object* go) const {
     *com = *this;
 
     // if it belongs to a different parent, re-compute the local
-    if(!is_dirty() && parent()->parent() != go->parent()) {
-        com->relocate(go);
+    if(parent()->parent() != go->parent()) {
+        com->mark_dirty(false);
     }
     return com;
 }
 
-void transform::update(affine3f const& parent) {
+void transform::update_global(affine3f const& parent) {
     _global_affine = parent;
     _global_affine.translate(_translate).scale(_scale).rotate(_rotate);
     _global_reversed = _global_affine.matrix().reverse();
 }
 
-void transform::relocate(game_object* go) {
-    auto* com = go->get_component<transform>();
-    affine3f const& local = com ? com->global_reversed() * global() : global();
+void transform::update_local(affine3f const& reversed) {
+    affine3f const& local = reversed * global_affine();
     affine3f::LinearMatrixType rotMatrix, scaleMatrix;
     local.computeRotationScaling(&rotMatrix, &scaleMatrix);
     _scale = scaleMatrix.diagonal();
@@ -36,9 +35,11 @@ transform_manager::transform_manager()
 {}
 
 void transform_manager::update(std::vector<game_object*> const& gos) {
-    auto idx = transform_manager::component_idx();
+    auto idx = component_idx();
+    auto offset = flag_offset();
     for(auto& it : gos) {
-        if(!it->is_set(flag_offset()))
+        auto mask = (it->flag() >> offset) & 0x3U;
+        if(mask == 0U)
             continue;
         
         auto* com = it->get_component<transform>(idx);
@@ -50,6 +51,10 @@ void transform_manager::update(std::vector<game_object*> const& gos) {
             parent = it->parent()->get_component<transform>();
         
         // if the parent breaks/skips, it won't populate to its descendents
-        com->update(parent ? parent->global() : _global_parent);
+        if(mask & global_bit) { // local takes priorities
+            com->update_global(parent ? parent->global_affine() : _global_parent);
+        } else {
+            com->update_local(parent ? parent->global_reversed() : _global_parent);
+        }
     }
 }

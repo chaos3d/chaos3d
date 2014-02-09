@@ -43,41 +43,43 @@ namespace com {
             return _global_reversed * global;
         }
         
-        // update itself using the given parent
-        void update(affine3f const&);
+        // update the global using the given parent
+        // that is, to keep the local transform
+        void update_global(affine3f const&);
+        
+        // update the local using the given parent (transform reverse)
+        // that is, to keep the global transform
+        void update_local(affine3f const& /*transform reverse*/);
         
         // FIXME: this probably should be in manager class
         // it will backward transverse the parent tree and update
         void force_update();
         
-        // keep the global transform, re-compute the local
-        void relocate(game_object*);
-        
-        // local transform piece
-        quaternionf const& rotate() const { return _rotate; }
-        vector3f const& translate() const { return _translate; }
-        vector3f const& scale() const { return _scale; }
-        
-        void set_rotate(quaternionf const& rotate) { _rotate = rotate; mark_dirty(); }
-        void set_scale(vector3f const& scale) { _scale = scale; mark_dirty(); }
-        void set_translate(vector3f const& translate) { _translate = translate; mark_dirty(); }
-        
-        affine3f const& global() const { return _global_affine; }
+        //affine3f const& global() const { return _global_affine; }
         affine3f const& global_reversed() const { return _global_reversed; }
         
-        inline void mark_dirty();
+        // to update global or local
+        // if both has been marked, to update global takes priorities
+        // (keep the local transform)
+        inline void mark_dirty(bool global = true);
         inline bool is_dirty() const;
         
     private:
-        quaternionf _rotate;
-        vector3f _translate, _scale;
-        affine3f _global_affine; // cached global affine transform
         affine3f _global_reversed;
+        
+        ATTRIBUTE(affine3f, global_affine);
+        ATTRIBUTE(quaternionf, rotate);
+        ATTRIBUTE(vector3f, translate);
+        ATTRIBUTE(vector3f, scale);
     };
     
     class transform_manager : public component_manager_base<transform_manager> {
     public:
-        typedef std::integral_constant<uint32_t, 1> flag_bit_t; // the dirty flag
+        // the dirty flag, to update global or local
+        typedef std::integral_constant<uint32_t, 2> flag_bit_t;
+        
+        constexpr static uint32_t global_bit = 1U;
+        constexpr static uint32_t local_bit = 2U;
 
     public:
         transform_manager();
@@ -89,14 +91,15 @@ namespace com {
         affine3f _global_parent;
     };
     
-    inline void transform::mark_dirty() {
-        parent()->set_flag(transform_manager::flag_offset());
+    inline void transform::mark_dirty(bool global) {
+        parent()->set_flag(transform_manager::flag_offset(),
+                           global ? transform_manager::global_bit :
+                           transform_manager::local_bit);
     }
     
     inline bool transform::is_dirty() const {
-        return parent()->is_set(transform_manager::flag_offset());
+        return ((parent()->flag() >> transform_manager::flag_offset()) & 0x3U) != 0U;
     }
-    
 }
 
 #endif
