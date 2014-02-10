@@ -24,7 +24,9 @@ namespace com {
         : component(go),
         _rotate(1.f, 0.f, 0.f, 0.f),
         _scale(1.f, 1.f, 1.f),
-        _translate(0.f, 0.f, 0.f)
+        _translate(0.f, 0.f, 0.f),
+        _global_affine(affine3f::Identity()),
+        _global_reversed(affine3f::Identity())
         {}
 
         virtual transform* clone(game_object*) const override;
