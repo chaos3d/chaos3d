@@ -39,8 +39,9 @@ void collider2d::reset_shapes(std::initializer_list<shape::init_t> const& shapes
                               mass const& m) {
     clear_shapes();
     
+    float ratio = world2d_mgr::instance().pixel_meter_ratio();
     for(auto& it : shapes) {
-        std::get<0>(it).append_to(this);
+        std::get<0>(it).append_to(this, ratio);
     }
     
     if(m.weight > 0.f) {
@@ -78,6 +79,10 @@ void collider2d::update_from_transform(com::transform &transform) {
 }
 
 void collider2d::apply_to_transform(com::transform &transform) const{
+    // static body never changes the transform
+    if(_internal->body->GetType() == b2_staticBody)
+        return;
+    
     auto& current = _internal->body->GetPosition();
     auto angle = _internal->body->GetAngle();
     if(current == _internal->position &&
@@ -111,7 +116,8 @@ world2d_mgr::world2d_mgr(float ratio, vector2f const& gravity)
 : _internal(new internal{
     b2Vec2(gravity.x(), gravity.y()),
     ratio,
-}), _velocity_iteration(6), _position_iteration(2){
+}), _velocity_iteration(6), _position_iteration(2),
+_pixel_meter_ratio(ratio){
     
 }
 

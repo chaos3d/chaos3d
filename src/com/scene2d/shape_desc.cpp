@@ -4,10 +4,11 @@
 
 using namespace scene2d;
 
-void box::append_to(scene2d::collider2d *collider) const {
+void box::append_to(scene2d::collider2d *collider, float ratio) const {
     b2Body* body = static_cast<b2Body*>(collider->internal_data());
     b2PolygonShape shape;
-    shape.SetAsBox(width/2.f, height/2.f, b2Vec2((x+width)/2.f, (y+height)/2.f), angle);
+    shape.SetAsBox(width/2.f*ratio, height/2.f*ratio,
+                   b2Vec2((x+width)/2.f*ratio, (y+height)/2.f*ratio), angle);
     
     b2FixtureDef def;
     def.shape = &shape;

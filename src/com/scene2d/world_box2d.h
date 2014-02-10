@@ -70,10 +70,10 @@ namespace scene2d {
     public:
         typedef std::false_type component_fixed_t;
         typedef Eigen::Vector2f vector2f;
-        static constexpr float pixel_meter_ratio = 0.02f;
+        static constexpr float default_pixel_meter_ratio = 0.02f;
         
     public:
-        world2d_mgr(float = pixel_meter_ratio,
+        world2d_mgr(float = default_pixel_meter_ratio,
                     vector2f const& gravity = {0.f, -9.81f});
         
     protected:
@@ -85,6 +85,7 @@ namespace scene2d {
         
         ATTRIBUTE(int, velocity_iteration);
         ATTRIBUTE(int, position_iteration);
+        ATTRIBUTE(float, pixel_meter_ratio);
         friend class collider2d;
     };
 }

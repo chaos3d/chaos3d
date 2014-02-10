@@ -17,12 +17,13 @@ namespace scene2d {
         float weight = 0.f;
     };
 
+    // measures in pixels
     struct shape {
         typedef std::tuple<shape &&> init_t;
         virtual ~shape() {};
         
     private:
-        virtual void append_to(collider2d*) const = 0;
+        virtual void append_to(collider2d*, float) const = 0;
         friend class collider2d; // append_to, internal implementation
     };
     
@@ -36,7 +37,7 @@ namespace scene2d {
         {}
 
     private:
-        virtual void append_to(collider2d*) const override;
+        virtual void append_to(collider2d*, float) const override;
     };
     
     struct circle : public shape {
@@ -48,7 +49,7 @@ namespace scene2d {
         {}
         
     private:
-        virtual void append_to(collider2d*) const override;
+        virtual void append_to(collider2d*, float) const override;
     };
     
     struct polygon : public shape {
@@ -60,7 +61,7 @@ namespace scene2d {
         {}
         
     private:
-        virtual void append_to(collider2d*) const override;
+        virtual void append_to(collider2d*, float) const override;
     };
     
     struct chain : public shape {
@@ -72,7 +73,7 @@ namespace scene2d {
         {}
         
     private:
-        virtual void append_to(collider2d*) const override;
+        virtual void append_to(collider2d*, float) const override;
     };
 }
 
