@@ -15,6 +15,9 @@ namespace com {
 namespace scene2d {
     class world2d_mgr;
     
+    // the 2d collider that interacts with phiysics world
+    // it will reset z-axie to 0 and remove non-z-axie rotation
+    // and reset scaling to 1.0
     class collider2d : public component {
     public:
         typedef world2d_mgr manager_t;
@@ -33,8 +36,11 @@ namespace scene2d {
         void* internal_data() const; // b2Body
         
         // update the internal pos from the given transform
-        // it will also reset z to 0 and non-z-axies to 0
+        // it will also reset z to 0 and non-z-axies to 0 and remove scaling
         void update_from_transform(com::transform &);
+        
+        // apply the changes to the transform
+        void apply_to_transform(com::transform &) const;
         
     protected:
         collider2d& operator=(collider2d const&);
@@ -77,6 +83,8 @@ namespace scene2d {
         struct internal;
         std::unique_ptr<internal> _internal;
         
+        ATTRIBUTE(int, velocity_iteration);
+        ATTRIBUTE(int, position_iteration);
         friend class collider2d;
     };
 }

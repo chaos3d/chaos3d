@@ -51,6 +51,9 @@ namespace com {
         // that is, to keep the global transform
         void update_local(affine3f const& /*transform reverse*/);
         
+        // FIXME: need to update local but not populate to its children
+        void relocate();
+        
         // FIXME: this probably should be in manager class
         // it will backward transverse the parent tree and update
         void force_update();
