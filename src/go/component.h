@@ -49,6 +49,11 @@ public:
     }
  
 protected:
+    component& operator=(component const&) {
+        // doesn't assign game_object
+        return *this;
+    }
+    
     virtual ~component() {};
     
 private:

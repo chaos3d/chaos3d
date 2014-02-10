@@ -234,9 +234,11 @@ void sprite_mgr::update(goes_t const& gos) {
 
     // step 2: update the position if needed
     auto flag = flag_offset();
+    auto transform_flag = com::transform_manager::flag_offset();
     for(auto& it : _buffers) {
-        if(!it->need_update)
-            continue;
+        // FIXME: transform flag
+        //if(!it->need_update)
+        //    continue;
         
         // uses the first buffer
         // TODO: asynch locking?
@@ -249,7 +251,9 @@ void sprite_mgr::update(goes_t const& gos) {
             
             auto* transform = spt->parent()->get_component<com::transform>(transform_idx);
             if(transform) {
-                if(spt->parent()->is_set(flag)) {
+                auto dirty = spt->parent()->flag();
+                if(((dirty >> flag) & 0x1) ||
+                   ((dirty >> transform_flag) & 0x3)) {
                     spt->fill_buffer(locked, *transform);
                 }else if(std::get<3>(sprite) != std::get<1>(sprite)) {
 #if 0

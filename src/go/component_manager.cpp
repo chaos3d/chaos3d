@@ -50,6 +50,10 @@ private:
         if(gos.empty())
             return;
         
+        for(auto& it : _mgrs) {
+            it->pre_update(gos);
+        }
+        
         // the root won't have a parent
         for(auto it = ++gos.begin(); it != gos.end(); ++it) {
             (*it)->populate_flag();

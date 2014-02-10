@@ -9,7 +9,7 @@ transform* transform::clone(game_object* go) const {
 
     // if it belongs to a different parent, re-compute the local
     if(parent()->parent() != go->parent()) {
-        com->mark_dirty(false);
+        com->mark_dirty(false); // FIXME: should compute immediately
     }
     return com;
 }

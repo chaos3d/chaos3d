@@ -49,9 +49,12 @@ public:
     // frame loop
     virtual void update(goes_t const&) = 0;
     
-    // TODO: those two not integrated yet
-    virtual void pre_update(std::vector<game_object*> const&) {};
-    virtual void post_update(std::vector<game_object*> const&) {};
+    // before populating the flags, component managers can pre-
+    // populate changes
+    virtual void pre_update(goes_t const&) {};
+    
+    // Not implemented
+    virtual void post_update(goes_t const&) {};
     
     virtual void set_component_idx(uint32_t idx) = 0;
     virtual void set_component_offset(uint32_t offset) = 0;

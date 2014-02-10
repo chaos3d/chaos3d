@@ -77,6 +77,7 @@ namespace scene2d {
                     vector2f const& gravity = {0.f, -9.81f});
         
     protected:
+        virtual void pre_update(goes_t const&) override;
         virtual void update(goes_t const&) override;
         
     private:

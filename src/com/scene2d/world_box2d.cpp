@@ -121,7 +121,7 @@ _pixel_meter_ratio(ratio){
     
 }
 
-void world2d_mgr::update(goes_t const&) {
+void world2d_mgr::pre_update(goes_t const&) {
     auto& world = _internal->world;
     auto offset = com::transform_manager::flag_offset();
     auto transform_idx = com::transform_manager::component_idx();
@@ -138,10 +138,15 @@ void world2d_mgr::update(goes_t const&) {
             if(transform) {
                 collider->update_from_transform(*transform);
             }
-
+            
             first->SetActive(true);
         }
     }
+}
+
+void world2d_mgr::update(goes_t const&) {
+    auto& world = _internal->world;
+    auto transform_idx = com::transform_manager::component_idx();
     
     world.Step(1.f/30.f, _velocity_iteration, _position_iteration);
     
