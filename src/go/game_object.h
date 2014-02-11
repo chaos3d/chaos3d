@@ -108,6 +108,44 @@ public:
         return nullptr;
     }
     
+    // remove component - fixed version
+    template<typename C>
+    typename std::enable_if<std::is_base_of<component, C>::value &&
+    C::manager_t::component_fixed_t::value>::type remove_component(int idx = C::manager_t::component_idx()) {
+        assert(idx != -1); // manager is not initializer properly?
+        _components[idx].reset();
+    }
+    
+    // remove component - non-fixed version
+    // FIXME: poorly written, not tested. etc, etc
+    template<typename C>
+    typename std::enable_if<std::is_base_of<component, C>::value &&
+    !C::manager_t::component_fixed_t::value>::type remove_component(int start = component_manager::fixed_component()) {
+        typedef typename C::manager_t trait; // manager class is a trait for the component
+        if(trait::sealed_t::value) {
+            auto first = std::next(_components.begin(), start);
+            auto last = std::remove_if(first,
+                                       std::find_if(first, _components.end(),
+                                                    [] (component_ptr const& ptr) {
+                                                        return ptr.get() == nullptr;
+                                                    }),
+                                       [] (component_ptr const& ptr) {
+                                           return typeid(*ptr) == typeid(C);
+                                       });
+        }
+        else {
+            auto first = std::next(_components.begin(), start);
+            auto last = std::remove_if(first,
+                                       std::find_if(first, _components.end(),
+                                                    [] (component_ptr const& ptr) {
+                                                        return ptr.get() == nullptr;
+                                                    }),
+                                       [] (component_ptr const& ptr) {
+                                           return dynamic_cast<C*>(ptr.get()) != nullptr;
+                                       });
+        }
+    }
+    
     // add component - fixed version
     template<typename C, typename... Args>
     typename std::enable_if<std::is_base_of<component, C>::value &&
