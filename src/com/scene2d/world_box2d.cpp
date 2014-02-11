@@ -20,7 +20,7 @@ struct world2d_mgr::internal {
 
 #pragma mark - collider2d -
 
-collider2d::collider2d(game_object* go, int type, int collision)
+collider2d::collider2d(game_object* go, int collision, int type)
 : component(go), _internal(new internal)
 {
     b2BodyDef def;
@@ -68,8 +68,7 @@ void collider2d::update_from_transform(com::transform &transform) {
        std::fabs(scaleMatrix(1,1) - 1.f) > FLT_EPSILON ||
        std::fabs(scaleMatrix(2,2) - 1.f) > FLT_EPSILON
        ) {
-        affine = Eigen::AngleAxisf(euler.z(), vector3f::UnitZ());
-        affine.pretranslate(vector3f(translation.x(), translation.y(), 0.f));
+        affine = Eigen::Translation3f(translation.x(), translation.y(), 0.f) * Eigen::AngleAxisf(euler.z(), vector3f::UnitZ());
         transform.mark_dirty(false); // update the local
     }
     
@@ -134,13 +133,17 @@ void world2d_mgr::pre_update(goes_t const&) {
         // FIXME: what if it is really deactived?
         if(!first->IsActive() ||
            (obj->flag() >> offset) & com::transform_manager::global_bit) {
+            first->SetActive(false);
             auto* transform = obj->get_component<com::transform>(transform_idx);
             if(transform) {
                 collider->update_from_transform(*transform);
             }
-            
-            first->SetActive(true);
         }
+    }
+    
+    for(b2Body* first = world.GetBodyList(); first; first = first->GetNext()) {
+        if(!first->IsActive())
+            first->SetActive(true);
     }
 }
 

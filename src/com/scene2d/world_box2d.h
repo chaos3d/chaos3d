@@ -27,8 +27,8 @@ namespace scene2d {
         
     public:
         collider2d(game_object* go,
-                   int = type_normal,
-                   int = collider_dynamic);
+                   int = collider_dynamic,
+                   int = type_normal);
 
         void reset_shapes(std::initializer_list<shape::init_t> const&,
                           mass const& = mass());
