@@ -53,7 +53,7 @@ public:
     // populate changes
     virtual void pre_update(goes_t const&) {};
     
-    // Not implemented
+    // FIXME: Not implemented
     virtual void post_update(goes_t const&) {};
     
     virtual void set_component_idx(uint32_t idx) = 0;
@@ -112,6 +112,10 @@ public:
     // usually to condionally/lazily update values
     //  no flag by default
     typedef std::integral_constant<uint32_t, 0> flag_bit_t;
+    
+    // the flag mask
+    // usually 1 bit if flag is present
+    typedef std::integral_constant<uint32_t, 1> flag_mask_t;
     
     // fix the index in the component list so to search it is fast
     // (only access the indexed component). this is helpful if the
