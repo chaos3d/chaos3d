@@ -22,6 +22,10 @@ namespace scene2d {
         typedef std::tuple<shape &&> init_t;
         virtual ~shape() {};
         
+    protected:
+        struct shape_def;
+        void create_from_shape(collider2d*, shape_def const&) const;
+        
     private:
         virtual void append_to(collider2d*, float) const = 0;
         friend class collider2d; // append_to, internal implementation
