@@ -71,6 +71,8 @@ public:
     game_object* pre_sibling() const { return _pre_sibling; }
     game_object* parent() const { return _parent; }
     
+    bool has_parent() const { return _parent != nullptr; }
+    
     // transversal
     void pre_order(uint32_t mark, iterator_t const&) const;
     void post_order(iterator_t const&) const;
@@ -145,8 +147,9 @@ public:
     // change flag
     uint32_t flag() const { return _flag; }
     void reset_flag() { _flag = 0; }
+    void reset_flag(uint32_t offset, uint32_t mask = 1U) { _flag &= ~(mask << offset); }
     void set_flag(uint32_t offset, uint32_t mask = 1U) { _flag |= mask << offset; }
-    bool is_set(uint32_t offset) const { return (_flag & 1U << offset) != 0; }
+    bool is_set(uint32_t offset, uint32_t mask = 1U) const { return (_flag & mask << offset) != 0; }
     void populate_flag(); // populate from the 'Parent'
     
     // --
