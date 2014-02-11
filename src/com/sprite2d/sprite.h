@@ -39,7 +39,9 @@ namespace sprite2d {
         vertex_layout::ptr layout;
         sprites_t sprites;
         uint32_t type_idx; // index for vertice types
-        bool need_update; // update vertex indices due to adding sprites
+        // removing this, there is more complicated scenario to update
+        // vertices, may not worth this, besides, this only reduces one loop
+        //bool need_update; // update vertex indices due to adding sprites
         std::array<int, MAX> channel_indices; // {{-1,-1,-1}};
     };
     

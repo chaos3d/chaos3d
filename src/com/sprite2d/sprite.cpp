@@ -188,7 +188,7 @@ void sprite_mgr::update_buffer(sprite2d::layout_buffer &buffer, const F &remove_
         }
     }
     
-    buffer.need_update = buffer.need_update || first != last;
+    //buffer.need_update = buffer.need_update || first != last;
     buffer.sprites.erase(first, buffer.sprites.end());
 }
 
@@ -203,10 +203,10 @@ void sprite_mgr::update(goes_t const& gos) {
     
     // step 1: update all the indices, remove deleted sprites
     for(auto& it : _buffers) {
-        bool& update = it->need_update;
+        //bool& update = it->need_update;
         uint16_t idx = 0;
 
-        update_buffer(*it, [&update, &idx] (layout_buffer::sprite_t& sprite) {
+        update_buffer(*it, [&idx] (layout_buffer::sprite_t& sprite) {
             if(std::get<0>(sprite)->_mark_for_remove)
                 return true;
             
@@ -233,48 +233,45 @@ void sprite_mgr::update(goes_t const& gos) {
     sort_sprites(gos);
 
     // step 2: update the position if needed
-    auto flag = flag_offset();
+    auto sprite_flag = flag_offset();
     auto transform_flag = com::transform_manager::flag_offset();
+    auto combined_flag = (1 << sprite_flag) | (3 << transform_flag);
     for(auto& it : _buffers) {
-        // FIXME: transform flag
-        //if(!it->need_update)
-        //    continue;
-        
         // uses the first buffer
         // TODO: asynch locking?
         auto locked = it->layout->lock_channels();
         size_t offset = 0;
         
         //bool no_read = true; // oes extend doesn't allow us to read
-        for(auto& sprite : it->sprites) {
+        for(auto each = it->sprites.begin(); each != it->sprites.end();
+            ++each, locked.set_offset(offset += std::get<2>(*each))) {
+            auto &sprite = *each;
             auto* spt = std::get<0>(sprite).get();
+            auto dirty = (spt->parent()->flag() & combined_flag) != 0;
+            auto moved = std::get<3>(sprite) != std::get<1>(sprite);
+
+            std::get<3>(sprite) = std::get<1>(sprite);  // data synced
+
+            if(!dirty && !moved)
+                continue;
             
             auto* transform = spt->parent()->get_component<com::transform>(transform_idx);
-            if(transform) {
-                auto dirty = spt->parent()->flag();
-                if(((dirty >> flag) & 0x1) ||
-                   ((dirty >> transform_flag) & 0x3)) {
-                    spt->fill_buffer(locked, *transform);
-                }else if(std::get<3>(sprite) != std::get<1>(sprite)) {
-#if 0
-                    // TODO: move data instead of re-building the data??
-                    if(!no_read)
-                        std::memcpy(buffer, buffer_start + std::get<3>(sprite) * stride,
-                                    stride * std::get<2>(sprite));
-                    else
-#endif
-                        spt->fill_buffer(locked, *transform);
-                }
-            } else {
+            if(!transform) {
                 ; // TODO: log
+                continue;
             }
             
-            std::get<3>(sprite) = std::get<1>(sprite);  // data synced
-            locked.set_offset(offset += std::get<2>(sprite));
-        }
+            spt->fill_buffer(locked, *transform);
+#if 0
+            // TODO: move data instead of re-building the data??
+            if(!no_read)
+                std::memcpy(buffer, buffer_start + std::get<3>(sprite) * stride,
+                            stride * std::get<2>(sprite));
+#endif
+         }
         
         locked.unlock();
-        it->need_update = false;
+        //it->need_update = false;
     }
 }
 
@@ -307,7 +304,7 @@ layout_buffer* sprite_mgr::assign_buffer(sprite* spt, uint32_t count, uint32_t t
                               buf->sprites.size() > 0 ?
                               std::get<1>(buf->sprites.back()) + std::get<2>(buf->sprites.back()) : 0,
                               count, -1U);
-    buf->need_update = true;
+    //buf->need_update = true;
     return buf;
 }
 
@@ -333,7 +330,7 @@ std::unique_ptr<layout_buffer> sprite_mgr::create_buffer(vertices_t const& layou
                                            _device->create_index_buffer(_index_buffer_size * sizeof(uint16_t),
                                                                         vertex_buffer::Stream),
                                            vertex_layout::Triangles);
-    return make_unique<layout_buffer>(layout_buffer{std::move(vlayout), {}, 0, true, map_channel(layout)});
+    return make_unique<layout_buffer>(layout_buffer{std::move(vlayout), {}, 0, map_channel(layout)});
 }
 
 uint16_t sprite_mgr::add_type(vertices_t const& layout) {
