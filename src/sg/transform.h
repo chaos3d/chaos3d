@@ -20,14 +20,10 @@ namespace com {
         typedef transform_manager manager_t;
         
     public:
-        transform(game_object* go)
-        : component(go),
-        _rotate(1.f, 0.f, 0.f, 0.f),
-        _scale(1.f, 1.f, 1.f),
-        _translate(0.f, 0.f, 0.f),
-        _global_affine(affine3f::Identity()),
-        _global_reversed(affine3f::Identity())
-        {}
+        transform(game_object* go,
+                  vector3f const& translate = {0.f,0.f,0.f},
+                  quaternionf const& rotate = {1.f, 0.f, 0.f, 0.f},
+                  vector3f const& scale = {1.f,1.f,1.f});
 
         virtual transform* clone(game_object*) const override;
 
@@ -47,17 +43,19 @@ namespace com {
         
         // update the global using the given parent
         // that is, to keep the local transform
-        void update_global(affine3f const&);
+        void update_global(affine3f const*);
         
         // update the local using the given parent (transform reverse)
         // that is, to keep the global transform
-        void update_local(affine3f const& /*transform reverse*/);
+        void update_local(affine3f const* /*transform reverse*/);
         
         // FIXME: need to update local but not populate to its children
         void relocate();
         
-        // FIXME: this probably should be in manager class
-        // it will backward transverse the parent tree and update
+        // backward transverse the parent tree and update the matrix
+        // it will also populate the flags and only reset itself so
+        // it won't get computed again
+        // TODO: this will be expensive or asynchroneously?
         void force_update();
         
         //affine3f const& global() const { return _global_affine; }
@@ -85,6 +83,7 @@ namespace com {
         
         constexpr static uint32_t global_bit = 1U;
         constexpr static uint32_t local_bit = 2U;
+        constexpr static uint32_t mask_bit = 3U; // two bits
 
     public:
         transform_manager();
