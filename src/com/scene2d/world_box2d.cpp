@@ -120,6 +120,29 @@ _pixel_meter_ratio(ratio){
     
 }
 
+void world2d_mgr::query(query_callback_t const& query,
+                        vector2f const& center,
+                        vector2f const& half_extent) {
+    class callback : public b2QueryCallback {
+    public:
+        callback(query_callback_t const& cb)
+        : _cb(cb) {}
+
+    private:
+        virtual bool ReportFixture(b2Fixture* fixture) {
+            return _cb(static_cast<collider2d*>(fixture->GetUserData()));
+        }
+        
+        query_callback_t const& _cb;
+    };
+    callback cb(query);
+    _internal->world.QueryAABB(&cb,
+                               b2AABB{
+                                   b2Vec2(center.x() - half_extent.x(), center.y() - half_extent.y()),
+                                   b2Vec2(center.x() + half_extent.x(), center.y() + half_extent.y())
+                               });
+}
+
 void world2d_mgr::pre_update(goes_t const&) {
     auto& world = _internal->world;
     auto offset = com::transform_manager::flag_offset();

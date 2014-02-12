@@ -67,6 +67,7 @@ namespace scene2d {
 
     class world2d_mgr : public component_manager_base<world2d_mgr> {
     public:
+        typedef std::function<bool(collider2d*)> query_callback_t;
         typedef std::false_type component_fixed_t;
         typedef Eigen::Vector2f vector2f;
         static constexpr float default_pixel_meter_ratio = 0.02f;
@@ -75,6 +76,9 @@ namespace scene2d {
         world2d_mgr(float = default_pixel_meter_ratio,
                     vector2f const& gravity = {0.f, -9.81f});
         
+        void query(query_callback_t const&,
+                   vector2f const& center,
+                   vector2f const& half_extent = {0.001f, 0.001f});
     protected:
         virtual void pre_update(goes_t const&) override;
         virtual void update(goes_t const&) override;
