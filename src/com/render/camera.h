@@ -23,8 +23,14 @@ namespace com {
         typedef std::forward_list<renderable*> renderables_t;
         typedef Eigen::Matrix4f matrix4f;
         typedef Eigen::AlignedBox2f rect2d;
+        typedef Eigen::Vector2f vector2f;
         typedef Eigen::Vector3f vector3f;
         
+        struct ray {
+            // R(t) = p + t*d;
+            vector3f p;
+            vector3f d; // normalized direction
+        };
     public:
         camera(game_object*, int priority = 0);
         
@@ -56,6 +62,9 @@ namespace com {
 
         // client(screen) space to the world space
         vector3f unproject(vector3f const&) const;
+        
+        // cast a ray from a screen point (a.k.a camera point)
+        ray cast_from_screen(vector2f const&) const;
         
     protected:
         camera& operator=(camera const&);
