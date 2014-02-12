@@ -6,7 +6,8 @@ using namespace com;
 camera::camera(game_object* go, int priority)
 : component(go), _priority(priority), _disabled(false),
 _viewport(Eigen::Vector2i{0, 0}, Eigen::Vector2i{256, 256}),
-_clear_color(.1f, .1f, .1f, 0.f){
+_clear_color(.1f, .1f, .1f, 0.f), _view_mat(matrix4f::Identity()),
+_project_mat(matrix4f::Identity()){
     render_component_mgr::instance().add_camera(this);
 }
 
@@ -61,4 +62,7 @@ void camera::set_perspective(float fovY, float aspect, float near, float far){
                     0.f, invtan / aspect, 0.f, 0.f,
                     0.f, 0.f, -(near + far) / range, -2 * near * far / range,
     0.f, 0.f, -1.f, 0.f;
+    
+    _proj_view_mat = _project_mat * _view_mat;
+    _proj_view_reverse = _proj_view_mat.reverse();
 }

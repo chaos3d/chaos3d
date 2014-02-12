@@ -153,6 +153,19 @@ void render_view::clear(int mask, color_t const& color) {
     GLNOERROR;
 }
 
+render_view::vector4f render_view::normalize_position(vector3f const& screen_pos,
+                                         rect2d const& viewport) const {
+    return vector4f(
+                    (screen_pos.x() - viewport.min().x()) /
+                    viewport.sizes().x() * 2.f -1.f,
+                    1.f - (screen_pos.y() - viewport.min().y()) /
+                    viewport.sizes().y() * 2.f,
+                    screen_pos.z() * 2.f - 1.f,
+                    1.f
+                    );
+
+}
+
 void render_view::clear_stencil(int set) {
     glClearStencil(set);
     GLNOERROR;

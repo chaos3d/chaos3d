@@ -75,6 +75,7 @@ namespace com {
         render_target::ptr target() const { return _target->retain<render_target>(); };
         
     private:
+        matrix4f _proj_view_mat, _proj_view_reverse;
         matrix4f _project_mat;
         matrix4f _view_mat;
         render_target::ptr _target;
