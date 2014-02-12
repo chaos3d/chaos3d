@@ -138,14 +138,29 @@ void render_view::create_view() {
     
 }
 
+void render_view::set_viewport(rect2d const& view) {
+    glViewport(view.min().x(), view.min().y(),
+               view.max().x(), view.max().y());
+    GLNOERROR;
+}
+
+void render_view::clear(int mask, color_t const& color) {
+    glClearColor(color(0), color(1), color(2), color(3));
+    
+    glClear(((mask & COLOR) ? GL_COLOR_BUFFER_BIT : 0) |
+            ((mask & DEPTH) ? GL_DEPTH_BUFFER_BIT : 0) );
+
+    GLNOERROR;
+}
+
+void render_view::clear_stencil(int set) {
+    glClearStencil(set);
+    GLNOERROR;
+}
+
 bool render_view::bind(render_context*) {
     glBindFramebuffer(GL_FRAMEBUFFER, _framebuffer_id);
 
-    glClearColor(1.f, 0.f, 0.f, 1.f);
-    glClear(GL_COLOR_BUFFER_BIT);
-    
-    glViewport(0, 0, size()[0], size()[1]);
-    
     GLNOERROR;
     return true;
 }

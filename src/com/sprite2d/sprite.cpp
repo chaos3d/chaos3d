@@ -112,10 +112,12 @@ _channel_names(channels){
     gpu->link(vertex_layout(0), {vs.get(), fs.get()});
     
     render_state state;
+#if 0
     state.set_src_alpha_blend(render_state::BlendSrcAlpha);
     state.set_src_blend(render_state::BlendSrcColor);
     state.set_dst_alpha_blend(render_state::BlendOneMinusSrcAlpha);
     state.set_dst_blend(render_state::BlendOneMinusSrcColor);
+#endif
     
     add_material("basic",
                  gpu->retain<gpu_program>(),

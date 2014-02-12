@@ -3,7 +3,7 @@
 #include <algorithm>
 
 render_target::render_target(target_size_t const& size)
-: _size(size), _clear_color({0.f,0.f,0.f,0.f}), _batch_retained(true)
+: _size(size), _batch_retained(true)
 {
     
 }

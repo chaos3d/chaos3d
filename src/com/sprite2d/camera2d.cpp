@@ -74,5 +74,7 @@ void camera2d::collect(const std::vector<game_object *> &goes) {
 }
 
 void camera2d::do_render(const com::render_component_mgr &mgr) {
+    target()->set_viewport(viewport());
+    target()->clear(render_target::COLOR, clear_color());
     target()->do_render(mgr.context());
 }

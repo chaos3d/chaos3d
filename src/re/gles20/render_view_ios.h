@@ -21,6 +21,10 @@ public:
     using render_window::dispatch;
     
 protected:
+    virtual void set_viewport(rect2d const& view) override;
+    virtual void clear(int mask, color_t const& color = {}) override;
+    virtual void clear_stencil(int set) override;
+
     virtual bool bind(render_context*) override;
     virtual bool flush(render_context*) override;
     void create_native();

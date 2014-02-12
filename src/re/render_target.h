@@ -11,16 +11,17 @@ class render_context;
 class render_target : public referenced_count {
 public:
     typedef Eigen::Vector2f target_size_t;
-    typedef Eigen::Vector4f color_t;
     typedef std::vector<render_batch> batches_t;
     typedef std::unique_ptr<render_target, referenced_count::release_deleter> ptr;
     typedef std::unique_ptr<render_target const, referenced_count::release_deleter> const_ptr;
-    
+    typedef Eigen::AlignedBox2i rect2d;
+    typedef Eigen::Vector4f color_t;
+
     enum { RGB565, RGBA8888, SRGBA8888 };
     enum { NODEPTH, DEPTH16, DEPTH24 };
     enum { NOSTENCIL, STENCIL8 };
     enum { NOMULTISAMPLE, MULTISAMPLE4X };
-    
+    enum { COLOR = 1, DEPTH = 2 };
 public:
     render_target(target_size_t const& size);
     virtual ~render_target() {};
@@ -32,6 +33,10 @@ public:
         _batches.emplace_back(std::forward<Args>(args)...);
     }
 
+    virtual void set_viewport(rect2d const& view) = 0;
+    virtual void clear(int mask, color_t const& color = {}) = 0;
+    virtual void clear_stencil(int set) = 0;
+    
     void do_render(render_context*);
     void sort(); // TODO: comparor
     
@@ -47,7 +52,6 @@ private:
     uint8_t _stencil_format;
     uint8_t _multi_sample;
     
-    ATTRIBUTE(color_t, clear_color);
     ATTRIBUTE(bool, batch_retained);
 };
 

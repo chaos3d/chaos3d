@@ -4,7 +4,9 @@
 using namespace com;
 
 camera::camera(game_object* go, int priority)
-: component(go), _priority(priority), _disabled(false) {
+: component(go), _priority(priority), _disabled(false),
+_viewport(Eigen::Vector2i{0, 0}, Eigen::Vector2i{256, 256}),
+_clear_color(.1f, .1f, .1f, 0.f){
     render_component_mgr::instance().add_camera(this);
 }
 

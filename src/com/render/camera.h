@@ -22,9 +22,10 @@ namespace com {
         typedef nil_component_mgr<std::false_type> manager_t;
         typedef std::forward_list<renderable*> renderables_t;
         typedef Eigen::Matrix4f matrix4f;
-        typedef Eigen::AlignedBox2f rect2d;
+        typedef Eigen::AlignedBox2i rect2d;
         typedef Eigen::Vector2f vector2f;
         typedef Eigen::Vector3f vector3f;
+        typedef Eigen::Vector4f color_t;
         
         struct ray {
             // R(t) = p + t*d;
@@ -50,16 +51,17 @@ namespace com {
             return _priority < rhs.priority();
         }
         
-        camera& set_clear(render_target::color_t const& color) {
-            _target->set_clear_color(color);
-            return *this;
-        }
-        
         camera& set_target(render_target* target) {
             _target = target->retain<render_target>(); // TODO: weak reference?
             return *this;
         }
 
+        camera& set_viewport_from_target() {
+            set_viewport(Eigen::Vector2i{0,0},
+                         Eigen::Vector2i{_target->size().x(),_target->size().y()});
+            return *this;
+        }
+        
         // client(screen) space to the world space
         vector3f unproject(vector3f const&) const;
         
@@ -79,6 +81,7 @@ namespace com {
         renderables_t _renderables;
         
         ATTRIBUTE(rect2d, viewport);
+        ATTRIBUTE(color_t, clear_color);
         ATTRIBUTE(bool, disabled);
         ATTRIBUTE(int, priority); // render order, smaller is higher
 
