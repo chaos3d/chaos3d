@@ -3,6 +3,7 @@
 
 #include <type_traits>
 #include <memory>
+#include <cfloat>
 
 // one-liner that the function returns the pointer and it will be only used once
 //  it is wrapped by a unique_ptr that it'll be released in its destructor
@@ -19,6 +20,17 @@ public: auto set_##name(type const& name) -> decltype(*this) \
         _##name = type(std::forward<Types>(args)...); \
         return *this; \
     }
+
+#ifndef M_PI
+#define	M_PI		(3.1415926)
+#endif
+
+#ifndef HALF_PI
+#define	HALF_PI		(M_PI/2.0)
+#endif
+
+#define DEGREE_TO_RADIAN(degree)	((degree)/180.0*M_PI)
+#define RADIAN_TO_DEGREE(radian)	((radian)/M_PI*180.0)
 
 template<class T, class... Args>
 std::unique_ptr<T> make_unique(Args&&... args) {

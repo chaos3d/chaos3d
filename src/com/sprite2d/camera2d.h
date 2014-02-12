@@ -12,6 +12,8 @@ namespace sprite2d {
     protected:
         camera2d& operator=(camera2d const& rhs);
 
+        // TODO: the sprite may have a different config for AABB to do culling
+        // instead of using collider2d
         virtual void collect(std::vector<game_object*> const&) override;
         virtual void do_render(com::render_component_mgr const&) override;
         

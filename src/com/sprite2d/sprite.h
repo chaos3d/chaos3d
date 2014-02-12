@@ -109,6 +109,7 @@ namespace sprite2d {
     // it can be more than 1 sprite in a single component, or rather
     // the whole 2d skeleton, so it could generate more than more
     // batches especially it uses more textures
+    // TODO: aabb and culling
     class sprite : public component {
     public:
         typedef sprite_mgr manager_t;

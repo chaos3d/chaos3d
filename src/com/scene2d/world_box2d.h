@@ -35,13 +35,6 @@ namespace scene2d {
         
         void* internal_data() const; // b2Body
         
-        // update the internal pos from the given transform
-        // it will also reset z to 0 and non-z-axies to 0 and remove scaling
-        void update_from_transform(com::transform &);
-        
-        // apply the changes to the transform
-        void apply_to_transform(com::transform &) const;
-        
     protected:
         collider2d& operator=(collider2d const&);
         virtual void destroy() override;
@@ -49,17 +42,23 @@ namespace scene2d {
         // remove all the shapes bound to the body
         void clear_shapes();
         
-        // 
+        // update the internal pos from the given transform
+        // it will also reset z to 0 and non-z-axies to 0 and remove scaling
+        void update_from_transform(com::transform &);
+        
+        // apply the changes to the transform
+        void apply_to_transform(com::transform &) const;
         
     private:
         struct internal;
         std::unique_ptr<internal> _internal;
         
-        SIMPLE_CLONE(collider2d);
         friend struct internal;
+        friend class world2d_mgr; //updating transform
         
         // TODO
         // mask/category/callback
+        SIMPLE_CLONE(collider2d);
     };
     
     /// ----------------------------------------------
