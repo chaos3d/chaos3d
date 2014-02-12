@@ -140,3 +140,27 @@ action::~action() {
     assert(_next_sibling == null_action || _next_sibling == nullptr);
     assert(_next == nullptr);
 }
+
+root_action::root_action() {
+    // root action will always be active
+    on_start();
+}
+
+void action_functor::on_start() {
+    _func();
+    action::on_start();
+};
+    
+void action_functor::on_stop(bool skipping) {
+    if(!started())
+        on_start();
+    action::on_stop(skipping);
+    if(!skipping)
+        _cancel(false); // cancel, go to beginning
+    else if(_cancel)
+        _cancel(true); // skip, go to end
+}
+
+bool action_functor::cancellable() const {
+    return _cancel != nullptr; // only if canceller exists
+}
