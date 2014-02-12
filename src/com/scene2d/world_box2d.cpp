@@ -54,7 +54,7 @@ void collider2d::clear_shapes() {
     // TODO
 }
 
-void collider2d::update_from_transform(com::transform &transform) {
+void collider2d::update_from_transform(com::transform &transform, float ratio) {
     auto& affine = transform.global_affine();
     affine3f::LinearMatrixType rotMatrix, scaleMatrix;
     affine.computeRotationScaling(&rotMatrix, &scaleMatrix);
@@ -72,12 +72,12 @@ void collider2d::update_from_transform(com::transform &transform) {
         transform.mark_dirty(false); // update the local
     }
     
-    _internal->position = {translation.x(), translation.y()};
+    _internal->position = {translation.x() * ratio, translation.y() * ratio};
     _internal->z_angle = euler.z();
     _internal->body->SetTransform(_internal->position, euler.z());
 }
 
-void collider2d::apply_to_transform(com::transform &transform) const{
+void collider2d::apply_to_transform(com::transform &transform, float ratio) const{
     // static body never changes the transform
     if(_internal->body->GetType() == b2_staticBody)
         return;
@@ -89,7 +89,7 @@ void collider2d::apply_to_transform(com::transform &transform) const{
         return;
     }
     
-    transform.set_global_affine(Eigen::Translation3f(current.x, current.y, 0.f) *
+    transform.set_global_affine(Eigen::Translation3f(current.x / ratio, current.y / ratio, 0.f) *
                                 Eigen::AngleAxisf(angle, vector3f::UnitZ()));
     transform.mark_dirty(false);
     _internal->position = current;
@@ -113,7 +113,7 @@ void collider2d::destroy() {
 
 world2d_mgr::world2d_mgr(float ratio, vector2f const& gravity)
 : _internal(new internal{
-    b2Vec2(gravity.x(), gravity.y()),
+    b2Vec2(gravity.x() * ratio, gravity.y() * ratio),
     ratio,
 }), _velocity_iteration(6), _position_iteration(2),
 _pixel_meter_ratio(ratio){
@@ -134,12 +134,16 @@ void world2d_mgr::query(query_callback_t const& query,
         }
         
         query_callback_t const& _cb;
-    };
-    callback cb(query);
+    } cb(query);
+
+    auto center_in_meter = center * pixel_meter_ratio();
+    auto extent_in_meter = half_extent * pixel_meter_ratio();
     _internal->world.QueryAABB(&cb,
                                b2AABB{
-                                   b2Vec2(center.x() - half_extent.x(), center.y() - half_extent.y()),
-                                   b2Vec2(center.x() + half_extent.x(), center.y() + half_extent.y())
+                                   b2Vec2(center_in_meter.x() - extent_in_meter.x(),
+                                          center_in_meter.y() - extent_in_meter.y()),
+                                   b2Vec2(center_in_meter.x() + extent_in_meter.x(),
+                                          center_in_meter.y() + extent_in_meter.y())
                                });
 }
 
@@ -159,7 +163,7 @@ void world2d_mgr::pre_update(goes_t const&) {
             first->SetActive(false);
             auto* transform = obj->get_component<com::transform>(transform_idx);
             if(transform) {
-                collider->update_from_transform(*transform);
+                collider->update_from_transform(*transform, pixel_meter_ratio());
             }
         }
     }
@@ -184,7 +188,7 @@ void world2d_mgr::update(goes_t const&) {
         auto* obj = collider->parent();
         auto* transform = obj->get_component<com::transform>(transform_idx);
         if(transform) {
-            collider->apply_to_transform(*transform);
+            collider->apply_to_transform(*transform, pixel_meter_ratio());
         }
     }
     

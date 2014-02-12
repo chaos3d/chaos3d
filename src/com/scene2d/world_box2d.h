@@ -44,10 +44,10 @@ namespace scene2d {
         
         // update the internal pos from the given transform
         // it will also reset z to 0 and non-z-axies to 0 and remove scaling
-        void update_from_transform(com::transform &);
+        void update_from_transform(com::transform &, float ratio);
         
         // apply the changes to the transform
-        void apply_to_transform(com::transform &) const;
+        void apply_to_transform(com::transform &, float ratio) const;
         
     private:
         struct internal;
