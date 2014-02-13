@@ -61,14 +61,13 @@ void collider2d::update_from_transform(com::transform &transform, float ratio) {
     auto translation = affine.translation();
     auto euler = rotMatrix.eulerAngles(0, 1, 2);
     
-    if(std::fabs(translation.z() - FLT_EPSILON) > 0.f ||
-       std::fabs(euler.x() - FLT_EPSILON) > 0.f ||
+    if(std::fabs(euler.x() - FLT_EPSILON) > 0.f ||
        std::fabs(euler.y() - FLT_EPSILON) > 0.f ||
        std::fabs(scaleMatrix(0,0) - 1.f) > FLT_EPSILON ||
        std::fabs(scaleMatrix(1,1) - 1.f) > FLT_EPSILON ||
        std::fabs(scaleMatrix(2,2) - 1.f) > FLT_EPSILON
        ) {
-        affine = Eigen::Translation3f(translation.x(), translation.y(), 0.f) * Eigen::AngleAxisf(euler.z(), vector3f::UnitZ());
+        affine = Eigen::Translation3f(translation) * Eigen::AngleAxisf(euler.z(), vector3f::UnitZ());
         transform.mark_dirty(false); // update the local
     }
     
@@ -89,7 +88,8 @@ void collider2d::apply_to_transform(com::transform &transform, float ratio) cons
         return;
     }
     
-    transform.set_global_affine(Eigen::Translation3f(current.x / ratio, current.y / ratio, 0.f) *
+    transform.set_global_affine(Eigen::Translation3f(current.x / ratio, current.y / ratio,
+                                                     transform.global_affine().translation().z()) *
                                 Eigen::AngleAxisf(angle, vector3f::UnitZ()));
     transform.mark_dirty(false);
     _internal->position = current;

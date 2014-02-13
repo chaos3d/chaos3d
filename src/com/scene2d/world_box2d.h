@@ -16,7 +16,7 @@ namespace scene2d {
     class world2d_mgr;
     
     // the 2d collider that interacts with phiysics world
-    // it will reset z-axie to 0 and remove non-z-axie rotation
+    // it will remove non-z-axie rotation
     // and reset scaling to 1.0
     class collider2d : public component {
     public:
@@ -43,7 +43,7 @@ namespace scene2d {
         void clear_shapes();
         
         // update the internal pos from the given transform
-        // it will also reset z to 0 and non-z-axies to 0 and remove scaling
+        // it will also reset non-z-axies to 0 and remove scaling
         void update_from_transform(com::transform &, float ratio);
         
         // apply the changes to the transform
