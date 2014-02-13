@@ -4,9 +4,9 @@
 #include <initializer_list>
 #include <vector>
 #include "common/referenced_count.h"
+#include "re/render_uniform.h"
 
 class vertex_channels;
-class render_uniform;
 class gpu_shader;
 class data_stream;
 class render_context;
@@ -75,7 +75,8 @@ public:
                       std::initializer_list<gpu_shader*> shaders) = 0;
     
     // bind to the hardware
-    virtual void bind(render_context*, render_uniform const*) const = 0;
+    virtual void bind(render_context*, render_uniform const*,
+                      std::vector<render_uniform::const_ptr> const&) const = 0;
  
 protected:
     channels_t& channels() { return _channels; }

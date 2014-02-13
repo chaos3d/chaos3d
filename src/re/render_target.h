@@ -11,6 +11,7 @@ class render_context;
 class render_target : public referenced_count {
 public:
     typedef std::vector<render_batch> batches_t;
+    typedef std::vector<render_uniform::const_ptr> uniforms_t;
     typedef std::unique_ptr<render_target, referenced_count::release_deleter> ptr;
     typedef std::unique_ptr<render_target const, referenced_count::release_deleter> const_ptr;
     typedef Eigen::AlignedBox2i rect2d;
@@ -47,6 +48,10 @@ public:
     void do_render(render_context*);
     void sort(); // TODO: comparor
     
+    float aspect_ratio() const {
+        return _size.x() / _size.y();
+    }
+    
 protected:
     virtual bool bind(render_context*) = 0;
     virtual bool flush(render_context*) = 0;
@@ -59,7 +64,8 @@ private:
     uint8_t _stencil_format;
     uint8_t _multi_sample;
     
-    ATTRIBUTE(bool, batch_retained);
+    ATTRIBUTE(bool, batch_retained); // whether the batches would be cleared
+    ATTRIBUTE(uniforms_t, uniforms); // the global uniforms
 };
 
 class texture;

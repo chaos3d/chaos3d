@@ -18,7 +18,7 @@ void render_target::do_render(render_context* context) {
     
     for(auto& it : _batches) {
         context->set_state(*it.state());
-        it.program()->bind(context, it.uniform());
+        it.program()->bind(context, it.uniform(), _uniforms);
         it.layout()->draw(context, it.start(), it.count());
     }
     

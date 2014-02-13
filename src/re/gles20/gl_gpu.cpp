@@ -253,13 +253,17 @@ void gl_gpu_program::assign_uniforms(render_context* context, render_uniform::un
     
 }
 
-void gl_gpu_program::bind(render_context* context, render_uniform const* uniform) const{
+void gl_gpu_program::bind(render_context* context, render_uniform const* uniform,
+                          std::vector<render_uniform::const_ptr> const& uniforms) const{
     glUseProgram(_program_id);
     GLNOERROR;
 
     if(!uniform)
         return;
 
+    for(auto& it : uniforms) {
+        assign_uniforms(context, it->uniforms());
+    }
     assign_uniforms(context, uniform->uniforms());
     GLNOERROR;
 }

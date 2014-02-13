@@ -24,7 +24,8 @@ public:
     virtual ~gl_gpu_program();
     
     virtual void link(std::vector<std::string>, std::initializer_list<gpu_shader*>) override;
-    virtual void bind(render_context*, render_uniform const*) const override;
+    virtual void bind(render_context*, render_uniform const*,
+                      std::vector<render_uniform::const_ptr> const&) const override;
     
 protected:
     void detach_all();
