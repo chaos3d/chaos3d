@@ -45,7 +45,8 @@ namespace com {
         virtual void do_render(render_component_mgr const&);
         
         void set_orthographic();
-        void set_perspective(float fovY, float aspect, float near, float far);
+        camera& set_perspective(float fovY, float aspect, float near, float far);
+        void set_perspective(float left, float bottom, float right, float top, float near, float far);
         
         bool operator< (camera const& rhs) const {
             return _priority < rhs.priority();
@@ -73,8 +74,10 @@ namespace com {
         virtual ~camera();
         renderables_t& renderables() { return _renderables; };
         render_target::ptr target() const { return _target->retain<render_target>(); };
+        render_uniform::ptr uniform() const { return _uniform; }
         
     private:
+        render_uniform::ptr _uniform;
         matrix4f _proj_view_mat, _proj_view_reverse;
         matrix4f _project_mat;
         matrix4f _view_mat;
