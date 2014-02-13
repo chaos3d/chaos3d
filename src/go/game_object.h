@@ -1,10 +1,6 @@
 #ifndef _GAME_OBJECT_H
 #define _GAME_OBJECT_H
 
-#include <boost/mpl/vector.hpp>
-#include <boost/mpl/find.hpp>
-#include <boost/mpl/size.hpp>
-
 #include <type_traits>
 #include <cassert>
 #include <vector>
