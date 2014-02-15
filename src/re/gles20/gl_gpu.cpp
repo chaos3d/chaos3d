@@ -235,10 +235,11 @@ void gl_gpu_program::assign_uniforms(render_context* context, render_uniform::un
     int unit = 0;
     
     while (rd_begin != rd_end && gpu_begin != gpu_end) {
-        if (rd_begin->get()->name() < gpu_begin->name) {
+        int ret = rd_begin->get()->name().compare(gpu_begin->name);
+        if (ret < 0) {
             ++rd_begin;
         } else  {
-            if (!(gpu_begin->name < rd_begin->get()->name())) {
+            if (ret == 0) {
                 if(typeid(uniform) == typeid(render_uniform::uniform_texture)) {
                     // TODO: sanity check, unit less than max units
                     glUniform1i(gpu_begin->location, unit);
@@ -246,6 +247,8 @@ void gl_gpu_program::assign_uniforms(render_context* context, render_uniform::un
                                          static_cast<render_uniform::uniform_texture const&>(*rd_begin->get()).value);
                 } else
                     update_uniform(*gpu_begin, *rd_begin->get());
+                
+                gpu_begin->last = rd_begin->get()->last();
             }
             ++gpu_begin;
         }

@@ -55,7 +55,7 @@ public:
     struct uniform {
         int location;
         int type;
-        uint32_t last; // last update time
+        mutable uint32_t last; // last update time
         std::string name;
     };
     

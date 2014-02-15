@@ -22,7 +22,7 @@ public:
     
     struct uniform {
         uniform(std::string const& name)
-        : _name(name)
+        : _name(name), _last(1)
         {}
         
         virtual ~uniform() {};
@@ -44,8 +44,11 @@ public:
         }
         
         std::string const& name() const {return _name; }
+        uint32_t last() const { return _last; }
+        
     private:
         std::string _name;
+        uint32_t _last; // the last time it is being set
     };
     
     struct uniform_texture : public uniform {
