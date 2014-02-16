@@ -27,21 +27,21 @@ camera& camera::operator=(camera const& rhs) {
 }
 
 camera::vector3f camera::unproject(vector3f const& pos) const {
-#if 0
-	Vector4f pos(
-                 (viewPos[0]-vp.pos.x)/vp.size.width *2.f -1.f,
-                 1.f-(viewPos[1]-vp.pos.y)/vp.size.height *2.f,
-                 viewPos[2]*2.f -1.f,
-                 1.f
-                 );
+	Eigen::Vector4f ret = _proj_view_reverse * Eigen::Vector4f{pos[0], pos[1], pos[2], 1.f};
+    return vector3f(ret[0]/ret[3], ret[1]/ret[3], ret[2]/ret[3]);
+}
+
+camera::ray camera::cast_from_screen(vector2f const& pos) const {
+    vector3f p(target()->normalize_position({pos[0], pos[1], 0.f}, viewport()));
+	vector3f d(target()->normalize_position({pos[0], pos[1], 1.f}, viewport()));
     
-	pos = mProjMatrixInv * pos;
-    
-	viewPos[0] = pos[0]/pos[3];
-	viewPos[1] = pos[1]/pos[3];
-	viewPos[2] = pos[2]/pos[3];
-#endif
-    return vector3f(); // TODO
+	ray ret = {
+        unproject(p), // p
+        unproject(d), // d
+    };
+	
+	(ret.d -= ret.p).normalize();
+    return ret;
 }
 
 void camera::collect(std::vector<game_object*> const&) {
@@ -106,7 +106,13 @@ camera& camera::set_perspective(float fovY, float aspect, float near, float far)
     //_project_mat.transposeInPlace();
     
     _proj_view_mat = _project_mat * _view_mat;
-    _proj_view_reverse = _proj_view_mat.reverse();
+    
+    _proj_view_reverse << aspect / invtan, 0.f, 0.f, 0.f,
+                    0.f, 1.f/invtan, 0.f, 0.f,
+                    0.f, 0.f, 0.f, -1.f,
+    0.f, 0.f, range / near / far * -.5f, - (near + far) / (near * far) * .5f;
+    // FIXME: view_mat_reverse
+    
     _uniform->set_matrix("c_ProjViewMat", _proj_view_mat);
     return *this;
 }

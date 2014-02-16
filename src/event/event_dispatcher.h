@@ -31,7 +31,7 @@ protected:
     }
     
 private:
-    F && _functor;
+    typename std::remove_cv<F>::type _functor;
 };
 
 template<class F>

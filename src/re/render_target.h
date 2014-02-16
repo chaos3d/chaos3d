@@ -42,7 +42,7 @@ public:
     
     // convert to normalized-device position
     // (range is in [-1,1] and y-axis is reversed)
-    virtual vector4f normalize_position(vector3f const& screen_pos,
+    virtual vector3f normalize_position(vector3f const& screen_pos,
                                         rect2d const& viewport) const = 0;
     
     void do_render(render_context*);

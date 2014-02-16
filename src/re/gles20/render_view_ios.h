@@ -24,7 +24,7 @@ protected:
     virtual void set_viewport(rect2d const& view) override;
     virtual void clear(int mask, color_t const& color = {}) override;
     virtual void clear_stencil(int set) override;
-    virtual vector4f normalize_position(vector3f const& screen_pos,
+    virtual vector3f normalize_position(vector3f const& screen_pos,
                                         rect2d const& viewport) const override;
 
     virtual bool bind(render_context*) override;
