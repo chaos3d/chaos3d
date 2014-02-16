@@ -23,7 +23,7 @@ void shape::create_from_shape(collider2d *collider, shape_def const&def) const {
 void box::append_to(scene2d::collider2d *collider, float ratio) const {
     b2PolygonShape shape;
     shape.SetAsBox(width/2.f*ratio, height/2.f*ratio,
-                   b2Vec2((x+width)/2.f*ratio, (y+height)/2.f*ratio), angle);
+                   b2Vec2((x+width/2.f)*ratio, (y+height/2.f)*ratio), angle);
     
     create_from_shape(collider, {&shape});
 }
