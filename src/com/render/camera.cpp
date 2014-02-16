@@ -108,7 +108,7 @@ void camera::update_from_transform() {
 void camera::update_matrix() {
     auto* trans = parent()->get_component<com::transform>();
     if (trans) {
-        _proj_view_inverse = _proj_inverse * trans->global_affine().matrix();
+        _proj_view_inverse = trans->global_affine().matrix() * _proj_inverse;
         _uniform->set_matrix("c_ProjViewMat", matrix4f(_proj_mat * trans->global_inverse().matrix()));
     } else {
         _proj_view_inverse = _proj_inverse;
