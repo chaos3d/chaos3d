@@ -110,7 +110,7 @@ camera& camera::set_perspective(float fovY, float aspect, float near, float far)
     _proj_view_reverse << aspect / invtan, 0.f, 0.f, 0.f,
                     0.f, 1.f/invtan, 0.f, 0.f,
                     0.f, 0.f, 0.f, -1.f,
-    0.f, 0.f, range / near / far * -.5f, - (near + far) / (near * far) * .5f;
+    0.f, 0.f, range / near / far * -.5f, (near + far) / (near * far) * .5f;
     // FIXME: view_mat_reverse
     
     _uniform->set_matrix("c_ProjViewMat", _proj_view_mat);
