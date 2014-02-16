@@ -77,11 +77,11 @@ void transform::force_update() {
 void transform::update_global(affine3f const* parent) {
     _global_affine = parent ? *parent : affine3f::Identity();
     _global_affine.translate(_translate).scale(_scale).rotate(_rotate);
-    _global_reversed = _global_affine.matrix().reverse();
+    _global_inverse = _global_affine.inverse();
 }
 
-void transform::update_local(affine3f const* reversed) {
-    affine3f const& local = reversed ? *reversed * global_affine() : global_affine();
+void transform::update_local(affine3f const* inverse) {
+    affine3f const& local = inverse ? *inverse * global_affine() : global_affine();
     affine3f::LinearMatrixType rotMatrix, scaleMatrix;
     local.computeRotationScaling(&rotMatrix, &scaleMatrix);
     _scale = scaleMatrix.diagonal();
@@ -115,7 +115,7 @@ void transform_manager::update(std::vector<game_object*> const& gos) {
         if(it->flag() & global_mask) { // local takes priorities
             com->update_global(parent ? &parent->global_affine() : nullptr);
         } else {
-            com->update_local(parent ? &parent->global_reversed() : nullptr);
+            com->update_local(parent ? &parent->global_inverse() : nullptr);
         }
     }
 }

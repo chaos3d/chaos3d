@@ -38,16 +38,16 @@ namespace com {
         
         // transform from the position global to this parent to the local space
         vector3f to_local(vector3f const& global) const {
-            return _global_reversed * global;
+            return _global_inverse * global;
         }
         
         // update the global using the given parent
         // that is, to keep the local transform
         void update_global(affine3f const*);
         
-        // update the local using the given parent (transform reverse)
+        // update the local using the given parent (transform inverse)
         // that is, to keep the global transform
-        void update_local(affine3f const* /*transform reverse*/);
+        void update_local(affine3f const* /*transform inverse*/);
         
         // FIXME: need to update local but not populate to its children
         void relocate();
@@ -59,7 +59,7 @@ namespace com {
         void force_update();
         
         //affine3f const& global() const { return _global_affine; }
-        affine3f const& global_reversed() const { return _global_reversed; }
+        affine3f const& global_inverse() const { return _global_inverse; }
         
         // to update global or local
         // if both has been marked, to update global takes priorities
@@ -68,7 +68,7 @@ namespace com {
         inline bool is_dirty() const;
         
     private:
-        affine3f _global_reversed;
+        affine3f _global_inverse;
         
         ATTRIBUTE(affine3f, global_affine);
         ATTRIBUTE(quaternionf, rotate);

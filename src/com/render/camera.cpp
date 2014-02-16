@@ -1,13 +1,17 @@
 #include "com/render/camera.h"
 #include "com/render/render_component_mgr.h"
+#include "go/game_object.h"
+#include "sg/transform.h"
 
 using namespace com;
 
 camera::camera(game_object* go, int priority)
 : component(go), _priority(priority), _disabled(false),
 _viewport(Eigen::Vector2i{0, 0}, Eigen::Vector2i{256, 256}),
-_clear_color(.1f, .1f, .1f, 0.f), _view_mat(matrix4f::Identity()),
-_project_mat(matrix4f::Identity()),
+_clear_color(.1f, .1f, .1f, 0.f),
+_proj_view_inverse(matrix4f::Identity()),
+_proj_mat(matrix4f::Identity()),
+_proj_inverse(matrix4f::Identity()),
 _uniform(make_uniforms_ptr({
     make_uniform<render_uniform::Mat4>("c_ProjViewMat", matrix4f::Identity())
 })){
@@ -19,15 +23,17 @@ camera::~camera() {
 }
 
 camera& camera::operator=(camera const& rhs) {
-    _project_mat = rhs._project_mat;
-    _view_mat = rhs._view_mat;
+    _proj_mat = rhs._proj_mat;
+    _proj_inverse = rhs._proj_inverse;
+    _proj_view_inverse = rhs._proj_view_inverse;
+    _uniform = std::make_shared<render_uniform>(*rhs.uniform().get());
     _target = rhs._target->retain<render_target>();
     _disabled = rhs._disabled;
     return *this;
 }
 
 camera::vector3f camera::unproject(vector3f const& pos) const {
-	Eigen::Vector4f ret = _proj_view_reverse * Eigen::Vector4f{pos[0], pos[1], pos[2], 1.f};
+	Eigen::Vector4f ret = _proj_view_inverse * Eigen::Vector4f{pos[0], pos[1], pos[2], 1.f};
     return vector3f(ret[0]/ret[3], ret[1]/ret[3], ret[2]/ret[3]);
 }
 
@@ -83,15 +89,31 @@ void camera::set_perspective(float left, float bottom, float right, float top, f
 	// D = (top + bottom) / (top - bottom)
 	// q = - (far + near) / (far - near)
 	// qn = - 2 * (far * near) / (far - near)
-    _project_mat << A, 0.f, C, 0.f,
+    _proj_mat << A, 0.f, C, 0.f,
                     0.f, B, D, 0.f,
                     0.f, 0.f, q, qn,
     0.f, 0.f, -1.f,0.f;
-    _project_mat.transposeInPlace();
 
-    _proj_view_mat = _project_mat * _view_mat;
-    _proj_view_reverse = _proj_view_mat.reverse();
-    _uniform->set_matrix("c_ProjViewMat", _proj_view_mat);
+    _uniform->set_matrix("c_ProjViewMat", _proj_mat);
+    assert(0); // FIXME
+}
+
+void camera::update_from_transform() {
+    if (parent()->is_set(com::transform_manager::flag_offset(),
+                         com::transform_manager::mask_bit)) {
+        update_matrix();
+    }
+}
+
+void camera::update_matrix() {
+    auto* trans = parent()->get_component<com::transform>();
+    if (trans) {
+        _proj_view_inverse = _proj_inverse * trans->global_affine().matrix();
+        _uniform->set_matrix("c_ProjViewMat", matrix4f(_proj_mat * trans->global_inverse().matrix()));
+    } else {
+        _proj_view_inverse = _proj_inverse;
+        _uniform->set_matrix("c_ProjViewMat", _proj_mat);
+    }
 }
 
 camera& camera::set_perspective(float fovY, float aspect, float near, float far){
@@ -99,20 +121,13 @@ camera& camera::set_perspective(float fovY, float aspect, float near, float far)
     float range = far - near;
     float invtan = 1./tan(theta);
     
-    _project_mat << invtan / aspect, 0.f, 0.f, 0.f,
-                    0.f, invtan, 0.f, 0.f,
-                    0.f, 0.f, -(near + far) / range, -2.f * near * far / range,
-    0.f, 0.f, -1.f, 0.f;
-    //_project_mat.transposeInPlace();
+    _proj_mat << invtan / aspect, 0.f, 0.f, 0.f,
+                 0.f, invtan, 0.f, 0.f,
+                 0.f, 0.f, -(near + far) / range, -2.f * near * far / range,
+                 0.f, 0.f, -1.f, 0.f;
     
-    _proj_view_mat = _project_mat * _view_mat;
+    _proj_inverse = _proj_mat.inverse();
     
-    _proj_view_reverse << aspect / invtan, 0.f, 0.f, 0.f,
-                    0.f, 1.f/invtan, 0.f, 0.f,
-                    0.f, 0.f, 0.f, -1.f,
-    0.f, 0.f, range / near / far * -.5f, (near + far) / (near * far) * .5f;
-    // FIXME: view_mat_reverse
-    
-    _uniform->set_matrix("c_ProjViewMat", _proj_view_mat);
+    update_matrix();
     return *this;
 }
