@@ -4,7 +4,7 @@
 #include "re/render_target.h"
 #include "event/event_dispatcher.h"
 
-class render_window : public render_target, protected event_dispatcher {
+class render_window : public render_target, public event_dispatcher {
 public:
     typedef Eigen::Vector2f window_pos_t;
     

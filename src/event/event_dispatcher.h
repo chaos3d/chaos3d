@@ -19,6 +19,26 @@ struct event_listener : virtual public referenced_count {
     virtual bool on_event(event const&) = 0;
 };
 
+template<class F>
+class listener_functor : public event_listener {
+public:
+    listener_functor(F&& f) : _functor(std::forward<F>(f))
+    {}
+    
+protected:
+    virtual bool on_event(event const&evt) override {
+        return _functor(evt);
+    }
+    
+private:
+    F && _functor;
+};
+
+template<class F>
+event_listener* make_listener(F&& f) {
+    return new listener_functor<F>(std::forward<F>(f));
+}
+
 // dispatcher
 class event_dispatcher {
 public:
@@ -31,6 +51,12 @@ public:
                                    event_listener*);
     
     virtual bool unregister_listener(event_listener*);
+    
+    template<class... Args, class Listener>
+    bool register_listener(Listener&& listener) {
+        return register_listener({std::type_index(typeid(Args))...},
+                                 std::forward<Listener>(listener));
+    }
     
 protected:
     void dispatch(event const&);
