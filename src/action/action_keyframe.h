@@ -26,7 +26,7 @@ public:
     
 public:
     template <class... Args>
-    action_keyframe(int wrap, Args&&... args)
+    animation_keyframe(int wrap, Args&&... args)
     : _wrap(wrap), _keyframes(std::forward<Args>(args)...) {
         normalize();
     }
@@ -98,7 +98,7 @@ private:
 
 template<class Key>
 struct interpolator_linear {
-    typedef animation_keyframe<Key>::key_frame key_frame;
+    typedef typename animation_keyframe<Key>::key_frame key_frame;
     inline key_frame operator() (key_frame const& from, key_frame const& to,
                                  float p, int) const {
         return from + to * p;
