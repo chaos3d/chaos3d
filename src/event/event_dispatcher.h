@@ -15,6 +15,9 @@ public:
 
 // listener interface: weak referenced
 struct event_listener : virtual public referenced_count {
+    typedef std::unique_ptr<event_listener> ptr;
+    typedef std::unique_ptr<const event_listener> const_ptr;
+    
     virtual ~event_listener() {};
     virtual bool on_event(event const&) = 0;
 };
@@ -35,8 +38,8 @@ private:
 };
 
 template<class F>
-event_listener* make_listener(F&& f) {
-    return new listener_functor<F>(std::forward<F>(f));
+event_listener::ptr make_listener(F&& f) {
+    return event_listener::ptr(new listener_functor<F>(std::forward<F>(f)));
 }
 
 // dispatcher
