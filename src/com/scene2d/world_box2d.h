@@ -89,6 +89,7 @@ namespace scene2d {
         
         ATTRIBUTE(int, velocity_iteration);
         ATTRIBUTE(int, position_iteration);
+        ATTRIBUTE(float, step);
         ATTRIBUTE(float, pixel_meter_ratio);
         friend class collider2d;
     };

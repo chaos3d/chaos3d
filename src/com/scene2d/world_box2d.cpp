@@ -116,7 +116,7 @@ world2d_mgr::world2d_mgr(float ratio, vector2f const& gravity)
     b2Vec2(gravity.x() * ratio, gravity.y() * ratio),
     ratio,
 }), _velocity_iteration(6), _position_iteration(2),
-_pixel_meter_ratio(ratio){
+_pixel_meter_ratio(ratio), _step(1.f/30.f){
     
 }
 
@@ -181,7 +181,7 @@ void world2d_mgr::update(goes_t const&) {
     auto& world = _internal->world;
     auto transform_idx = com::transform_manager::component_idx();
     
-    world.Step(1.f/30.f, _velocity_iteration, _position_iteration);
+    world.Step(_step, _velocity_iteration, _position_iteration);
     
     for(b2Body* first = world.GetBodyList(); first; first = first->GetNext()) {
         if(!first->IsAwake())
