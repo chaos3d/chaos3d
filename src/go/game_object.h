@@ -28,6 +28,11 @@ public:
     typedef std::function<void (game_object const&)> iterator_t;
     typedef std::array<component_ptr, ComponentSize> components_t;
     
+    template <typename C>
+    struct components_constructor {
+        void operator() (game_object*);
+    };
+    
 public:
     game_object(game_object* parent = &root())
     : _first_child(null), _parent(nullptr),
@@ -176,6 +181,13 @@ public:
         assert(existed < _components.size()); // components overflow...
         _components[existed].reset(C::template create<C>(this, std::forward<Args>(args)...));
         return static_cast<C*>(_components[existed].get());
+    }
+    
+    // add several components at once
+    // redirecting to components_constructor
+    template<typename C, typename... Args>
+    void add_components(Args&&... args) {
+        components_constructor<C>() (this, std::forward<Args>(args)...);
     }
     
     // change flag
