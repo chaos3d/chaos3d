@@ -8,10 +8,12 @@
 #include <ctime>
 
 #include "common/utility.h"
+#include "common/singleton.h"
 
 class timer {
 public:
     typedef uint32_t frame_t;
+    typedef double time_t;
     
 #ifdef __APPLE__
     typedef uint64_t tick_t;
@@ -73,11 +75,11 @@ public:
     }
     
     // current tracking time
-    double current_time() const {
+    time_t current_time() const {
 #ifdef __APPLE__
-        return (double)_tick / _tick_per_second;
+        return (time_t)_tick / _tick_per_second;
 #else
-        return (double)_tick / CLOCKS_PER_SEC;
+        return (time_t)_tick / CLOCKS_PER_SEC;
 #endif
     }
     
@@ -92,19 +94,23 @@ public:
 
 private:
 #ifdef __APPLE__
-    static double tick_per_second() {
+    static time_t tick_per_second() {
         mach_timebase_info_data_t timebase_info;
         (void) mach_timebase_info(&timebase_info);
         return timebase_info.denom*1000000000L / timebase_info.numer;
     }
 
-    static const double _tick_per_second;
+    static const time_t _tick_per_second;
 #endif
     
 private:
     frame_t _current = 0;
     tick_t _tick = 0, _last_frame_tick = 0;
     tick_t _frame_rate = _tick_per_second / 30;
+};
+
+class global_timer : public timer, public singleton<global_timer, Static_Instance> {
+    
 };
 
 #endif
