@@ -11,7 +11,7 @@ public:
     typedef timer::time_t time_t;
 
 public:
-    action_timer(time_t duration, timer const& t = global_timer::instance())
+    action_timer(time_t duration, timer const& t = global_timer_base::instance())
     : _duration(duration), _timer(t)
     {}
 
@@ -67,7 +67,7 @@ protected:
     
 private:
     time_t _start = 0;
-    timer const& _timer = global_timer::instance();
+    timer const& _timer = global_timer_base::instance();
     actions_t _actions;
 };
 

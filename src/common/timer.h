@@ -24,7 +24,7 @@ public:
     // ticking using the given time
     class ticker_realtime {
     public:
-        ticker_realtime(tick_t now)
+        ticker_realtime(tick_t now = current())
         : _last_tick(now)
         {}
         
@@ -41,7 +41,7 @@ public:
     // ticking using the fixed ticks
     class ticker_fixed {
     public:
-        ticker_fixed(frame_t frames)
+        ticker_fixed(frame_t frames = 30)
         : _fixed_tick(frames * _tick_per_second)
         {}
         
@@ -52,7 +52,7 @@ public:
     private:
         tick_t _fixed_tick;
     };
-    
+
 public:
     // tick delta, return the delta frames
     frame_t tick(tick_t delta) {
@@ -109,8 +109,24 @@ private:
     tick_t _frame_rate = _tick_per_second / 30;
 };
 
-class global_timer : public timer, public singleton<global_timer, Static_Instance> {
-    
+class global_timer_base : public timer, public singleton<global_timer> {
 };
 
+template<class T>
+class global_timer : public global_timer_base {
+public:
+    global_timer(T const& t = T())
+    : _ticker(t)
+    
+    void update() {
+        _ticker(current());
+    }
+private:
+    T _ticker;
+};
+
+template<class T>
+global_timer<T> make_global_timer(T const& t = T()) {
+    return global_timer<T>(t);
+}
 #endif
