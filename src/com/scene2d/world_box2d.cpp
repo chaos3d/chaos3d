@@ -154,7 +154,7 @@ void world2d_mgr::pre_update(goes_t const& goes) {
     auto mark = goes.front()->mark();
     
     // FIXME: dont' update detached game objects
-    for(b2Body* first = world.GetBodyList(); first; first = first->GetNext()) {
+    for (b2Body* first = world.GetBodyList(); first; first = first->GetNext()) {
         auto* collider = static_cast<collider2d*>(first->GetUserData());
         auto* obj = collider->parent();
         
@@ -169,10 +169,15 @@ void world2d_mgr::pre_update(goes_t const& goes) {
         if (!first->IsActive() ||
            (obj->flag() >> offset) & com::transform_manager::global_bit) {
             auto* transform = obj->get_component<com::transform>(transform_idx);
-            if(transform) {
+            if (transform) {
                 collider->update_from_transform(*transform, pixel_meter_ratio());
             }
             first->SetActive(true);
+            
+            for (auto* contact = first->GetContactList();
+                 contact != nullptr; contact = contact->next) {
+                contact->other->SetAwake(true); // awake the other body
+            }
         }
     }
 }
@@ -184,13 +189,13 @@ void world2d_mgr::update(goes_t const&) {
     world.Step(_step, _velocity_iteration, _position_iteration);
     
     for(b2Body* first = world.GetBodyList(); first; first = first->GetNext()) {
-        if(!first->IsAwake())
+        if (!first->IsAwake())
             continue;
         
         auto* collider = static_cast<collider2d*>(first->GetUserData());
         auto* obj = collider->parent();
         auto* transform = obj->get_component<com::transform>(transform_idx);
-        if(transform) {
+        if (transform) {
             collider->apply_to_transform(*transform, pixel_meter_ratio());
         }
     }
