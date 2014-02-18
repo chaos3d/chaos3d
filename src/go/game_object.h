@@ -220,6 +220,7 @@ private:
     game_object(game_object const&) = delete;
     game_object& operator =(game_object const&) = delete;
     
+    // FIXME: use unique_ptr, fix null for unique_ptr
     game_object *_first_child, *_parent;
     game_object *_pre_sibling, *_next_sibling;
     size_t _child_size;
