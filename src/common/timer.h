@@ -7,6 +7,8 @@
 #endif
 #include <ctime>
 
+#include "common/utility.h"
+
 class timer {
 public:
     typedef uint32_t frame_t;
@@ -18,10 +20,19 @@ public:
 #endif
     
 public:
-    // move one frame and delta ticks forward
-    void tick_one_frame(tick_t delta) {
-        ++ _current;
+    // delta ticks
+    frame_t tick(tick_t delta) {
+        frame_t previous = _current;
         _tick += delta;
+        while (_tick - _last_frame_tick > _frame_rate) {
+            _last_frame_tick += _frame_rate;
+            ++ current;
+        }
+        return _current - previous;
+    }
+    
+    void set_frame_rate(frame_t frames) {
+        _frame_rate = _tick_per_second / frames;
     }
     
     // current tracking frame
@@ -48,9 +59,6 @@ public:
 	};
 
 private:
-    frame_t _current;
-    tick_t _tick;
-
 #ifdef __APPLE__
     static double tick_per_second() {
         mach_timebase_info_data_t timebase_info;
@@ -60,6 +68,11 @@ private:
 
     static const double _tick_per_second;
 #endif
+    
+private:
+    frame_t _current = 0;
+    tick_t _tick = 0, _last_frame_tick = 0;
+    tick_t _frame_rate = _tick_per_second / 30;
 };
 
 #endif
