@@ -46,7 +46,7 @@ public:
     class ticker_fixed {
     public:
         ticker_fixed(frame_t frames = 30)
-        : _fixed_tick(frames * _tick_per_second)
+        : _fixed_tick(_tick_per_second / frames)
         {}
         
         tick_t ticking(tick_t now) {
