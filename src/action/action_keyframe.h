@@ -113,7 +113,15 @@ template<class Key>
 struct interpolator_linear {
     inline Key operator() (Key const& from, Key const& to,
                            float p, int) const {
-        return from + (to - from) * p;
+        return from * (1.f - p) + to * p;
+    }
+};
+
+template<class Key>
+struct interpolator_slerp {
+    inline Key operator() (Key const& from, Key const& to,
+                           float p, int) const {
+        return from.slerp(p, to);
     }
 };
 
