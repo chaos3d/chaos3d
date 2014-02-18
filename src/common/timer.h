@@ -19,6 +19,36 @@ public:
     typedef clock_t tick_t;
 #endif
     
+    class ticker_realtime {
+    public:
+        ticker_realtime(tick_t now)
+        : _last_tick(now)
+        {}
+        
+        tick_t ticking(tick_t now) {
+            tick_t delta = now - _last_tick;
+            _last_tick = now;
+            return delta;
+        }
+        
+    private:
+        tick_t _last_tick;
+    };
+    
+    class ticker_fixed {
+    public:
+        ticker_fixed(frame_t frames)
+        : _fixed_tick(frames * _tick_per_second)
+        {}
+        
+        tick_t ticking(tick_t now) {
+            return _fixed_tick;
+        }
+        
+    private:
+        tick_t _fixed_tick;
+    };
+    
 public:
     // delta ticks
     frame_t tick(tick_t delta) {
@@ -26,7 +56,7 @@ public:
         _tick += delta;
         while (_tick - _last_frame_tick > _frame_rate) {
             _last_frame_tick += _frame_rate;
-            ++ current;
+            ++ _current;
         }
         return _current - previous;
     }
