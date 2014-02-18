@@ -153,21 +153,20 @@ void world2d_mgr::pre_update(goes_t const& goes) {
     auto transform_idx = com::transform_manager::component_idx();
     auto mark = goes.front()->mark();
     
-    // FIXME: dont' update detached game objects
     for (b2Body* first = world.GetBodyList(); first; first = first->GetNext()) {
         auto* collider = static_cast<collider2d*>(first->GetUserData());
         auto* obj = collider->parent();
         
         // deactivate the hidden objects
         if (obj->mark() != mark) {
-            if(first->IsActive())
+            if (first->IsActive())
                 first->SetActive(false);
             continue;
         }
         
         // FIXME: what if it is really deactived?
         if (!first->IsActive() ||
-           (obj->flag() >> offset) & com::transform_manager::global_bit) {
+            (obj->flag() >> offset) & com::transform_manager::global_bit) {
             auto* transform = obj->get_component<com::transform>(transform_idx);
             if (transform) {
                 collider->update_from_transform(*transform, pixel_meter_ratio());

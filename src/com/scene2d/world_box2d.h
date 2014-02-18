@@ -78,7 +78,7 @@ namespace scene2d {
         
         void query(query_callback_t const&,
                    vector2f const& center,
-                   vector2f const& half_extent = {0.001f, 0.001f});
+                   vector2f const& half_extent = {FLT_EPSILON, FLT_EPSILON});
     protected:
         virtual void pre_update(goes_t const&) override;
         virtual void update(goes_t const&) override;
