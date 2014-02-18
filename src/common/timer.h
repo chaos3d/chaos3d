@@ -34,6 +34,10 @@ public:
             return delta;
         }
         
+        tick_t operator() (tick_t now) {
+            return ticking(now);
+        }
+        
     private:
         tick_t _last_tick;
     };
@@ -47,6 +51,10 @@ public:
         
         tick_t ticking(tick_t now) {
             return _fixed_tick;
+        }
+        
+        tick_t operator() (tick_t now) {
+            return ticking(now);
         }
         
     private:
@@ -109,24 +117,28 @@ private:
     tick_t _frame_rate = _tick_per_second / 30;
 };
 
-class global_timer_base : public timer, public singleton<global_timer> {
+class global_timer_base : public timer, public singleton<global_timer_base> {
+public:
+    virtual void update() = 0;
 };
 
 template<class T>
 class global_timer : public global_timer_base {
 public:
-    global_timer(T const& t = T())
-    : _ticker(t)
+    template<class... Args>
+    global_timer(Args&&... args)
+    : _ticker(std::forward<Args>(args)...)
+    {}
     
-    void update() {
-        _ticker(current());
+    virtual void update() override {
+        tick(_ticker(current()));
     }
 private:
     T _ticker;
 };
 
-template<class T>
-global_timer<T> make_global_timer(T const& t = T()) {
-    return global_timer<T>(t);
+template<class T, class... Args>
+global_timer<T>* make_global_timer(Args&&... args) {
+    return new global_timer<T>(std::forward<Args>(args)...);
 }
 #endif

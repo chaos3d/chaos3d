@@ -9,6 +9,7 @@
 #import "cAppDelegate.h"
 #import "cViewController.h"
 #import "app/screen.h"
+#import "common/timer.h"
 #import "re/render_device.h"
 #import "re/render_target.h"
 #import "go/component_manager.h"
@@ -38,6 +39,8 @@
     component_manager::managers().update(&game_object::root());
     
     _main_screen->loop();
+    
+    global_timer_base::instance().update();
     //_main_window->do_render(_main_context); // clear batch
     
 }

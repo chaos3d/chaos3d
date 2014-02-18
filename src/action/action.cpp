@@ -6,7 +6,7 @@ static int _no_action = 0x12345678;
 action* action::null_action = reinterpret_cast<action*>(&_no_action);
 
 action::action()
-: _child_head(null_action), _next_sibling(null_action),
+: _child_head(null_action), _next_sibling(nullptr),
 _next(nullptr), _started(false)
 {
 }
@@ -18,7 +18,7 @@ action* action::push(action* act) {
         return this;
     
     // already pushed to some action tree?
-    assert(act->_next_sibling == null_action);
+    assert(act->_next_sibling == nullptr);
     act->_next_sibling = _child_head;
     _child_head = act;
     

@@ -26,7 +26,7 @@ protected:
     };
     
     virtual bool done() const {
-        return _timer.current_frame() - _start > _duration && action::done();
+        return _timer.current_time() - _start > _duration && action::done();
     }
 
 private:
@@ -42,12 +42,19 @@ public:
     typedef std::pair<time_t, action*> timed_action;
     typedef std::forward_list<timed_action> actions_t;
     
-public:    
+public:
+    action_timed(std::initializer_list<timed_action> actions)
+    : _actions(actions)
+    {}
+    
     action_timed* add(time_t t, action* a) {
         _actions.emplace_front(t, a);
         return this;
     };
     
+    static action_timed* timed(std::initializer_list<timed_action> actions) {
+        return new action_timed(actions);
+    }
 protected:
     virtual void on_start() override;
     //virtual void on_end() override;
