@@ -2,9 +2,17 @@
 #define _CHAOS3D_ACTION_KEYFRAME_H
 
 #include <vector>
+#include <memory>
 #include <algorithm>
 #include <cfloat>
+#include "Eigen/Geometry"
+
 #include "action/action.h"
+#include "common/timer.h"
+
+// TODO0: better namespace
+// TODO: WRAP_FULL_LOOP
+enum { WRAP_CLAMP, WRAP_LOOP };
 
 // The static/constant keyframes data for an animation
 //
@@ -20,8 +28,8 @@ public:
 		};
     };
     
-    enum { WRAP_CLAMP, WRAP_LOOP };
-    
+    typedef std::shared_ptr<animation_keyframe> ptr;
+    typedef std::shared_ptr<animation_keyframe const> const_ptr;
     typedef std::vector<key_frame> key_frames_t;
     
 public:
@@ -45,33 +53,33 @@ public:
     
     // regular interpolation
     template <class I, typename std::enable_if<!std::is_same<I, void>::value>::type* = nullptr>
-    key_frame interpolate(float offset, I i = I()) const {
+    Key interpolate(float offset, I const& i = I()) const {
         assert(offset >= 0.f && offset <= 1.f);
         assert(_keyframes.size() > 0);
         auto it = keyframe(offset);
         if (it == _keyframes.end()) {
-            return _wrap == WRAP_CLAMP ? _keyframes.back() : _keyframes.front();
+            return _wrap == WRAP_CLAMP ? _keyframes.back().key : _keyframes.front().key;
         } else if (it->timestamp - offset <= FLT_EPSILON ||
                    it == _keyframes.begin()) {
-            return *it;
+            return it->key;
         } else {
             auto pre = std::next(it, -1);
-            return i(*pre, *it, (offset - pre->timestamp) / (it->timestamp - pre->timestamp),
+            return i(pre->key, it->key, (offset - pre->timestamp) / (it->timestamp - pre->timestamp),
                      std::distance(pre, _keyframes.begin()));
         }
-        return key_frame();
+        return Key();
     }
     
     // concrete/no interpolation
     template <class I, typename std::enable_if<std::is_same<I, void>::value>::type* = nullptr>
-    key_frame const& interpolate(float offset) const {
+    Key const& interpolate(float offset) const {
         assert(offset >= 0.f && offset <= 1.f);
         assert(_keyframes.size() > 0);
         auto it = keyframe(offset);
         if (it == _keyframes.end()) {
-            return _wrap == WRAP_CLAMP ? _keyframes.back() : _keyframes.front();
+            return _wrap == WRAP_CLAMP ? _keyframes.back().key : _keyframes.front().key;
         } else {
-            return *it;
+            return it->key;
         }
     }
     
@@ -96,21 +104,66 @@ private:
     int _wrap;
 };
 
+typedef animation_keyframe<float> scalarf_keyframe_t;
+typedef animation_keyframe<Eigen::Vector2f> vec2f_keyframe_t;
+typedef animation_keyframe<Eigen::Vector3f> vec3f_keyframe_t;
+typedef animation_keyframe<Eigen::Quaternionf> quaternionf_keyframe_t;
+
 template<class Key>
 struct interpolator_linear {
-    typedef typename animation_keyframe<Key>::key_frame key_frame;
-    inline key_frame operator() (key_frame const& from, key_frame const& to,
-                                 float p, int) const {
-        return from + to * p;
+    inline Key operator() (Key const& from, Key const& to,
+                           float p, int) const {
+        return from + (to - from) * p;
     }
 };
 
+template<class Key, class Applier>
 class action_keyframe : public action {
+public:
+    typedef typename animation_keyframe<Key>::const_ptr keyframe_ptr;
+    typedef typename timer::time_t time_t;
+    
+public:
+    template<class... Args>
+    action_keyframe(time_t duration, keyframe_ptr const& keyframe,
+                    timer const& t, Args&&... args)
+    : _duration(duration), _keyframe(keyframe),
+    _timer(t), _applier(std::forward<Args>(args)...)
+    {}
+    
 protected:
-    virtual void on_start() override;
-    virtual void on_end() override;
-    virtual void on_stop(bool skip) override;
-    virtual bool done() const override;
-    virtual void update() override;
+    virtual void on_start() override {
+        action::on_start();
+        _start = _timer.current_time();
+    }
+    
+    virtual void on_stop(bool skip) override {
+        assert(0); // TODO
+    }
+    
+    virtual bool done() const override {
+        return _timer.current_time() - _start >= _duration && action::done();
+    }
+    
+    virtual void update() override {
+        action::update();
+        
+        auto normalized = (_timer.current_time() - _start) / _duration;
+        _applier(*_keyframe, normalized > 1.f ? 1.f : normalized < 0.f ? 0.f : normalized);
+    }
+    
+private:
+    Applier _applier;
+    keyframe_ptr _keyframe;
+    time_t _duration, _start;
+    timer const& _timer;
 };
+
+template<class Key, class Applier>
+action_keyframe<Key, Applier>* make_action_keyframe(Applier const& applier, time_t duration,
+                                                    typename action_keyframe<Key, Applier>::keyframe_ptr const& keyframe,
+                                                    timer const& t = global_timer_base::instance()) {
+    return new action_keyframe<Key, Applier>(duration, keyframe, t, applier);
+}
+
 #endif
