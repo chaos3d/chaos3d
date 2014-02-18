@@ -19,6 +19,7 @@ public:
     typedef clock_t tick_t;
 #endif
     
+    // ticking using the given time
     class ticker_realtime {
     public:
         ticker_realtime(tick_t now)
@@ -35,6 +36,7 @@ public:
         tick_t _last_tick;
     };
     
+    // ticking using the fixed ticks
     class ticker_fixed {
     public:
         ticker_fixed(frame_t frames)
@@ -50,7 +52,7 @@ public:
     };
     
 public:
-    // delta ticks
+    // tick delta, return the delta frames
     frame_t tick(tick_t delta) {
         frame_t previous = _current;
         _tick += delta;
