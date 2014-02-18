@@ -1,4 +1,5 @@
 #include "action/action.h"
+#include "action_keyframe.h"
 
 static int _no_action = 0x12345678;
 action* action::null_action = reinterpret_cast<action*>(&_no_action);

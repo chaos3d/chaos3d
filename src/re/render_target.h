@@ -64,8 +64,8 @@ private:
     uint8_t _stencil_format;
     uint8_t _multi_sample;
     
-    ATTRIBUTE(bool, batch_retained); // whether the batches would be cleared
-    ATTRIBUTE(uniforms_t, uniforms); // the global uniforms
+    ATTRIBUTE(bool, batch_retained, false); // whether the batches would be cleared
+    ATTRIBUTE(uniforms_t, uniforms, uniforms_t()); // the global uniforms
 };
 
 class texture;

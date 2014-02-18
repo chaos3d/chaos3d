@@ -3,6 +3,7 @@
 
 #include "common/singleton.h"
 #include "common/utility.h"
+#include "common/timer.h"
 #include <vector>
 
 class game_object;

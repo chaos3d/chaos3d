@@ -87,10 +87,10 @@ namespace scene2d {
         struct internal;
         std::unique_ptr<internal> _internal;
         
-        ATTRIBUTE(int, velocity_iteration);
-        ATTRIBUTE(int, position_iteration);
-        ATTRIBUTE(float, step);
-        ATTRIBUTE(float, pixel_meter_ratio);
+        ATTRIBUTE(int, velocity_iteration, 6);
+        ATTRIBUTE(int, position_iteration, 2);
+        ATTRIBUTE(float, step, 1.f/30.f);
+        ATTRIBUTE(float, pixel_meter_ratio, 0.02f);
         friend class collider2d;
     };
 }

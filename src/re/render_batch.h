@@ -74,8 +74,8 @@ private:
     render_uniform::const_ptr _uniform;
     gpu_program::const_ptr _program;
     render_state::const_ptr _state;
-    ATTRIBUTE(size_t, start); // buffer to start
-    ATTRIBUTE(size_t, count); // number of elements to draw
+    ATTRIBUTE(size_t, start, 0); // buffer to start
+    ATTRIBUTE(size_t, count, 0); // number of elements to draw
 };
 
 #endif

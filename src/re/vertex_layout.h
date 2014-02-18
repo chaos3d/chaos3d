@@ -83,7 +83,7 @@ public:
         std::vector<char*> _buffer; // buffer address
         vertex_layout::ptr _layout;
         
-        ATTRIBUTE(size_t, offset);
+        ATTRIBUTE(size_t, offset, size_t());
         friend class vertex_layout;
     };
     
@@ -123,7 +123,7 @@ private:
     channels_t _channels;
     vertex_index_buffer::ptr _index_buffer;
     
-    ATTRIBUTE(uint8_t, mode); // TODO: this could be in batches too?
+    ATTRIBUTE(uint8_t, mode, Points); // TODO: this could be in batches too?
 };
 
 extern vertex_layout::channels_t make_channels(std::initializer_list<std::tuple<vertex_buffer::ptr&&, int, int, size_t, size_t>> const& list);

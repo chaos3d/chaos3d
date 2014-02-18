@@ -85,10 +85,10 @@ namespace com {
         render_target::ptr _target;
         renderables_t _renderables;
         
-        ATTRIBUTE(rect2d, viewport);
-        ATTRIBUTE(color_t, clear_color);
-        ATTRIBUTE(bool, disabled);
-        ATTRIBUTE(int, priority); // render order, smaller is higher
+        ATTRIBUTE(rect2d, viewport, rect2d());
+        ATTRIBUTE(color_t, clear_color, color_t());
+        ATTRIBUTE(bool, disabled, false);
+        ATTRIBUTE(int, priority, 0); // render order, smaller is higher
 
         SIMPLE_CLONE(camera);
     };

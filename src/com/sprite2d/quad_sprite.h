@@ -23,9 +23,9 @@ namespace sprite2d {
     public:
         quad_sprite(game_object*, int type);
         
-        ATTRIBUTE(box2f, frame); // texture uv
-        ATTRIBUTE(box2f, bound); // position and size
-        ATTRIBUTE(float, alpha); // alpha
+        ATTRIBUTE(box2f, frame, box2f()); // texture uv
+        ATTRIBUTE(box2f, bound, box2f()); // position and size
+        ATTRIBUTE(float, alpha, 1.f); // alpha
         
         void set_frame_key(animated_frame_key const& key) {
             set_frame(key.frame);

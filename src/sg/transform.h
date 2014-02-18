@@ -70,10 +70,10 @@ namespace com {
     private:
         affine3f _global_inverse;
         
-        ATTRIBUTE(affine3f, global_affine);
-        ATTRIBUTE(quaternionf, rotate);
-        ATTRIBUTE(vector3f, translate);
-        ATTRIBUTE(vector3f, scale);
+        ATTRIBUTE(affine3f, global_affine, affine3f::Identity());
+        ATTRIBUTE(quaternionf, rotate, quaternionf(1.f, 0.f, 0.f, 0.f));
+        ATTRIBUTE(vector3f, translate, vector3f(0.f, 0.f, 0.f));
+        ATTRIBUTE(vector3f, scale, vector3f(1.f, 1.f, 1.f));
     };
     
     class transform_manager : public component_manager_base<transform_manager> {

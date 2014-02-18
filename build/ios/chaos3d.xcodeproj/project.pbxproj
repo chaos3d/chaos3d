@@ -43,6 +43,7 @@
 		8879CE1E18A8146400BCBFA6 /* shape_desc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8879CE1D18A8146400BCBFA6 /* shape_desc.cpp */; };
 		8879CE2A18B1EAB500BCBFA6 /* action.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8879CE2618B1EAB500BCBFA6 /* action.cpp */; };
 		8879CE2B18B1EAB500BCBFA6 /* action_lua.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8879CE2818B1EAB500BCBFA6 /* action_lua.cpp */; };
+		8879CE3318B2E0C900BCBFA6 /* timer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8879CE3118B2E0C900BCBFA6 /* timer.cpp */; };
 		8882D8D218990BD900B00DCD /* quad_sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8882D8D018990BD800B00DCD /* quad_sprite.cpp */; };
 		8882E4A518A382A20044CFE4 /* event_dispatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8882E4A418A382A20044CFE4 /* event_dispatcher.cpp */; };
 		8882E4E318A74E2D0044CFE4 /* libBox2D.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8882E4E218A74E2D0044CFE4 /* libBox2D.a */; };
@@ -490,6 +491,9 @@
 		8879CE2718B1EAB500BCBFA6 /* action.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = action.h; sourceTree = "<group>"; };
 		8879CE2818B1EAB500BCBFA6 /* action_lua.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = action_lua.cpp; sourceTree = "<group>"; };
 		8879CE2918B1EAB500BCBFA6 /* action_lua.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = action_lua.h; sourceTree = "<group>"; };
+		8879CE2C18B1EDDF00BCBFA6 /* action_keyframe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = action_keyframe.h; sourceTree = "<group>"; };
+		8879CE3118B2E0C900BCBFA6 /* timer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = timer.cpp; sourceTree = "<group>"; };
+		8879CE3218B2E0C900BCBFA6 /* timer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = timer.h; sourceTree = "<group>"; };
 		8882D8D018990BD800B00DCD /* quad_sprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = quad_sprite.cpp; sourceTree = "<group>"; };
 		8882D8D118990BD900B00DCD /* quad_sprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = quad_sprite.h; sourceTree = "<group>"; };
 		8882E49E18A37C040044CFE4 /* event_dispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = event_dispatcher.h; sourceTree = "<group>"; };
@@ -681,6 +685,8 @@
 				8879CE1C18A80F0F00BCBFA6 /* base_types.h */,
 				8827622B187FF65300B1291B /* referenced_count.h */,
 				882762321881509800B1291B /* singleton.h */,
+				8879CE3118B2E0C900BCBFA6 /* timer.cpp */,
+				8879CE3218B2E0C900BCBFA6 /* timer.h */,
 				8812C2D11866E1EB001C4D0B /* utility.h */,
 			);
 			path = common;
@@ -1388,6 +1394,7 @@
 		8879CE2518B1EAB500BCBFA6 /* action */ = {
 			isa = PBXGroup;
 			children = (
+				8879CE2C18B1EDDF00BCBFA6 /* action_keyframe.h */,
 				8879CE2618B1EAB500BCBFA6 /* action.cpp */,
 				8879CE2718B1EAB500BCBFA6 /* action.h */,
 				8879CE2818B1EAB500BCBFA6 /* action_lua.cpp */,
@@ -1740,6 +1747,7 @@
 				883246C8183237220022EA4A /* render_view_ios.mm in Sources */,
 				8812C28F185DB7F8001C4D0B /* file_stream.cpp in Sources */,
 				880BA32E189654A6002542E2 /* sprite.cpp in Sources */,
+				8879CE3318B2E0C900BCBFA6 /* timer.cpp in Sources */,
 				8882E4A518A382A20044CFE4 /* event_dispatcher.cpp in Sources */,
 				8879CE2B18B1EAB500BCBFA6 /* action_lua.cpp in Sources */,
 				88A84B121830B6D9009F7ECD /* game_object.cpp in Sources */,

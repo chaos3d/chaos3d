@@ -28,7 +28,7 @@ public:
     typedef std::function<void (game_object const&)> iterator_t;
     typedef std::array<component_ptr, ComponentSize> components_t;
     
-    template <typename C>
+    template<typename C>
     struct components_constructor {
         void operator() (game_object*);
     };

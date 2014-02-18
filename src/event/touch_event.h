@@ -16,9 +16,9 @@ public:
     _which(which)
     {}
     
-    ATTRIBUTE(vector2f, position);
-    ATTRIBUTE(float, time);
-    ATTRIBUTE(uint32_t, which);
+    ATTRIBUTE(vector2f, position, vector2f());
+    ATTRIBUTE(float, time, 0.f);
+    ATTRIBUTE(uint32_t, which, 0);
 };
 
 class touch_began_event : public touch_event {

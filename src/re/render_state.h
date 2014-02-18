@@ -50,16 +50,16 @@ public:
         memset(&padding, 0, sizeof(padding));
     }
     
-    ATTRIBUTE(uint8_t, depth_func);
-    ATTRIBUTE(uint8_t, src_blend);
-    ATTRIBUTE(uint8_t, dst_blend);
-    ATTRIBUTE(uint8_t, src_alpha_blend);
-    ATTRIBUTE(uint8_t, dst_alpha_blend);
-    ATTRIBUTE(uint8_t, blend_op);
-    ATTRIBUTE(uint8_t, alpha_blend_op);
-    ATTRIBUTE(uint8_t, culling);
+    ATTRIBUTE(uint8_t, depth_func, 0);
+    ATTRIBUTE(uint8_t, src_blend, 0);
+    ATTRIBUTE(uint8_t, dst_blend, 0);
+    ATTRIBUTE(uint8_t, src_alpha_blend, 0);
+    ATTRIBUTE(uint8_t, dst_alpha_blend, 0);
+    ATTRIBUTE(uint8_t, blend_op, 0);
+    ATTRIBUTE(uint8_t, alpha_blend_op, 0);
+    ATTRIBUTE(uint8_t, culling, 0);
     uint8_t padding[8];
-    ATTRIBUTE(color_t, blend_color);
+    ATTRIBUTE(color_t, blend_color, color_t());
     
     bool operator == (render_state const& rhs) const {
         return memcmp(this, &rhs, sizeof(render_state)) == 0;
