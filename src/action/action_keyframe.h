@@ -23,6 +23,11 @@ struct key_frame {
     Key key;
     float timestamp;
     
+    template<class... Args>
+    key_frame(float ts, Args&&... args)
+    : key(std::forward<Args>(args)...), timestamp(ts)
+    {}
+    
     bool operator<(key_frame const& rhs) const {
         return timestamp < rhs.timestamp;
     };
@@ -117,6 +122,11 @@ typedef typename scalarf_anim_kf_t::key_frames_t scalarf_keyframes_t;
 typedef typename vec2f_anim_kf_t::key_frames_t vec2f_keyframes_t;
 typedef typename vec3f_anim_kf_t::key_frames_t vec3f_keyframes_t;
 typedef typename quaternionf_anim_kf_t::key_frames_t quaternionf_keyframes_t;
+
+typedef key_frame<float> scalarf_keyframe_t;
+typedef key_frame<Eigen::Vector2f> vec2_keyframe_t;
+typedef key_frame<Eigen::Vector3f> vec3_keyframe_t;
+typedef key_frame<Eigen::Quaternionf> quaternionf_keyframe_t;
 
 template<class Key>
 typename animation_keyframe<Key>::ptr make_animation_keyframe(int wrap,
