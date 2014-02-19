@@ -30,8 +30,8 @@ namespace scene2d {
                    int = collider_dynamic,
                    int = type_normal);
 
-        void reset_shapes(std::initializer_list<shape::init_t> const&,
-                          mass const& = mass());
+        collider2d* reset_shapes(std::initializer_list<shape::init_t> const&,
+                                 mass const& = mass());
         
         void* internal_data() const; // b2Body
         

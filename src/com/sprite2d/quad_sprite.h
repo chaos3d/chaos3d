@@ -33,9 +33,9 @@ namespace sprite2d {
         // set the material and its bound/frame at once
         // the bound is calculated based on the size of texture
         // and the pivot
-        void set_from_material(sprite_material* mat,
-                               box2f const& frame,
-                               vector2f const& pivot = {0.f, 0.f});
+        quad_sprite* set_from_material(sprite_material* mat,
+                                       box2f const& frame,
+                                       vector2f const& pivot = {0.f, 0.f});
     protected:
         virtual quad_sprite* clone(game_object*) const override;
         

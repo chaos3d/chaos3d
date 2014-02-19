@@ -69,6 +69,9 @@ namespace com {
         // cast a ray from a screen point (a.k.a camera point)
         ray cast_from_screen(vector2f const&) const;
         
+        // the projection matrix
+        matrix4f const& proj_matrix() const { return _proj_mat; }
+        
     protected:
         camera& operator=(camera const&);
         virtual ~camera();

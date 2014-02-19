@@ -35,19 +35,21 @@ collider2d::collider2d(game_object* go, int collision, int type)
     _internal->body = world2d_mgr::instance()._internal->world.CreateBody(&def);
 }
 
-void collider2d::reset_shapes(std::initializer_list<shape::init_t> const& shapes,
-                              mass const& m) {
+collider2d* collider2d::reset_shapes(std::initializer_list<shape::init_t> const& shapes,
+                                     mass const& m) {
     clear_shapes();
     
     float ratio = world2d_mgr::instance().pixel_meter_ratio();
-    for(auto& it : shapes) {
+    for (auto& it : shapes) {
         std::get<0>(it).append_to(this, ratio);
     }
     
-    if(m.weight > 0.f) {
+    if (m.weight > 0.f) {
         b2MassData data { m.weight, {m.x,m.y}, m.rotate};
         _internal->body->SetMassData(&data);
     }
+    
+    return this;
 }
 
 void collider2d::clear_shapes() {
@@ -61,12 +63,12 @@ void collider2d::update_from_transform(com::transform &transform, float ratio) {
     auto translation = affine.translation();
     auto euler = rotMatrix.eulerAngles(0, 1, 2);
     
-    if(std::fabs(euler.x() - FLT_EPSILON) > 0.f ||
-       std::fabs(euler.y() - FLT_EPSILON) > 0.f ||
-       std::fabs(scaleMatrix(0,0) - 1.f) > FLT_EPSILON ||
-       std::fabs(scaleMatrix(1,1) - 1.f) > FLT_EPSILON ||
-       std::fabs(scaleMatrix(2,2) - 1.f) > FLT_EPSILON
-       ) {
+    if (std::fabs(euler.x() - FLT_EPSILON) > 0.f ||
+        std::fabs(euler.y() - FLT_EPSILON) > 0.f ||
+        std::fabs(scaleMatrix(0,0) - 1.f) > FLT_EPSILON ||
+        std::fabs(scaleMatrix(1,1) - 1.f) > FLT_EPSILON ||
+        std::fabs(scaleMatrix(2,2) - 1.f) > FLT_EPSILON
+        ) {
         affine = Eigen::Translation3f(translation) * Eigen::AngleAxisf(euler.z(), vector3f::UnitZ());
         transform.mark_dirty(false); // update the local
     }
@@ -78,13 +80,13 @@ void collider2d::update_from_transform(com::transform &transform, float ratio) {
 
 void collider2d::apply_to_transform(com::transform &transform, float ratio) const{
     // static body never changes the transform
-    if(_internal->body->GetType() == b2_staticBody)
+    if (_internal->body->GetType() == b2_staticBody)
         return;
     
     auto& current = _internal->body->GetPosition();
     auto angle = _internal->body->GetAngle();
-    if(current == _internal->position &&
-       angle == _internal->z_angle) {
+    if (current == _internal->position &&
+        angle == _internal->z_angle) {
         return;
     }
     
@@ -187,7 +189,7 @@ void world2d_mgr::update(goes_t const&) {
     
     world.Step(_step, _velocity_iteration, _position_iteration);
     
-    for(b2Body* first = world.GetBodyList(); first; first = first->GetNext()) {
+    for (b2Body* first = world.GetBodyList(); first; first = first->GetNext()) {
         if (!first->IsAwake())
             continue;
         

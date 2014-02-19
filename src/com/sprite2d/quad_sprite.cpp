@@ -28,16 +28,15 @@ void quad_sprite::fill_indices(uint16_t start_idx) {
     };
 }
 
-void quad_sprite::set_from_material(sprite_material* mat,
+quad_sprite* quad_sprite::set_from_material(sprite_material* mat,
                                     box2f const& frame, vector2f const& pivot) {
-    if (!mat)
-        return;
+    if (mat)
+        set_material(mat);
     
-    set_material(mat);
     texture *const* tex = nullptr;
-    mat->uniform()->get("c_tex1", tex);
+    shared_material()->uniform()->get("c_tex1", tex);
     if (tex == nullptr || *tex == nullptr)
-        return;
+        return this;
     
     auto& size = (*tex)->size();
     vector2f rt_min{frame.min().x() * size.x(), frame.min().y() * size.y()};
@@ -46,6 +45,7 @@ void quad_sprite::set_from_material(sprite_material* mat,
     set_frame(frame);
     set_bound(vector2f{pivot.x() - bound.x()/2.f, pivot.y() - bound.y()/2.f},
               vector2f{pivot.x() + bound.x()/2.f, pivot.y() + bound.y()/2.f});
+    return this;
 }
 
 void quad_sprite::fill_buffer(vertex_layout::locked_buffer const& buffer,
