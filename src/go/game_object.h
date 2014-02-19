@@ -150,37 +150,37 @@ public:
     // add component - fixed version
     template<typename C, typename... Args>
     typename std::enable_if<std::is_base_of<component, C>::value &&
-    C::manager_t::component_fixed_t::value, C*>::type add_component(Args&&... args) {
+    C::manager_t::component_fixed_t::value, C&>::type add_component(Args&&... args) {
         assert(C::manager_t::component_idx() != -1); // manager is not initializer properly?
         auto& existed = _components[C::manager_t::component_idx()];
         if(existed.get() == nullptr)
             existed.reset(C::template create<C>(this, std::forward<Args>(args)...));
-        return static_cast<C*>(existed.get());
+        return static_cast<C&>(*existed.get());
     }
     
     // add component - non-fixed version
     template<typename C, typename... Args>
     typename std::enable_if<std::is_base_of<component, C>::value &&
-    !C::manager_t::component_fixed_t::value, C*>::type add_component(Args&&... args) {
+    !C::manager_t::component_fixed_t::value, C&>::type add_component(Args&&... args) {
         typedef typename C::manager_t trait; // manager class is a trait for the component
         uint32_t existed = component_manager::fixed_component();
         if(trait::sealed_t::value) {
             for(auto it = _components.begin() + component_manager::fixed_component();
                 it != _components.end() && it->get() != nullptr; ++it, ++ existed) {
                 if(typeid(*it->get()) == typeid(C))
-                    return static_cast<C*>(it->get());
+                    return static_cast<C&>(*it->get());
             }
         }
         else {
             for(auto it = _components.begin() + component_manager::fixed_component();
                 it != _components.end() && it->get() != nullptr; ++it, ++ existed) {
                 if(dynamic_cast<C*>(it->get()) != nullptr)
-                    return static_cast<C*>(it->get());
+                    return static_cast<C&>(*it->get());
             }
         }
         assert(existed < _components.size()); // components overflow...
         _components[existed].reset(C::template create<C>(this, std::forward<Args>(args)...));
-        return static_cast<C*>(_components[existed].get());
+        return static_cast<C&>(*_components[existed]);
     }
     
     // add several components at once
