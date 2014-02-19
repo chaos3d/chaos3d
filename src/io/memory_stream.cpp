@@ -9,6 +9,15 @@
 
 #include "io/memory_stream.h"
 
+memory_stream::memory_stream(data_stream* ds)
+: _address(nullptr), _end(nullptr), _current(nullptr),
+_owned(true)
+{
+    _current = _address = new char [ds->size()];
+    ds->read(_address, ds->size());
+    _end = _address + ds->size();
+}
+
 memory_stream::memory_stream(const char* address, size_t size)
 : _address(nullptr), _end(nullptr), _current(nullptr),
 _owned(true)

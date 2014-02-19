@@ -20,9 +20,18 @@
  */
 class memory_stream : public data_stream{
 public:
+    // read the data into the memory
+    memory_stream(data_stream*);
+    
+    // create an empty memory stream/buffer
     memory_stream(size_t size);
+    
+    // create/copy from the memory
     memory_stream(const char* address, size_t size);
+    
+    // transfer the memory to be managed as a stream
     memory_stream(char* address, size_t size, bool copy = false);
+    
     virtual ~memory_stream();
 
     virtual bool valid() override;

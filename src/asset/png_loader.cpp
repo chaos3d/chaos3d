@@ -33,8 +33,8 @@ private:
     png_loader::const_ptr _loader;
 };
 
-std::unique_ptr<data_stream> png_loader::data() const {
-    return std::unique_ptr<data_stream>(new buffer_wrapper_stream(retain<png_loader>()));
+std::unique_ptr<memory_stream> png_loader::data() const {
+    return std::unique_ptr<memory_stream>(new buffer_wrapper_stream(retain<png_loader>()));
 }
 
 static void PNGAPI user_read_data_fcn(png_structp png_ptr, png_bytep data, png_size_t length){

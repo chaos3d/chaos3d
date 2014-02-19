@@ -5,6 +5,7 @@
 #include <memory>
 
 class data_stream;
+class memory_stream;
 
 // TODO: move this up
 struct image_desc {
@@ -32,7 +33,7 @@ public:
     // create a stream wrapper
     //  the stream's ownership is transfered, but its
     //  data will only be valid if the loader is valid
-    std::unique_ptr<data_stream> data() const;
+    std::unique_ptr<memory_stream> data() const;
     
     image_desc const& image() const { return _desc; }
     size_t buf_size() const { return _buf_size; }

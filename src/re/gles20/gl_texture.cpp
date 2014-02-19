@@ -1,5 +1,4 @@
 #include "re/gles20/gl_texture.h"
-
 #include "io/memory_stream.h"
 
 using namespace gles20;
@@ -56,41 +55,45 @@ gl_texture::~gl_texture() {
     glDeleteTextures(1, &_tex_id);
 }
 
-bool gl_texture::load(void const* data, size_t s, int color, int level) {
+bool gl_texture::load(memory_stream* stream, int color, int level) {
     glBindTexture(GL_TEXTURE_2D, _tex_id);
 #if GL_EXT_texture_storage
     // TODO: fix width based on mipmap level
     GLenum target = _type_map[attribute().type];
-    switch(color){
+    switch (color) {
         case RGBA8888:
             glTexSubImage2D(target, level, 0, 0, size()[0], size()[1],
-                            GL_RGBA, GL_UNSIGNED_BYTE, data);
+                            GL_RGBA, GL_UNSIGNED_BYTE, stream->address());
             break;
         case RGB565:
             glTexSubImage2D(target, level, 0, 0, size()[0], size()[1],
-                            GL_RGB, GL_UNSIGNED_SHORT_5_6_5, data);
+                            GL_RGB, GL_UNSIGNED_SHORT_5_6_5, stream->address());
             break;
         case ALPHA:
             glTexSubImage2D(target, level, 0, 0, size()[0], size()[1],
-                            GL_ALPHA, GL_UNSIGNED_BYTE, data);
+                            GL_ALPHA, GL_UNSIGNED_BYTE, stream->address());
         case LUMINANCE:
             glTexSubImage2D(target, level, 0, 0, size()[0], size()[1],
-                            GL_LUMINANCE, GL_UNSIGNED_BYTE, data);
+                            GL_LUMINANCE, GL_UNSIGNED_BYTE, stream->address());
             break;
         case PVRTC4_RGBA:
             glCompressedTexSubImage2D(target, level, 0, 0, size()[0], size()[1],
-                                      GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG, s, data);
+                                      GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG,
+                                      stream->size(), stream->address());
         case PVRTC2_RGBA:
             glCompressedTexSubImage2D(target, level, 0, 0, size()[0], size()[1],
-                                      GL_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG, s, data);
+                                      GL_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG,
+                                      stream->size(), stream->address());
             break;
         case PVRTC4_RGB:
             glCompressedTexSubImage2D(target, level, 0, 0, size()[0], size()[1],
-                                      GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG, s, data);
+                                      GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG,
+                                      stream->size(), stream->address());
             break;
         case PVRTC2_RGB:
             glCompressedTexSubImage2D(target, level, 0, 0, size()[0], size()[1],
-                                      GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG, s, data);
+                                      GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG,
+                                      stream->size(), stream->address());
             break;
     }
 #else

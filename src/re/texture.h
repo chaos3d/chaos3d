@@ -5,6 +5,8 @@
 #include <Eigen/Dense>
 #include "common/referenced_count.h"
 
+class memory_stream;
+
 class texture : public referenced_count {
 public:
     typedef std::unique_ptr<texture, referenced_count::release_deleter> ptr;
@@ -49,7 +51,7 @@ public:
     vector2i const& size() const { return _size; }
     attribute_t const& attribute() const { return _attribute; }
     
-    virtual bool load(void const*, size_t, int color, int level = 0) = 0;
+    virtual bool load(memory_stream*, int color, int level = 0) = 0;
     virtual bool generate_mipmap() { return false; };
     
     constexpr static texture* null() { return nullptr; }

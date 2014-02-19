@@ -10,7 +10,7 @@ namespace gles20 {
         gl_texture(texture::vector2i const&, texture::attribute_t const&);
         virtual ~gl_texture();
         
-        virtual bool load(void const*, size_t, int color, int level = 0) override;
+        virtual bool load(memory_stream*, int color, int level = 0) override;
         
         GLuint tex_id() const { return _tex_id; }
     private:
