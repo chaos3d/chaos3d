@@ -97,7 +97,7 @@ void render_view::create_native() {
 	_native_view.autoresizesSubviews = NO;
 	_native_view.autoresizingMask = UIViewAutoresizingNone;
     _native_view.backgroundColor = [UIColor yellowColor];
-    
+    _native_view.contentScaleFactor = [UIScreen mainScreen].scale;
 }
     
 void render_view::create_view() {
