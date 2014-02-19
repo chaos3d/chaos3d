@@ -3,9 +3,17 @@
 
 #include <vector>
 #include <cassert>
+#include <type_traits>
 #include "common/utility.h"
+#include "io/io_converter.h"
 
 class game_object;
+
+class component;
+template<class T>
+struct is_component {
+    static const bool value = std::is_base_of<component, T>::value;
+};
 
 class component {
 public:
@@ -14,16 +22,24 @@ public:
             com->destroy();
         }
     };
-public:
-    component(component const&) = delete;
     
-    component(game_object* go) : _parent(go)
+public:
+    component(game_object* go)
+    : _parent(go)
     {}
+    
+    template<class T, class Loader>
+    typename std::enable_if<is_component<T>::value, bool>::type load_from(Loader const& loader) {
+        return io_converter<Loader, T>() (loader, static_cast<T&>(*this));
+    }
     
     // clone to the new game object
     virtual component* clone(game_object*) const = 0;
     
-    game_object* parent() const{ return _parent; }
+    // the attached game object
+    game_object* parent() const{
+        return _parent;
+    }
     
     template<typename C, typename ...Args>
     static C* create(game_object* go, Args&&... args) {
@@ -45,6 +61,8 @@ protected:
     virtual ~component() {};
     
 private:
+    component(component const&) = delete;
+    
     game_object* _parent;
 };
 

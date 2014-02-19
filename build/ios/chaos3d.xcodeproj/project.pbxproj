@@ -45,6 +45,9 @@
 		8879CE2B18B1EAB500BCBFA6 /* action_lua.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8879CE2818B1EAB500BCBFA6 /* action_lua.cpp */; };
 		8879CE3318B2E0C900BCBFA6 /* timer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8879CE3118B2E0C900BCBFA6 /* timer.cpp */; };
 		8879CE3618B2F27000BCBFA6 /* action_timed.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8879CE3518B2F27000BCBFA6 /* action_timed.cpp */; };
+		8879CE4018B4B7E700BCBFA6 /* json_loader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8879CE3E18B4B7E700BCBFA6 /* json_loader.cpp */; };
+		8879CE4518B4B9C900BCBFA6 /* json_to_texture_atlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8879CE4418B4B9C900BCBFA6 /* json_to_texture_atlas.cpp */; };
+		8879CE4818B4BC2900BCBFA6 /* json_to_components.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8879CE4718B4BC2900BCBFA6 /* json_to_components.cpp */; };
 		8882D8D218990BD900B00DCD /* quad_sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8882D8D018990BD800B00DCD /* quad_sprite.cpp */; };
 		8882E4A518A382A20044CFE4 /* event_dispatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8882E4A418A382A20044CFE4 /* event_dispatcher.cpp */; };
 		8882E4E318A74E2D0044CFE4 /* libBox2D.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8882E4E218A74E2D0044CFE4 /* libBox2D.a */; };
@@ -498,6 +501,14 @@
 		8879CE3418B2EE2C00BCBFA6 /* action_timed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = action_timed.h; sourceTree = "<group>"; };
 		8879CE3518B2F27000BCBFA6 /* action_timed.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = action_timed.cpp; sourceTree = "<group>"; };
 		8879CE3C18B351F400BCBFA6 /* action_transform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = action_transform.h; sourceTree = "<group>"; };
+		8879CE3D18B4B56500BCBFA6 /* io_converter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = io_converter.h; path = io/io_converter.h; sourceTree = "<group>"; };
+		8879CE3E18B4B7E700BCBFA6 /* json_loader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = json_loader.cpp; path = io/json_loader.cpp; sourceTree = "<group>"; };
+		8879CE3F18B4B7E700BCBFA6 /* json_loader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = json_loader.h; path = io/json_loader.h; sourceTree = "<group>"; };
+		8879CE4218B4B8E700BCBFA6 /* json_to_texture_atlas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = json_to_texture_atlas.h; sourceTree = "<group>"; };
+		8879CE4318B4B93A00BCBFA6 /* texture_atlas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = texture_atlas.h; sourceTree = "<group>"; };
+		8879CE4418B4B9C900BCBFA6 /* json_to_texture_atlas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = json_to_texture_atlas.cpp; sourceTree = "<group>"; };
+		8879CE4618B4BB9E00BCBFA6 /* json_to_components.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = json_to_components.h; sourceTree = "<group>"; };
+		8879CE4718B4BC2900BCBFA6 /* json_to_components.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = json_to_components.cpp; sourceTree = "<group>"; };
 		8882D8D018990BD800B00DCD /* quad_sprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = quad_sprite.cpp; sourceTree = "<group>"; };
 		8882D8D118990BD900B00DCD /* quad_sprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = quad_sprite.h; sourceTree = "<group>"; };
 		8882E49E18A37C040044CFE4 /* event_dispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = event_dispatcher.h; sourceTree = "<group>"; };
@@ -627,6 +638,7 @@
 				8882D8D118990BD900B00DCD /* quad_sprite.h */,
 				880BA32B189654A6002542E2 /* sprite.cpp */,
 				880BA32C189654A6002542E2 /* sprite.h */,
+				8879CE4318B4B93A00BCBFA6 /* texture_atlas.h */,
 			);
 			path = sprite2d;
 			sourceTree = "<group>";
@@ -1417,6 +1429,17 @@
 			path = action_support;
 			sourceTree = "<group>";
 		};
+		8879CE4118B4B8E700BCBFA6 /* misc */ = {
+			isa = PBXGroup;
+			children = (
+				8879CE4718B4BC2900BCBFA6 /* json_to_components.cpp */,
+				8879CE4618B4BB9E00BCBFA6 /* json_to_components.h */,
+				8879CE4418B4B9C900BCBFA6 /* json_to_texture_atlas.cpp */,
+				8879CE4218B4B8E700BCBFA6 /* json_to_texture_atlas.h */,
+			);
+			path = misc;
+			sourceTree = "<group>";
+		};
 		8882E49B18A37C040044CFE4 /* event */ = {
 			isa = PBXGroup;
 			children = (
@@ -1605,6 +1628,7 @@
 				8882E49B18A37C040044CFE4 /* event */,
 				88A84B08183067AF009F7ECD /* go */,
 				AACCE35C185D89BA0017CEEE /* io */,
+				8879CE4118B4B8E700BCBFA6 /* misc */,
 				8812C2A918618A8C001C4D0B /* platform */,
 				883246A3183237220022EA4A /* re */,
 				88A84B0B183067AF009F7ECD /* sg */,
@@ -1647,11 +1671,14 @@
 		AACCE35C185D89BA0017CEEE /* io */ = {
 			isa = PBXGroup;
 			children = (
+				AACCE35D185D89CA0017CEEE /* data_stream.h */,
 				8812C28D185DB7F8001C4D0B /* file_stream.cpp */,
 				8812C28E185DB7F8001C4D0B /* file_stream.h */,
+				8879CE3D18B4B56500BCBFA6 /* io_converter.h */,
+				8879CE3E18B4B7E700BCBFA6 /* json_loader.cpp */,
+				8879CE3F18B4B7E700BCBFA6 /* json_loader.h */,
 				8812C287185DA722001C4D0B /* memory_stream.cpp */,
 				8812C288185DA722001C4D0B /* memory_stream.h */,
-				AACCE35D185D89CA0017CEEE /* data_stream.h */,
 			);
 			name = io;
 			sourceTree = "<group>";
@@ -1771,6 +1798,7 @@
 				8812C2D8186841B4001C4D0B /* render_uniform.cpp in Sources */,
 				882762191873806A00B1291B /* render_context.cpp in Sources */,
 				883246C9183237220022EA4A /* render_device.cpp in Sources */,
+				8879CE4818B4BC2900BCBFA6 /* json_to_components.cpp in Sources */,
 				8812C292185E5F77001C4D0B /* gl_texture.cpp in Sources */,
 				883246C7183237220022EA4A /* render_device_ios.mm in Sources */,
 				8812C2AE18618ACE001C4D0B /* cViewController.mm in Sources */,
@@ -1787,9 +1815,11 @@
 				882762211873945A00B1291B /* gl_context.mm in Sources */,
 				882762141872D50D00B1291B /* vertex_layout.cpp in Sources */,
 				8804F8CE18A75DC50055322F /* world_box2d.cpp in Sources */,
+				8879CE4018B4B7E700BCBFA6 /* json_loader.cpp in Sources */,
 				8812C2BD18644221001C4D0B /* gl_vertex_buffer.cpp in Sources */,
 				882762241873FA7100B1291B /* gl_vertex_layout.cpp in Sources */,
 				8812C28C185DB235001C4D0B /* png_loader.cpp in Sources */,
+				8879CE4518B4B9C900BCBFA6 /* json_to_texture_atlas.cpp in Sources */,
 				8812C2B418619E33001C4D0B /* device.mm in Sources */,
 				883246A2183233F10022EA4A /* aabb.cpp in Sources */,
 			);
