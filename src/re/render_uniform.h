@@ -281,6 +281,28 @@ public:
         set_vector<uniform_texture>(name, tex);
     }
     
+    template<class Value, size_t _Type = 0,
+    typename std::enable_if<std::is_same<typename std::tuple_element<_Type, value_types>::type,
+    Value>::value>::type* = nullptr>
+    bool get(std::string const& name, Value const*& value) const {
+        typedef typename std::tuple_element<_Type, uniform_types>::type U;
+        auto it = find(name);
+        if (it != _uniforms.end() && (*it)->name() == name) {
+            value = &static_cast<U const*>(it->get())->value;
+            return true;
+        }
+        return false;
+    }
+    
+    template<class Value, size_t _Type = 0,
+    typename std::enable_if<std::is_same<typename std::tuple_element<_Type, value_types>::type,
+    Value>::value == false>::type* = nullptr>
+    bool get(std::string const& name, Value const*& value) const {
+        static_assert(std::tuple_size<value_types>::value > _Type + 1,
+                      "not supported value type for the uniform");
+        return get<Value, _Type + 1>(name, value);
+    }
+    
     // walk through all the uniforms, from the parent to the child
     void apply_to(visitor_t const&) const;
     
@@ -291,7 +313,7 @@ public:
   
     // TODO: hash code
 protected:
-    uniforms_t::iterator find(std::string const&);
+    uniforms_t::const_iterator find(std::string const&) const;
     uniform* find(std::string const&, bool);
     
     template<class U, class... Args>
