@@ -93,13 +93,13 @@ _channel_names(channels){
     )shader";
     
     const char* ps_source = R"shader(
-    uniform sampler2D tex1;
+    uniform sampler2D c_tex1;
     varying lowp vec2 uvVaring;
     varying lowp float alpha;
     
     void main(void)
     {
-        gl_FragColor = texture2D(tex1, uvVaring) * vec4(1.0, 1.0, 1.0, alpha);
+        gl_FragColor = texture2D(c_tex1, uvVaring) * vec4(1.0, 1.0, 1.0, alpha);
     }
     )shader";
 
@@ -124,7 +124,7 @@ _channel_names(channels){
                  gpu->retain<gpu_program>(),
                  std::make_shared<render_state>(state),
                  make_uniforms_ptr({
-        make_uniform("tex1", texture::null())
+        make_uniform("c_tex1", texture::null())
     }));
 #endif
 }

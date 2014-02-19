@@ -1,5 +1,6 @@
 #include "com/sprite2d/quad_sprite.h"
 #include "sg/transform.h"
+#include "re/render_uniform.h"
 
 using namespace sprite2d;
 
@@ -25,6 +26,26 @@ void quad_sprite::fill_indices(uint16_t start_idx) {
         start_idx, start_idx+1, start_idx+2,
         start_idx+1, start_idx+2, start_idx+3
     };
+}
+
+void quad_sprite::set_from_material(sprite_material* mat,
+                                    box2f const& frame, vector2f const& pivot) {
+    if (!mat)
+        return;
+    
+    set_material(mat);
+    texture *const* tex = nullptr;
+    mat->uniform()->get("c_tex1", tex);
+    if (tex == nullptr || *tex == nullptr)
+        return;
+    
+    auto& size = (*tex)->size();
+    vector2f rt_min{frame.min().x() * size.x(), frame.min().y() * size.y()};
+    vector2f bound{frame.max().x() * size.x(), frame.max().y() * size.y()};
+    bound -= rt_min;
+    set_frame(frame);
+    set_bound(vector2f{pivot.x() - bound.x()/2.f, pivot.y() - bound.y()/2.f},
+              vector2f{pivot.x() + bound.x()/2.f, pivot.y() + bound.y()/2.f});
 }
 
 void quad_sprite::fill_buffer(vertex_layout::locked_buffer const& buffer,

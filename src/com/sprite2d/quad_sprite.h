@@ -10,6 +10,7 @@ namespace sprite2d {
     class quad_sprite : public sprite {
     public:
         typedef Eigen::AlignedBox2f box2f;
+        typedef Eigen::Vector2f vector2f;
         typedef Eigen::Vector4f vector4f;
         
         struct animated_frame_key {
@@ -23,16 +24,18 @@ namespace sprite2d {
     public:
         quad_sprite(game_object*, int type);
         
-        ATTRIBUTE(box2f, frame, box2f()); // texture uv
-        ATTRIBUTE(box2f, bound, box2f()); // position and size
-        ATTRIBUTE(float, alpha, 1.f); // alpha
-        
         void set_frame_key(animated_frame_key const& key) {
             set_frame(key.frame);
             if (key.mat)
                 set_material(key.mat);
         }
 
+        // set the material and its bound/frame at once
+        // the bound is calculated based on the size of texture
+        // and the pivot
+        void set_from_material(sprite_material* mat,
+                               box2f const& frame,
+                               vector2f const& pivot = {0.f, 0.f});
     protected:
         virtual quad_sprite* clone(game_object*) const override;
         
@@ -41,6 +44,9 @@ namespace sprite2d {
                                  com::transform const&) const override;
         virtual void fill_indices(uint16_t) override;
         
+        ATTRIBUTE(box2f, frame, box2f()); // texture uv
+        ATTRIBUTE(box2f, bound, box2f()); // position and size
+        ATTRIBUTE(float, alpha, 1.f); // alpha
     };
 }
 

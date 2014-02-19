@@ -51,6 +51,9 @@ namespace sprite2d {
     // to the material will affect all the other sprites; a new material
     // can be created based on the same settings with upated uniforms.
     class sprite_material {
+        // TODO:
+        // 1. move this up to the material/material mgr
+        // 2. easy access to find a material
     public:
         template<class N, class P, class S, class U>
         sprite_material(N&& n, P&& p, S&& s, U&& u)
