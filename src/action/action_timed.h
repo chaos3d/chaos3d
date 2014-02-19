@@ -5,18 +5,20 @@
 #include "action/action.h"
 #include "common/timer.h"
 
-// action to wait for a certain amount of time
-class action_timer : public action {
+// action to wait for a certain amount of time/frame
+template<class T>
+class action_timing : public action {
 public:
-    typedef timer::time_t time_t;
+    typedef T time_t;
 
 public:
-    action_timer(time_t duration, timer const& t = global_timer_base::instance())
+    action_timing(time_t duration,
+                  timer const& t = global_timer_base::instance())
     : _duration(duration), _timer(t)
     {}
 
     static action* wait(time_t duration) {
-        return new action_timer(duration);
+        return new action_timing(duration);
     }
 
 protected:
@@ -34,6 +36,18 @@ private:
     time_t _duration = 0;
     timer const& _timer;
 };
+
+typedef action_timing<timer::time_t> action_timer;
+
+class action_frame : public action_timing<timer::frame_t> {
+public:
+    // yield a certain amount of frames
+    // alias to wait, just for readability
+    static action* yield(time_t frame = 0) {
+        return new action_timing<timer::frame_t>(frame);
+    }
+};
+
 
 // action to trigger other actions at a certain time
 class action_timed : public action {
