@@ -5,14 +5,19 @@
 #include <unistd.h>
 #include <sys/stat.h>
 
+struct priority_sorter {
+    bool operator() (locator_mgr::locator_ptr const& lhs,
+                     locator_mgr::locator_ptr const& rhs) const {
+        return lhs->priority() < rhs->priority();
+    }
+};
+
 void locator_mgr::sort_locators() {
-    std::sort(_locators.begin(), _locators.end(),
-              [] (locator_ptr const&lhs, locator_ptr const& rhs) {
-                  return lhs->priority() < rhs->priority();
-              });
+    std::sort(_locators.begin(), _locators.end(), priority_sorter());
 }
 
 data_stream::ptr locator_mgr::from(std::string const& name) const {
+    assert(std::is_sorted(_locators.begin(), _locators.end(), priority_sorter()));
     for (auto& it : _locators) {
         auto stream = it->from(name);
         if (stream.get() != nullptr)

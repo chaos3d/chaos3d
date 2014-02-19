@@ -60,6 +60,14 @@ public:
         return sort_helper(this);
     }
     
+    // add a new locator without sorting
+    // sort_locators need to be called afterwards
+    template<class... Args>
+    void add_no_sort(Args&&... args) {
+        _locators.emplace_back(std::forward<Args>(args)...);
+    }
+
+    // get a stream by looking up the locators by priority
     data_stream::ptr from(std::string const&) const;
     
     // sort locators by priority
