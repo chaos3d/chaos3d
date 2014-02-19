@@ -16,21 +16,25 @@ enum { WRAP_CLAMP, WRAP_LOOP };
 
 // The static/constant keyframes data for an animation
 //
+template<class Key>
+struct key_frame {
+    typedef std::vector<key_frame> key_frames_t;
+
+    Key key;
+    float timestamp;
+    
+    bool operator<(key_frame const& rhs) const {
+        return timestamp < rhs.timestamp;
+    };
+};
+
 template <class Key>
 class animation_keyframe {
 public:
-    struct key_frame {
-        Key key;
-        float timestamp;
-
-		bool operator<(key_frame const& rhs) const {
-			return timestamp < rhs.timestamp;
-		};
-    };
-    
+    typedef key_frame<Key> key_frame_t;
     typedef std::shared_ptr<animation_keyframe> ptr;
     typedef std::shared_ptr<animation_keyframe const> const_ptr;
-    typedef std::vector<key_frame> key_frames_t;
+    typedef std::vector<key_frame_t> key_frames_t;
     
 public:
     template <class... Args>
@@ -46,7 +50,7 @@ public:
     // lower bound of the given time
     typename key_frames_t::const_iterator keyframe(float offset) const {
         return std::lower_bound(_keyframes.begin(), _keyframes.end(), offset,
-                                [] (key_frame const& key, float offset) {
+                                [] (key_frame_t const& key, float offset) {
                                     return key.timestamp < offset;
                                 });
     }
@@ -104,10 +108,22 @@ private:
     int _wrap;
 };
 
-typedef animation_keyframe<float> scalarf_keyframe_t;
-typedef animation_keyframe<Eigen::Vector2f> vec2f_keyframe_t;
-typedef animation_keyframe<Eigen::Vector3f> vec3f_keyframe_t;
-typedef animation_keyframe<Eigen::Quaternionf> quaternionf_keyframe_t;
+typedef animation_keyframe<float> scalarf_anim_kf_t;
+typedef animation_keyframe<Eigen::Vector2f> vec2f_anim_kf_t;
+typedef animation_keyframe<Eigen::Vector3f> vec3f_anim_kf_t;
+typedef animation_keyframe<Eigen::Quaternionf> quaternionf_anim_kf_t;
+
+typedef typename scalarf_anim_kf_t::key_frames_t scalarf_keyframes_t;
+typedef typename vec2f_anim_kf_t::key_frames_t vec2f_keyframes_t;
+typedef typename vec3f_anim_kf_t::key_frames_t vec3f_keyframes_t;
+typedef typename quaternionf_anim_kf_t::key_frames_t quaternionf_keyframes_t;
+
+template<class Key>
+typename animation_keyframe<Key>::ptr make_animation_keyframe(int wrap,
+                                                              std::vector<key_frame<Key>> const& keyframes) {
+    typedef animation_keyframe<Key> anim_kf_t;
+    return typename anim_kf_t::ptr(new anim_kf_t(wrap, keyframes));
+}
 
 template<class Key>
 struct interpolator_linear {

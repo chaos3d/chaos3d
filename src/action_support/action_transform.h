@@ -8,7 +8,7 @@ namespace act {
     template<class I = interpolator_linear<vector3f>>
     struct transform_translate_applier_t {
         com::transform* _transform;
-        void operator() (vec3f_keyframe_t const& keyframe,
+        void operator() (vec3f_anim_kf_t const& keyframe,
                          timer::time_t offset) const {
             _transform->set_translate(keyframe.interpolate<I>(offset));
             _transform->mark_dirty();
@@ -18,7 +18,7 @@ namespace act {
     template<class I = interpolator_linear<vector3f>>
     struct transform_scale_applier_t {
         com::transform* _transform;
-        void operator() (vec3f_keyframe_t const& keyframe,
+        void operator() (vec3f_anim_kf_t const& keyframe,
                          timer::time_t offset) const {
             _transform->set_scale(keyframe.interpolate<I>(offset));
             _transform->mark_dirty();
@@ -28,7 +28,7 @@ namespace act {
     template<class I = interpolator_slerp<quaternionf>>
     struct transform_rotate_applier_t {
         com::transform* _transform;
-        void operator() (quaternionf_keyframe_t const& keyframe,
+        void operator() (quaternionf_anim_kf_t const& keyframe,
                          timer::time_t offset) const {
             _transform->set_rotate(keyframe.interpolate<I>(offset));
             _transform->mark_dirty();
@@ -38,7 +38,7 @@ namespace act {
     template<class I = interpolator_linear<vector3f>>
     action_keyframe<vector3f, transform_translate_applier_t<I>>*
     make_translate_action(game_object* go, timer::time_t duration,
-                          vec3f_keyframe_t::const_ptr const& keyframe,
+                          vec3f_anim_kf_t::const_ptr const& keyframe,
                           timer const& t = global_timer_base::instance()) {
         auto* trans = go->get_component<com::transform>();
         if (trans == nullptr)
@@ -51,7 +51,7 @@ namespace act {
     template<class I = interpolator_linear<vector3f>>
     action_keyframe<vector3f, transform_scale_applier_t<I>>*
     make_scale_action(game_object* go, timer::time_t duration,
-                      vec3f_keyframe_t::const_ptr const& keyframe,
+                      vec3f_anim_kf_t::const_ptr const& keyframe,
                       timer const& t = global_timer_base::instance()) {
         auto* trans = go->get_component<com::transform>();
         if (trans == nullptr)
@@ -64,7 +64,7 @@ namespace act {
     template<class I = interpolator_slerp<quaternionf>>
     action_keyframe<quaternionf, transform_rotate_applier_t<I>>*
     make_rotate_action(game_object* go, timer::time_t duration,
-                       quaternionf_keyframe_t::const_ptr const& keyframe,
+                       quaternionf_anim_kf_t::const_ptr const& keyframe,
                        timer const& t = global_timer_base::instance()) {
         auto* trans = go->get_component<com::transform>();
         if (trans == nullptr)
