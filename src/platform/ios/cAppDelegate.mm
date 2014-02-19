@@ -6,14 +6,15 @@
 //  Copyright (c) 2013 cHaos3D. All rights reserved.
 //
 
-#import "cAppDelegate.h"
-#import "cViewController.h"
 #import "app/screen.h"
+#import "asset/asset_locator.h"
 #import "common/timer.h"
-#import "re/render_device.h"
-#import "re/render_target.h"
 #import "go/component_manager.h"
 #import "go/game_object.h"
+#import "platform/ios/cAppDelegate.h"
+#import "platform/ios/cViewController.h"
+#import "re/render_device.h"
+#import "re/render_target.h"
 
 #import <OpenGLES/ES2/gl.h>
 #import <OpenGLES/ES2/glext.h>
@@ -46,7 +47,7 @@
 }
 
 - (void) startLoop {
-    if(self.displayLink != nil){
+    if (self.displayLink != nil){
         [displayLink invalidate];
     }
     
@@ -64,6 +65,12 @@
     return render_device::OpenGLES20;
 }
 
+- (void) initLocators {
+    locator_mgr::instance().
+    add(locator::dir_locator::app_dir())->
+    add(locator::dir_locator::home_dir());
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     CGRect rt = [[UIScreen mainScreen] bounds];
@@ -75,6 +82,9 @@
 
     self.window.rootViewController = controller;
     [self.window makeKeyAndVisible];
+    
+    // init the locators
+    [self initLocators];
     
     // create the device
     _default_device = render_device::get_device([self renderType]);

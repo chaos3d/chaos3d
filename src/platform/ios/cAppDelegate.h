@@ -43,4 +43,5 @@ class render_context;
 - (void) stopLoop;
 
 - (int) renderType; // render_device::OpenGLES20
+- (void) initLocators;
 @end
