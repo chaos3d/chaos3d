@@ -21,6 +21,11 @@ public: auto set_##name(type const& name) -> decltype(*this) \
         return *this; \
     }
 
+#define DEFINE_LOADER   template<class Loader> \
+                        std::pair<bool, typename Loader::position_t> load_from(Loader const&)
+#define SPECIFY_LOADER_FOR(type, Loader)    template<> \
+                                            std::pair<bool, Loader::position_t> type::load_from<Loader>(Loader const& loader)
+
 #ifndef M_PI
 #define	M_PI		(3.1415926)
 #endif
