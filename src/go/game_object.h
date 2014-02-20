@@ -39,7 +39,7 @@ public:
     _next_sibling(null), _pre_sibling(null), _child_size(0),
     _flag(-1U){
         ++ _number_of_objects;
-        if(parent)
+        if (parent)
             parent->add_child(this);
     }
     
@@ -92,17 +92,16 @@ public:
     typename std::enable_if<std::is_base_of<component, C>::value &&
     !C::manager_t::component_fixed_t::value, C*>::type get_component(int start = component_manager::fixed_component()) const {
         typedef typename C::manager_t trait; // manager class is a trait for the component
-        if(trait::sealed_t::value) {
-            for(auto it = std::next(_components.begin(), start);
+        if (trait::sealed_t::value) {
+            for (auto it = std::next(_components.begin(), start);
                 it != _components.end() && it->get() != nullptr; ++it) {
-                if(typeid(*it) == typeid(C))
+                if (typeid(*it) == typeid(C))
                     return static_cast<C*>(it->get());
             }
-        }
-        else {
-            for(auto it = std::next(_components.begin(), start);
+        } else {
+            for (auto it = std::next(_components.begin(), start);
                 it != _components.end() && it->get() != nullptr; ++it) {
-                if(dynamic_cast<C*>(it->get()) != nullptr)
+                if (dynamic_cast<C*>(it->get()) != nullptr)
                     return static_cast<C*>(it->get());
             }
         }
@@ -123,7 +122,7 @@ public:
     typename std::enable_if<std::is_base_of<component, C>::value &&
     !C::manager_t::component_fixed_t::value>::type remove_component(int start = component_manager::fixed_component()) {
         typedef typename C::manager_t trait; // manager class is a trait for the component
-        if(trait::sealed_t::value) {
+        if (trait::sealed_t::value) {
             auto first = std::next(_components.begin(), start);
             auto last = std::remove_if(first,
                                        std::find_if(first, _components.end(),
@@ -133,8 +132,7 @@ public:
                                        [] (component_ptr const& ptr) {
                                            return typeid(*ptr) == typeid(C);
                                        });
-        }
-        else {
+        } else {
             auto first = std::next(_components.begin(), start);
             auto last = std::remove_if(first,
                                        std::find_if(first, _components.end(),
@@ -153,7 +151,7 @@ public:
     C::manager_t::component_fixed_t::value, C&>::type add_component(Args&&... args) {
         assert(C::manager_t::component_idx() != -1); // manager is not initializer properly?
         auto& existed = _components[C::manager_t::component_idx()];
-        if(existed.get() == nullptr)
+        if (existed.get() == nullptr)
             existed.reset(C::template create<C>(this, std::forward<Args>(args)...));
         return static_cast<C&>(*existed.get());
     }
@@ -164,17 +162,16 @@ public:
     !C::manager_t::component_fixed_t::value, C&>::type add_component(Args&&... args) {
         typedef typename C::manager_t trait; // manager class is a trait for the component
         uint32_t existed = component_manager::fixed_component();
-        if(trait::sealed_t::value) {
-            for(auto it = _components.begin() + component_manager::fixed_component();
+        if (trait::sealed_t::value) {
+            for (auto it = _components.begin() + component_manager::fixed_component();
                 it != _components.end() && it->get() != nullptr; ++it, ++ existed) {
-                if(typeid(*it->get()) == typeid(C))
+                if (typeid(*it->get()) == typeid(C))
                     return static_cast<C&>(*it->get());
             }
-        }
-        else {
-            for(auto it = _components.begin() + component_manager::fixed_component();
+        } else {
+            for (auto it = _components.begin() + component_manager::fixed_component();
                 it != _components.end() && it->get() != nullptr; ++it, ++ existed) {
-                if(dynamic_cast<C*>(it->get()) != nullptr)
+                if (dynamic_cast<C*>(it->get()) != nullptr)
                     return static_cast<C&>(*it->get());
             }
         }
