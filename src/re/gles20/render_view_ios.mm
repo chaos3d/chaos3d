@@ -10,64 +10,65 @@
 @interface EAGLView : UIView
 
 @property (nonatomic, assign) gles20::render_view* host;
+@property (nonatomic, assign) float scaling;
 
 @end
 
 @implementation EAGLView
 
-@synthesize host;
+@synthesize host, scaling;
 
 + (Class)layerClass {
     return [CAEAGLLayer class];
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    for(UITouch* touch : touches) {
-        if(touch.phase != UITouchPhaseBegan)
+    for (UITouch* touch : touches) {
+        if (touch.phase != UITouchPhaseBegan)
             continue;
         
         CGPoint pos = [touch locationInView: self];
         host->dispatch(touch_began_event(
-            {pos.x, pos.y}, 0.f /*FIXME, time*/,
-            reinterpret_cast<uint32_t>(touch)
-        ));
+                                         {pos.x * scaling, pos.y * scaling}, 0.f /*FIXME, time*/,
+                                         reinterpret_cast<uint32_t>(touch)
+                                         ));
     }
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event{
-    for(UITouch* touch : touches) {
-        if(touch.phase != UITouchPhaseMoved)
+    for (UITouch* touch : touches) {
+        if (touch.phase != UITouchPhaseMoved)
             continue;
         
         CGPoint pos = [touch locationInView: self];
         host->dispatch(touch_moved_event(
-                                         {pos.x, pos.y}, 0.f /*FIXME, time*/,
+                                         {pos.x * scaling, pos.y * scaling}, 0.f /*FIXME, time*/,
                                          reinterpret_cast<uint32_t>(touch)
                                          ));
     }
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
-    for(UITouch* touch : touches) {
-        if(touch.phase != UITouchPhaseEnded)
+    for (UITouch* touch : touches) {
+        if (touch.phase != UITouchPhaseEnded)
             continue;
         
         CGPoint pos = [touch locationInView: self];
         host->dispatch(touch_ended_event(
-                                         {pos.x, pos.y}, 0.f /*FIXME, time*/,
+                                         {pos.x * scaling, pos.y * scaling}, 0.f /*FIXME, time*/,
                                          reinterpret_cast<uint32_t>(touch)
                                          ));
     }
 }
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event{
-    for(UITouch* touch : touches) {
-        if(touch.phase != UITouchPhaseCancelled)
+    for (UITouch* touch : touches) {
+        if (touch.phase != UITouchPhaseCancelled)
             continue;
         
         CGPoint pos = [touch locationInView: self];
         host->dispatch(touch_cancelled_event(
-                                             {pos.x, pos.y}, 0.f /*FIXME, time*/,
+                                             {pos.x * scaling, pos.y * scaling}, 0.f /*FIXME, time*/,
                                              reinterpret_cast<uint32_t>(touch)
                                              ));
     }
@@ -77,8 +78,10 @@
 
 namespace gles20 {
 
-render_view::render_view(target_size_t const& size_, window_pos_t const& pos_) :
-    render_window(size_, pos_), _native_view(nil) {
+render_view::render_view(target_size_t const& size_, window_pos_t const& pos_)
+: render_window(size_ * [UIScreen mainScreen].scale,
+                pos_ * [UIScreen mainScreen].scale),
+_native_view(nil) {
     create_native();
     create_view();
 }
@@ -89,15 +92,20 @@ render_view::~render_view() {
 
 void render_view::create_native() {
     assert(_native_view == nil);
-    _native_view = [[EAGLView alloc] initWithFrame: CGRectMake(_position(0), _position(1),
-                                                               size()(0), size()(1))];
+    
+    float scaling = [UIScreen mainScreen].scale;
+    _native_view = [[EAGLView alloc] initWithFrame: CGRectMake(_position(0) / scaling, _position(1) / scaling,
+                                                               size()(0) / scaling, size()(1) / scaling)];
     _native_view.host = this;
 	_native_view.userInteractionEnabled = YES;
 	_native_view.opaque = TRUE;
 	_native_view.autoresizesSubviews = NO;
 	_native_view.autoresizingMask = UIViewAutoresizingNone;
     _native_view.backgroundColor = [UIColor yellowColor];
-    _native_view.contentScaleFactor = [UIScreen mainScreen].scale;
+    _native_view.contentScaleFactor = scaling;
+    _native_view.scaling = scaling;
+    
+    
 }
     
 void render_view::create_view() {
