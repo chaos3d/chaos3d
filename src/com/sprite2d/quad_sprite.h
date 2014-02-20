@@ -4,6 +4,8 @@
 #include "com/sprite2d/sprite.h"
 #include <Eigen/Geometry>
 
+class texture_atlas;
+
 namespace sprite2d {
     
     // the quad sprite
@@ -36,6 +38,10 @@ namespace sprite2d {
         quad_sprite& set_from_material(sprite_material* mat,
                                        box2f const& frame,
                                        vector2f const& pivot = {0.f, 0.f});
+        
+        quad_sprite& set_from_atlas(texture_atlas const&,
+                                    std::string const& name,
+                                    std::string const& mat = "basic");
     protected:
         virtual quad_sprite* clone(game_object*) const override;
         

@@ -1,6 +1,7 @@
 #include "com/sprite2d/quad_sprite.h"
 #include "sg/transform.h"
 #include "re/render_uniform.h"
+#include "com/sprite2d/texture_atlas.h"
 
 using namespace sprite2d;
 
@@ -46,6 +47,12 @@ quad_sprite& quad_sprite::set_from_material(sprite_material* mat,
     set_bound(vector2f{pivot.x() - bound.x()/2.f, pivot.y() - bound.y()/2.f},
               vector2f{pivot.x() + bound.x()/2.f, pivot.y() + bound.y()/2.f});
     return *this;
+}
+
+quad_sprite& quad_sprite::set_from_atlas(texture_atlas const& atlas, std::string const& name,
+                                         std::string const& mat) {
+    set_material(mat, { make_uniform("c_tex1", atlas.texture().get()) });
+    return set_from_material(nullptr, atlas.get_frame(name));
 }
 
 void quad_sprite::fill_buffer(vertex_layout::locked_buffer const& buffer,
