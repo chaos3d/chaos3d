@@ -16,7 +16,7 @@ public:
     // serialization injection,
     // TODO: macro?
     template<class Loader>
-    bool load_from(Loader&);
+    std::pair<bool, typename Loader::position_t> load_from(Loader const&);
     
     // get the underlying texture
     texture::ptr const& texture() const { return _texture; }
