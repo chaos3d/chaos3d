@@ -10,4 +10,6 @@ struct io_converter<json_loader, texture_atlas> {
     bool operator() (json_loader const&, texture_atlas&) const;
 };
 
+template<>
+std::pair<bool, json_loader::position_t> texture_atlas::load_from<json_loader>(json_loader const&);
 #endif
