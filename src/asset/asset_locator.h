@@ -80,6 +80,7 @@ private:
 class asset_locator {
 public:
     typedef std::unique_ptr<asset_locator const> ptr;
+    typedef std::function<void(std::string const&)> visitor_t;
     
 public:
     asset_locator(int priority = 0)
@@ -88,7 +89,11 @@ public:
     
     virtual ~asset_locator() {};
     
+    // get a stream from the given name
     virtual data_stream::ptr from(std::string const&) const = 0;
+    
+    // go through all the possible names
+    virtual void traverse(visitor_t const&) const = 0;
     
     // the priority to look up the asset so the 'local' asset
     // will be able to override. probably change to a different
@@ -104,7 +109,8 @@ namespace locator {
     public:
         dir_locator(std::string const&, int = 0);
         
-        virtual data_stream::ptr from(std::string const&) const;
+        virtual data_stream::ptr from(std::string const&) const override;
+        virtual void traverse(visitor_t const&) const override;
         
         static ptr home_dir(int priority = 0);
         static ptr app_dir(int priority = 1);

@@ -1,9 +1,11 @@
 #include "asset/asset_locator.h"
 #include "io/file_stream.h"
 
+#include <queue>
 #include <algorithm>
 #include <unistd.h>
 #include <sys/stat.h>
+#include <dirent.h>
 
 struct priority_sorter {
     bool operator() (locator_mgr::locator_ptr const& lhs,
@@ -47,4 +49,39 @@ namespace locator {
         return data_stream::ptr(new file_stream(full.c_str()));
     }
 
+    void dir_locator::traverse(visitor_t const& visitor) const {        
+        std::queue<std::string> dirs;
+        dirs.push(_base);
+        
+        while (!dirs.empty()) {
+            auto& cur = dirs.front();
+            
+            struct dirent *entry;
+            DIR *dp;
+            
+            dp = opendir(cur.c_str());
+            if (dp == NULL) {
+                dirs.pop();
+                continue;
+            }
+
+            while ((entry = readdir(dp))) {
+                if (strcmp(entry->d_name, ".") == 0 ||
+                    strcmp(entry->d_name, "..") == 0) {
+                    continue;
+                }
+                else if (entry->d_type == DT_DIR) {
+                    dirs.push(cur + entry->d_name + '/');
+                } else if (cur.length() == _base.length()) {
+                    visitor(entry->d_name);
+                } else {
+                    visitor(std::string(cur.data() + _base.length()) + entry->d_name);
+                }
+            }
+            
+            dirs.pop();
+            closedir(dp);
+        }
+        
+    }
 }
