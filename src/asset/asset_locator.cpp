@@ -51,7 +51,7 @@ namespace locator {
 
     void dir_locator::traverse(visitor_t const& visitor) const {        
         std::queue<std::string> dirs;
-        dirs.push(_base);
+        dirs.emplace(_base);
         
         while (!dirs.empty()) {
             auto& cur = dirs.front();
@@ -65,17 +65,17 @@ namespace locator {
                 continue;
             }
 
+            auto base = std::string(cur.data() + _base.length());
             while ((entry = readdir(dp))) {
                 if (strcmp(entry->d_name, ".") == 0 ||
                     strcmp(entry->d_name, "..") == 0) {
                     continue;
-                }
-                else if (entry->d_type == DT_DIR) {
-                    dirs.push(cur + entry->d_name + '/');
+                } else if (entry->d_type == DT_DIR) {
+                    dirs.emplace(cur + entry->d_name + '/');
                 } else if (cur.length() == _base.length()) {
                     visitor(entry->d_name);
                 } else {
-                    visitor(std::string(cur.data() + _base.length()) + entry->d_name);
+                    visitor(base + entry->d_name);
                 }
             }
             
