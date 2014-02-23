@@ -11,7 +11,7 @@ class asset_locator;
 
 class locator_mgr : public singleton<locator_mgr, Static_Instance> {
 public:
-    typedef std::unique_ptr<asset_locator const> locator_ptr;
+    typedef std::shared_ptr<asset_locator const> locator_ptr;
     typedef std::vector<locator_ptr> locators_t;
     
     // the helper struct to sort the locators
@@ -77,9 +77,10 @@ private:
     locators_t _locators;
 };
 
-class asset_locator {
+class asset_locator : public std::enable_shared_from_this<asset_locator> {
 public:
-    typedef std::unique_ptr<asset_locator const> ptr;
+    typedef std::shared_ptr<asset_locator const> const_ptr;
+    typedef std::shared_ptr<asset_locator> ptr;
     typedef std::function<void(std::string const&)> visitor_t;
     
 public:
@@ -88,6 +89,9 @@ public:
     {}
     
     virtual ~asset_locator() {};
+    
+    // check if the given name exists
+    virtual bool contains(std::string const&) const = 0;
     
     // get a stream from the given name
     virtual data_stream::ptr from(std::string const&) const = 0;
@@ -109,6 +113,7 @@ namespace locator {
     public:
         dir_locator(std::string const&, int = 0);
         
+        virtual bool contains(std::string const&) const override;
         virtual data_stream::ptr from(std::string const&) const override;
         virtual void traverse(visitor_t const&) const override;
         

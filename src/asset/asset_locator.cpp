@@ -37,6 +37,13 @@ namespace locator {
            !S_ISDIR(st.st_mode))
             throw std::exception(); // TODO log error or throw exception?
     }
+
+    bool dir_locator::contains(std::string const& name) const {
+        struct stat st;
+        auto full = _base + name;
+        
+        return stat(full.c_str(), &st) == 0 && (S_ISREG(st.st_mode));
+    }
     
     data_stream::ptr dir_locator::from(std::string const& name) const {
         struct stat st;
