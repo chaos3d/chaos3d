@@ -13,7 +13,6 @@
 		880BA32D189654A6002542E2 /* camera2d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 880BA329189654A6002542E2 /* camera2d.cpp */; };
 		880BA32E189654A6002542E2 /* sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 880BA32B189654A6002542E2 /* sprite.cpp */; };
 		8812C289185DA722001C4D0B /* memory_stream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8812C287185DA722001C4D0B /* memory_stream.cpp */; };
-		8812C28C185DB235001C4D0B /* png_loader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8812C28A185DB235001C4D0B /* png_loader.cpp */; };
 		8812C28F185DB7F8001C4D0B /* file_stream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8812C28D185DB7F8001C4D0B /* file_stream.cpp */; };
 		8812C292185E5F77001C4D0B /* gl_texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8812C290185E5F77001C4D0B /* gl_texture.cpp */; };
 		8812C295185E6359001C4D0B /* render_device.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8812C294185E6359001C4D0B /* render_device.cpp */; };
@@ -46,8 +45,13 @@
 		8879CE3318B2E0C900BCBFA6 /* timer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8879CE3118B2E0C900BCBFA6 /* timer.cpp */; };
 		8879CE3618B2F27000BCBFA6 /* action_timed.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8879CE3518B2F27000BCBFA6 /* action_timed.cpp */; };
 		8879CE4018B4B7E700BCBFA6 /* json_loader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8879CE3E18B4B7E700BCBFA6 /* json_loader.cpp */; };
-		8879CE4518B4B9C900BCBFA6 /* json_to_texture_atlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8879CE4418B4B9C900BCBFA6 /* json_to_texture_atlas.cpp */; };
 		8879CE4818B4BC2900BCBFA6 /* json_to_components.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8879CE4718B4BC2900BCBFA6 /* json_to_components.cpp */; };
+		8879CE4B18B60DBD00BCBFA6 /* action_json_loader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8879CE4918B60DBD00BCBFA6 /* action_json_loader.cpp */; };
+		8879CE4E18B6F76100BCBFA6 /* asset_manager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8879CE4C18B6F76100BCBFA6 /* asset_manager.cpp */; };
+		8879CE5B18B7698F00BCBFA6 /* locator_asset_bundle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8879CE5918B7698F00BCBFA6 /* locator_asset_bundle.cpp */; };
+		8879CE5E18B9D13300BCBFA6 /* png_loader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8879CE5D18B9D13300BCBFA6 /* png_loader.cpp */; };
+		8879CE6518B9F17D00BCBFA6 /* json_to_texture_atlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8879CE4418B4B9C900BCBFA6 /* json_to_texture_atlas.cpp */; };
+		8879CE6A18BA067D00BCBFA6 /* texture_asset.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8879CE6918BA067D00BCBFA6 /* texture_asset.cpp */; };
 		8882D8D218990BD900B00DCD /* quad_sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8882D8D018990BD800B00DCD /* quad_sprite.cpp */; };
 		8882E4A518A382A20044CFE4 /* event_dispatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8882E4A418A382A20044CFE4 /* event_dispatcher.cpp */; };
 		8882E4E318A74E2D0044CFE4 /* libBox2D.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8882E4E218A74E2D0044CFE4 /* libBox2D.a */; };
@@ -98,8 +102,6 @@
 		880BA32C189654A6002542E2 /* sprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sprite.h; sourceTree = "<group>"; };
 		8812C287185DA722001C4D0B /* memory_stream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = memory_stream.cpp; path = io/memory_stream.cpp; sourceTree = "<group>"; };
 		8812C288185DA722001C4D0B /* memory_stream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = memory_stream.h; path = io/memory_stream.h; sourceTree = "<group>"; };
-		8812C28A185DB235001C4D0B /* png_loader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = png_loader.cpp; path = asset/png_loader.cpp; sourceTree = "<group>"; };
-		8812C28B185DB235001C4D0B /* png_loader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = png_loader.h; path = asset/png_loader.h; sourceTree = "<group>"; };
 		8812C28D185DB7F8001C4D0B /* file_stream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = file_stream.cpp; path = io/file_stream.cpp; sourceTree = "<group>"; };
 		8812C28E185DB7F8001C4D0B /* file_stream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = file_stream.h; path = io/file_stream.h; sourceTree = "<group>"; };
 		8812C290185E5F77001C4D0B /* gl_texture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gl_texture.cpp; sourceTree = "<group>"; };
@@ -509,6 +511,19 @@
 		8879CE4418B4B9C900BCBFA6 /* json_to_texture_atlas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = json_to_texture_atlas.cpp; sourceTree = "<group>"; };
 		8879CE4618B4BB9E00BCBFA6 /* json_to_components.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = json_to_components.h; sourceTree = "<group>"; };
 		8879CE4718B4BC2900BCBFA6 /* json_to_components.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = json_to_components.cpp; sourceTree = "<group>"; };
+		8879CE4918B60DBD00BCBFA6 /* action_json_loader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = action_json_loader.cpp; sourceTree = "<group>"; };
+		8879CE4A18B60DBD00BCBFA6 /* action_json_loader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = action_json_loader.h; sourceTree = "<group>"; };
+		8879CE4C18B6F76100BCBFA6 /* asset_manager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = asset_manager.cpp; path = asset/asset_manager.cpp; sourceTree = "<group>"; };
+		8879CE4D18B6F76100BCBFA6 /* asset_manager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = asset_manager.h; path = asset/asset_manager.h; sourceTree = "<group>"; };
+		8879CE4F18B707E300BCBFA6 /* asset_bundle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = asset_bundle.h; path = asset/asset_bundle.h; sourceTree = "<group>"; };
+		8879CE5918B7698F00BCBFA6 /* locator_asset_bundle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = locator_asset_bundle.cpp; path = asset/locator_asset_bundle.cpp; sourceTree = "<group>"; };
+		8879CE5A18B7698F00BCBFA6 /* locator_asset_bundle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = locator_asset_bundle.h; path = asset/locator_asset_bundle.h; sourceTree = "<group>"; };
+		8879CE5C18B9D13300BCBFA6 /* png_loader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = png_loader.h; sourceTree = "<group>"; };
+		8879CE5D18B9D13300BCBFA6 /* png_loader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = png_loader.cpp; sourceTree = "<group>"; };
+		8879CE6618B9F44E00BCBFA6 /* asset_handle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = asset_handle.h; path = asset/asset_handle.h; sourceTree = "<group>"; };
+		8879CE6718BA013B00BCBFA6 /* render_device_capacity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = render_device_capacity.h; sourceTree = "<group>"; };
+		8879CE6818BA067D00BCBFA6 /* texture_asset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = texture_asset.h; sourceTree = "<group>"; };
+		8879CE6918BA067D00BCBFA6 /* texture_asset.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = texture_asset.cpp; sourceTree = "<group>"; };
 		8882D8D018990BD800B00DCD /* quad_sprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = quad_sprite.cpp; sourceTree = "<group>"; };
 		8882D8D118990BD900B00DCD /* quad_sprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = quad_sprite.h; sourceTree = "<group>"; };
 		8882E49E18A37C040044CFE4 /* event_dispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = event_dispatcher.h; sourceTree = "<group>"; };
@@ -1366,6 +1381,7 @@
 				882762181873806A00B1291B /* render_context.h */,
 				883246B5183237220022EA4A /* render_device.cpp */,
 				883246B6183237220022EA4A /* render_device.h */,
+				8879CE6718BA013B00BCBFA6 /* render_device_capacity.h */,
 				883246B9183237220022EA4A /* render_state.h */,
 				883246CD183CC04C0022EA4A /* render_target.cpp */,
 				883246CE183CC04C0022EA4A /* render_target.h */,
@@ -1417,6 +1433,8 @@
 				8879CE2918B1EAB500BCBFA6 /* action_lua.h */,
 				8879CE3518B2F27000BCBFA6 /* action_timed.cpp */,
 				8879CE3418B2EE2C00BCBFA6 /* action_timed.h */,
+				8879CE4918B60DBD00BCBFA6 /* action_json_loader.cpp */,
+				8879CE4A18B60DBD00BCBFA6 /* action_json_loader.h */,
 			);
 			path = action;
 			sourceTree = "<group>";
@@ -1438,6 +1456,17 @@
 				8879CE4218B4B8E700BCBFA6 /* json_to_texture_atlas.h */,
 			);
 			path = misc;
+			sourceTree = "<group>";
+		};
+		8879CE5018B75EAD00BCBFA6 /* asset_support */ = {
+			isa = PBXGroup;
+			children = (
+				8879CE6818BA067D00BCBFA6 /* texture_asset.h */,
+				8879CE6918BA067D00BCBFA6 /* texture_asset.cpp */,
+				8879CE5D18B9D13300BCBFA6 /* png_loader.cpp */,
+				8879CE5C18B9D13300BCBFA6 /* png_loader.h */,
+			);
+			path = asset_support;
 			sourceTree = "<group>";
 		};
 		8882E49B18A37C040044CFE4 /* event */ = {
@@ -1623,6 +1652,7 @@
 				8879CE3B18B351F400BCBFA6 /* action_support */,
 				8812C2A21861788F001C4D0B /* app */,
 				AACCE35F185D977C0017CEEE /* asset */,
+				8879CE5018B75EAD00BCBFA6 /* asset_support */,
 				8827623418912A4800B1291B /* com */,
 				8812C2CB1866E1EB001C4D0B /* common */,
 				8882E49B18A37C040044CFE4 /* event */,
@@ -1686,14 +1716,18 @@
 		AACCE35F185D977C0017CEEE /* asset */ = {
 			isa = PBXGroup;
 			children = (
-				8812C29F185F0992001C4D0B /* asset_locator.mm */,
+				8879CE4F18B707E300BCBFA6 /* asset_bundle.h */,
+				8879CE6618B9F44E00BCBFA6 /* asset_handle.h */,
 				8812C299185EF887001C4D0B /* asset_locator.cpp */,
 				8812C29A185EF887001C4D0B /* asset_locator.h */,
+				8812C29F185F0992001C4D0B /* asset_locator.mm */,
+				8879CE4C18B6F76100BCBFA6 /* asset_manager.cpp */,
+				8879CE4D18B6F76100BCBFA6 /* asset_manager.h */,
+				8879CE5918B7698F00BCBFA6 /* locator_asset_bundle.cpp */,
+				8879CE5A18B7698F00BCBFA6 /* locator_asset_bundle.h */,
+				AACCE360185D978E0017CEEE /* resource.h */,
 				8812C297185EF4FA001C4D0B /* resource_manager.cpp */,
 				8812C296185E72FE001C4D0B /* resource_manager.h */,
-				8812C28A185DB235001C4D0B /* png_loader.cpp */,
-				8812C28B185DB235001C4D0B /* png_loader.h */,
-				AACCE360185D978E0017CEEE /* resource.h */,
 			);
 			name = asset;
 			sourceTree = "<group>";
@@ -1786,6 +1820,7 @@
 				880BA3271895D261002542E2 /* camera.cpp in Sources */,
 				883246CF183CC04C0022EA4A /* render_target.cpp in Sources */,
 				880BA3251895131E002542E2 /* render_component_mgr.cpp in Sources */,
+				8879CE6518B9F17D00BCBFA6 /* json_to_texture_atlas.cpp in Sources */,
 				8812C289185DA722001C4D0B /* memory_stream.cpp in Sources */,
 				883246C8183237220022EA4A /* render_view_ios.mm in Sources */,
 				8812C28F185DB7F8001C4D0B /* file_stream.cpp in Sources */,
@@ -1796,30 +1831,33 @@
 				88A84B121830B6D9009F7ECD /* game_object.cpp in Sources */,
 				8827622E1881482F00B1291B /* component_manager.cpp in Sources */,
 				8812C2D8186841B4001C4D0B /* render_uniform.cpp in Sources */,
+				8879CE5E18B9D13300BCBFA6 /* png_loader.cpp in Sources */,
 				882762191873806A00B1291B /* render_context.cpp in Sources */,
 				883246C9183237220022EA4A /* render_device.cpp in Sources */,
 				8879CE4818B4BC2900BCBFA6 /* json_to_components.cpp in Sources */,
 				8812C292185E5F77001C4D0B /* gl_texture.cpp in Sources */,
 				883246C7183237220022EA4A /* render_device_ios.mm in Sources */,
 				8812C2AE18618ACE001C4D0B /* cViewController.mm in Sources */,
+				8879CE5B18B7698F00BCBFA6 /* locator_asset_bundle.cpp in Sources */,
 				88A84B0E183067AF009F7ECD /* transform.cpp in Sources */,
 				8812C2A0185F0992001C4D0B /* asset_locator.mm in Sources */,
 				8812C29B185EF887001C4D0B /* asset_locator.cpp in Sources */,
 				882762111870F9E600B1291B /* gl_gpu.cpp in Sources */,
 				8812C2D518683BE0001C4D0B /* render_utility2d.cpp in Sources */,
 				8879CE2A18B1EAB500BCBFA6 /* action.cpp in Sources */,
+				8879CE4E18B6F76100BCBFA6 /* asset_manager.cpp in Sources */,
 				8882D8D218990BD900B00DCD /* quad_sprite.cpp in Sources */,
 				883246CC183A01730022EA4A /* vertex_buffer.cpp in Sources */,
 				8879CE1E18A8146400BCBFA6 /* shape_desc.cpp in Sources */,
 				880BA32D189654A6002542E2 /* camera2d.cpp in Sources */,
+				8879CE4B18B60DBD00BCBFA6 /* action_json_loader.cpp in Sources */,
 				882762211873945A00B1291B /* gl_context.mm in Sources */,
 				882762141872D50D00B1291B /* vertex_layout.cpp in Sources */,
 				8804F8CE18A75DC50055322F /* world_box2d.cpp in Sources */,
 				8879CE4018B4B7E700BCBFA6 /* json_loader.cpp in Sources */,
+				8879CE6A18BA067D00BCBFA6 /* texture_asset.cpp in Sources */,
 				8812C2BD18644221001C4D0B /* gl_vertex_buffer.cpp in Sources */,
 				882762241873FA7100B1291B /* gl_vertex_layout.cpp in Sources */,
-				8812C28C185DB235001C4D0B /* png_loader.cpp in Sources */,
-				8879CE4518B4B9C900BCBFA6 /* json_to_texture_atlas.cpp in Sources */,
 				8812C2B418619E33001C4D0B /* device.mm in Sources */,
 				883246A2183233F10022EA4A /* aabb.cpp in Sources */,
 			);
