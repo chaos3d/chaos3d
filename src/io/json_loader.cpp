@@ -1,13 +1,18 @@
 #include "io/json_loader.h"
 #include "memory_stream.h"
 #include <cJSON/cJSON.h>
+#include <rapidjson/document.h>
 
-json_loader::json_loader(char const* str) {
-    const char* parse_end = nullptr;
-    _json_root = cJSON_ParseWithOpts(str, &parse_end, 1);
-    
-    // TODO: throw instead?
-    assert(parse_end == str + strlen(str));
+using namespace rapidjson;
+
+struct json_loader::internal_t : public rapidjson::Document {
+};
+
+json_loader::json_loader(char const* str)
+: _internal(new internal_t()) {
+    if (_internal->Parse<0>(str).HasParseError()) {
+        // TODO: throw exception?
+    }
 }
 
 json_loader::json_loader(memory_stream* stream)
@@ -15,6 +20,4 @@ json_loader::json_loader(memory_stream* stream)
 }
 
 json_loader::~json_loader() {
-    if (_json_root != NULL)
-        cJSON_Delete(_json_root);
 }

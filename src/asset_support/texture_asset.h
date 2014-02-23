@@ -32,15 +32,16 @@ typedef asset_handle_base<texture> texture_handle;
 // 3. multiple extensions/pvr/png all together?
 class png_asset_bundle : public locator_asset_bundle {
 public:
-    png_asset_bundle(render_device*,
-                     asset_locator::ptr const&,
-                     std::string const&);
-
     virtual handle_ptr get(std::string const&) const override;
     
     static ptr bundle(render_device* device, asset_locator::ptr const&,
                       std::string const& = ".png");
     
+protected:
+    png_asset_bundle(render_device*,
+                     asset_locator::ptr const&,
+                     std::string const&);
+
 private:
     render_device *_device;
     texture::attribute_t _attribute; // ubiquitous attribute

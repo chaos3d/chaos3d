@@ -3,7 +3,6 @@
 
 #include <memory>
 
-struct cJSON;
 class memory_stream;
 
 // The JSON wrapper for cJSON, this serves to remove
@@ -15,26 +14,14 @@ public:
 public:
     json_loader(char const*);
     json_loader(memory_stream*);
-    
-    json_loader(json_loader&& rhs)
-    : _json_root(rhs._json_root) {
-        rhs._json_root = NULL;
-    }
-    
-    json_loader& operator=(json_loader&& rhs) {
-        _json_root = rhs._json_root;
-        rhs._json_root = NULL;
-        return *this;
-    }
-    
     ~json_loader();
     
-    json_loader(json_loader const&) = delete;
-    json_loader& operator=(json_loader const&) = delete;
+    template<class T>
+    T const& internal() const { return *reinterpret_cast<T*>(_internal.get()); }
     
-    cJSON* internal() const { return _json_root; }
 private:
-    cJSON* _json_root;
+    struct internal_t;
+    std::unique_ptr<internal_t> _internal;
 };
 
 #endif
