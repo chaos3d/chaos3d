@@ -4,6 +4,7 @@
 #include <string>
 #include <unordered_map>
 #include <Eigen/Geometry>
+#include "common/utility.h"
 #include "re/texture.h"
 
 // TODO: move up for general purposes?
@@ -13,13 +14,10 @@ public:
     typedef std::unordered_map<std::string, box2f> rects_t;
     
 public:
-    // serialization injection,
-    // TODO: macro?
-    template<class Loader>
-    std::pair<bool, typename Loader::position_t> load_from(Loader const&);
+    DEFINE_LOADER;
     
     // get the underlying texture
-    texture::ptr const& texture() const { return _texture; }
+    texture::ptr const& texture_ptr() const { return _texture; }
     
     // get the named frame
     // if the name doesn't exist, return the empty box (0,0)

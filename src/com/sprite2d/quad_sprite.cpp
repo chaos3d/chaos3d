@@ -51,7 +51,7 @@ quad_sprite& quad_sprite::set_from_material(sprite_material* mat,
 
 quad_sprite& quad_sprite::set_from_atlas(texture_atlas const& atlas, std::string const& name,
                                          std::string const& mat) {
-    set_material(mat, { make_uniform("c_tex1", atlas.texture().get()) });
+    set_material(mat, { make_uniform("c_tex1", atlas.texture_ptr().get()) });
     return set_from_material(nullptr, atlas.get_frame(name));
 }
 
