@@ -12,12 +12,12 @@
 // a meta or produce several types of resources as well.
 class locator_asset_bundle : public asset_bundle {
 public:
-    locator_asset_bundle(asset_locator::ptr const& locator,
-                         std::string const& meta_extension = "");
-    
     virtual names_t all_names() const override;
     
 protected:
+    locator_asset_bundle(asset_locator::ptr const& locator,
+                         std::string const& meta_extension = "");
+    
     asset_locator::ptr const& locator() const { return _locator;}
     std::string const& extension() const { return _extension; }
     
@@ -26,4 +26,7 @@ private:
     asset_locator::ptr _locator;
 };
 
+// TODO: asset handle factory based on type (extension or
+// info in the .meta?), so the locator bundle can be load
+// from a list of files
 #endif

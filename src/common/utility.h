@@ -26,6 +26,12 @@ public: auto set_##name(type const& name) -> decltype(*this) \
 #define SPECIFY_LOADER_FOR(type, Loader)    template<> \
                                             std::pair<bool, Loader::position_t> type::load_from<Loader>(Loader const& loader)
 
+// help functions for classes using enable_shared_from_this
+#define CONSTRUCTOR_FOR_SHARED(type) \
+    public: template<class... Args> std::shared_ptr<type> create(Args&&... args) { \
+        return std::make_shared<type>(std::forward<Args>(args)...); \
+    }
+
 #ifndef M_PI
 #define	M_PI		(3.1415926)
 #endif

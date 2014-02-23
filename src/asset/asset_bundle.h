@@ -37,6 +37,10 @@ public:
 
     // get all the assets meta in this bundle
     virtual handles_t all_assets() const;
+    
+protected:
+    asset_bundle() = default;
+    
 };
 
 #endif

@@ -34,6 +34,8 @@ public:
     virtual ~asset_handle() {};
 
 protected:
+    asset_handle() = default;
+    
     // load/unload the heavy data from the disk
     virtual void load() = 0;
     virtual void unload() = 0;

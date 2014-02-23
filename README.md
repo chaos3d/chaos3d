@@ -9,6 +9,7 @@ chaos3d
 * Use move semantics to pass pointers; const pointers (T \*const) can be used, indicating the callee will not be able to take over the onwership, that is, (T \*) is *disallowed*.
 * Reference-counted objects should use unique\_ptr instead of shared\_ptr; because of C++'s RAII, it naturally solves auto-releasing issue
 * Objects shall define type _ptr_ and const\_ptr
+* Class inheriting from enable\_shared\_ptr\_from\_this should hide the contructors but provide alternative helper functions to create objects, at least when exposing API's, for consistency
 
 ### Layer
 * io

@@ -84,10 +84,6 @@ public:
     typedef std::function<void(std::string const&)> visitor_t;
     
 public:
-    asset_locator(int priority = 0)
-    : _priority(priority)
-    {}
-    
     virtual ~asset_locator() {};
     
     // check if the given name exists
@@ -103,6 +99,11 @@ public:
     // will be able to override. probably change to a different
     // approach
     int priority() const { return _priority; }
+
+protected:
+    asset_locator(int priority = 0)
+    : _priority(priority)
+    {}
 
 private:
     int _priority;

@@ -9,21 +9,20 @@
 #include <type_traits>
 #include "common/referenced_count.h"
 #include "common/singleton.h"
+#include "common/utility.h"
 #include "asset/asset_handle.h"
 
 class asset_bundle;
 
-class asset_manager {
+class asset_manager : public std::enable_shared_from_this<asset_manager> {
 public:
     typedef std::shared_ptr<asset_handle> handle_ptr;
     typedef std::unordered_map<std::string, handle_ptr> handles_t;
     
 public:
-    asset_manager();
-    ~asset_manager();
-    
     // load the asset by the given name (usually filename without ext)
     // return null if the meta doens't exist
+    // NB: the asset support header also needs to be included
     template<class T>
     typename T::ptr load(std::string const& name) {
         static_assert(std::is_same<typename std::remove_cv<T>::type, T>::value,
@@ -57,6 +56,10 @@ public:
     // release unused resources
     // TODO: LRU, space to free, other hints for partial purge?
     void purge();
+
+protected:
+    asset_manager();
+    ~asset_manager();
     
 private:
     void load_asset(asset_handle*);
@@ -65,12 +68,24 @@ private:
 private:
     handles_t _assets;
     std::thread _loading_thread; // TODO: asynch loading
+    
+    CONSTRUCTOR_FOR_SHARED(asset_manager);
 };
 
 // convenient asset manager singleton
 class global_asset_mgr :
     public asset_manager,
-    public singleton<global_asset_mgr, Static_Instance> {
+    public singleton<global_asset_mgr> {
+        
+public:
+    // initialize the manager to the shard_ptr because
+    // asset manager is shared_ptr enabled
+    // multiple calling this function won't create multiple
+    // instances but still should be prevented
+    static asset_manager& create() {
+        static std::shared_ptr<global_asset_mgr> _instance(new global_asset_mgr());
+        return *_instance;
+    }
 };
 
 #endif
