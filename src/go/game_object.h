@@ -44,6 +44,10 @@ public:
     }
     
     virtual ~game_object();
+
+    // expose the loader
+    template<class Loader, class... Args>
+    static game_object* game_object(Args&&...);
     
     // tag
     std::string const& tag() const { return _tag; }

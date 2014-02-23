@@ -5,7 +5,6 @@
 #include <cassert>
 #include <type_traits>
 #include "common/utility.h"
-#include "io/io_converter.h"
 
 class game_object;
 
@@ -28,11 +27,6 @@ public:
     : _parent(go)
     {}
     
-    template<class T, class Loader>
-    typename std::enable_if<is_component<T>::value, bool>::type load_from(Loader const& loader) {
-        return io_converter<Loader, T>() (loader, static_cast<T&>(*this));
-    }
-    
     // clone to the new game object
     virtual component* clone(game_object*) const = 0;
     
@@ -52,6 +46,9 @@ public:
         delete this;
     }
  
+    template<class C, class Loader, class... Args>
+    bool load_from(Loader const&, Args&&...);
+    
 protected:
     component& operator=(component const&) {
         // doesn't assign game_object
