@@ -1,6 +1,21 @@
 #include "asset/asset_manager.h"
 #include "asset/asset_bundle.h"
 
+#pragma mark - asset bundle
+
+asset_bundle::handles_t asset_bundle::all_assets() const{
+    handles_t handles;
+    for (auto& name : all_names()) {
+        auto handle(get(name));
+        if (handle) {
+            handles.emplace_back(std::move(name), std::move(handle));
+        }
+    }
+    return handles;
+}
+
+#pragma mark - asset manager
+
 asset_manager::asset_manager()
 : _loading_thread(std::bind(&asset_manager::loading_thread, this))
 {
@@ -14,6 +29,16 @@ asset_manager::~asset_manager() {
 
 void asset_manager::loading_thread() {
     
+}
+
+bool asset_manager::add(std::string const& name, handle_ptr const& handle, bool override) {
+    handles_t::iterator it;
+    if (!override || (it = _assets.find(name)) == _assets.end()) {
+        return _assets.emplace(name, handle).second;
+    } else {
+        it->second = handle;
+        return true;
+    }
 }
 
 std::pair<uint32_t, uint32_t> asset_manager::add_from_bundle(asset_bundle *bundle) {
@@ -51,15 +76,10 @@ void asset_manager::load_asset(asset_handle* handle) {
     handle->load();
 }
 
-#pragma mark - asset bundle
-
-asset_bundle::handles_t asset_bundle::all_assets() const{
-    handles_t handles;
-    for (auto& name : all_names()) {
-        auto handle(get(name));
-        if (handle) {
-            handles.emplace_back(std::move(name), std::move(handle));
+void asset_manager::purge() {
+    for (auto& it: _assets) {
+        if (it.second->is_loaded() && it.second->unique()) {
+            it.second->unload();
         }
     }
-    return handles;
 }

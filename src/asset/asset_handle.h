@@ -11,6 +11,8 @@ class asset_manager;
 // can be loaded/unloaded per se. The end user should not deal with
 // this class but through the asset manager interface to retrieve the
 // actual asset/resource
+// The same asset handle can exist in different bundles and points to
+// the same asset (i.e. downloaded bundle and loaded to asset manager).
 class asset_handle : public std::enable_shared_from_this<asset_handle> {
 public:
     typedef std::shared_ptr<asset_handle> ptr;

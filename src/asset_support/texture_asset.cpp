@@ -1,4 +1,4 @@
-#include "asset_support/asset_texture.h"
+#include "asset_support/texture_asset.h"
 #include "asset_support/png_loader.h"
 #include "io/memory_stream.h"
 
