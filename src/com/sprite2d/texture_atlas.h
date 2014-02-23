@@ -10,8 +10,12 @@
 // TODO: move up for general purposes?
 class texture_atlas {
 public:
+    // TODO: frame spacing
     typedef Eigen::AlignedBox2f box2f;
     typedef std::unordered_map<std::string, box2f> rects_t;
+    
+    // tags for different format
+    struct TexturePacker {};
     
 public:
     DEFINE_LOADER;
