@@ -12,6 +12,7 @@
 #include "re/vertex_layout.h"
 
 class render_window;
+class render_device_capacity;
 
 class render_device {
 public:
@@ -62,10 +63,12 @@ public:
     virtual render_texture* create_render_texture() = 0;
     virtual render_window* create_window(render_target::target_size_t const&,
                                          render_window::window_pos_t const& pos = render_window::window_pos_t(0.f,0.f)) = 0;
-    
     virtual vertex_layout::ptr create_layout(vertex_layout::channels_t&&,
                                              vertex_index_buffer::ptr&&, uint8_t mode) = 0;
 
+    // the device capacity
+    virtual render_device_capacity const& get_capacity() const = 0;
+    
     // shaders
     virtual gpu_program::ptr create_program() = 0;
     virtual gpu_shader::ptr create_shader(int type) = 0;

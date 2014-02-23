@@ -2,6 +2,7 @@
 #define _GLES20_RENDER_DEVICE_H
 
 #include "re/render_device.h"
+#include "re/render_device_capacity.h"
 #include "re/render_target.h"
 #include "re/render_context.h"
 #include "re/gles20/gl_texture.h"
@@ -41,10 +42,13 @@ public:
                                              vertex_index_buffer::ptr&&, uint8_t mode) override;
     
 
+    virtual render_device_capacity const& get_capacity() const override;
+    
 private:
     struct internal;
     
     std::unique_ptr<internal> _internal;
+    render_device_capacity _capacity;
 };
 
 }

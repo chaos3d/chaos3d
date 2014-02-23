@@ -29,4 +29,8 @@ namespace gles20 {
                                                        std::move(idx_buffer), mode));
     }
 
+    render_device_capacity const& render_device::get_capacity() const {
+        return _capacity;
+    }
+
 }
