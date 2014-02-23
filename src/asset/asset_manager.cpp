@@ -1,5 +1,5 @@
-#include "asset_manager.h"
-#include "re/texture.h"
+#include "asset/asset_manager.h"
+#include "asset/asset_bundle.h"
 
 asset_manager::asset_manager()
 : _loading_thread(std::bind(&asset_manager::loading_thread, this))
@@ -23,7 +23,7 @@ std::pair<uint32_t, uint32_t> asset_manager::add_from_bundle(asset_bundle *bundl
     uint32_t replaced = 0;
     for (auto& it : assets) {
         auto existed = _assets.find(it.first);
-        if (existed == _assets.end()) {
+        if (existed != _assets.end()) {
             existed->second = std::move(it.second);
             ++ replaced;
         } else {
@@ -49,4 +49,17 @@ void asset_manager::load_asset(asset_handle* handle) {
     assert(handle != nullptr);
 
     handle->load();
+}
+
+#pragma mark - asset bundle
+
+asset_bundle::handles_t asset_bundle::all_assets() const{
+    handles_t handles;
+    for (auto& name : all_names()) {
+        auto handle(get(name));
+        if (handle) {
+            handles.emplace_back(std::move(name), std::move(handle));
+        }
+    }
+    return handles;
 }

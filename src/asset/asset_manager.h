@@ -6,9 +6,12 @@
 #include <unordered_map>
 #include <thread>
 #include <vector>
-#include "asset/asset_bundle.h"
+#include <type_traits>
 #include "common/referenced_count.h"
 #include "common/singleton.h"
+#include "asset/asset_handle.h"
+
+class asset_bundle;
 
 class asset_manager {
 public:
@@ -20,14 +23,17 @@ public:
     ~asset_manager();
     
     template<class T>
-    typename std::remove_cv<T>::type* load(std::string const& name) {
-        typedef typename std::remove_cv<T>::type Raw_T;
+    typename T::ptr load(std::string const& name) {
+        static_assert(std::is_same<typename std::remove_cv<T>::type, T>::value,
+                      "T should be tye raw type");
         auto it = _assets.find(name);
         if (it == _assets.end())
             return nullptr;
 
-        load_asset(it->second.get());
-        return it->second->as<asset_handle_base<Raw_T>>().get_asset();
+        if (!it->second->is_loaded())
+            load_asset(it->second.get());
+        
+        return it->second->as<asset_handle_base<T>>().get_asset();
     }
     
     // add/remove the meta info from the bundle to the manager
