@@ -39,6 +39,9 @@ public:
     size_t buf_size() const { return _buf_size; }
     const char* buffer() const { return _buffer; }
     
+    // TODO:
+    // 1. the original image info
+    // 2. load image in a separate step for more controls
 private:
     void load(data_stream&);
     

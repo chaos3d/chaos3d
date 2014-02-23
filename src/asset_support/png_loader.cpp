@@ -55,13 +55,13 @@ void png_loader::load(data_stream& ds) {
 	png_bytep data = 0;
 	
 	// Read the first few bytes of the PNG file
-	if( ds.read(buffer, 8) != 8 ){
+	if (ds.read(buffer, 8) != 8) {
 		//LOG_STAT(ERROR,"Unable to read a PNG." );
 		return;
 	}
     
 	// Check if it really is a PNG file
-	if( png_sig_cmp(buffer, 0, 8) ){
+	if (png_sig_cmp(buffer, 0, 8)) {
 		//LOG_STAT(ERROR,"PNG checked error");
 		return;
 	}
@@ -70,21 +70,20 @@ void png_loader::load(data_stream& ds) {
                                                  PNG_LIBPNG_VER_STRING,
                                                  NULL, NULL, NULL);
     
-	if( png_ptr == 0 ){
+	if (png_ptr == 0) {
 		//LOG_STAT(ERROR,"Unable to create png structure.");
 		return;
 	}
     
 	png_infop info_ptr = png_create_info_struct(png_ptr);
-	if( info_ptr == 0 ){
+	if (info_ptr == 0) {
 		//LOG_STAT(ERROR,"Unable to create png info structure.");
 		png_destroy_read_struct(&png_ptr,(png_infopp)0, (png_infopp)0);
 		return;
 	}
     
 	// for proper error handling
-	if (setjmp(png_jmpbuf(png_ptr)))
-	{
+	if (setjmp(png_jmpbuf(png_ptr))) {
 		png_destroy_read_struct(&png_ptr, &info_ptr, NULL);
 		if (row_pointers)
 			delete [] row_pointers;
@@ -104,7 +103,8 @@ void png_loader::load(data_stream& ds) {
 	int width, height;
 	int bitDepth, colorType;
 	int channels = png_get_channels(png_ptr, info_ptr);
-	{
+    
+    {
 		// Use temporary variables to avoid passing casted pointers
 		png_uint_32 w,h;
 		// Extract info
@@ -134,7 +134,7 @@ void png_loader::load(data_stream& ds) {
 	if (bitDepth == 16)
 		png_set_strip_16(png_ptr);
     
-    if(_desc.format == image_desc::A8 && channels != 1) {
+    if (_desc.format == image_desc::A8 && channels != 1) {
         // convert to grey scale and use it as an alpha mask
         // and strip the alpha channel
         png_set_strip_alpha(png_ptr);
@@ -156,8 +156,7 @@ void png_loader::load(data_stream& ds) {
 	_buffer = new char [_buf_size];
     data = (png_bytep)_buffer;
     
-	if (!row_pointers || !data)
-	{
+	if (!row_pointers || !data) {
 		//LOG_STAT(ERROR,"Unable to allocate enough memory.");
 		png_destroy_read_struct(&png_ptr, &info_ptr, NULL);
 		return;
@@ -171,14 +170,14 @@ void png_loader::load(data_stream& ds) {
 	// Read data using the library function that handles all transformations including interlacing
 	png_read_image(png_ptr, row_pointers);
     
-    if( _desc.format == image_desc::A8 && channels != 1) {
+    if (_desc.format == image_desc::A8 && channels != 1) {
         assert(0); // shouldn't happen?
     } else if (_desc.format == image_desc::RGB565) {
 		unsigned char* tempData = new unsigned char[width * height * 2];
 		unsigned char* in = data;
 		unsigned short* out = (unsigned short*)tempData;
         
-		for(int i = 0; i < width * height; ++i, in += channels)
+		for (int i = 0; i < width * height; ++i, in += channels)
 			*out++ = ((unsigned short)(*in >> 3)<<11) |
             ((unsigned short)(*(in+1) >> 2)<<5) |
             ((unsigned short)(*(in+2) >> 3));
