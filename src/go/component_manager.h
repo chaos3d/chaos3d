@@ -39,6 +39,13 @@ public:
         virtual void update(game_object* /*root*/) = 0;
     };
 
+    // manager tag for forwarding to contruct a manager
+    template<class C, class... Args>
+    struct manager_tag {
+        typedef C manager_t;
+        std::tuple<Args&&...> params;
+    };
+    
 public:
     // the constructor will add itself to the managers singleton.
     // once a comoponent manager is created of some sort, it will
@@ -74,6 +81,12 @@ public:
         return manager_initializer_internal<0, 0, Mgrs, ParamTuple...>(params...);
     }
     
+    template<typename... ParamPair>
+    static void initializer(ParamPair const&... params) {
+        typedef std::tuple<typename ParamPair::manager_t...> Mgrs;
+        return manager_initializer<Mgrs>(params.params...);
+    }
+    
     static managers_t& managers();
     
     static uint32_t fixed_component() { return _fixed_component; }
@@ -92,9 +105,9 @@ private:
         
         auto* mgr = Mgr::template initialize_tuple<First>(first,
                                                           typename tuple_gens<std::tuple_size<First>::value>::type());
-        if(Mgr::component_fixed_t::value)
+        if (Mgr::component_fixed_t::value)
             mgr->set_component_idx(_Idx);
-        if(Mgr::flag_bit_t::value > 0)
+        if (Mgr::flag_bit_t::value > 0)
             mgr->set_component_offset(_Bit);
         
         manager_initializer_internal<_Idx + (Mgr::component_fixed_t::value ? 1 : 0), _Bit + Mgr::flag_bit_t::value,
@@ -104,6 +117,12 @@ private:
     
     static uint32_t _fixed_component;
 };
+
+// forward to contruct a manager with the manager type
+template<class C, class... Args>
+component_manager::manager_tag<C, Args...> make_manager(Args&&... args) {
+    return {std::forward_as_tuple(std::forward<Args>(args)...)};
+}
 
 // base class for generic functions
 template<class Mgr>
