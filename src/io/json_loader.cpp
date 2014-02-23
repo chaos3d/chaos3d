@@ -1,6 +1,5 @@
 #include "io/json_loader.h"
 #include "memory_stream.h"
-#include <cJSON/cJSON.h>
 #include <rapidjson/document.h>
 
 using namespace rapidjson;
