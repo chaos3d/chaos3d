@@ -6,6 +6,7 @@ png_asset_bundle::png_asset_bundle(render_device* device,
                                    asset_locator::ptr const& locator,
                                    std::string const& extension)
 : locator_asset_bundle(locator, extension), _device(device) {
+    assert(_device != nullptr);
 }
 
 asset_bundle::handle_ptr png_asset_bundle::get(std::string const&name) const {
