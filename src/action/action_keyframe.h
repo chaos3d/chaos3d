@@ -9,6 +9,7 @@
 
 #include "action/action.h"
 #include "common/timer.h"
+#include "common/utility.h"
 
 // TODO0: better namespace
 // TODO: WRAP_FULL_LOOP
@@ -33,7 +34,7 @@ struct key_frame {
     };
 };
 
-template <class Key>
+template<class Key>
 class animation_keyframe {
 public:
     typedef key_frame<Key> key_frame_t;
@@ -42,11 +43,13 @@ public:
     typedef std::vector<key_frame_t> key_frames_t;
     
 public:
-    template <class... Args>
+    template<class... Args>
     animation_keyframe(int wrap, Args&&... args)
     : _wrap(wrap), _keyframes(std::forward<Args>(args)...) {
         normalize();
     }
+    
+    animation_keyframe() = default;
     
     key_frames_t const& keyframes() const {
         return _keyframes;
@@ -61,7 +64,7 @@ public:
     }
     
     // regular interpolation
-    template <class I, typename std::enable_if<!std::is_same<I, void>::value>::type* = nullptr>
+    template<class I, typename std::enable_if<!std::is_same<I, void>::value>::type* = nullptr>
     Key interpolate(float offset, I const& i = I()) const {
         assert(offset >= 0.f && offset <= 1.f);
         assert(_keyframes.size() > 0);
@@ -80,7 +83,7 @@ public:
     }
     
     // concrete/no interpolation
-    template <class I, typename std::enable_if<std::is_same<I, void>::value>::type* = nullptr>
+    template<class I, typename std::enable_if<std::is_same<I, void>::value>::type* = nullptr>
     Key const& interpolate(float offset) const {
         assert(offset >= 0.f && offset <= 1.f);
         assert(_keyframes.size() > 0);
@@ -91,7 +94,8 @@ public:
             return it->key;
         }
     }
-    
+
+    DEFINE_LOADER;
 protected:
     void normalize() {
         if (_keyframes.size() == 0)
@@ -110,7 +114,7 @@ protected:
     
 private:
     key_frames_t _keyframes; // key frames are constant
-    int _wrap;
+    int _wrap = WRAP_CLAMP;
 };
 
 typedef animation_keyframe<float> scalarf_anim_kf_t;
