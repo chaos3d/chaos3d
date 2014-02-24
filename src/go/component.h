@@ -67,7 +67,7 @@ private:
         return com; \
     }
 
-#define CONSTRUCT_FROM_LOADER(type, tag_) \
+#define COMPONENT_FROM_LOADER(type, tag_) \
     public: template<class Loader> type(game_object*, Loader const&); \
     static constexpr char const* tag = #tag_;
 
