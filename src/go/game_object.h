@@ -24,6 +24,8 @@ public:
     enum {Parent = 0, Order = 1, Offset = 2 };
     enum {ComponentSize = 16 }; // before we figure out a better way...
 
+    typedef std::unique_ptr<game_object, referenced_count::release_deleter> ptr;
+    typedef std::unique_ptr<game_object const, referenced_count::release_deleter> const_ptr;
     typedef std::unique_ptr<component, component::component_deleter> component_ptr;
     typedef std::function<void (game_object const&)> iterator_t;
     typedef std::array<component_ptr, ComponentSize> components_t;
@@ -45,9 +47,14 @@ public:
     
     virtual ~game_object();
 
-    // expose the loader
-    template<class Loader, class... Args>
-    static game_object* game_object(Args&&...);
+    // load the game object form the loader
+    // by the given explicit loader tag
+    template<class... Cms, class Loader>
+    static ptr load_from(Loader const& loader) {
+        auto obj = load_object_from<Loader>(loader);
+        obj->template load_components_from<Loader, Cms...>(loader);
+        return obj;
+    }
     
     // tag
     std::string const& tag() const { return _tag; }
@@ -215,6 +222,27 @@ public:
     
     // being set during transversal
     uint32_t mark() const { return _mark; }
+
+protected:
+    // recursive termination
+    template<class Loader>
+    void load_components_from(Loader const&) {
+    }
+
+    // helper function to iterate component loaders
+    template<class Loader, class C, class... Cms>
+    void load_components_from(Loader const& loader) {
+        load_component_from<C>(loader);
+        return load_components_from<Loader, Cms...>(loader);
+    }
+
+    // expose loaders for game object
+    template<class Loader>
+    static ptr load_object_from(Loader const&);
+
+    // expose loaders for components (group by tags)
+    template<class C, class Loader>
+    void load_component_from(Loader const&);
     
 private:
     // no copy/assignment? use clone instead
