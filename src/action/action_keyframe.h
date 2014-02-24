@@ -35,7 +35,7 @@ struct key_frame {
 };
 
 template<class Key>
-class animation_keyframe {
+class animation_keyframe : public std::enable_shared_from_this<animation_keyframe<Key>> {
 public:
     typedef key_frame<Key> key_frame_t;
     typedef std::shared_ptr<animation_keyframe> ptr;
@@ -43,14 +43,6 @@ public:
     typedef std::vector<key_frame_t> key_frames_t;
     
 public:
-    template<class... Args>
-    animation_keyframe(int wrap, Args&&... args)
-    : _wrap(wrap), _keyframes(std::forward<Args>(args)...) {
-        normalize();
-    }
-    
-    animation_keyframe() = default;
-    
     key_frames_t const& keyframes() const {
         return _keyframes;
     }
@@ -96,6 +88,16 @@ public:
     }
 
 protected:
+    template<class Loader>
+    animation_keyframe(Loader const&);
+
+    animation_keyframe(int wrap, key_frames_t const& frames)
+    : _wrap(wrap), _keyframes(frames) {
+        normalize();
+    }
+    
+    animation_keyframe() = default;
+    
     void normalize() {
         if (_keyframes.size() == 0)
             return;
@@ -115,7 +117,7 @@ private:
     key_frames_t _keyframes; // key frames are constant
     int _wrap = WRAP_CLAMP;
     
-    CONSTRUCT_FROM_LOADER(animation_keyframe);
+    CONSTRUCTOR_FOR_SHARED(animation_keyframe);
 };
 
 typedef animation_keyframe<float> scalarf_anim_kf_t;
@@ -133,11 +135,12 @@ typedef key_frame<Eigen::Vector2f> vec2_keyframe_t;
 typedef key_frame<Eigen::Vector3f> vec3_keyframe_t;
 typedef key_frame<Eigen::Quaternionf> quaternionf_keyframe_t;
 
+// helper function to create keyframes derived from the given key
 template<class Key>
 typename animation_keyframe<Key>::ptr make_animation_keyframe(int wrap,
                                                               std::vector<key_frame<Key>> const& keyframes) {
     typedef animation_keyframe<Key> anim_kf_t;
-    return typename anim_kf_t::ptr(new anim_kf_t(wrap, keyframes));
+    return anim_kf_t::create(wrap, keyframes);
 }
 
 template<class Key>
