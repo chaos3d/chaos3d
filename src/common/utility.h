@@ -21,10 +21,8 @@ public: auto set_##name(type const& name) -> decltype(*this) \
         return *this; \
     }
 
-#define DEFINE_LOADER   template<class Loader, class... Args> \
-                        std::pair<bool, typename Loader::position_t> load_from(Loader const&, Args&&...)
-#define SPECIFY_LOADER_FOR(type, Loader)    template<> \
-                                            std::pair<bool, Loader::position_t> type::load_from<Loader>(Loader const& loader)
+#define CONSTRUCT_FROM_LOADER(type) \
+    public: template<class Loader,class... Args> type(Loader const&, Args&&...);
 
 // help functions for classes using enable_shared_from_this
 #define CONSTRUCTOR_FOR_SHARED(type) \

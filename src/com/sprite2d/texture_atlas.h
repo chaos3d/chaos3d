@@ -18,8 +18,6 @@ public:
     struct TexturePacker {};
     
 public:
-    DEFINE_LOADER;
-    
     // get the underlying texture
     texture::ptr const& texture_ptr() const { return _texture; }
     
@@ -39,6 +37,8 @@ public:
 private:
     texture::ptr _texture;
     rects_t _rects;
+    
+    CONSTRUCT_FROM_LOADER(texture_atlas);
 };
 
 #endif

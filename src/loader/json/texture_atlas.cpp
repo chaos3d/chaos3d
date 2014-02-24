@@ -9,9 +9,9 @@ using namespace rapidjson;
 
 // texture_atlas loader for texture packer in json
 template<>
-std::pair<bool, json_loader::position_t> texture_atlas::load_from<json_loader>(json_loader const& json,
-                                                                               asset_manager& mgr,
-                                                                               texture_atlas::TexturePacker &&) {
+texture_atlas::texture_atlas(json_loader const& json,
+                                      asset_manager& mgr,
+                                      texture_atlas::TexturePacker &&) {
     Document const& root = json.internal<Document>();
 
     std::string file_name(root["metadata"]["target"]["textureFileName"].GetString());
@@ -30,6 +30,4 @@ std::pair<bool, json_loader::position_t> texture_atlas::load_from<json_loader>(j
                                              Eigen::Vector2f{ (float)64 / size.x(), (float)64 / size.y()}));
 
     }
-
-    return {true, 0};
 }
