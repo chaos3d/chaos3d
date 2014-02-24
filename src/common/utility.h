@@ -26,8 +26,8 @@ public: auto set_##name(type const& name) -> decltype(*this) \
 
 // help functions for classes using enable_shared_from_this
 #define CONSTRUCTOR_FOR_SHARED(type) \
-    public: template<class... Args> std::shared_ptr<type> create(Args&&... args) { \
-        return std::make_shared<type>(std::forward<Args>(args)...); \
+    public: template<class... Args> static std::shared_ptr<type> create(Args&&... args) { \
+        return std::shared_ptr<type>(new type(std::forward<Args>(args)...)); \
     }
 
 #ifndef M_PI
