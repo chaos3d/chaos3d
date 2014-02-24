@@ -12,16 +12,32 @@ public:
     typedef int position_t;
     
 public:
-    json_loader(char const*);
-    json_loader(memory_stream*);
-    ~json_loader();
+    json_loader(void* internal)
+    : _internal(internal) {
+    }
     
     template<class T>
-    T const& internal() const { return *reinterpret_cast<T*>(_internal.get()); }
+    T& internal() { return *reinterpret_cast<T*>(_internal); }
+
+    template<class T>
+    T const& internal() const { return *reinterpret_cast<T*>(_internal); }
     
 private:
-    struct internal_t;
-    std::unique_ptr<internal_t> _internal;
+    void* _internal;
+};
+
+class json_document : public json_loader {
+public:
+    json_document(char const*);
+    json_document(memory_stream*);
+    ~json_document();
+    
+    json_loader& as_json_loader() { return *this; }
+private:
+    json_document(json_document &&) = delete;
+    json_document(json_document const&) = delete;
+    json_document& operator=(json_document const&) = delete;
+    json_document& operator=(json_document &&) = delete;
 };
 
 #endif
