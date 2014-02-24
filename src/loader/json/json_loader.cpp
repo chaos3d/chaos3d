@@ -1,4 +1,4 @@
-#include "io/json_loader.h"
+#include "loader/json/json_loader.h"
 #include "memory_stream.h"
 #include <rapidjson/document.h>
 

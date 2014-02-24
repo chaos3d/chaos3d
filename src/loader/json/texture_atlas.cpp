@@ -1,8 +1,8 @@
 #include "asset/asset_manager.h"
 #include "asset_support/texture_asset.h"
 #include "com/sprite2d/texture_atlas.h"
-#include "io/json_loader.h"
 #include "io/memory_stream.h"
+#include "json_loader.h"
 #include <rapidjson/document.h>
 
 using namespace rapidjson;
