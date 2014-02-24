@@ -53,6 +53,7 @@ namespace sprite2d {
         ATTRIBUTE(box2f, frame, box2f()); // texture uv
         ATTRIBUTE(box2f, bound, box2f()); // position and size
         ATTRIBUTE(float, alpha, 1.f); // alpha
+        CONSTRUCT_FROM_LOADER(quad_sprite, quad);
     };
 }
 

@@ -25,6 +25,7 @@ namespace sprite2d {
         virtual void do_render(com::render_component_mgr const&) override;
         
         SIMPLE_CLONE(camera2d);
+        CONSTRUCT_FROM_LOADER(camera2d, camera2d);
     };
 }
 #endif
