@@ -35,6 +35,9 @@ public:
         void operator() (game_object*);
     };
     
+    template<typename Loader, typename... Cms>
+    struct loader_constructor;
+    
 public:
     game_object(game_object* parent = &root())
     : _first_child(null), _parent(nullptr),
@@ -47,13 +50,9 @@ public:
     
     virtual ~game_object();
 
-    // load the game object form the loader
-    // by the given explicit loader tag
-    template<class... Cms, class Loader>
+    template<typename... Cms, typename Loader>
     static ptr load_from(Loader const& loader) {
-        auto obj = load_object_from<Loader>(loader);
-        obj->template load_components_from<Loader, Cms...>(loader);
-        return obj;
+        return loader_constructor<Loader, Cms...>()(loader);
     }
     
     // tag
@@ -223,27 +222,6 @@ public:
     // being set during transversal
     uint32_t mark() const { return _mark; }
 
-protected:
-    // recursive termination
-    template<class Loader>
-    void load_components_from(Loader const&) {
-    }
-
-    // helper function to iterate component loaders
-    template<class Loader, class C, class... Cms>
-    void load_components_from(Loader const& loader) {
-        load_component_from<C>(loader);
-        return load_components_from<Loader, Cms...>(loader);
-    }
-
-    // expose loaders for game object
-    template<class Loader>
-    static ptr load_object_from(Loader const&);
-
-    // expose loaders for components (group by tags)
-    template<class C, class Loader>
-    void load_component_from(Loader const&);
-    
 private:
     // no copy/assignment? use clone instead
     game_object(game_object const&) = delete;

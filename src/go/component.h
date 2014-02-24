@@ -46,9 +46,6 @@ public:
         delete this;
     }
  
-    template<class C, class Loader, class... Args>
-    bool load_from(Loader const&, Args&&...);
-    
 protected:
     component& operator=(component const&) {
         // doesn't assign game_object
@@ -63,11 +60,16 @@ private:
     game_object* _parent;
 };
 
-#define SIMPLE_CLONE(type)  protected: virtual type* clone(game_object* go) const override {\
-type* com = new type(go); \
-*com = *this; \
-return com; \
-}
+#define SIMPLE_CLONE(type) \
+    protected: virtual type* clone(game_object* go) const override {\
+        type* com = new type(go); \
+        *com = *this; \
+        return com; \
+    }
+
+#define CONSTRUCT_FROM_LOADER(type, tag_) \
+    public: template<class Loader> type(game_object*, Loader const&); \
+    static constexpr char const* tag = #tag_;
 
 #if 0
 class component_dirty : public component {
