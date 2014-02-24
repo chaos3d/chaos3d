@@ -1,5 +1,8 @@
-#include "action/action_json_loader.h"
+//#include "action/action_json_loader.h"
+#include "loader/json/json_loader.h"
+#include "action/action_keyframe.h"
 
-template<> SPECIFY_LOADER_FOR(quaternionf_anim_kf_t, json_loader) {
-    return {true, 0};
+template<>
+template<>
+quaternionf_anim_kf_t::animation_keyframe(json_loader const& loader) {
 }

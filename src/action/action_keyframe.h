@@ -95,7 +95,6 @@ public:
         }
     }
 
-    DEFINE_LOADER;
 protected:
     void normalize() {
         if (_keyframes.size() == 0)
@@ -115,6 +114,8 @@ protected:
 private:
     key_frames_t _keyframes; // key frames are constant
     int _wrap = WRAP_CLAMP;
+    
+    CONSTRUCT_FROM_LOADER(animation_keyframe);
 };
 
 typedef animation_keyframe<float> scalarf_anim_kf_t;
