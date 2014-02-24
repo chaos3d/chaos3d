@@ -105,27 +105,28 @@ public:
         typedef std::unique_ptr<weak_ref_ctrl const, weak_ref_ctrl_base::weak_releaser> const_weak_ptr;
         
     public:
-        weak_ref_ctrl(referenced_count* ref) : weak_ref_ctrl_base(ref)
+        weak_ref_ctrl(referenced_count* ref = nullptr) : weak_ref_ctrl_base(ref)
         {}
         
-        const_ptr lock() const {
-            return _strong_ref ? _strong_ref->retain<R const>() : const_ptr();
-        };
-        
-        ptr lock() {
+        ptr lock() const {
             return _strong_ref ? _strong_ref->retain<R>() : ptr();
         };
         
-        weak_ptr get() {
+        weak_ptr get() const {
             increase();
             return weak_ptr(this);
         };
         
+#if 0
         const_weak_ptr get() const {
             increase();
             return const_weak_ptr(this);
         };
         
+        const_ptr lock() const {
+            return _strong_ref ? _strong_ref->retain<R const>() : const_ptr();
+        };
+#endif
     };
     
 public:
