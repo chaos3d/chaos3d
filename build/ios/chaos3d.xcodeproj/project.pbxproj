@@ -54,6 +54,7 @@
 		8879CE9018BABCDE00BCBFA6 /* scene2d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8879CE8E18BABCDE00BCBFA6 /* scene2d.cpp */; };
 		8879CE9118BABCDE00BCBFA6 /* sprite2d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8879CE8F18BABCDE00BCBFA6 /* sprite2d.cpp */; };
 		8879CE9318BB4D2E00BCBFA6 /* action_json_loader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8879CE9218BB4D2E00BCBFA6 /* action_json_loader.cpp */; };
+		8879CE9518BC984700BCBFA6 /* collider2d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8879CE9418BC984700BCBFA6 /* collider2d.cpp */; };
 		8882D8D218990BD900B00DCD /* quad_sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8882D8D018990BD800B00DCD /* quad_sprite.cpp */; };
 		8882E4A518A382A20044CFE4 /* event_dispatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8882E4A418A382A20044CFE4 /* event_dispatcher.cpp */; };
 		8882E4E318A74E2D0044CFE4 /* libBox2D.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8882E4E218A74E2D0044CFE4 /* libBox2D.a */; };
@@ -534,6 +535,7 @@
 		8879CE8E18BABCDE00BCBFA6 /* scene2d.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = scene2d.cpp; sourceTree = "<group>"; };
 		8879CE8F18BABCDE00BCBFA6 /* sprite2d.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sprite2d.cpp; sourceTree = "<group>"; };
 		8879CE9218BB4D2E00BCBFA6 /* action_json_loader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = action_json_loader.cpp; sourceTree = "<group>"; };
+		8879CE9418BC984700BCBFA6 /* collider2d.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = collider2d.cpp; sourceTree = "<group>"; };
 		8882D8D018990BD800B00DCD /* quad_sprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = quad_sprite.cpp; sourceTree = "<group>"; };
 		8882D8D118990BD900B00DCD /* quad_sprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = quad_sprite.h; sourceTree = "<group>"; };
 		8882E49E18A37C040044CFE4 /* event_dispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = event_dispatcher.h; sourceTree = "<group>"; };
@@ -631,6 +633,7 @@
 		8804F8CB18A75DC50055322F /* scene2d */ = {
 			isa = PBXGroup;
 			children = (
+				8879CE9418BC984700BCBFA6 /* collider2d.cpp */,
 				8879CE1D18A8146400BCBFA6 /* shape_desc.cpp */,
 				8879CE1B18A809C200BCBFA6 /* shape_desc.h */,
 				8804F8CC18A75DC50055322F /* world_box2d.cpp */,
@@ -1882,6 +1885,7 @@
 				8812C2AE18618ACE001C4D0B /* cViewController.mm in Sources */,
 				8879CE5B18B7698F00BCBFA6 /* locator_asset_bundle.cpp in Sources */,
 				88A84B0E183067AF009F7ECD /* transform.cpp in Sources */,
+				8879CE9518BC984700BCBFA6 /* collider2d.cpp in Sources */,
 				8812C2A0185F0992001C4D0B /* asset_locator.mm in Sources */,
 				8812C29B185EF887001C4D0B /* asset_locator.cpp in Sources */,
 				882762111870F9E600B1291B /* gl_gpu.cpp in Sources */,
