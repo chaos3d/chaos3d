@@ -30,11 +30,16 @@ namespace scene2d {
                    int = collider_dynamic,
                    int = type_normal);
 
-        collider2d* reset_shapes(std::initializer_list<shape::init_t> const&,
+        collider2d& reset_shapes(std::initializer_list<shape::init_t> const&,
                                  mass const& = mass());
         
         void* internal_data() const; // b2Body
         
+        // TODO:
+        // apply force/impulse
+        // get velocity
+        // other body settings
+        // etc.
     protected:
         collider2d& operator=(collider2d const&);
         virtual void destroy() override;
