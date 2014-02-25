@@ -46,6 +46,17 @@ public:
         delete this;
     }
  
+    // helper function
+    template<typename C>
+    C const& as() const {
+        return *static_cast<C const*>(this);
+    }
+    
+    template<typename C>
+    C& as() {
+        return *static_cast<C*>(this);
+    }
+    
 protected:
     component& operator=(component const&) {
         // doesn't assign game_object
