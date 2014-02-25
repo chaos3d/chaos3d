@@ -28,7 +28,7 @@ transform* transform::clone(game_object* go) const {
     return com;
 }
 
-void transform::force_update() {
+transform& transform::force_update() {
     auto flag = transform_manager::mask_bit << transform_manager::flag_offset();
     auto idx = transform_manager::component_idx();
     
@@ -72,6 +72,8 @@ void transform::force_update() {
         go->populate_flag();
         go->reset_flag(flag, transform_manager::mask_bit);
     }
+    
+    return *this;
 }
 
 void transform::update_global(affine3f const* parent) {

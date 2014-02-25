@@ -56,7 +56,7 @@ namespace com {
         // it will also populate the flags and only reset itself so
         // it won't get computed again
         // TODO: this will be expensive or asynchroneously?
-        void force_update();
+        transform& force_update();
         
         //affine3f const& global() const { return _global_affine; }
         affine3f const& global_inverse() const { return _global_inverse; }
@@ -64,7 +64,7 @@ namespace com {
         // to update global or local
         // if both has been marked, to update global takes priorities
         // (keep the local transform)
-        inline void mark_dirty(bool global = true);
+        inline transform& mark_dirty(bool global = true);
         inline bool is_dirty() const;
         
     private:
@@ -95,10 +95,11 @@ namespace com {
         affine3f _global_parent;
     };
     
-    inline void transform::mark_dirty(bool global) {
+    inline transform& transform::mark_dirty(bool global) {
         parent()->set_flag(transform_manager::flag_offset(),
                            global ? transform_manager::global_bit :
                            transform_manager::local_bit);
+        return *this;
     }
     
     inline bool transform::is_dirty() const {
