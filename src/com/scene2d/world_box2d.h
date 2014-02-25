@@ -22,18 +22,21 @@ namespace scene2d {
     public:
         typedef world2d_mgr manager_t;
         
-        enum { collider_static, collider_dynamic, collider_kinametic };
+        enum { static_, dynamic, kinametic };
         enum { type_normal, type_character, type_bullet, };
         
     public:
         collider2d(game_object* go,
-                   int = collider_dynamic,
+                   int = static_,
                    int = type_normal);
 
         collider2d& reset_shapes(std::initializer_list<shape::init_t> const&,
                                  mass const& = mass());
         
         void* internal_data() const; // b2Body
+        
+        template<class C>
+        collider2d& reset_from(bool collidable = false, shape const& = shape());
         
         // TODO:
         // apply force/impulse

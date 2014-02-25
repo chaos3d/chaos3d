@@ -17,7 +17,7 @@ void shape::create_from_shape(collider2d *collider, shape_def const&def) const {
     fixture.density = density();
     fixture.friction = friction();
     fixture.restitution = restitution();
-    fixture.isSensor = is_collidable();
+    fixture.isSensor = !is_collidable();
     fixture.filter.categoryBits = collision_category();
     fixture.filter.maskBits = collision_mask();
     fixture.filter.groupIndex = collision_group();

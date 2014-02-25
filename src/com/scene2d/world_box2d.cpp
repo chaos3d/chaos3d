@@ -26,8 +26,8 @@ collider2d::collider2d(game_object* go,
 {
     b2BodyDef def;
     def.userData = this;
-    def.type = collision == collider_static ? b2_staticBody :
-    collision == collider_dynamic ? b2_dynamicBody : b2_kinematicBody;
+    def.type = collision == static_ ? b2_staticBody :
+               collision == dynamic ? b2_dynamicBody : b2_kinematicBody;
     def.bullet = type == type_bullet;
     def.fixedRotation = type == type_character;
     def.active = false; // init as false, activate during first update

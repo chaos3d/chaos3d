@@ -32,7 +32,7 @@ namespace scene2d {
         ATTRIBUTE(int16_t, collision_group, 0);
         ATTRIBUTE(uint16_t, collision_mask, 0xFFFF);
         ATTRIBUTE(uint16_t, collision_category, 0x1);
-        ATTRIBUTE(bool, is_collidable, true);
+        ATTRIBUTE(bool, is_collidable, false);
         
         shape&& forward() {
             return std::forward<shape>(*this);
@@ -43,7 +43,7 @@ namespace scene2d {
         void create_from_shape(collider2d*, shape_def const&) const;
         
     private:
-        virtual void append_to(collider2d*, float) const = 0;
+        virtual void append_to(collider2d*, float) const {};
         friend class collider2d; // append_to, internal implementation
     };
     
