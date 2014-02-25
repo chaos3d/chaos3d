@@ -50,6 +50,10 @@ public:
     
     virtual ~game_object();
 
+    static game_object* make(game_object* parent = &root()) {
+        return new game_object(parent);
+    }
+    
     template<typename... Cms, typename Loader>
     static ptr load_from(Loader const& loader) {
         return loader_constructor<Loader, Cms...>()(loader);
