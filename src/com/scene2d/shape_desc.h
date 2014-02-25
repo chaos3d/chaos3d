@@ -3,6 +3,8 @@
 
 #include <vector>
 #include <type_traits>
+#include <Eigen/Geometry>
+#include "common/utility.h"
 
 namespace scene2d {
     class collider2d;
@@ -19,8 +21,22 @@ namespace scene2d {
 
     // measures in pixels
     struct shape {
+        typedef Eigen::AlignedBox2f box2f;
         typedef std::tuple<shape &&> init_t;
+        
         virtual ~shape() {};
+        
+        ATTRIBUTE(float, restitution, 0.f);
+        ATTRIBUTE(float, friction, 0.2f);
+        ATTRIBUTE(float, density, 1.f);
+        ATTRIBUTE(int16_t, collision_group, 0);
+        ATTRIBUTE(uint16_t, collision_mask, 0xFFFF);
+        ATTRIBUTE(uint16_t, collision_category, 0x1);
+        ATTRIBUTE(bool, is_collidable, true);
+        
+        shape&& forward() {
+            return std::forward<shape>(*this);
+        }
         
     protected:
         struct shape_def;
@@ -40,6 +56,12 @@ namespace scene2d {
         : x(x_), y(y_), width(w), height(h), angle(angle_)
         {}
 
+        explicit box(box2f const& bound)
+        : x(bound.min().x()), y(bound.min().y()),
+        width(bound.sizes().x()), height(bound.sizes().y()),
+        angle(0.f) {
+        }
+        
     private:
         virtual void append_to(collider2d*, float) const override;
     };

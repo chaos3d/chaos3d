@@ -14,8 +14,13 @@ void shape::create_from_shape(collider2d *collider, shape_def const&def) const {
     b2FixtureDef fixture;
     fixture.shape = def.def;
     fixture.userData = collider;
-    fixture.density = 1.f;
-    // FIXME: fill others
+    fixture.density = density();
+    fixture.friction = friction();
+    fixture.restitution = restitution();
+    fixture.isSensor = is_collidable();
+    fixture.filter.categoryBits = collision_category();
+    fixture.filter.maskBits = collision_mask();
+    fixture.filter.groupIndex = collision_group();
     
     body->CreateFixture(&fixture);
 }
