@@ -8,7 +8,6 @@ using namespace scene2d;
 
 struct collider2d::internal{
     b2Body* body = nullptr;
-    // TODO: using contact listener?
     b2Vec2 position = {0.f, 0.f};
     float z_angle = 0.f;
 };
@@ -25,9 +24,16 @@ public:
     }
     
 private:
-	virtual void BeginContact(b2Contact* contact) override;
-	virtual void EndContact(b2Contact* contact) override;
+	virtual void BeginContact(b2Contact* contact) override {
+        _mgr->dispatch(contact_began_event((collider2d*)contact->GetFixtureA()->GetUserData(),
+                                           (collider2d*)contact->GetFixtureB()->GetUserData()));
+    }
     
+	virtual void EndContact(b2Contact* contact) override {
+        _mgr->dispatch(contact_ended_event((collider2d*)contact->GetFixtureA()->GetUserData(),
+                                           (collider2d*)contact->GetFixtureB()->GetUserData()));
+    }
+
 private:
     world2d_mgr* _mgr;
 };
@@ -168,16 +174,6 @@ void collider2d::apply_impulse(vector2f const& impulse, vector2f const& pos) {
 }
 
 #pragma mark - world2d mgr -
-
-void world2d_mgr::box2d_listener::BeginContact(b2Contact* contact) {
-    _mgr->dispatch(contact_began_event((collider2d*)contact->GetFixtureA()->GetUserData(),
-                                       (collider2d*)contact->GetFixtureB()->GetUserData()));
-}
-
-void world2d_mgr::box2d_listener::EndContact(b2Contact* contact) {
-    _mgr->dispatch(contact_ended_event((collider2d*)contact->GetFixtureA()->GetUserData(),
-                                       (collider2d*)contact->GetFixtureB()->GetUserData()));
-}
 
 world2d_mgr::world2d_mgr(float ratio, vector2f const& gravity)
 : _internal(new internal{

@@ -49,8 +49,6 @@ namespace scene2d {
         void apply_impulse(vector2f const&, vector2f const& pos);
         
         // TODO:
-        // apply force/impulse
-        // get velocity
         // other body settings
         // etc.
     protected:
@@ -74,15 +72,9 @@ namespace scene2d {
         friend struct internal;
         friend class world2d_mgr; //updating transform
         
-        // TODO
-        // mask/category/callback
         SIMPLE_CLONE(collider2d);
     };
     
-    /// ----------------------------------------------
-    /// ----------------------------------------------
-    /// ----------------------------------------------
-
     class world2d_mgr : public component_manager_base<world2d_mgr>, public event_dispatcher {
     public:
         typedef std::function<bool(collider2d*)> query_callback_t;
