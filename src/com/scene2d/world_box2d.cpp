@@ -118,6 +118,37 @@ void collider2d::destroy() {
     delete this;
 }
 
+vector2f collider2d::get_velocity() const {
+    return *(vector2f*)&_internal->body->GetLinearVelocity().x;
+}
+
+void collider2d::apply_force(vector2f const& force) {
+    float ratio = world2d_mgr::instance()._internal->piexl_ratio;
+    _internal->body->ApplyForceToCenter(b2Vec2(force.x() * ratio, force.y() * ratio), true);
+}
+
+void collider2d::apply_force(vector2f const& force, vector2f const& pos) {
+    float ratio = world2d_mgr::instance()._internal->piexl_ratio;
+    _internal->body->ApplyForce(b2Vec2(force.x() * ratio, force.y() * ratio),
+                                _internal->body->GetWorldPoint(b2Vec2(pos.x() * ratio, pos.y() * ratio)),
+                                true);
+}
+
+void collider2d::apply_impulse(vector2f const&impulse) {
+    float ratio = world2d_mgr::instance()._internal->piexl_ratio;
+    _internal->body->ApplyLinearImpulse(b2Vec2(impulse.x() * ratio, impulse.y() * ratio),
+                                        _internal->body->GetWorldCenter(),
+                                        true);
+}
+
+void collider2d::apply_impulse(vector2f const& impulse, vector2f const& pos) {
+    float ratio = world2d_mgr::instance()._internal->piexl_ratio;
+    _internal->body->ApplyLinearImpulse(b2Vec2(impulse.x() * ratio, impulse.y() * ratio),
+                                        _internal->body->GetWorldPoint(b2Vec2(pos.x() * ratio,
+                                                                              pos.y() * ratio)),
+                                        true);
+}
+
 #pragma mark - world2d mgr -
 
 world2d_mgr::world2d_mgr(float ratio, vector2f const& gravity)
@@ -130,10 +161,8 @@ _pixel_meter_ratio(ratio), _step(1.f/30.f){
 }
 
 void world2d_mgr::query(query_callback_t const& query,
-                        vector2f const& center,
-                        vector2f const& half_extent) {
+                        vector2f const& center) {
     auto center_in_meter = center * pixel_meter_ratio();
-    auto extent_in_meter = half_extent * pixel_meter_ratio();
 
     class callback : public b2QueryCallback {
     public:
@@ -142,11 +171,9 @@ void world2d_mgr::query(query_callback_t const& query,
 
     private:
         virtual bool ReportFixture(b2Fixture* fixture) {
-#if 0
             if (!fixture->TestPoint(_center))
                 return true;
             else
-#endif
                 return _cb(static_cast<collider2d*>(fixture->GetUserData()));
         }
         
@@ -156,10 +183,10 @@ void world2d_mgr::query(query_callback_t const& query,
 
     _internal->world.QueryAABB(&cb,
                                b2AABB{
-                                   b2Vec2(center_in_meter.x() - extent_in_meter.x(),
-                                          center_in_meter.y() - extent_in_meter.y()),
-                                   b2Vec2(center_in_meter.x() + extent_in_meter.x(),
-                                          center_in_meter.y() + extent_in_meter.y())
+                                   b2Vec2(center_in_meter.x() - FLT_EPSILON,
+                                          center_in_meter.y() - FLT_EPSILON),
+                                   b2Vec2(center_in_meter.x() + FLT_EPSILON,
+                                          center_in_meter.y() + FLT_EPSILON)
                                });
 }
 

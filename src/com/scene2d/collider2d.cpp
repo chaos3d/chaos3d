@@ -1,5 +1,6 @@
 #include "com/scene2d/world_box2d.h"
 #include "com/sprite2d/quad_sprite.h"
+#include <Box2D/Box2D.h>
 
 using namespace scene2d;
 using namespace sprite2d;

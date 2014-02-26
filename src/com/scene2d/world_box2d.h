@@ -37,6 +37,14 @@ namespace scene2d {
         
         template<class C>
         collider2d& reset_from(bool collidable = false, shape const& = shape());
+
+        vector2f get_velocity() const;
+        
+        void apply_force(vector2f const&);
+        void apply_force(vector2f const&, vector2f const& pos);
+        
+        void apply_impulse(vector2f const&);
+        void apply_impulse(vector2f const&, vector2f const& pos);
         
         // TODO:
         // apply force/impulse
@@ -85,8 +93,7 @@ namespace scene2d {
                     vector2f const& gravity = {0.f, -9.81f});
         
         void query(query_callback_t const&,
-                   vector2f const& center,
-                   vector2f const& half_extent = {FLT_EPSILON, FLT_EPSILON});
+                   vector2f const& center);
     protected:
         virtual void pre_update(goes_t const&) override;
         virtual void update(goes_t const&) override;
