@@ -55,10 +55,10 @@ public:
     
     virtual bool unregister_listener(event_listener*);
     
-    template<class... Args, class Listener>
-    bool register_listener(Listener&& listener) {
+    template<class... Args>
+    bool register_listener(event_listener* listener) {
         return register_listener({std::type_index(typeid(Args))...},
-                                 std::forward<Listener>(listener));
+                                 listener);
     }
     
 protected:
