@@ -59,10 +59,6 @@ public:
         return loader_constructor<Loader, Cms...>()(loader);
     }
     
-    // tag
-    std::string const& tag() const { return _tag; }
-    void set_tag(std::string const& tag) { _tag = tag; }
-
     // clone
     virtual game_object* clone() const;
     
@@ -109,7 +105,7 @@ public:
         if (trait::sealed_t::value) {
             for (auto it = std::next(_components.begin(), start);
                 it != _components.end() && it->get() != nullptr; ++it) {
-                if (typeid(*it) == typeid(C))
+                if (typeid(**it) == typeid(C))
                     return static_cast<C*>(it->get());
             }
         } else {
@@ -239,11 +235,12 @@ private:
     uint32_t _flag;
     mutable uint32_t _mark;
     
-    std::string _tag;
     components_t _components;
 
     constexpr static game_object* null = __builtin_constant_p((game_object*)0xFF) ? (game_object*)0xFF : (game_object*)0xFF; // diff than nullptr
     static uint32_t _number_of_objects;
+    
+    ATTRIBUTE(std::string, tag, "");
 };
 
 #endif

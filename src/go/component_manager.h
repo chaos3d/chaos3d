@@ -144,10 +144,12 @@ public:
     typedef std::true_type component_fixed_t;
     
     // whether to check only the type or to try casting when searching
-    // in the component list
+    // in the component list, only used if index is not fixed
     //  don't check subclasses by default
     typedef std::true_type sealed_t;
     
+    // helper type
+    typedef component_manager_base<Mgr> mgr_base;
 public:
     template<typename... Args>
     static component_manager* initialize(Args&&... args) {

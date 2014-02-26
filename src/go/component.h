@@ -5,6 +5,7 @@
 #include <cassert>
 #include <type_traits>
 #include "common/utility.h"
+#include "go/component_manager.h"
 
 class game_object;
 
@@ -16,6 +17,9 @@ struct is_component {
 
 class component {
 public:
+    // default to nil mgr
+    typedef nil_component_mgr manager_t;
+    
     struct component_deleter {
         void operator() (component* com) const {
             com->destroy();
