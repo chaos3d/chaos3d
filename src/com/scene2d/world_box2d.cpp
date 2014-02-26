@@ -18,6 +18,20 @@ struct world2d_mgr::internal {
     float piexl_ratio;
 };
 
+class world2d_mgr::box2d_listener : public b2ContactListener {
+public:
+    box2d_listener(world2d_mgr* mgr)
+    : _mgr(mgr) {
+    }
+    
+private:
+	virtual void BeginContact(b2Contact* contact) override;
+	virtual void EndContact(b2Contact* contact) override;
+    
+private:
+    world2d_mgr* _mgr;
+};
+
 #pragma mark - collider2d -
 
 collider2d::collider2d(game_object* go,
@@ -122,6 +136,10 @@ vector2f collider2d::get_velocity() const {
     return *(vector2f*)&_internal->body->GetLinearVelocity().x;
 }
 
+void collider2d::set_velocity(float x, float y) {
+    _internal->body->SetLinearVelocity(b2Vec2(x, y));
+}
+
 void collider2d::apply_force(vector2f const& force) {
     float ratio = world2d_mgr::instance()._internal->piexl_ratio;
     _internal->body->ApplyForceToCenter(b2Vec2(force.x() * ratio, force.y() * ratio), true);
@@ -150,6 +168,16 @@ void collider2d::apply_impulse(vector2f const& impulse, vector2f const& pos) {
 }
 
 #pragma mark - world2d mgr -
+
+void world2d_mgr::box2d_listener::BeginContact(b2Contact* contact) {
+    _mgr->dispatch(contact_began_event((collider2d*)contact->GetFixtureA()->GetUserData(),
+                                       (collider2d*)contact->GetFixtureB()->GetUserData()));
+}
+
+void world2d_mgr::box2d_listener::EndContact(b2Contact* contact) {
+    _mgr->dispatch(contact_ended_event((collider2d*)contact->GetFixtureA()->GetUserData(),
+                                       (collider2d*)contact->GetFixtureB()->GetUserData()));
+}
 
 world2d_mgr::world2d_mgr(float ratio, vector2f const& gravity)
 : _internal(new internal{

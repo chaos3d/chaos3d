@@ -7,6 +7,7 @@
 #include "go/game_object.h"
 #include "shape_desc.h"
 #include "common/base_types.h"
+#include "com/scene2d/world_event.h"
 
 namespace com {
     class transform;
@@ -39,6 +40,7 @@ namespace scene2d {
         collider2d& reset_from(bool collidable = false, shape const& = shape());
 
         vector2f get_velocity() const;
+        void set_velocity(float x, float y);
         
         void apply_force(vector2f const&);
         void apply_force(vector2f const&, vector2f const& pos);
@@ -81,7 +83,7 @@ namespace scene2d {
     /// ----------------------------------------------
     /// ----------------------------------------------
 
-    class world2d_mgr : public component_manager_base<world2d_mgr> {
+    class world2d_mgr : public component_manager_base<world2d_mgr>, public event_dispatcher {
     public:
         typedef std::function<bool(collider2d*)> query_callback_t;
         typedef std::false_type component_fixed_t;
@@ -99,7 +101,9 @@ namespace scene2d {
         virtual void update(goes_t const&) override;
         
     private:
+        class box2d_listener;
         struct internal;
+
         std::unique_ptr<internal> _internal;
         
         ATTRIBUTE(int, velocity_iteration, 6);
@@ -107,6 +111,7 @@ namespace scene2d {
         ATTRIBUTE(float, step, 1.f/30.f);
         ATTRIBUTE(float, pixel_meter_ratio, 0.02f);
         friend class collider2d;
+        friend class box2d_listener;
     };
 }
 
