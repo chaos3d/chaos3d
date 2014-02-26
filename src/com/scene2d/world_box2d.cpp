@@ -184,8 +184,9 @@ world2d_mgr::world2d_mgr(float ratio, vector2f const& gravity)
     b2Vec2(gravity.x() * ratio, gravity.y() * ratio),
     ratio,
 }), _velocity_iteration(6), _position_iteration(2),
-_pixel_meter_ratio(ratio), _step(1.f/30.f){
-    
+_pixel_meter_ratio(ratio), _step(1.f/30.f),
+_listener(new box2d_listener(this)){
+    _internal->world.SetContactListener(_listener.get());
 }
 
 void world2d_mgr::query(query_callback_t const& query,

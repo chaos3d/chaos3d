@@ -105,6 +105,7 @@ namespace scene2d {
         struct internal;
 
         std::unique_ptr<internal> _internal;
+        std::unique_ptr<box2d_listener> _listener;
         
         ATTRIBUTE(int, velocity_iteration, 6);
         ATTRIBUTE(int, position_iteration, 2);
