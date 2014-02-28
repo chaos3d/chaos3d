@@ -32,6 +32,14 @@ camera& camera::operator=(camera const& rhs) {
     return *this;
 }
 
+camera& camera::move_for_perfect_pixel(float height) {
+    parent()->add_component<com::transform>()
+    .set_translate(0.f, 0.f, distant_for_perfect_pixel(height))
+    .mark_dirty();
+    
+    return *this;
+}
+
 camera::vector3f camera::unproject(vector3f const& pos) const {
 	Eigen::Vector4f ret = _proj_view_inverse * Eigen::Vector4f{pos[0], pos[1], pos[2], 1.f};
     return vector3f(ret[0]/ret[3], ret[1]/ret[3], ret[2]/ret[3]);
@@ -48,6 +56,14 @@ camera::ray camera::cast_from_screen(vector2f const& pos) const {
 	
 	(ret.d -= ret.p).normalize();
     return ret;
+}
+
+vector2f camera::size_at(float z) const {
+    // FIXME: (1.0, 1.0) may not be the corner in DX
+    float w = (_proj_mat(3,2) * z + _proj_mat(3,3));
+    z = (_proj_mat(2,2) * z + _proj_mat(2,3)) / w;
+    Eigen::Vector4f ret = _proj_inverse * Eigen::Vector4f(1.f,1.f,z,1.f);
+    return vector2f(ret[0]/ret[3]*2.f, ret[1]/ret[3]*2.f);
 }
 
 void camera::collect(std::vector<game_object*> const&) {

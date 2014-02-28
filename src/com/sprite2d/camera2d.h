@@ -9,18 +9,6 @@ namespace sprite2d {
     public:
         camera2d(game_object*, int priority = 0);
         
-        // the z-/depth value for the plane where a pixel
-        // is equal to '1' based on the current target
-        // and the perspective matrix
-        float distant_for_perfect_pixel() const {
-            return target()->size().y() * .5f * proj_matrix()(1,1);
-        }
-        
-        // move the camera to where it is pixel perfect
-        // on the plane z = 0
-        // NB: if transform doesn't exist, one will be created
-        camera2d& move_for_perfect_pixel();
-        
     protected:
         camera2d& operator=(camera2d const& rhs);
 

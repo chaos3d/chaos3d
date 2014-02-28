@@ -2,9 +2,10 @@
 #define _COM_CAMERA_H
 
 #include <Eigen/Geometry>
+#include "common/common.h"
+#include "common/referenced_count.h"
 #include "go/component.h"
 #include "go/component_manager.h"
-#include "common/common.h"
 #include "re/render_target.h"
 #include <vector>
 #include <forward_list>
@@ -17,7 +18,7 @@ namespace com {
     // represent a rendering algorithm
     // it will collect all visible renderables, and render to the
     // target
-    class camera : public component {
+    class camera : public component, protected referenced_count {
     public:
         typedef nil_component_mgr<std::false_type> manager_t;
         typedef std::forward_list<renderable*> renderables_t;
@@ -26,6 +27,7 @@ namespace com {
         typedef Eigen::Vector2f vector2f;
         typedef Eigen::Vector3f vector3f;
         typedef Eigen::Vector4f color_t;
+        typedef weak_ref_ctrl<camera>::weak_ptr ptr;
         
         struct ray {
             // R(t) = p + t*d;
@@ -63,6 +65,9 @@ namespace com {
             return *this;
         }
         
+        // get the projected view size at the given z distant
+        vector2f size_at(float z = 0.f) const;
+        
         // client(screen) space to the world space
         vector3f unproject(vector3f const&) const;
         
@@ -72,6 +77,22 @@ namespace com {
         // the projection matrix
         matrix4f const& proj_matrix() const { return _proj_mat; }
         
+        // the z-/depth value for the plane where the height
+        // is in pixels based on the current target
+        // and the perspective matrix
+        float distant_for_perfect_pixel(float height = 0.f) const {
+            return (height <= FLT_EPSILON ? target()->size().y() : height)
+            * .5f * _proj_mat(1,1);
+        }
+        
+        // move the camera to where it is pixel perfect
+        // on the plane z = 0
+        // NB: if transform doesn't exist, one will be created
+        camera& move_for_perfect_pixel(float height = 0.f);
+        
+        ptr get_weak() {
+            return get<camera>();
+        }
     protected:
         camera& operator=(camera const&);
         virtual ~camera();
@@ -80,6 +101,10 @@ namespace com {
         render_uniform::ptr uniform() const { return _uniform; }
         void update_matrix();
         void update_from_transform();
+        
+        virtual void destroy() override {
+            release();
+        }
         
     private:
         render_uniform::ptr _uniform;

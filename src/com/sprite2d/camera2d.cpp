@@ -17,15 +17,6 @@ camera2d& camera2d::operator=(camera2d const& rhs) {
     return *this;
 }
 
-camera2d& camera2d::move_for_perfect_pixel() {
-    parent()->add_component<com::transform>()
-    .set_translate(0.f, 0.f, distant_for_perfect_pixel())
-    .mark_dirty();
-
-    return *this;
-}
-
-
 void camera2d::collect(const std::vector<game_object *> &goes) {
     const int idx = sprite_mgr::component_idx();
     auto it = goes.begin();
