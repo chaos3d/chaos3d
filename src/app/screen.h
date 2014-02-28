@@ -1,5 +1,5 @@
-#ifndef _SCREEN_H
-#define _SCREEN_H
+#ifndef _CHAOS2D_APP_SCREEN_H
+#define _CHAOS2D_APP_SCREEN_H
 
 #include <deque>
 #include <utility>
