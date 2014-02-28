@@ -6,6 +6,7 @@
 #include <type_traits>
 #include <vector>
 #include "common/utility.h"
+#include "asset/asset_manager.h"
 
 class asset_handle;
 
@@ -30,13 +31,13 @@ public:
     // be loaded (asset_handle == nullptr)
     // this will also produce a new asset since
     // the meta will be different
-    virtual handle_ptr get(std::string const&) const = 0;
+    virtual handle_ptr get(std::string const&, asset_manager::context const&) const = 0;
     
     // find all the assets names
-    virtual names_t all_names() const = 0;
+    virtual names_t all_names(asset_manager::context const&) const = 0;
 
     // get all the assets meta in this bundle
-    virtual handles_t all_assets() const;
+    virtual handles_t all_assets(asset_manager::context const&) const;
     
 protected:
     asset_bundle() = default;

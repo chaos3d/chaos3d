@@ -19,6 +19,13 @@ public:
     typedef std::shared_ptr<asset_handle> handle_ptr;
     typedef std::unordered_map<std::string, handle_ptr> handles_t;
     
+    // the asset context to decide which subset of assets should be loaded
+    // i.e.
+    //  current screen scaling based on the desired size
+    //  compression data based on the chips
+    struct context {
+        float scale; // scaling factor
+    };
 public:
     // load the asset by the given name (usually filename without ext)
     // return null if the meta doens't exist
@@ -58,7 +65,7 @@ public:
     void purge();
 
 protected:
-    asset_manager();
+    asset_manager(context const&);
     ~asset_manager();
     
 private:
@@ -66,6 +73,7 @@ private:
     void loading_thread();
     
 private:
+    context const _context;
     handles_t _assets;
     std::thread _loading_thread; // TODO: asynch loading
     
@@ -82,9 +90,14 @@ public:
     // asset manager is shared_ptr enabled
     // multiple calling this function won't create multiple
     // instances but still should be prevented
-    static asset_manager& create() {
-        static std::shared_ptr<global_asset_mgr> _instance(new global_asset_mgr());
+    static asset_manager& create(context const& ctx) {
+        static std::shared_ptr<global_asset_mgr> _instance(new global_asset_mgr(ctx));
         return *_instance;
+    }
+        
+private:
+    global_asset_mgr(context const& ctx)
+    : asset_manager(ctx) {
     }
 };
 

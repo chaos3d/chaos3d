@@ -6,7 +6,7 @@ locator_asset_bundle::locator_asset_bundle(asset_locator::ptr const& locator,
     
 }
 
-locator_asset_bundle::names_t locator_asset_bundle::all_names() const {
+locator_asset_bundle::names_t locator_asset_bundle::all_names(asset_manager::context const&) const {
     names_t names;
     _locator->traverse([&] (std::string const& name) {
         auto pre = name.length() - _extension.length();

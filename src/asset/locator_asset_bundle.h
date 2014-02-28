@@ -12,7 +12,7 @@
 // a meta or produce several types of resources as well.
 class locator_asset_bundle : public asset_bundle {
 public:
-    virtual names_t all_names() const override;
+    virtual names_t all_names(asset_manager::context const&) const override;
     
 protected:
     locator_asset_bundle(asset_locator::ptr const& locator,

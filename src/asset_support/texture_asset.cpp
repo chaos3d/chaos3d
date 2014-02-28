@@ -9,7 +9,8 @@ png_asset_bundle::png_asset_bundle(render_device* device,
     assert(_device != nullptr);
 }
 
-asset_bundle::handle_ptr png_asset_bundle::get(std::string const&name) const {
+asset_bundle::handle_ptr png_asset_bundle::get(std::string const& name,
+                                               asset_manager::context const& ctx) const {
     auto asset_name = name + extension();
     if (!locator()->contains(asset_name))
         return nullptr;
