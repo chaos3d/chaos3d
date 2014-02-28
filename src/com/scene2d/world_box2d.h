@@ -40,13 +40,13 @@ namespace scene2d {
         collider2d& reset_from(bool collidable = false, shape const& = shape());
 
         vector2f get_velocity() const;
-        void set_velocity(float x, float y);
+        collider2d& set_velocity(float x, float y);
         
-        void apply_force(vector2f const&);
-        void apply_force(vector2f const&, vector2f const& pos);
+        collider2d& apply_force(vector2f const&);
+        collider2d& apply_force(vector2f const&, vector2f const& pos);
         
-        void apply_impulse(vector2f const&);
-        void apply_impulse(vector2f const&, vector2f const& pos);
+        collider2d& apply_impulse(vector2f const&);
+        collider2d& apply_impulse(vector2f const&, vector2f const& pos);
         
         // TODO:
         // other body settings

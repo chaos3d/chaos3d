@@ -142,35 +142,41 @@ vector2f collider2d::get_velocity() const {
     return *(vector2f*)&_internal->body->GetLinearVelocity().x;
 }
 
-void collider2d::set_velocity(float x, float y) {
-    _internal->body->SetLinearVelocity(b2Vec2(x, y));
+collider2d& collider2d::set_velocity(float x, float y) {
+    float ratio = world2d_mgr::instance()._internal->piexl_ratio;
+    _internal->body->SetLinearVelocity(b2Vec2(x * ratio, y * ratio));
+    return *this;
 }
 
-void collider2d::apply_force(vector2f const& force) {
+collider2d& collider2d::apply_force(vector2f const& force) {
     float ratio = world2d_mgr::instance()._internal->piexl_ratio;
     _internal->body->ApplyForceToCenter(b2Vec2(force.x() * ratio, force.y() * ratio), true);
+    return *this;
 }
 
-void collider2d::apply_force(vector2f const& force, vector2f const& pos) {
+collider2d& collider2d::apply_force(vector2f const& force, vector2f const& pos) {
     float ratio = world2d_mgr::instance()._internal->piexl_ratio;
     _internal->body->ApplyForce(b2Vec2(force.x() * ratio, force.y() * ratio),
                                 _internal->body->GetWorldPoint(b2Vec2(pos.x() * ratio, pos.y() * ratio)),
                                 true);
+    return *this;
 }
 
-void collider2d::apply_impulse(vector2f const&impulse) {
+collider2d& collider2d::apply_impulse(vector2f const&impulse) {
     float ratio = world2d_mgr::instance()._internal->piexl_ratio;
     _internal->body->ApplyLinearImpulse(b2Vec2(impulse.x() * ratio, impulse.y() * ratio),
                                         _internal->body->GetWorldCenter(),
                                         true);
+    return *this;
 }
 
-void collider2d::apply_impulse(vector2f const& impulse, vector2f const& pos) {
+collider2d& collider2d::apply_impulse(vector2f const& impulse, vector2f const& pos) {
     float ratio = world2d_mgr::instance()._internal->piexl_ratio;
     _internal->body->ApplyLinearImpulse(b2Vec2(impulse.x() * ratio, impulse.y() * ratio),
                                         _internal->body->GetWorldPoint(b2Vec2(pos.x() * ratio,
                                                                               pos.y() * ratio)),
                                         true);
+    return *this;
 }
 
 #pragma mark - world2d mgr -
