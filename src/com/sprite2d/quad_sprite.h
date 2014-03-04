@@ -16,8 +16,10 @@ namespace sprite2d {
         typedef Eigen::Vector4f vector4f;
         
         struct animated_frame_key {
-            box2f frame;
+            enum { FRAME = 1, BOUND = 2, MAT = 4 };
+            box2f frame, bound;
             sprite_material* mat = nullptr;
+            uint8_t mask = 1;
         };
         
         typedef box2f animated_bound_key;
@@ -27,8 +29,11 @@ namespace sprite2d {
         quad_sprite(game_object*, int type);
         
         void set_frame_key(animated_frame_key const& key) {
-            set_frame(key.frame);
-            if (key.mat)
+            if (key.mask & animated_frame_key::FRAME)
+                set_frame(key.frame);
+            if (key.mask & animated_frame_key::BOUND)
+                set_bound(key.bound);
+            if (key.mask & animated_frame_key::MAT && key.mat)
                 set_material(key.mat);
         }
 
