@@ -82,8 +82,11 @@ public:
         auto it = keyframe(offset);
         if (it == _keyframes.end()) {
             return _wrap == WRAP_CLAMP ? _keyframes.back().key : _keyframes.front().key;
-        } else {
+        } else if (it->timestamp - offset <= FLT_EPSILON ||
+                   it == _keyframes.begin()) {
             return it->key;
+        } else {
+            return std::next(it, -1)->key;
         }
     }
 
