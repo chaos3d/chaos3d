@@ -18,7 +18,10 @@
  *  creating from existing memory won't transfer ownership
  *  creating a new memory block will maintain its ownership
  */
-class memory_stream : public data_stream{
+class memory_stream : public data_stream {
+public:
+    typedef std::unique_ptr<memory_stream> ptr;
+    
 public:
     // read the data into the memory
     memory_stream(data_stream*);
@@ -44,6 +47,7 @@ public:
 
     char* address() const { return _address; }
     
+    static ptr from(data_stream*, bool null_end = true);
 private:
     char* _address;
     char* _end;

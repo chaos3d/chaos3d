@@ -98,3 +98,16 @@ bool memory_stream::seek( long offset, int pos ){
 long memory_stream::tell(){
     return _current - _address;
 }
+
+memory_stream::ptr memory_stream::from(data_stream* ds, bool null_end) {
+    size_t size = ds->size() + (null_end ? 1 : 0);
+    char* buffer = new char[size];
+    
+    ds->read(buffer, size);
+    
+    if (null_end) {
+        buffer[size - 1] = '\0';
+    }
+    
+    return ptr(new memory_stream(buffer, size));
+}
