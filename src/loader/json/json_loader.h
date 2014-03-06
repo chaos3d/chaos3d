@@ -3,7 +3,7 @@
 
 #include <memory>
 
-class memory_stream;
+class data_stream;
 
 // The JSON wrapper for cJSON, this serves to remove
 // dependencies between the client code and cJSON
@@ -29,7 +29,7 @@ private:
 class json_document : public json_loader {
 public:
     json_document(char const*);
-    json_document(memory_stream*); // TODO: write rapidjson stream reader
+    json_document(data_stream*); // TODO: write rapidjson stream reader
     ~json_document();
     
     json_loader& as_json_loader() { return *this; }
