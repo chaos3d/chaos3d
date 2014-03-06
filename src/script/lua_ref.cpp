@@ -1,4 +1,5 @@
 #include "script/lua_ref.h"
+#include "script/state.h"
 
 using namespace script;
 

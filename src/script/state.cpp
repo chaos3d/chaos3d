@@ -12,13 +12,15 @@ static const char *_stream_reader (lua_State *L, void *data, size_t *size){
 	return buffer;
 }
 
-coroutine::coroutine(lua_State* L, state* parent)
-: _L(L), _parent(parent->shared_from_this()) {
+coroutine::coroutine(state* parent)
+: _L(lua_tothread(parent->internal(), -1)), _co_ref(parent) {
     
 }
 
 coroutine::~coroutine() {
-    // TODO: recycle coroutine
+    if (!parent().expired()) {
+        parent().lock()->recycle(std::move(*this));
+    }
 }
 
 coroutine& coroutine::resume() {
@@ -29,11 +31,11 @@ coroutine& coroutine::resume() {
 }
 
 bool coroutine::is_yielded() const {
-    return !_parent.expired() && lua_status(_L) == LUA_YIELD;
+    return !parent().expired() && lua_status(_L) == LUA_YIELD;
 }
 
 bool coroutine::is_resumable() const {
-    if (_parent.expired())
+    if (parent().expired())
         return false;
     int st = lua_status(_L);
     return (st == LUA_YIELD || st == 0);
@@ -50,13 +52,35 @@ state::~state() {
     lua_close(_L);
 }
 
-coroutine::ptr state::load(data_stream *ds, char const* name) {
-    lua_State* L = lua_newthread(_L); // TODO: coroutine pool
-    int ret = lua_load(L, _stream_reader, (void*)ds, name);
+void state::recycle(script::coroutine &&) {
     
+}
+
+coroutine state::fetch() {
+    lua_newthread(_L);
+    return coroutine(this); // transfer ownership to co, the thread is removed from the stack
+}
+
+coroutine state::load(char const* s, char const* name) {
+    coroutine co(fetch());
+    auto* L = co.internal();
+    
+    int ret = luaL_loadbuffer(L, s, strlen(s), name);
+    if (ret != 0) {
+        // TODO: proper log
+        printf("compiling errors: %s", lua_tostring(L, -1));
+    }
+    return co;
+}
+
+coroutine state::load(data_stream *ds, char const* name) {
+    coroutine co(fetch());
+    auto* L = co.internal();
+    
+    int ret = lua_load(L, _stream_reader, (void*)ds, name);    
     if (ret != 0) {
         // TODO: proper log
         printf("compiling errors: %s", lua_tostring(L, -1));
     } 
-    return coroutine::ptr(new coroutine(L, this));
+    return co;
 }

@@ -3,7 +3,6 @@
 
 #include <memory>
 #include <liblua/lua/lua.hpp>
-#include "script/state.h"
 
 namespace script {
     class state;
@@ -15,7 +14,7 @@ namespace script {
         
     public:
         // an invalid/empty ref
-        ref();
+        ref() : _ref(-1) {};
         
         // from the object on top of the stack
         ref(state*);
@@ -30,6 +29,7 @@ namespace script {
             _ref = rhs._ref;
             _parent = std::move(rhs._parent);
             rhs._ref = -1;
+            return *this;
         }
         
         // explicit delete copy constructor to avoid
@@ -37,6 +37,8 @@ namespace script {
         // explicitly retrieve a new copy
         ref(ref const&) = delete;
         ref& operator=(ref const&) = delete;
+       
+        ~ref() { release(); };
         
         ref copy() const {
             if (_parent.expired())
@@ -46,6 +48,9 @@ namespace script {
             }
         }
         
+        void release();
+        
+        parent_ptr const& parent() const { return _parent; }
     private:
         int _ref;
         parent_ptr _parent;
