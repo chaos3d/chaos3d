@@ -240,7 +240,7 @@ void gl_gpu_program::assign_uniforms(render_context* context, render_uniform::un
             ++rd_begin;
         } else  {
             if (ret == 0) {
-                if(typeid(uniform) == typeid(render_uniform::uniform_texture)) {
+                if(typeid(*rd_begin->get()) == typeid(render_uniform::uniform_texture)) {
                     // TODO: sanity check, unit less than max units
                     glUniform1i(gpu_begin->location, unit);
                     context->set_texture(unit++,

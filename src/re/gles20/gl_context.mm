@@ -82,7 +82,6 @@ void gl_context::apply() {
         if(*it == nullptr) {
             glDisable(GL_TEXTURE_2D); // FIXME: texture type
         } else {
-            glEnable(GL_TEXTURE_2D);
             glBindTexture(GL_TEXTURE_2D, static_cast<gles20::gl_texture const*>(it->get())->tex_id());
         
             // TODO: texture parameters
@@ -92,8 +91,8 @@ void gl_context::apply() {
     
     glActiveTexture(GL_TEXTURE0);
     _bound_state = _cur_state;
-    std::transform(_textures.begin(), _textures.end(), _bound_textures.begin(), [](texture::const_ptr const&t) {
-        return t->retain<texture>();
+    std::transform(_textures.begin(), _textures.end(), _bound_textures.begin(), [](texture::const_ptr &t) {
+        return t.get() ? t->retain<texture>() : std::move(t);
     });
     GLNOERROR;
 

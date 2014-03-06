@@ -20,8 +20,8 @@ public:
     render_context(size_t max_tex)
     : _textures(), _bound_textures()
     {
-        _textures.reserve(max_tex);
-        _bound_textures.reserve(max_tex);
+        _textures.resize(max_tex);
+        _bound_textures.resize(max_tex);
     }
     
     virtual void set_current() = 0;

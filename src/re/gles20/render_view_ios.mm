@@ -104,8 +104,6 @@ void render_view::create_native() {
     _native_view.backgroundColor = [UIColor yellowColor];
     _native_view.contentScaleFactor = scaling;
     _native_view.scaling = scaling;
-    
-    
 }
     
 void render_view::create_view() {
