@@ -1,12 +1,13 @@
 #ifndef _GAME_OBJECT_H
 #define _GAME_OBJECT_H
 
-#include <type_traits>
-#include <cassert>
-#include <vector>
 #include <array>
-#include <string>
+#include <cassert>
+#include <functional>
 #include <memory>
+#include <string>
+#include <type_traits>
+#include <typeinfo>
 
 #include "common/referenced_count.h"
 #include "common/utility.h"

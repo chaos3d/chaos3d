@@ -1,10 +1,11 @@
 #ifndef _COMPONENT_MANAGER_H
 #define _COMPONENT_MANAGER_H
 
+#include <typeinfo>
+#include <vector>
 #include "common/singleton.h"
 #include "common/utility.h"
 #include "common/timer.h"
-#include <vector>
 
 class game_object;
 

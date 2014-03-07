@@ -3,6 +3,7 @@
 
 #include <type_traits>
 #include <typeindex>
+#include <typeinfo>
 #include <memory>
 #include <unordered_map>
 #include "common/referenced_count.h"
