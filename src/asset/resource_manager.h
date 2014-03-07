@@ -5,6 +5,7 @@
 #include <unordered_map>
 #include <forward_list>
 #include <memory>
+#include <typeinfo>
 #include <initializer_list>
 #include "io/data_stream.h"
 
