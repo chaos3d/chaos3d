@@ -10,8 +10,9 @@
 #ifndef _CHAOS_SINGLETON_H
 #define _CHAOS_SINGLETON_H
 
-#include "common.h"
 #include <type_traits>
+#include <cassert>
+#include "common.h"
 
 _CHAOS_BEGIN
 
