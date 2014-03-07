@@ -1,8 +1,10 @@
+#include <algorithm>
+#include <typeinfo>
+
 #include "re/gles20/gl_gpu.h"
 #include "re/gles20/gles2.h"
 #include "re/render_context.h"
 #include "io/data_stream.h"
-#include <algorithm>
 
 static int _shader_map [] = {
     GL_VERTEX_SHADER,

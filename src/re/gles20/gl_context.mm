@@ -1,3 +1,5 @@
+#include <typeinfo>
+
 #include "re/gles20/gl_context.h"
 #include "re/gles20/gl_gpu.h"
 #include "re/gles20/gl_texture.h"

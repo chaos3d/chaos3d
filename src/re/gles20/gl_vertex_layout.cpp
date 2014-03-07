@@ -1,3 +1,5 @@
+#include <typeinfo>
+
 #include "re/gles20/gl_vertex_layout.h"
 #include "re/gles20/gl_vertex_buffer.h"
 #include "re/render_context.h"

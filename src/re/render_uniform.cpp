@@ -1,5 +1,6 @@
-#include "re/render_uniform.h"
 #include <algorithm>
+
+#include "re/render_uniform.h"
 
 render_uniform::render_uniform(render_uniform* parent)
 :_parent(parent)

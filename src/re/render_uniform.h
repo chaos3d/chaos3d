@@ -1,8 +1,9 @@
 #ifndef _RENDER_UNIFORM_H
 #define _RENDER_UNIFORM_H
 
-#include <Eigen/Dense>
 #include <vector>
+#include <typeinfo>
+#include <Eigen/Dense>
 #include "re/texture.h"
 
 class gpu_program;
