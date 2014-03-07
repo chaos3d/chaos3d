@@ -1,5 +1,4 @@
-#include "json_loader.h"
-#include "io/memory_stream.h"
+#include "loader/json/json_loader.h"
 #include "go/component.h"
 #include "com/sprite2d/camera2d.h"
 #include "com/sprite2d/quad_sprite.h"
