@@ -191,6 +191,10 @@ _listener(new box2d_listener(this)){
     _internal->world.SetContactListener(_listener.get());
 }
 
+void world2d_mgr::set_gravity(vector2f const& dir) {
+    _internal->world.SetGravity(b2Vec2(dir.x(), dir.y()));
+}
+
 void world2d_mgr::query(query_callback_t const& query,
                         vector2f const& center) {
     auto center_in_meter = center * pixel_meter_ratio();

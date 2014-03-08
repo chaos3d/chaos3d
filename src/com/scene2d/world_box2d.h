@@ -88,6 +88,9 @@ namespace scene2d {
         
         void query(query_callback_t const&,
                    vector2f const& center);
+        
+        void set_gravity(vector2f const&);
+        
     protected:
         virtual void pre_update(goes_t const&) override;
         virtual void update(goes_t const&) override;
