@@ -18,7 +18,7 @@ namespace script {
     
     class coroutine {
     public:
-        typedef std::weak_ptr<state> parent_ptr;
+        typedef std::shared_ptr<state> parent_ptr;
         
     public:
         ~coroutine();
@@ -41,8 +41,11 @@ namespace script {
                                         std::forward<Args>(args)...);
         }
         
+        // whether safe to call resume
+        // it could be
+        //  a) it's just created with the function at the bottome of the stack or
+        //  b) it's being yielded
         bool is_yielded() const;
-        bool is_resumable() const;
         
         // for other wrappers, do not use
         lua_State* internal() const { return _L; }

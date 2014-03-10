@@ -10,7 +10,7 @@ namespace script {
     
     class ref {
     public:
-        typedef std::weak_ptr<state> parent_ptr;
+        typedef std::shared_ptr<state> parent_ptr;
         
     public:
         // an invalid/empty ref
@@ -37,16 +37,9 @@ namespace script {
         // explicitly retrieve a new copy
         ref(ref const&) = delete;
         ref& operator=(ref const&) = delete;
-       
+        ref copy() const;
+               
         ~ref() { release(); };
-        
-        ref copy() const {
-            if (_parent.expired())
-                return ref();
-            else {
-                return ref(_parent.lock().get());
-            }
-        }
         
         void release();
         

@@ -18,13 +18,17 @@ coroutine::coroutine(state* parent)
 }
 
 coroutine::~coroutine() {
+#if 0
     if (!parent().expired()) {
         parent().lock()->recycle(std::move(*this));
     }
+#else
+    parent()->recycle(std::move(*this));
+#endif
 }
 
 bool coroutine::resume_with(int nargs) {
-    if (!is_resumable())
+    if (!is_yielded())
         return false;
     int ret = lua_resume(_L, nargs);
     if (ret > 1) {
@@ -35,15 +39,25 @@ bool coroutine::resume_with(int nargs) {
 }
 
 bool coroutine::is_yielded() const {
+#if 0
     return !parent().expired() && lua_status(_L) == LUA_YIELD;
+#else
+    int st = lua_status(_L);
+    if (st == 0) {
+        return lua_isfunction(_L, 1);
+    } else
+        return st == LUA_YIELD;
+#endif
 }
 
+#if 0
 bool coroutine::is_resumable() const {
     if (parent().expired())
         return false;
     int st = lua_status(_L);
     return (st == LUA_YIELD || st == 0);
 }
+#endif
 
 state::state(bool open_all)
 : _L(luaL_newstate()) {
