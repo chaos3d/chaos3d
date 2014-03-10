@@ -35,17 +35,6 @@ namespace script {
             return *this;
         }
         
-        template<class... Rs, class... Args, int... N>
-        std::tuple<bool, Rs...> resume_helper(tuple_seq<N...>, Args&&... args) {
-            push(std::forward<Args>(args)...);
-            if (!resume_with(sizeof...(Args)))
-                return std::make_tuple(false, Rs()...);
-            
-            auto result = std::make_tuple(true, converter<Rs>::from(_L, N + 1, nullptr)...);
-            lua_settop(_L, 0);
-            return std::move(result);
-        }
-        
         template<class... Rs, class... Args>
         std::tuple<bool, Rs...> resume(Args&&... args) {
             return resume_helper<Rs...>(typename tuple_gens<sizeof...(Rs)>::type(),
@@ -60,6 +49,17 @@ namespace script {
         parent_ptr const& parent() const { return _co_ref.parent(); }
         
     private:
+        template<class... Rs, class... Args, int... N>
+        std::tuple<bool, Rs...> resume_helper(tuple_seq<N...>, Args&&... args) {
+            push(std::forward<Args>(args)...);
+            if (!resume_with(sizeof...(Args)))
+                return std::make_tuple(false, Rs()...);
+            
+            auto result = std::make_tuple(true, converter<Rs>::from(_L, N + 1, nullptr)...);
+            lua_settop(_L, 0);
+            return std::move(result);
+        }
+        
         bool resume_with(int nargs = 0);
         
         template<class Arg, class... Args>
