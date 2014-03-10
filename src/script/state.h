@@ -1,8 +1,9 @@
 #ifndef _CHAOS3D_SCRIPT_STATE_H
 #define _CHAOS3D_SCRIPT_STATE_H
 
-#include <type_traits>
 #include <memory>
+#include <tuple>
+#include <type_traits>
 #include <liblua/lua/lua.hpp>
 #include "common/utility.h"
 #include "script/converter.h"
@@ -17,11 +18,6 @@ namespace script {
     
     class coroutine {
     public:
-        struct deleter {
-            void operator() (coroutine*) const;
-        };
-        
-        typedef std::unique_ptr<coroutine, deleter> ptr;
         typedef std::weak_ptr<state> parent_ptr;
         
     public:
@@ -39,7 +35,23 @@ namespace script {
             return *this;
         }
         
-        coroutine& resume();
+        template<class... Rs, class... Args, int... N>
+        std::tuple<bool, Rs...> resume_helper(tuple_seq<N...>, Args&&... args) {
+            push(std::forward<Args>(args)...);
+            if (!resume_with(sizeof...(Args)))
+                return std::make_tuple(false, Rs()...);
+            
+            auto result = std::make_tuple(true, converter<Rs>::from(_L, N + 1, nullptr)...);
+            lua_settop(_L, 0);
+            return std::move(result);
+        }
+        
+        template<class... Rs, class... Args>
+        std::tuple<bool, Rs...> resume(Args&&... args) {
+            return resume_helper<Rs...>(typename tuple_gens<sizeof...(Rs)>::type(),
+                                        std::forward<Args>(args)...);
+        }
+        
         bool is_yielded() const;
         bool is_resumable() const;
         
@@ -48,6 +60,17 @@ namespace script {
         parent_ptr const& parent() const { return _co_ref.parent(); }
         
     private:
+        bool resume_with(int nargs = 0);
+        
+        template<class Arg, class... Args>
+        void push(Arg&& arg, Args&&... args) {
+            converter<Arg>::to(_L, std::forward<Arg>(arg));
+            return push(std::forward<Args>(args)...);
+        }
+        
+        // termination
+        void push() {};
+        
         coroutine(coroutine const&) = delete;
         coroutine& operator=(coroutine const&) = delete;
         

@@ -18,6 +18,12 @@ namespace script {
     : public std::conditional<is_number<C>::value, std::false_type, std::true_type>::type {};
     
     template<>
+    struct is_userdata<char const*> : public std::false_type {};
+
+    template<int N>
+    struct is_userdata<char [N]> : public std::false_type {};
+    
+    template<>
     struct is_userdata<std::string> : public std::false_type {};
     
     template<class C>
@@ -64,13 +70,15 @@ namespace script {
         };
         
         template<typename U = T,
-        typename std::enable_if<std::is_same<T1<T>, std::vector<typename vector_of<U>::type>>::value>::type* = nullptr>
-        static U from(lua_State* L, int idx, char* storage) {
-            using E = typename vector_of<U>::type;
+        typename std::enable_if<std::is_same<T1<T>,
+        std::vector<typename vector_of<T1<U>>::type>>::value>::type* = nullptr>
+        static T1<U> from(lua_State* L, int idx, char* storage) {
+            using R = T1<U>;
+            using E = typename vector_of<R>::type;
             if (!lua_istable(L, idx))
-                return U();
+                return R();
             
-            U result;
+            R result;
             int i = 0;
             while(true) {
                 lua_rawgeti(L, idx, ++i);
@@ -78,7 +86,8 @@ namespace script {
                     lua_pop(L, 1);
                     break;
                 }
-                result.emplace_back(converter<E>::from(L, -1, storage)); //FIXME: storage
+                // E will never be a reference
+                result.emplace_back(converter<E>::from(L, -1, nullptr));
                 lua_pop(L, 1);
             }
             return result;
@@ -107,10 +116,22 @@ namespace script {
         }
         
         template<typename U = T,
+        typename std::enable_if<std::is_same<T1<U>, char const*>::value>::type* = nullptr>
+        static void to(lua_State* L, char const* str) {
+            lua_pushstring(L, str);
+        };
+        
+        template<typename U = T,
+        typename std::enable_if<std::is_same<typename std::remove_extent<T1<U>>::type, char>::value>::type* = nullptr>
+        static void to(lua_State* L, char const* str) {
+            lua_pushstring(L, str);
+        };
+        
+        template<typename U = T,
         typename std::enable_if<is_userdata<T1<U>>::value>::type* = nullptr>
         static void to(lua_State* L, T&& value) {
             // TODO
-            //lua_pushnumber(L, value);
+            lua_pushnil(L);
         }
 
         template<typename U = T,
@@ -120,7 +141,7 @@ namespace script {
         }
         
         template<typename U = T,
-        typename std::enable_if<std::is_same<T1<T>, std::vector<typename vector_of<U>::type>>::value>::type* = nullptr>
+        typename std::enable_if<std::is_same<U, std::vector<typename vector_of<U>::type>>::value>::type* = nullptr>
         static void to(lua_State* L, std::vector<typename vector_of<U>::type> && value) {
             using E = typename vector_of<U>::type;
             lua_newtable(L);

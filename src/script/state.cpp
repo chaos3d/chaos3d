@@ -23,15 +23,15 @@ coroutine::~coroutine() {
     }
 }
 
-coroutine& coroutine::resume() {
+bool coroutine::resume_with(int nargs) {
     if (!is_resumable())
-        return *this;
-    int ret = lua_resume(_L, 0);
+        return false;
+    int ret = lua_resume(_L, nargs);
     if (ret > 1) {
         // TODO: proper log
         printf("runtime errors: %s", lua_tostring(_L, -1));
     }
-    return *this;
+    return ret <= 1;
 }
 
 bool coroutine::is_yielded() const {
