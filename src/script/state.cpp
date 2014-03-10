@@ -26,7 +26,11 @@ coroutine::~coroutine() {
 coroutine& coroutine::resume() {
     if (!is_resumable())
         return *this;
-    lua_resume(_L, 0);
+    int ret = lua_resume(_L, 0);
+    if (ret > 1) {
+        // TODO: proper log
+        printf("runtime errors: %s", lua_tostring(_L, -1));
+    }
     return *this;
 }
 
@@ -84,3 +88,39 @@ coroutine state::load(data_stream *ds, char const* name) {
     } 
     return co;
 }
+
+// push the named scope(table) or the global table
+void state::push_scope(lua_State* L, char const* scope) {
+    if (scope == nullptr) {
+        lua_pushvalue(L, LUA_GLOBALSINDEX);
+    } else {
+        lua_getglobal(L, scope);
+        // TODO: recursively create the table
+        assert(0);
+    }
+}
+
+import_scope state::import(char const* name) {
+    return import_scope(name, *this);
+}
+
+#if 0
+state& state::import(void* data, char const* name, type_info const* type, char const* scope) {
+    if (type != nullptr) {
+        lua_pushlightuserdata(_L, type);
+        lua_rawget(L, LUA_REGISTRYINDEX);
+        
+        if (!lua_istable(_L, -1)) {
+            lua_pop(_L, 1); // pop nil
+            lua_newtable(_L);
+        }
+    }
+    
+    for (auto& it : import.meta()) {
+        lua_pushstring(_L, it.first.c_str());
+        lua_pushcfunction(_L, it.second);
+        lua_rawset(_L, -3);
+    }
+    return *this;
+}
+#endif

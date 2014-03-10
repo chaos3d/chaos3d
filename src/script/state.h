@@ -4,8 +4,11 @@
 #include <type_traits>
 #include <memory>
 #include <liblua/lua/lua.hpp>
-#include "script/lua_ref.h"
 #include "common/utility.h"
+#include "script/converter.h"
+#include "script/class_type.h"
+#include "script/lua_ref.h"
+#include "script/import_scope.h"
 
 class data_stream;
 
@@ -71,7 +74,42 @@ namespace script {
         // internal ref for other wrappers, do not use
         lua_State* internal() const { return _L; };
         
+        import_scope import(char const* name = nullptr);
+        
+        template<class C>
+        state& import(C&& value, char const* name, char const* scope = nullptr) {
+            using C0 = typename std::remove_cv<C>::type;
+            using C1 = typename std::remove_pointer<C0>::type;
+            static_assert(!std::is_pointer<C1>::value, "does not support pointer of pointer type");
+            static_assert(std::is_pointer<C0>::value && !std::is_const<C1>::value,
+                          "does not support pointer of const value");
+
+            push_scope(_L, scope);
+            lua_pushstring(_L, name);
+            converter<C>::to(_L, value);
+            lua_rawset(_L, -3);
+            lua_pop(_L, 1); // pop the scope table
+            return *this;// import_internal<C0>(value, name, scope);
+        }
+        
     private:
+        template<class C, typename std::enable_if<std::is_pointer<C>::value>::type* = nullptr>
+        state& import_internal(C&& value, char const* name, char const* scope) {
+            using C1 = typename std::remove_pointer<C>::type;
+            return import((void*)value, name, &class_<C1>::type(), scope);
+        }
+        
+        template<class C, typename std::enable_if<!std::is_pointer<C>::value>::type* = nullptr>
+        state& import_internal(C&& value, char const* name, char const* scope) {
+            using C1 = typename std::remove_cv<C>::type;
+            return import(new C1(value), name, &class_<C1>::type(), scope);
+        }
+        
+        state& import(void* data, char const*, type_info const*, char const* scope);
+        
+        // push the named scope(table) or the global table
+        void push_scope(lua_State*, char const* scope);
+        
         state(bool = true);
         void recycle(coroutine &&);
         coroutine fetch();
