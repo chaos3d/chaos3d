@@ -26,7 +26,7 @@ public:
     virtual ~screen() {};
     
     virtual void loop();
-    virtual void on_start() {};
+    virtual void on_start() {}; // TODO: may not be needed?
     virtual void on_end() {};
     
     void push_front(screen_state*);

@@ -7,6 +7,7 @@
 //
 
 #import "app/screen.h"
+#import "app/application.h"
 #import "asset/asset_locator.h"
 #import "common/timer.h"
 #import "go/component_manager.h"
@@ -23,7 +24,7 @@
 
 @synthesize window, controller, displayLink;
 @synthesize mainWindow = _main_window, defaultDevice = _default_device;
-@synthesize mainContext = _main_context, mainScreen = _main_screen;
+@synthesize mainContext = _main_context;
 
 - (void)dealloc
 {
@@ -32,14 +33,10 @@
     [super dealloc];
 }
 
-- (screen*) createScreen {
-    return new screen();
-}
-
 - (void) frameLoop: (CADisplayLink*) _{
     component_manager::managers().update(&game_object::root());
     
-    _main_screen->loop();
+    application::instance().get_screen().loop();
     
     global_timer_base::instance().update();
     //_main_window->do_render(_main_context); // clear batch
@@ -96,8 +93,7 @@
     _main_window = _default_device->create_window(render_target::target_size_t(rt.size.width, rt.size.height));
     [self.controller.view addSubview: (UIView*)_main_window->native_handle()];
     
-    _main_screen = [self createScreen];
-    _main_screen->on_start();
+    application::instance().get_screen().on_start();
     
     [self startLoop];
     return YES;

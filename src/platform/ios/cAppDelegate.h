@@ -22,7 +22,6 @@ class render_context;
  * set up the app
  */
 @interface cAppDelegate : UIResponder <UIApplicationDelegate> {
-    screen* _main_screen;
     render_window* _main_window;
     render_device* _default_device;
     render_context* _main_context;
@@ -32,12 +31,9 @@ class render_context;
 @property (nonatomic, retain) cViewController* controller;
 @property (retain) CADisplayLink* displayLink;
 
-@property (nonatomic, readonly, assign) screen* mainScreen;
 @property (nonatomic, readonly, assign) render_window* mainWindow;
 @property (nonatomic, readonly, assign) render_device* defaultDevice;
 @property (nonatomic, readonly, assign) render_context* mainContext;
-
-- (screen*) createScreen;
 
 - (void) startLoop;
 - (void) stopLoop;

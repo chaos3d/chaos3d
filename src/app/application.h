@@ -4,6 +4,8 @@
 #include "common/singleton.h"
 #include "event/event_listener.h"
 
+class screen;
+
 namespace evt {
     class memory_warning : public event {
     };
@@ -26,6 +28,9 @@ public:
     //  this should be to initialize components, actions to
     //  actually start the game
     virtual void on_launch() = 0;
+    
+    // get the main screen
+    virtual screen& get_screen() const;
 };
 
 #endif
