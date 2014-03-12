@@ -81,7 +81,7 @@ void state::ensure_objlink() {
 #if 0
     // TODO: add debug tracking info for __index/__newindex
 #endif
-    int ref = luaL_ref(_L, -1);
+    int ref = lua_ref(_L, 1);
     assert(ref == 1);
 }
 

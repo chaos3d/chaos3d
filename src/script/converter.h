@@ -4,39 +4,14 @@
 #include <type_traits>
 #include <string>
 #include <vector>
+#include <memory>
 #include <liblua/lua/lua.hpp>
 #include "script/type_info.h"
 #include "script/class_type.h"
+#include "script/traits.h"
 //#include "script/state.h"
 
 namespace script {
-    template<class C>
-    using is_number = std::is_arithmetic<C>;
-    
-    template<class C>
-    struct is_userdata
-    : public std::conditional<is_number<C>::value, std::false_type, std::true_type>::type {};
-    
-    template<>
-    struct is_userdata<char const*> : public std::false_type {};
-
-    template<int N>
-    struct is_userdata<char [N]> : public std::false_type {};
-    
-    template<>
-    struct is_userdata<std::string> : public std::false_type {};
-    
-    template<class C>
-    struct is_userdata<std::vector<C>> : public std::false_type {};
-    
-    template<class C>
-    struct vector_of {};
-    
-    template<class C>
-    struct vector_of<std::vector<C>> {
-        typedef C type;
-    };
-    
     template<class T>
     struct converter {
         template<class C>
@@ -51,21 +26,21 @@ namespace script {
         template<class C>
         using is_string = typename std::is_same<T1<T0<C>>, std::string>;
         
-        template<typename U = T>
-        static typename std::enable_if<is_number<T1<U>>::value, T0<U>>::type
-        from(lua_State* L, int idx, char* storage) {
+        template<typename U = T,
+        typename std::enable_if<is_number<T1<U>>::value>::type* = nullptr>
+        static T0<U> from(lua_State* L, int idx, char* storage) {
             return (T)lua_tonumber(L, idx);
         };
         
-        template<typename U = T>
-        static typename std::enable_if<std::is_same<U, char const*>::value, char const*>::type
-        from(lua_State* L, int idx, char* storage) {
+        template<typename U = T,
+        typename std::enable_if<std::is_same<T1<U>, char const*>::value>::type* = nullptr>
+        static char const* from(lua_State* L, int idx, char* storage) {
             return lua_tostring(L, idx);
         };
         
-        template<typename U = T>
-        static typename std::enable_if<is_string<T1<U>>::value, std::string>::type
-        from(lua_State* L, int idx, char* storage) {
+        template<typename U = T,
+        typename std::enable_if<is_string<T1<U>>::value>::type* = nullptr>
+        static std::string from(lua_State* L, int idx, char* storage) {
             return std::string(lua_tostring(L, idx));
         };
         
@@ -93,18 +68,18 @@ namespace script {
             return result;
         };
         
-        template<typename U = T>
-        static typename std::enable_if<is_userdata<T2<U>>::value && std::is_pointer<U>::value,
-            T2<U>*>::type
-        from(lua_State* L, int idx, char* storage) {
+        template<typename U = T,
+        typename std::enable_if<is_userdata<T2<U>>::value && std::is_pointer<U>::value
+            >::type* = nullptr>
+        static T2<U>* from(lua_State* L, int idx, char* storage) {
             object_wrapper* obj = (object_wrapper*)lua_touserdata(L, idx);
             return obj != nullptr ? (T2<U>*)obj->object : nullptr;
         };
         
-        template<typename U = T>
-        static typename std::enable_if<is_userdata<T2<U>>::value && std::is_reference<U>::value,
-            T2<U>&>::type
-        from(lua_State* L, int idx, char* storage) {
+        template<typename U = T,
+        typename std::enable_if<is_userdata<T2<U>>::value && std::is_reference<U>::value
+            >::type* = nullptr>
+        static T2<U>& from(lua_State* L, int idx, char* storage) {
             object_wrapper* obj = (object_wrapper*)lua_touserdata(L, idx);
             return *(T2<U>*)obj->object;
         };
@@ -128,13 +103,6 @@ namespace script {
         };
         
         template<typename U = T,
-        typename std::enable_if<is_userdata<T1<U>>::value>::type* = nullptr>
-        static void to(lua_State* L, T&& value) {
-            // TODO
-            lua_pushnil(L);
-        }
-
-        template<typename U = T,
         typename std::enable_if<is_string<T1<U>>::value>::type* = nullptr>
         static void to(lua_State* L, std::string const& value) {
             lua_pushstring(L, value.c_str());
@@ -153,19 +121,45 @@ namespace script {
         }
         
         template<typename U = T,
-        typename std::enable_if<std::is_class<T2<U>>::value &&
-        std::is_pointer<T1<U>>::value>::type* = nullptr>
+        typename std::enable_if<is_userdata<T1<U>>::value &&
+        !std::is_pointer<T1<U>>::value>::type* = nullptr>
         static void to(lua_State* L, T&& value) {
-            lua_pushstring(L, "$"); // TODO: save it to a ref?
-            lua_rawget(L, LUA_REGISTRYINDEX);
+            typedef T2<U> R;
+            //to(L, new R(std::forward<R>(value))); // need transfer ownership
+            //assert(0);
+            lua_getref(L, 1); // state ensures this be 1
+            lua_pushlightuserdata(L, &value);
+            lua_rawget(L, -2);
+            if (lua_isnoneornil(L, -1)) {
+                lua_pop(L, 1); // pop the nil
+                auto* wrapper = (object_wrapper*)lua_newuserdata(L, sizeof(object_wrapper));
+                wrapper->object = &value; // TODO: ownership transfer
+                wrapper->type = &class_<T2<U>>::type();
+                wrapper->type->push_metatable(L);
+                lua_setmetatable(L, -2);
+                lua_pushlightuserdata(L, &value); // # tbl, value, key
+                lua_pushvalue(L, -2); // # tbl, value, key, value
+                lua_rawset(L, -4); // # tbl, value
+            }
+            
+            // remove the table, the object is already on the stack
+            lua_remove(L, -2);
+        }
+        
+        template<typename U = T,
+        typename std::enable_if<is_userdata<T2<U>>::value &&
+        std::is_pointer<T1<U>>::value>::type* = nullptr>
+        static void to(lua_State* L, T1<U> value) {
+            lua_getref(L, 1); // state ensures this be 1
             lua_pushlightuserdata(L, value);
             lua_rawget(L, -2);
             if (lua_isnoneornil(L, -1)) {
+                lua_pop(L, 1); // pop the nil
                 auto* wrapper = (object_wrapper*)lua_newuserdata(L, sizeof(object_wrapper));
-                wrapper->object = value;
-                wrapper->type = &class_<T2<T>>::type();
-                // TODO: meta table
-                
+                wrapper->object = value; // TODO: ownership transfer
+                wrapper->type = &class_<T2<U>>::type();
+                wrapper->type->push_metatable(L);
+                lua_setmetatable(L, -2);
                 lua_pushlightuserdata(L, value); // # tbl, value, key
                 lua_pushvalue(L, -2); // # tbl, value, key, value
                 lua_rawset(L, -4); // # tbl, value

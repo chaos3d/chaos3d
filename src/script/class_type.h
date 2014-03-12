@@ -24,11 +24,6 @@ namespace script {
         static_assert(std::is_same<C4, C>::value, "define only raw type");
         
     public:
-        class_() {
-            //def("__gc", gc_policy<C>::gc);
-            // TODO: some other meta function?
-        }
-        
         template<class... Others, typename std::enable_if<sizeof...(Others) == 0>::type* = nullptr>
         class_& derive() {
             return *this;
@@ -80,7 +75,13 @@ namespace script {
             static class_<C> _type;
             return _type;
         }
+        
     private:
+        class_() {
+            //def("__gc", gc_policy<C>::gc);
+            // TODO: some other meta function?
+        }
+        
         class_(class_ const&) = delete;
         class_& operator=(class_ const&) = delete;
         

@@ -4,6 +4,7 @@
 #include <typeinfo>
 #include <vector>
 #include <unordered_map>
+#include <liblua/lua/lua.hpp>
 
 namespace script {
     typedef int (*lua_function_t)(lua_State*);
@@ -15,7 +16,10 @@ namespace script {
         typedef std::vector<type_info const*> bases_t;
         
     public:
-        virtual lua_function_t find(std::string const&) const = 0;        
+        // refactor this later
+        virtual void push_metatable(lua_State*) const;
+        
+        virtual lua_function_t find(std::string const&) const = 0;
     };
     
     // object data saved in userdata

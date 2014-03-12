@@ -22,7 +22,7 @@ import_scope::import_scope(char const* name, state& st)
     }
 }
 
-inline lua_State* import_scope::get_L() const{
+lua_State* import_scope::get_L() const{
     return _state->internal();
 }
 

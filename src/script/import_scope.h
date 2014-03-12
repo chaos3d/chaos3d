@@ -45,7 +45,7 @@ namespace script {
         // assign the value on the top to the scope
         import_scope& save(char const*);
 
-        inline lua_State* get_L() const;
+        lua_State* get_L() const;
         
         import_scope(import_scope&&) = default;
         import_scope& operator=(import_scope&&) = default;

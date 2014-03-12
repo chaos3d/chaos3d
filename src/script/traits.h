@@ -1,6 +1,11 @@
 #ifndef _CHAOS3D_SCRIPT_TRAITS_H
 #define _CHAOS3D_SCRIPT_TRAITS_H
 
+#include <string>
+#include <memory>
+#include <vector>
+#include <type_traits>
+
 namespace script {
     template<class C>
     using is_number = std::is_arithmetic<C>;
@@ -18,8 +23,17 @@ namespace script {
     template<>
     struct is_userdata<std::string> : public std::false_type {};
 
-    template<class C>
-    struct is_userdata<std::vector<C>> : public std::false_type {};
+    template<class C, class... As>
+    struct is_userdata<std::vector<C, As...>> : public std::false_type {};
+
+    template<class P, class... Args>
+    struct is_userdata<std::unique_ptr<P, Args...>> : public std::false_type {};
+
+    template<class P>
+    struct is_userdata<std::shared_ptr<P>> : public std::false_type {};
+    
+    template<class P>
+    struct is_userdata<std::weak_ptr<P>> : public std::false_type {};
 
     template<class C, class... As>
     struct vector_of {};
