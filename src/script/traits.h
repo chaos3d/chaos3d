@@ -1,60 +1,53 @@
-/* cHaos3D
- *
- * Copyright (C) 2009-2010 reserved.
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the license in the license sub-directory.
- *
- */
+#ifndef _CHAOS3D_SCRIPT_TRAITS_H
+#define _CHAOS3D_SCRIPT_TRAITS_H
 
-#ifndef	_CHAOS_TRAITS_H
-#define	_CHAOS_TRAITS_H
+namespace script {
+    template<class C>
+    using is_number = std::is_arithmetic<C>;
 
-#include "common.h"
+    template<class C>
+    struct is_userdata
+    : public std::conditional<is_number<C>::value, std::false_type, std::true_type>::type {};
 
-_CHAOS_BEGIN
+    template<>
+    struct is_userdata<char const*> : public std::false_type {};
 
-class Type;
+    template<int N>
+    struct is_userdata<char [N]> : public std::false_type {};
 
-class TypeNative{
-public:
-	static Type* __getType(){
-		return 0;
-	};
-};
+    template<>
+    struct is_userdata<std::string> : public std::false_type {};
 
-template<typename T>
-class TypeApplier{
-public:
-	inline
-	static Type* getType(){
-		return T::__getType();
-	}
-};
-/*
-this is to transform native type, like int/char to class type
-*/
-template<class T> struct TypeTraits{	typedef	T	Type; };
-template<class T> struct TypeTraits<T*>{	typedef	T	Type; };
-template<class T> struct TypeTraits<T&>{	typedef	T	Type; };
+    template<class C>
+    struct is_userdata<std::vector<C>> : public std::false_type {};
 
-#define TYPE_NATIVE( type )			\
-	template<> struct TypeTraits<type>{	typedef	TypeNative	Type; };		\
-	template<> struct TypeTraits<type*>{	typedef	TypeNative	Type; };	\
-	template<> struct TypeTraits<type&>{	typedef	TypeNative	Type; };	
+    template<class C, class... As>
+    struct vector_of {};
 
-TYPE_NATIVE(const char);
-TYPE_NATIVE(char);
-TYPE_NATIVE(bool);
-TYPE_NATIVE(short);
-TYPE_NATIVE(int);
-TYPE_NATIVE(long);
-TYPE_NATIVE(float);
-TYPE_NATIVE(double);
-TYPE_NATIVE(std::string);
-template<> struct TypeTraits<void>{	typedef	TypeNative	Type; };		\
-template<> struct TypeTraits<void*>{	typedef	TypeNative	Type; };	\
+    template<class C, class... As>
+    struct vector_of<std::vector<C, As...>> {
+        typedef C type;
+    };
 
-_CHAOS_END
+    template<class P>
+    struct unwrap_ptr {
+        typedef P type;
+    };
+
+    template<class P, class... Args>
+    struct unwrap_ptr<std::unique_ptr<P, Args...>> {
+        typedef P type;
+    };
+
+    template<class P>
+    struct unwrap_ptr<std::shared_ptr<P>> {
+        typedef P type;
+    };
+
+    template<class P>
+    struct unwrap_ptr<std::weak_ptr<P>> {
+        typedef P type;
+    };
+}
 
 #endif
