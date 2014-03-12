@@ -35,18 +35,32 @@ ref ref::copy() const {
 #endif
 }
 
+int ref::release() {
+    int cur = _ref;
+    _ref = -1;
+    _parent.reset();
+    return cur;
+}
 
-void ref::release() {
+void ref::reset(state* st) {
 #if 1
-    if (_ref != -1) {
+    if (_ref > -1) {
         lua_unref(_parent->internal(), _ref);
-        _ref = -1;
     }
 #else
-    if (_ref != -1 && !_parent.expired()) {
+    if (_ref > -1 && !_parent.expired()) {
         auto* L = _parent.lock()->internal();
         lua_unref(L, _ref);
-        _ref = -1;
     }
 #endif
+    _ref = -1;
+    _parent.reset();
+    
+    if (st != nullptr) {
+        auto* L = st->internal();
+        if (lua_gettop(L) > 0) {
+            _ref = lua_ref(L, 1);
+            _parent = st->shared_from_this();
+        }
+    }
 }

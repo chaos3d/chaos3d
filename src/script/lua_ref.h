@@ -39,9 +39,13 @@ namespace script {
         ref& operator=(ref const&) = delete;
         ref copy() const;
                
-        ~ref() { release(); };
+        ~ref() { reset(); };
         
-        void release();
+        // release the ownership and the parent state
+        int release();
+        
+        // reset the internal reference to a new one at the top of stack
+        void reset(state* = nullptr);
         
         parent_ptr const& parent() const { return _parent; }
     private:

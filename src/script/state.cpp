@@ -23,7 +23,8 @@ coroutine::~coroutine() {
         parent().lock()->recycle(std::move(*this));
     }
 #else
-    parent()->recycle(std::move(*this));
+    if (parent())
+        parent()->recycle(std::move(*this));
 #endif
 }
 
@@ -61,6 +62,7 @@ bool coroutine::is_resumable() const {
 
 state::state(bool open_all)
 : _L(luaL_newstate()) {
+    ensure_objlink();
     if (open_all) {
         luaL_openlibs(_L);
     }
@@ -70,13 +72,39 @@ state::~state() {
     lua_close(_L);
 }
 
-void state::recycle(script::coroutine &&) {
-    
+void state::ensure_objlink() {
+    lua_newtable(_L);
+    lua_newtable(_L);
+    lua_pushstring(_L, "kv");
+    lua_setfield(_L, -2, "__mode");
+    lua_setmetatable(_L, -2);
+#if 0
+    // TODO: add debug tracking info for __index/__newindex
+#endif
+    int ref = luaL_ref(_L, -1);
+    assert(ref == 1);
+}
+
+void state::recycle(script::coroutine &&co) {
+    int r = co._co_ref.release();
+    _coroutines.emplace_back(std::move(co));
+    _co_refs.emplace_back(r);
 }
 
 coroutine state::fetch() {
-    lua_newthread(_L);
-    return coroutine(this); // transfer ownership to co, the thread is removed from the stack
+    if (!_coroutines.empty()) {
+        coroutine co = std::move(_coroutines.back());
+        lua_getref(_L, _co_refs.back());
+        
+        _coroutines.pop_back();
+        _co_refs.pop_back();
+        
+        co._co_ref.reset(this);
+        return co;
+    } else {
+        lua_newthread(_L);
+        return coroutine(this); // transfer ownership to co, the thread is removed from the stack
+    }
 }
 
 coroutine state::load(char const* s, char const* name) {

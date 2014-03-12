@@ -4,6 +4,7 @@
 #include <memory>
 #include <tuple>
 #include <type_traits>
+#include <vector>
 #include <liblua/lua/lua.hpp>
 #include "common/utility.h"
 #include "script/converter.h"
@@ -90,6 +91,8 @@ namespace script {
     class state : public std::enable_shared_from_this<state> {
     public:
         typedef std::shared_ptr<state> ptr;
+        typedef std::vector<coroutine> coroutines_t;
+        typedef std::vector<int> coroutine_refs_t;
         
     public:
         ~state();
@@ -137,10 +140,17 @@ namespace script {
         void push_scope(lua_State*, char const* scope);
         
         state(bool = true);
+        
+        // make sure the table to link all the objects are reference as 1
+        void ensure_objlink();
+        
         void recycle(coroutine &&);
         coroutine fetch();
         
         lua_State* _L;
+        
+        coroutines_t _coroutines;
+        coroutine_refs_t _co_refs;
         
         CONSTRUCTOR_FOR_SHARED(state);
         
