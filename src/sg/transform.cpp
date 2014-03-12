@@ -28,6 +28,15 @@ transform* transform::clone(game_object* go) const {
     return com;
 }
 
+transform& transform::set_rotate_by_axis(float x, float y, float z) {
+    _rotate = quaternionf(
+                          Eigen::AngleAxisf(x*M_PI, vector3f::UnitX())
+                          * Eigen::AngleAxisf(y*M_PI,  vector3f::UnitY())
+                          * Eigen::AngleAxisf(z*M_PI, vector3f::UnitZ())
+                          );
+    return *this;
+}
+
 transform& transform::force_update() {
     auto flag = transform_manager::mask_bit << transform_manager::flag_offset();
     auto idx = transform_manager::component_idx();

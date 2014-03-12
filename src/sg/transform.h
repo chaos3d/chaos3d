@@ -67,6 +67,9 @@ namespace com {
         inline transform& mark_dirty(bool global = true);
         inline bool is_dirty() const;
         
+        // helper function to set rotation
+        transform& set_rotate_by_axis(float x, float y, float z);
+        
     private:
         affine3f _global_inverse;
         
