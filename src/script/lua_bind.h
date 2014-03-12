@@ -115,7 +115,7 @@ namespace script {
         typename is_void<R>::type* = nullptr>
         static int wrapper_internal(lua_State* L, R (C::*ptr)(Args...), tuple_seq<N...>) {
             char storage[storage_of<Args...>()];
-            C& obj = converter<C&>::from(L, 1);
+            C& obj = converter<C&>::from(L, 1, nullptr);
             (obj.*ptr)(converter<Args>::from(L, N + 2, &storage[storage_of<Args...>(N + 1)])...);
             return policy_helper().apply<Policy...>(L);
         }
@@ -125,7 +125,7 @@ namespace script {
         template<class R, class C, class... Args, int ...N, class... Policy>
         static int wrapper_internal(lua_State* L, R (C::*ptr)(Args...) const, tuple_seq<N...>) {
             char storage[storage_of<Args...>()];
-            C& obj = converter<C&>::from(L, 1);
+            C& obj = converter<C&>::from(L, 1, nullptr);
             return push_results<R, Policy...>
             (L, (obj.*ptr)(converter<Args>::from(L, N + 2, &storage[storage_of<Args...>(N + 1)])...));
         }

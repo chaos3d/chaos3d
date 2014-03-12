@@ -18,6 +18,7 @@ namespace script {
         
         // from the object on top of the stack
         ref(state*);
+        ref(lua_State*);
         ref(coroutine&);
         
         ref(ref &&rhs)
@@ -30,6 +31,13 @@ namespace script {
             _parent = std::move(rhs._parent);
             rhs._ref = -1;
             return *this;
+        }
+        
+        void push(lua_State* L) const {
+            if (_ref > -1)
+                lua_getref(L, _ref);
+            else
+                lua_pushnil(L);
         }
         
         // explicit delete copy constructor to avoid

@@ -60,8 +60,19 @@ bool coroutine::is_resumable() const {
 }
 #endif
 
-state::state(bool open_all)
-: _L(luaL_newstate()) {
+static void *l_alloc (void *ud, void *ptr, size_t osize,
+                      size_t nsize) {
+    (void)ud;  (void)osize;  /* not used */
+    if (nsize == 0) {
+        free(ptr);
+        return NULL;
+    }
+    else
+        return realloc(ptr, nsize);
+}
+
+state::state(bool open_all) {
+    _L = lua_newstate(l_alloc, this);
     ensure_objlink();
     if (open_all) {
         luaL_openlibs(_L);

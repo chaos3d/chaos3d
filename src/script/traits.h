@@ -5,6 +5,7 @@
 #include <memory>
 #include <vector>
 #include <type_traits>
+#include "script/lua_ref.h"
 
 namespace script {
     template<class C>
@@ -16,6 +17,9 @@ namespace script {
 
     template<>
     struct is_userdata<char const*> : public std::false_type {};
+
+    template<>
+    struct is_userdata<ref> : public std::false_type {};
 
     template<int N>
     struct is_userdata<char [N]> : public std::false_type {};

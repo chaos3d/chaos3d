@@ -33,6 +33,13 @@ namespace script {
         };
         
         template<typename U = T,
+        typename std::enable_if<std::is_same<T1<U>, ref>::value>::type* = nullptr>
+        static ref from(lua_State* L, int idx, char* storage) {
+            lua_pushvalue(L, idx);
+            return ref(L);
+        };
+
+        template<typename U = T,
         typename std::enable_if<std::is_same<T1<U>, char const*>::value>::type* = nullptr>
         static char const* from(lua_State* L, int idx, char* storage) {
             return lua_tostring(L, idx);
@@ -89,11 +96,17 @@ namespace script {
         static void to(lua_State* L, T const&& value) {
             lua_pushnumber(L, value);
         }
-        
+
         template<typename U = T,
         typename std::enable_if<std::is_same<T1<U>, char const*>::value>::type* = nullptr>
         static void to(lua_State* L, char const* str) {
             lua_pushstring(L, str);
+        };
+        
+        template<typename U = T,
+        typename std::enable_if<std::is_same<T1<U>, ref>::value>::type* = nullptr>
+        static void to(lua_State* L, ref const& r) {
+            r.push(L);
         };
         
         template<typename U = T,

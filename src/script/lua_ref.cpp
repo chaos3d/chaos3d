@@ -11,6 +11,15 @@ ref::ref(state* st)
     }
 }
 
+ref::ref(lua_State* L) {
+    state* st = nullptr;
+    lua_getallocf(L, (void**)&st);
+    _parent = st->shared_from_this();
+    if (lua_gettop(L) > 0) {
+        _ref = lua_ref(L, 1);
+    }
+}
+
 ref::ref(coroutine& co)
 : _parent(co.parent()), _ref(-1) {
 //    if (_parent.expired())
