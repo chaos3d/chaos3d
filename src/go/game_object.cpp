@@ -23,16 +23,15 @@ void game_object::populate_flag() {
 }
 
 game_object* game_object::find_by_tag(char const* tag, bool recursive) const{
-	game_object *node = nullptr;
 	for(auto *child = _first_child;
-        child != 0 && node == 0;
-        child = child->_next_sibling)
-        if(node->tag() == tag)
-            return node;
+        child != null; child = child->_next_sibling)
+        if(child->tag() == tag)
+            return child;
     
+	game_object *node = nullptr;
     if(recursive) {
         for(auto *child = _first_child;
-            child != 0 && node == 0;
+            child != null && node == nullptr;
             child = child->_next_sibling)
             node = child->find_by_tag(tag, true);
     }
