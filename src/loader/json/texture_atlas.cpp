@@ -26,7 +26,7 @@ texture_atlas texture_atlas::load_from(json_loader const& json,
 
     auto& frames = root["frames"];
     auto& rects = atlas._rects;
-    for (auto it =frames.Begin(); it != frames.End(); ++it) {
+    for (auto it = frames.Begin(); it != frames.End(); ++it) {
         // TODO: source size/rotate/trim
         auto& frame = (*it)["frame"];
         float x = (float)frame["x"].GetInt() / size.x();
@@ -42,11 +42,4 @@ texture_atlas texture_atlas::load_from(json_loader const& json,
     }
     
     return atlas;
-}
-
-#include "script/lua_ref.h"
-
-template<>
-texture_atlas texture_atlas::load_from(script::ref const& json) {
-    return texture_atlas();
 }

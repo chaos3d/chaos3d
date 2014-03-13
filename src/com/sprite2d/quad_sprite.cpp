@@ -24,13 +24,14 @@ quad_sprite* quad_sprite::clone(game_object* go) const {
 
 void quad_sprite::fill_indices(uint16_t start_idx) {
     _indices = {
-        start_idx, start_idx+1, start_idx+2,
-        start_idx+1, start_idx+2, start_idx+3
+        start_idx, static_cast<uint16_t>(start_idx + 1),
+        static_cast<uint16_t>(start_idx + 2), static_cast<uint16_t>(start_idx + 1),
+        static_cast<uint16_t>(start_idx + 2), static_cast<uint16_t>(start_idx + 3)
     };
 }
 
 quad_sprite& quad_sprite::set_from_material(sprite_material* mat,
-                                    box2f const& frame, vector2f const& pivot) {
+                                            box2f const& frame, vector2f const& pivot) {
     if (mat)
         set_material(mat);
     

@@ -31,7 +31,7 @@
         CGPoint pos = [touch locationInView: self];
         host->dispatch(touch_began_event(
                                          {pos.x * scaling, pos.y * scaling}, 0.f /*FIXME, time*/,
-                                         reinterpret_cast<uint32_t>(touch)
+                                         reinterpret_cast<touch_event::pointer_t>(touch)
                                          ));
     }
 }
@@ -44,7 +44,7 @@
         CGPoint pos = [touch locationInView: self];
         host->dispatch(touch_moved_event(
                                          {pos.x * scaling, pos.y * scaling}, 0.f /*FIXME, time*/,
-                                         reinterpret_cast<uint32_t>(touch)
+                                         reinterpret_cast<touch_event::pointer_t>(touch)
                                          ));
     }
 }
@@ -57,7 +57,7 @@
         CGPoint pos = [touch locationInView: self];
         host->dispatch(touch_ended_event(
                                          {pos.x * scaling, pos.y * scaling}, 0.f /*FIXME, time*/,
-                                         reinterpret_cast<uint32_t>(touch)
+                                         reinterpret_cast<touch_event::pointer_t>(touch)
                                          ));
     }
 }
@@ -70,7 +70,7 @@
         CGPoint pos = [touch locationInView: self];
         host->dispatch(touch_cancelled_event(
                                              {pos.x * scaling, pos.y * scaling}, 0.f /*FIXME, time*/,
-                                             reinterpret_cast<uint32_t>(touch)
+                                             reinterpret_cast<touch_event::pointer_t>(touch)
                                              ));
     }
 }

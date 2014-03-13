@@ -17,6 +17,11 @@ sprite::sprite(game_object* go, size_t count, int type)
 sprite::~sprite() {
 }
 
+void sprite::set_type(size_t count, int type) {
+    // always give away the ownership to the manager
+    _data.buffer = sprite_mgr::instance().assign_buffer(this, count, type);
+}
+
 void sprite::destroy() {
     _mark_for_remove = true;
 }
@@ -279,14 +284,17 @@ void sprite_mgr::update(goes_t const& gos) {
 }
 
 layout_buffer* sprite_mgr::assign_buffer(sprite* spt, uint32_t count, uint32_t typeIdx) {
+    // TODO: remove from the old buffer? maybe it's better to just create a new one
+    assert(spt->_data.buffer == nullptr);
+    
     layout_buffer *buf = nullptr;
     auto it = std::lower_bound(_buffers.begin(), _buffers.end(), typeIdx,
                                [] (std::unique_ptr<layout_buffer> const & buf, uint32_t type) {
                                    return buf->type_idx < type;
                                });
-    for(auto free_it = it; it != _buffers.end() && (*it)->type_idx == typeIdx; ++free_it) {
+    for (auto free_it = it; it != _buffers.end() && (*it)->type_idx == typeIdx; ++free_it) {
         auto& spt = (*it)->sprites.back();
-        if(std::get<1>(spt) + std::get<2>(spt) + count <= _vertex_buffer_size) {
+        if (std::get<1>(spt) + std::get<2>(spt) + count <= _vertex_buffer_size) {
             buf = free_it->get();
             break;
         }
@@ -298,7 +306,7 @@ layout_buffer* sprite_mgr::assign_buffer(sprite* spt, uint32_t count, uint32_t t
 #endif
     }
     
-    if(buf == nullptr) {
+    if (buf == nullptr) {
         buf = _buffers.emplace(it, create_buffer(_types[typeIdx]))->get();
     }
     

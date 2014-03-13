@@ -47,7 +47,7 @@ public:
 
     char* address() const { return _address; }
     
-    static ptr from(data_stream*, bool null_end = true);
+    static ptr from(data_stream*, bool null_end = false);
 private:
     char* _address;
     char* _end;

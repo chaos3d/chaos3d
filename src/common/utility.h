@@ -22,7 +22,7 @@ public: auto set_##name(type const& name) -> decltype(*this) \
     }
 
 #define CONSTRUCT_FROM_LOADER(type) \
-    public: template<class Loader,class... Args> static type load_from(Loader const&, Args&&...);
+    public: template<class Loader,class... Args> static type load_from(Loader const&, Args...);
 
 // help functions for classes using enable_shared_from_this
 #define CONSTRUCTOR_FOR_SHARED(type) \

@@ -22,7 +22,7 @@ void camera2d::collect(const std::vector<game_object *> &goes) {
     auto it = goes.begin();
     auto next_sprite = [&] () {
         sprite* spt = nullptr;
-        for (;it != goes.end() && spt == nullptr; ++it) {
+        for (;it != goes.end() && (spt == nullptr || !spt->is_renderable()); ++it) {
             spt = (*it)->get_component<sprite>(idx);
         }
         return spt;

@@ -135,6 +135,8 @@ namespace sprite2d {
         sprite(game_object*, size_t count /*number of vertices*/, int type/*layout*/);
         virtual ~sprite();
         
+        void set_type(size_t count, int type);
+        
         // buffer data
         std::tuple<const void*, size_t> index_data() const {
             return std::make_tuple(_indices.data(), _indices.size() * sizeof(uint16_t));
@@ -143,6 +145,10 @@ namespace sprite2d {
         // batching operation
         bool batchable(sprite const& rhs) const {
             return _data == rhs._data;
+        }
+        
+        bool is_renderable() const {
+            return _data.buffer != nullptr && _data.material != nullptr;
         }
         
         vertex_layout::ptr layout() const {
