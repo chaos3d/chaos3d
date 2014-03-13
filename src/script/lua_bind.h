@@ -7,10 +7,10 @@
 #include <liblua/lua/lua.hpp>
 #include "common/utility.h"
 #include "script/converter.h"
+#include "script/converter_ptr.h"
+#include "script/type_info.h"
 
 namespace script {
-    typedef int (*lua_funciont_t) (lua_State*);
-
     struct return_to_reference {};
 
     // out_value policy need external storage?
@@ -159,26 +159,6 @@ namespace script {
             return wrapper(L, f, Policy() ...);
         };
     };
-    
-    template<class R, class... Args>
-    auto function_deduce(R (*ptr)(Args...)) -> decltype(ptr) {
-        return ptr;//&function_wrapper<R, Args...>::template lua_call;
-    }
-    
-//    template<class F, F _F>
-//    lua_funciont_t function_deduce2(){
-//        return ptr;//&function_wrapper<R, Args...>::template lua_call;
-//    }
-
-    template<class R, class... Args>
-    lua_funciont_t function_deduce2(R (*ptr)(Args...)) {
-        return nullptr;//&function_wrapper<R, Args...>::template lua_call<>;
-    }
-    
-    
-    void def(char const* name, lua_funciont_t f) {
-        //function_wrapper<void, f>(nullptr);
-    }
 }
 
 #define LUA_GET_BIND(_1,_2,NAME,...) NAME

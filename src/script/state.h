@@ -7,7 +7,6 @@
 #include <vector>
 #include <liblua/lua/lua.hpp>
 #include "common/utility.h"
-#include "script/converter.h"
 #include "script/class_type.h"
 #include "script/lua_ref.h"
 #include "script/import_scope.h"

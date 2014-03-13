@@ -52,8 +52,8 @@ namespace script {
         typedef P type;
     };
 
-    template<class P, class... Args>
-    struct unwrap_ptr<std::unique_ptr<P, Args...>> {
+    template<class P, class D>
+    struct unwrap_ptr<std::unique_ptr<P, D>> {
         typedef P type;
     };
 

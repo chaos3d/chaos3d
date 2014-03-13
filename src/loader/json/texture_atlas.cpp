@@ -9,10 +9,10 @@ using namespace rapidjson;
 
 // texture_atlas loader for texture packer in json
 template<>
-texture_atlas texture_atlas::load_from(json_loader const& json,
-                                       asset_manager& mgr,
-                                       texture_atlas::TexturePacker &&) {
-    texture_atlas atlas;
+std::unique_ptr<texture_atlas> texture_atlas::load_from(json_loader const& json,
+                                                        asset_manager& mgr,
+                                                        texture_atlas::TexturePacker &&) {
+    texture_atlas *atlas = new texture_atlas();
     Document const& root = json.internal<Document>();
 
     std::string file_name(root["meta"]["image"].GetString());
@@ -21,11 +21,11 @@ texture_atlas texture_atlas::load_from(json_loader const& json,
         assert(0); // FIXME: manual add meta, and load
     }
 
-    atlas._texture = mgr.load<texture>(file_name);
-    auto size = atlas._texture->size();
+    atlas->_texture = mgr.load<texture>(file_name);
+    auto size = atlas->_texture->size();
 
     auto& frames = root["frames"];
-    auto& rects = atlas._rects;
+    auto& rects = atlas->_rects;
     for (auto it = frames.Begin(); it != frames.End(); ++it) {
         // TODO: source size/rotate/trim
         auto& frame = (*it)["frame"];
@@ -41,5 +41,5 @@ texture_atlas texture_atlas::load_from(json_loader const& json,
                       );
     }
     
-    return atlas;
+    return std::unique_ptr<texture_atlas>(atlas);
 }

@@ -6,6 +6,7 @@
 #include <unordered_map>
 #include "script/class_type.h"
 #include "script/converter.h"
+#include "script/converter_ptr.h"
 
 namespace script {
     class state;

@@ -138,17 +138,21 @@ namespace script {
         !std::is_pointer<T1<U>>::value>::type* = nullptr>
         static void to(lua_State* L, T&& value) {
             typedef T2<U> R;
-            //to(L, new R(std::forward<R>(value))); // need transfer ownership
-            //assert(0);
+            using tag_t = typename std::conditional<std::is_base_of<referenced_count, R>::value,
+                referenced_count_tag, pure_pointer_tag>::type;
             lua_getref(L, 1); // state ensures this be 1
             lua_pushlightuserdata(L, &value);
             lua_rawget(L, -2);
             if (lua_isnoneornil(L, -1)) {
                 lua_pop(L, 1); // pop the nil
                 auto* wrapper = (object_wrapper*)lua_newuserdata(L, sizeof(object_wrapper));
-                wrapper->object = &value; // TODO: ownership transfer
+                wrapper->object = &value;
                 wrapper->type = &class_<T2<U>>::type();
-                wrapper->type->push_metatable(L);
+
+                // FIXME: we don't really bother the lifetime for this for now
+                // unless it's a referenced_count object
+                object_meta<tag_t>::retain(&value);
+                object_meta<tag_t>::push_metatable(L);
                 lua_setmetatable(L, -2);
                 lua_pushlightuserdata(L, &value); // # tbl, value, key
                 lua_pushvalue(L, -2); // # tbl, value, key, value
@@ -163,15 +167,23 @@ namespace script {
         typename std::enable_if<is_userdata<T2<U>>::value &&
         std::is_pointer<T1<U>>::value>::type* = nullptr>
         static void to(lua_State* L, T1<U> value) {
+            typedef T2<U> R;
+            using tag_t = typename std::conditional<std::is_base_of<referenced_count, R>::value,
+                referenced_count_tag, raw_pointer_tag>::type;
             lua_getref(L, 1); // state ensures this be 1
+            
             lua_pushlightuserdata(L, value);
             lua_rawget(L, -2);
+            
             if (lua_isnoneornil(L, -1)) {
                 lua_pop(L, 1); // pop the nil
                 auto* wrapper = (object_wrapper*)lua_newuserdata(L, sizeof(object_wrapper));
-                wrapper->object = value; // TODO: ownership transfer
-                wrapper->type = &class_<T2<U>>::type();
-                wrapper->type->push_metatable(L);
+                wrapper->object = value;
+                wrapper->type = &class_<R>::type();
+                
+                // we take the ownership as a regular pointer
+                object_meta<tag_t>::retain(value);
+                object_meta<tag_t>::template push_metatable<R>(L, std::default_delete<R>());
                 lua_setmetatable(L, -2);
                 lua_pushlightuserdata(L, value); // # tbl, value, key
                 lua_pushvalue(L, -2); // # tbl, value, key, value
