@@ -286,9 +286,9 @@ namespace sprite2d {
         // one, so when do batching, it's faster
         // note, the paramters are moved away to the result
         sprite_material* add_material(std::string const&,
-                                      gpu_program::const_ptr && program,
-                                      render_state::ptr && state,
-                                      render_uniform::ptr && uniform);
+                                      gpu_program* program,
+                                      render_state::ptr const& state,
+                                      render_uniform::ptr const& uniform);
         sprite_material* add_material(std::unique_ptr<sprite_material>&&);
         sprite_material* find_first_material(std::string const&) const;
         

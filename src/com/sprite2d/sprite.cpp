@@ -109,10 +109,10 @@ _channel_names(channels){
     )shader";
 
     auto vs = _device->create_shader(gpu_shader::Vertex);
-    vs->compile(make_unique<memory_stream>(vs_source, strlen(vs_source)).get());
+    vs->compile(vs_source);
     
     auto fs = _device->create_shader(gpu_shader::Fragment);
-    fs->compile(make_unique<memory_stream>(ps_source, strlen(ps_source)).get());
+    fs->compile(ps_source);
     
     auto gpu = _device->create_program();
     gpu->link(vertex_layout(0), {vs.get(), fs.get()});
@@ -126,7 +126,7 @@ _channel_names(channels){
 #endif
     
     add_material("basic",
-                 gpu->retain<gpu_program>(),
+                 gpu.get(),
                  std::make_shared<render_state>(state),
                  make_uniforms_ptr({
         make_uniform("c_tex1", texture::null())
@@ -139,11 +139,11 @@ sprite_mgr::~sprite_mgr() {
 }
 
 sprite_material* sprite_mgr::add_material(std::string const& name,
-                                          gpu_program::const_ptr && program,
-                                          render_state::ptr && state,
-                                          render_uniform::ptr && uniform) {
-    return add_material(make_unique<sprite_material>(name, std::move(program),
-                                                           std::move(state), std::move(uniform)));
+                                          gpu_program* program,
+                                          render_state::ptr const& state,
+                                          render_uniform::ptr const& uniform) {
+    return add_material(make_unique<sprite_material>(name, program->retain<gpu_program>(),
+                                                     state, uniform));
 }
 
 sprite_material* sprite_mgr::find_first_material(std::string const& name) const {
@@ -370,7 +370,7 @@ std::array<int, layout_buffer::MAX> sprite_mgr::map_channel(vertices_t const& la
                                        return vtx.name < channel;
                                    });
         if(it != layout.end() && it->name == _channel_names[i]) {
-            indices[i] = std::distance(layout.begin(), it);
+            indices[i] = (int)std::distance(layout.begin(), it);
         }
     }
     return std::move(indices);

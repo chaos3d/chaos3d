@@ -41,7 +41,7 @@ game_object* game_object::find_by_tag(char const* tag, bool recursive) const{
 game_object* game_object::child_at(int idx) const {
     game_object* child = _first_child;
     if(idx < 0)
-        idx = child_size() + idx;
+        idx = (int)child_size() + idx;
     for(;child != null && idx > 0; -- idx)
         child = child->_next_sibling;
     return child;
