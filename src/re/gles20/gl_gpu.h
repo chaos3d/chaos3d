@@ -10,7 +10,7 @@ public:
     gl_gpu_shader(int type);
     virtual ~gl_gpu_shader();
     
-    void compile(data_stream*);
+    virtual void compile(std::vector<char const*> const&) override;
 
     GLuint shader_id() const { return _shader_id; }
     

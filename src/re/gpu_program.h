@@ -3,19 +3,20 @@
 
 #include <initializer_list>
 #include <vector>
+#include <memory>
 #include "common/referenced_count.h"
 #include "re/render_uniform.h"
 
 class vertex_channels;
 class gpu_shader;
-class data_stream;
+class memory_stream;
 class render_context;
 
-class gpu_shader {
+class gpu_shader : public std::enable_shared_from_this<gpu_shader> {
 public:
     enum { Vertex, Fragment };
-    typedef std::unique_ptr<gpu_shader> ptr;
-    typedef std::unique_ptr<const gpu_shader> const_ptr;
+    typedef std::shared_ptr<gpu_shader> ptr;
+    typedef std::shared_ptr<const gpu_shader> const_ptr;
     
 public:
     gpu_shader(int type) : _type(type)
@@ -23,7 +24,11 @@ public:
     
     virtual ~gpu_shader() {};
     
-    virtual void compile(data_stream*) = 0;
+    virtual void compile(std::vector<char const*> const&) = 0;
+    
+    void compile(char const* source) {
+        compile(std::vector<char const*>{source});
+    };
     
 private:
     int _type;

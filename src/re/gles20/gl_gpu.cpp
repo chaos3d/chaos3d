@@ -21,12 +21,8 @@ gl_gpu_shader::~gl_gpu_shader() {
     glDeleteShader(_shader_id);
 }
 
-void gl_gpu_shader::compile(data_stream* ds) {
-    GLint size = ds->size();
-    GLchar* buf = new char [size];
-    ds->read(buf, size);
-    
-    glShaderSource(_shader_id, 1, &buf, &size);
+void gl_gpu_shader::compile(std::vector<char const*> const& ds) {
+    glShaderSource(_shader_id, (GLsizei)ds.size(), ds.data(), NULL); // null-terminated
     glCompileShader(_shader_id);
     
     GLint status;
@@ -43,7 +39,6 @@ void gl_gpu_shader::compile(data_stream* ds) {
         printf("%s\n", src);
         free(src);
     }
-    delete [] buf;
 }
 
 gl_gpu_program::gl_gpu_program() {
