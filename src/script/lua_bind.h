@@ -61,7 +61,9 @@ namespace script {
     constexpr size_t storage_of(size_t idx = sizeof...(Ts)) {
         using T0 = typename std::remove_reference<T>::type;
         return idx == 0 ? 0 :
-            ((std::is_lvalue_reference<T>::value ? sizeof(T0) : 0) + storage_of<Ts...>(idx - 1));
+        ((std::is_lvalue_reference<T>::value && !std::is_const<T0>::value
+              ? sizeof(T0)
+              : 0) + storage_of<Ts...>(idx - 1));
     };
     
     template<class F>
@@ -107,7 +109,7 @@ namespace script {
             char storage[storage_of<Args...>()];
             C& obj = converter<C&>::from(L, 1, nullptr); // C will never be a reference
             return push_results<R, Policy...>
-            (L, (obj.*ptr)(converter<Args>::from(L, N + 2, &storage[storage_of<Args...>(N + 1)])...));
+            (L, (obj.*ptr)(converter<Args>::from(L, N + 2, &storage[storage_of<Args...>(N)])...));
         }
         
         // member function without returns (void)
@@ -116,7 +118,7 @@ namespace script {
         static int wrapper_internal(lua_State* L, R (C::*ptr)(Args...), tuple_seq<N...>) {
             char storage[storage_of<Args...>()];
             C& obj = converter<C&>::from(L, 1, nullptr);
-            (obj.*ptr)(converter<Args>::from(L, N + 2, &storage[storage_of<Args...>(N + 1)])...);
+            (obj.*ptr)(converter<Args>::from(L, N + 2, &storage[storage_of<Args...>(N)])...);
             return policy_helper().apply<Policy...>(L);
         }
         
@@ -127,7 +129,7 @@ namespace script {
             char storage[storage_of<Args...>()];
             C& obj = converter<C&>::from(L, 1, nullptr);
             return push_results<R, Policy...>
-            (L, (obj.*ptr)(converter<Args>::from(L, N + 2, &storage[storage_of<Args...>(N + 1)])...));
+            (L, (obj.*ptr)(converter<Args>::from(L, N + 2, &storage[storage_of<Args...>(N)])...));
         }
         
         // to deduce function pointer

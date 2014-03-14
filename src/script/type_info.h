@@ -114,15 +114,17 @@ namespace script {
         static void push_metatable(lua_State *L, std::shared_ptr<T> const& ptr) {
             typedef std::shared_ptr<T> ptr_t;
 
-            if(luaL_newmetatable(L, typeid(T).name()) == 1) {
-                lua_pushcfunction(L, __index);
-                lua_setfield(L, -2, "__index");
+            // each object will have a unique metatable
+            // because shared_ptr bound to gc function
+            lua_createtable(L, 0, 2);
+
+            lua_pushcfunction(L, __index);
+            lua_setfield(L, -2, "__index");
                 
-                void* addr = lua_newuserdata(L, sizeof(ptr_t));
-                new (addr) ptr_t(ptr);
-                lua_pushcclosure(L, __gc<T>, 1);
-                lua_setfield(L, -2, "__gc");
-            }
+            void* addr = lua_newuserdata(L, sizeof(ptr_t));
+            new (addr) ptr_t(ptr);
+            lua_pushcclosure(L, __gc<T>, 1);
+            lua_setfield(L, -2, "__gc");
         }
     };
     
