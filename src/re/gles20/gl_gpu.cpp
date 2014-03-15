@@ -163,7 +163,7 @@ void gl_gpu_program::load_uniforms() {
     });
 }
 
-void gl_gpu_program::link(std::vector<std::string> layout, std::initializer_list<gpu_shader*> shaders) {
+void gl_gpu_program::link(std::vector<std::string> layout, std::vector<gpu_shader*> shaders) {
     uniforms().clear();
     channels().clear();
     detach_all();

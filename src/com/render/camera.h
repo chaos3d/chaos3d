@@ -18,7 +18,7 @@ namespace com {
     // represent a rendering algorithm
     // it will collect all visible renderables, and render to the
     // target
-    class camera : public component, protected referenced_count {
+    class camera : public component {
     public:
         typedef nil_component_mgr<std::false_type> manager_t;
         typedef std::forward_list<renderable*> renderables_t;
@@ -27,7 +27,6 @@ namespace com {
         typedef Eigen::Vector2f vector2f;
         typedef Eigen::Vector3f vector3f;
         typedef Eigen::Vector4f color_t;
-        typedef weak_ref_ctrl<camera>::weak_ptr ptr;
         
         struct ray {
             // R(t) = p + t*d;
@@ -90,9 +89,6 @@ namespace com {
         // NB: if transform doesn't exist, one will be created
         camera& move_for_perfect_pixel(float height = 0.f);
         
-        ptr get_weak() {
-            return get<camera>();
-        }
     protected:
         camera& operator=(camera const&);
         virtual ~camera();
@@ -101,10 +97,6 @@ namespace com {
         render_uniform::ptr uniform() const { return _uniform; }
         void update_matrix();
         void update_from_transform();
-        
-        virtual void destroy() override {
-            release();
-        }
         
     private:
         render_uniform::ptr _uniform;

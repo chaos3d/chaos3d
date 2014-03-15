@@ -77,7 +77,7 @@ public:
 
     // shaders can be safely deleted after linking
     virtual void link(std::vector<std::string> layout /* vertex attributes layout hints, channel name*/,
-                      std::initializer_list<gpu_shader*> shaders) = 0;
+                      std::vector<gpu_shader*> shaders) = 0;
     
     // bind to the hardware
     virtual void bind(render_context*, render_uniform const*,
