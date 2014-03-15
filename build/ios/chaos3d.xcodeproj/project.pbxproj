@@ -13,6 +13,10 @@
 		880BA32D189654A6002542E2 /* camera2d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 880BA329189654A6002542E2 /* camera2d.cpp */; };
 		880BA32E189654A6002542E2 /* sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 880BA32B189654A6002542E2 /* sprite.cpp */; };
 		8811357A18D181160069F351 /* texture_atlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8811357918D181160069F351 /* texture_atlas.cpp */; };
+		8811358018D426FA0069F351 /* game_object.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8811357D18D426FA0069F351 /* game_object.cpp */; };
+		8811358118D426FA0069F351 /* sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8811357F18D426FA0069F351 /* sprite.cpp */; };
+		8811358318D43F1D0069F351 /* re.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8811358218D43F1D0069F351 /* re.cpp */; };
+		8811358518D43F910069F351 /* eigen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8811358418D43F910069F351 /* eigen.cpp */; };
 		8812C289185DA722001C4D0B /* memory_stream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8812C287185DA722001C4D0B /* memory_stream.cpp */; };
 		8812C28F185DB7F8001C4D0B /* file_stream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8812C28D185DB7F8001C4D0B /* file_stream.cpp */; };
 		8812C292185E5F77001C4D0B /* gl_texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8812C290185E5F77001C4D0B /* gl_texture.cpp */; };
@@ -63,7 +67,6 @@
 		8879CEA118BDE7C800BCBFA6 /* asset_collection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8879CE9F18BDE7C800BCBFA6 /* asset_collection.cpp */; };
 		8879CEA418C0A10F00BCBFA6 /* application.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8879CEA218C0A10F00BCBFA6 /* application.cpp */; };
 		8879CEB218C7097200BCBFA6 /* liblua.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8879CEAB18C7097200BCBFA6 /* liblua.a */; };
-		8879CEF818C70E7900BCBFA6 /* test.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8879CEF718C70E7900BCBFA6 /* test.cpp */; };
 		8879CEFC18C848BB00BCBFA6 /* state.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8879CEFB18C848BB00BCBFA6 /* state.cpp */; };
 		8879CF0618C8873D00BCBFA6 /* lua_ref.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8879CF0518C8873D00BCBFA6 /* lua_ref.cpp */; };
 		8882D8D218990BD900B00DCD /* quad_sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8882D8D018990BD800B00DCD /* quad_sprite.cpp */; };
@@ -116,6 +119,11 @@
 		880BA32C189654A6002542E2 /* sprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sprite.h; sourceTree = "<group>"; };
 		8811357918D181160069F351 /* texture_atlas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = texture_atlas.cpp; sourceTree = "<group>"; };
 		8811357B18D18FEE0069F351 /* converter_ptr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = converter_ptr.h; sourceTree = "<group>"; };
+		8811357D18D426FA0069F351 /* game_object.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = game_object.cpp; sourceTree = "<group>"; };
+		8811357E18D426FA0069F351 /* def.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = def.h; sourceTree = "<group>"; };
+		8811357F18D426FA0069F351 /* sprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sprite.cpp; sourceTree = "<group>"; };
+		8811358218D43F1D0069F351 /* re.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = re.cpp; sourceTree = "<group>"; };
+		8811358418D43F910069F351 /* eigen.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = eigen.cpp; sourceTree = "<group>"; };
 		8812C287185DA722001C4D0B /* memory_stream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = memory_stream.cpp; path = io/memory_stream.cpp; sourceTree = "<group>"; };
 		8812C288185DA722001C4D0B /* memory_stream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = memory_stream.h; path = io/memory_stream.h; sourceTree = "<group>"; };
 		8812C28D185DB7F8001C4D0B /* file_stream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = file_stream.cpp; path = io/file_stream.cpp; sourceTree = "<group>"; };
@@ -511,7 +519,6 @@
 		887711DE18CB24B700BA5508 /* class_type.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = class_type.h; sourceTree = "<group>"; };
 		887711DF18CB2FA600BA5508 /* import_scope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = import_scope.h; sourceTree = "<group>"; };
 		887711E018CBC5F500BA5508 /* type_info.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = type_info.h; sourceTree = "<group>"; };
-		887711E318CC7D9200BA5508 /* gc_referenced_count.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gc_referenced_count.h; sourceTree = "<group>"; };
 		887711E418CD32CE00BA5508 /* import_scope.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = import_scope.cpp; sourceTree = "<group>"; };
 		8879CE1B18A809C200BCBFA6 /* shape_desc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shape_desc.h; sourceTree = "<group>"; };
 		8879CE1C18A80F0F00BCBFA6 /* base_types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = base_types.h; sourceTree = "<group>"; };
@@ -573,7 +580,6 @@
 		8879CEB018C7097200BCBFA6 /* lualib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lualib.h; sourceTree = "<group>"; };
 		8879CEB318C7099500BCBFA6 /* lua.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = lua.hpp; sourceTree = "<group>"; };
 		8879CEF618C70ACE00BCBFA6 /* lua_bind.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lua_bind.h; sourceTree = "<group>"; };
-		8879CEF718C70E7900BCBFA6 /* test.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = test.cpp; sourceTree = "<group>"; };
 		8879CEF918C83F0000BCBFA6 /* converter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = converter.h; sourceTree = "<group>"; };
 		8879CEFA18C8477C00BCBFA6 /* state.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = state.h; sourceTree = "<group>"; };
 		8879CEFB18C848BB00BCBFA6 /* state.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = state.cpp; sourceTree = "<group>"; };
@@ -721,6 +727,18 @@
 				8811357918D181160069F351 /* texture_atlas.cpp */,
 			);
 			path = lua;
+			sourceTree = "<group>";
+		};
+		8811357C18D426FA0069F351 /* type */ = {
+			isa = PBXGroup;
+			children = (
+				8811357E18D426FA0069F351 /* def.h */,
+				8811358418D43F910069F351 /* eigen.cpp */,
+				8811357D18D426FA0069F351 /* game_object.cpp */,
+				8811358218D43F1D0069F351 /* re.cpp */,
+				8811357F18D426FA0069F351 /* sprite.cpp */,
+			);
+			path = type;
 			sourceTree = "<group>";
 		};
 		8812C2A21861788F001C4D0B /* app */ = {
@@ -1608,10 +1626,10 @@
 		8879CEB418C70A9200BCBFA6 /* script */ = {
 			isa = PBXGroup;
 			children = (
+				8811357C18D426FA0069F351 /* type */,
 				887711DE18CB24B700BA5508 /* class_type.h */,
 				8879CEF918C83F0000BCBFA6 /* converter.h */,
 				8811357B18D18FEE0069F351 /* converter_ptr.h */,
-				887711E318CC7D9200BA5508 /* gc_referenced_count.h */,
 				887711E418CD32CE00BA5508 /* import_scope.cpp */,
 				887711DF18CB2FA600BA5508 /* import_scope.h */,
 				8879CEF618C70ACE00BCBFA6 /* lua_bind.h */,
@@ -1619,7 +1637,6 @@
 				8879CF0418C87EAE00BCBFA6 /* lua_ref.h */,
 				8879CEFB18C848BB00BCBFA6 /* state.cpp */,
 				8879CEFA18C8477C00BCBFA6 /* state.h */,
-				8879CEF718C70E7900BCBFA6 /* test.cpp */,
 				8814E1BF18D02C7C006C9120 /* traits.h */,
 				8814E1C018D04279006C9120 /* type_info.cpp */,
 				887711E018CBC5F500BA5508 /* type_info.h */,
@@ -1985,9 +2002,11 @@
 				8812C289185DA722001C4D0B /* memory_stream.cpp in Sources */,
 				8811357A18D181160069F351 /* texture_atlas.cpp in Sources */,
 				883246C8183237220022EA4A /* render_view_ios.mm in Sources */,
+				8811358318D43F1D0069F351 /* re.cpp in Sources */,
 				8812C28F185DB7F8001C4D0B /* file_stream.cpp in Sources */,
 				880BA32E189654A6002542E2 /* sprite.cpp in Sources */,
 				8879CE3318B2E0C900BCBFA6 /* timer.cpp in Sources */,
+				8811358118D426FA0069F351 /* sprite.cpp in Sources */,
 				887711E518CD32CE00BA5508 /* import_scope.cpp in Sources */,
 				8882E4A518A382A20044CFE4 /* event_dispatcher.cpp in Sources */,
 				8879CE2B18B1EAB500BCBFA6 /* action_script.cpp in Sources */,
@@ -1997,6 +2016,7 @@
 				8879CE5E18B9D13300BCBFA6 /* png_loader.cpp in Sources */,
 				8879CE9318BB4D2E00BCBFA6 /* action_json_loader.cpp in Sources */,
 				882762191873806A00B1291B /* render_context.cpp in Sources */,
+				8811358018D426FA0069F351 /* game_object.cpp in Sources */,
 				8879CE9018BABCDE00BCBFA6 /* scene2d.cpp in Sources */,
 				883246C9183237220022EA4A /* render_device.cpp in Sources */,
 				8879CEFC18C848BB00BCBFA6 /* state.cpp in Sources */,
@@ -2005,10 +2025,10 @@
 				883246C7183237220022EA4A /* render_device_ios.mm in Sources */,
 				8812C2AE18618ACE001C4D0B /* cViewController.mm in Sources */,
 				8879CE9D18BDC25100BCBFA6 /* ui_manager.cpp in Sources */,
+				8811358518D43F910069F351 /* eigen.cpp in Sources */,
 				8879CE5B18B7698F00BCBFA6 /* locator_asset_bundle.cpp in Sources */,
 				8879CEA118BDE7C800BCBFA6 /* asset_collection.cpp in Sources */,
 				88A84B0E183067AF009F7ECD /* transform.cpp in Sources */,
-				8879CEF818C70E7900BCBFA6 /* test.cpp in Sources */,
 				8879CE9518BC984700BCBFA6 /* collider2d.cpp in Sources */,
 				8812C2A0185F0992001C4D0B /* asset_locator.mm in Sources */,
 				8812C29B185EF887001C4D0B /* asset_locator.cpp in Sources */,

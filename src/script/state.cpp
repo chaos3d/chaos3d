@@ -132,9 +132,11 @@ coroutine state::load(char const* s, char const* name) {
 
 coroutine state::load(data_stream *ds, char const* name) {
     coroutine co(fetch());
-    auto* L = co.internal();
+    if (ds == nullptr)
+        return co;
     
-    int ret = lua_load(L, _stream_reader, (void*)ds, name);    
+    auto* L = co.internal();
+    int ret = lua_load(L, _stream_reader, (void*)ds, name);
     if (ret != 0) {
         // TODO: proper log
         printf("compiling errors: %s", lua_tostring(L, -1));
