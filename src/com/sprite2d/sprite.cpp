@@ -8,7 +8,7 @@
 using namespace sprite2d;
 
 #pragma mark - the sprite
-sprite::sprite(game_object* go, size_t count, int type)
+sprite::sprite(game_object* go, uint32_t count, int type)
 : component(go), _mark_for_remove(false) {
     // always give away the ownership to the manager
     _data.buffer = sprite_mgr::instance().assign_buffer(this, count, type);
@@ -17,7 +17,7 @@ sprite::sprite(game_object* go, size_t count, int type)
 sprite::~sprite() {
 }
 
-void sprite::set_type(size_t count, int type) {
+void sprite::set_type(uint32_t count, int type) {
     // always give away the ownership to the manager
     _data.buffer = sprite_mgr::instance().assign_buffer(this, count, type);
 }

@@ -132,13 +132,13 @@ namespace sprite2d {
         };
         
     public:
-        sprite(game_object*, size_t count /*number of vertices*/, int type/*layout*/);
+        sprite(game_object*, uint32_t count /*number of vertices*/, int type/*layout*/);
         virtual ~sprite();
         
-        void set_type(size_t count, int type);
+        void set_type(uint32_t count, int type);
         
         // buffer data
-        std::tuple<const void*, size_t> index_data() const {
+        std::tuple<const void*, uint32_t> index_data() const {
             return std::make_tuple(_indices.data(), _indices.size() * sizeof(uint16_t));
         }
         

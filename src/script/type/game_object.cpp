@@ -5,7 +5,7 @@
 #include "script/lua_bind.h"
 
 namespace script {
-    void def_render_device() {
+    void def_game_object() {
         script::class_<game_object>::type()
         .def("by_tag", LUA_BIND(&game_object::find_by_tag))
         .def("set_tag", LUA_BIND(&game_object::set_tag<char const*>))
