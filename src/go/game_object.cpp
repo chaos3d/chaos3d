@@ -8,13 +8,13 @@ game_object::~game_object() {
     -- _number_of_objects;
 }
 
-game_object* game_object::clone() const {
+game_object::ptr game_object::clone() const {
     game_object* go = new game_object(parent());
     for(int i = 0; i < _components.size(); ++i) {
         if(_components[i])
             go->_components[i].reset(_components[i]->clone(go));
     }
-    return go;
+    return ptr(go);
 }
 
 void game_object::populate_flag() {

@@ -61,7 +61,7 @@ public:
     }
     
     // clone
-    virtual game_object* clone() const;
+    virtual ptr clone() const;
     
     // search
     game_object* find_by_tag(char const* tag, bool recursive = true) const; // only search in children
