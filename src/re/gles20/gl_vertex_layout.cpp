@@ -44,11 +44,11 @@ void gl_vertex_layout::draw(render_context *context, size_t start, size_t count)
         assert(typeid(*index_buffer()) == typeid(gl_vertex_index_buffer));
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,
                      static_cast<gl_vertex_index_buffer*>(index_buffer_raw())->buffer_id());
-        glDrawElements(_mode_map[mode()], count, GL_UNSIGNED_SHORT, reinterpret_cast<void*>(start)); // FIXME: index type
+        glDrawElements(_mode_map[mode()], (GLsizei)count, GL_UNSIGNED_SHORT, reinterpret_cast<void*>(start)); // FIXME: index type
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
         GLNOERROR;
     } else {
-        glDrawArrays(_mode_map[mode()], start, count);
+        glDrawArrays(_mode_map[mode()], (GLint)start, (GLsizei)count);
         GLNOERROR;
     }
     
@@ -81,7 +81,7 @@ void gl_vertex_layout::create_vao() {
         auto const& channel = channels()[it.index];
         glEnableVertexAttribArray(it.index);
         glVertexAttribPointer(it.index, channel.unit, _type_map[channel.type],
-                              GL_FALSE, channel.stride, (void*)channel.offset);
+                              GL_FALSE, (GLsizei)channel.stride, (void*)channel.offset);
     }
     
     glBindBuffer(GL_ARRAY_BUFFER, 0);

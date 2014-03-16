@@ -79,21 +79,21 @@ bool gl_texture::load(memory_stream* stream, int color, int level) {
         case PVRTC4_RGBA:
             glCompressedTexSubImage2D(target, level, 0, 0, size()[0], size()[1],
                                       GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG,
-                                      stream->size(), stream->address());
+                                      (GLsizei)stream->size(), stream->address());
         case PVRTC2_RGBA:
             glCompressedTexSubImage2D(target, level, 0, 0, size()[0], size()[1],
                                       GL_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG,
-                                      stream->size(), stream->address());
+                                      (GLsizei)stream->size(), stream->address());
             break;
         case PVRTC4_RGB:
             glCompressedTexSubImage2D(target, level, 0, 0, size()[0], size()[1],
                                       GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG,
-                                      stream->size(), stream->address());
+                                      (GLsizei)stream->size(), stream->address());
             break;
         case PVRTC2_RGB:
             glCompressedTexSubImage2D(target, level, 0, 0, size()[0], size()[1],
                                       GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG,
-                                      stream->size(), stream->address());
+                                      (GLsizei)stream->size(), stream->address());
             break;
     }
 #else
