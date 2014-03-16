@@ -104,6 +104,15 @@ namespace script {
         
         import_scope import(char const* name = nullptr);
         
+        // step gc
+        void gc_step(int step = 2);
+        
+        // full gc collecting
+        void gc_collect();
+        
+        // return memory used by Lua in bytes
+        int memory_usage();
+        
         template<class C>
         state& import(C&& value, char const* name, char const* scope = nullptr) {
             using C0 = typename std::remove_cv<C>::type;

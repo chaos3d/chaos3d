@@ -144,6 +144,18 @@ coroutine state::load(data_stream *ds, char const* name) {
     return co;
 }
 
+int state::memory_usage() {
+    return (lua_gc(_L, LUA_GCCOUNT, 0) << 10) | lua_gc(_L, LUA_GCCOUNTB, 0);
+}
+
+void state::gc_collect() {
+    lua_gc(_L, LUA_GCCOLLECT, 0);
+}
+
+void state::gc_step(int step) {
+    lua_gc(_L, LUA_GCSTEP, step);
+}
+
 // push the named scope(table) or the global table
 void state::push_scope(lua_State* L, char const* scope) {
     if (scope == nullptr) {

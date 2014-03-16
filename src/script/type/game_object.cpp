@@ -7,6 +7,7 @@
 namespace script {
     void def_game_object() {
         script::class_<game_object>::type()
+        .def("clone", LUA_BIND(&game_object::clone))
         .def("by_tag", LUA_BIND(&game_object::find_by_tag))
         .def("set_tag", LUA_BIND(&game_object::set_tag<char const*>))
         .def("add_transform", LUA_BIND(&game_object::add_component<com::transform>))
