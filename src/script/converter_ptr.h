@@ -31,9 +31,13 @@ namespace script {
         
         // we will take over the ownership
         static void to(lua_State* L, std::unique_ptr<P, D>&& value) {
-            void* obj = value.release();
-            lua_getref(L, 1);
+            if (value) {
+                lua_pushnil(L);
+                return;
+            }
             
+            void* obj = value.release();
+            lua_getref(L, 1);            
             lua_pushlightuserdata(L, obj);
             lua_rawget(L, -2);
             
@@ -73,8 +77,7 @@ namespace script {
         
         // referenced count can "generate" unique_ptr
         template<class U = P, typename std::enable_if<R<U>::value>::type* = nullptr>
-        static std::unique_ptr<P, referenced_count::release_deleter>
-        from(lua_State* L, int idx, char* storage) {
+        static std::shared_ptr<T> from(lua_State* L, int idx, char* storage) {
             object_wrapper* obj = (object_wrapper*)lua_touserdata(L, idx);
             return obj != nullptr ? ((T*)obj->object)->shared_from_this() : nullptr;
         };
@@ -82,8 +85,12 @@ namespace script {
         // we will take over the ownership
         static void to(lua_State* L, std::shared_ptr<T> const& value) {
             void* obj = value.get();
-            lua_getref(L, 1);
+            if (obj == nullptr) {
+                lua_pushnil(L);
+                return;
+            }
             
+            lua_getref(L, 1);
             lua_pushlightuserdata(L, obj);
             lua_rawget(L, -2);
             

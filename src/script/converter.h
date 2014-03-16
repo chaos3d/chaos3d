@@ -154,9 +154,9 @@ namespace script {
                 object_meta<tag_t>::retain(&value);
                 object_meta<tag_t>::push_metatable(L);
                 lua_setmetatable(L, -2);
-                lua_pushlightuserdata(L, &value); // # tbl, value, key
-                lua_pushvalue(L, -2); // # tbl, value, key, value
-                lua_rawset(L, -4); // # tbl, value
+                lua_pushlightuserdata(L, &value);   // # tbl, value, key
+                lua_pushvalue(L, -2);               // # tbl, value, key, value
+                lua_rawset(L, -4);                  // # tbl, value
             }
             
             // remove the table, the object is already on the stack
@@ -170,6 +170,11 @@ namespace script {
             typedef T2<U> R;
             using tag_t = typename std::conditional<std::is_base_of<referenced_count, R>::value,
                 referenced_count_tag, raw_pointer_tag>::type;
+            if (value == nullptr) {
+                lua_pushnil(L);
+                return;
+            }
+            
             lua_getref(L, 1); // state ensures this be 1
             
             lua_pushlightuserdata(L, value);
