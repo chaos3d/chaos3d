@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <typeinfo>
+#include <memory>
 #include <Eigen/Dense>
 #include "re/texture.h"
 
@@ -10,7 +11,7 @@ class gpu_program;
 
 // a.k.a render_parameter/render_environment
 //  uniform values that gpu uses
-class render_uniform {
+class render_uniform : public std::enable_shared_from_this<render_uniform> {
 public:
     typedef Eigen::Matrix2f matrix2f;
     typedef Eigen::Matrix3f matrix3f;
@@ -265,7 +266,11 @@ public:
     void set_vector(std::string const& name, float x, float y, float z) {
         set_vector<uniform_vector3>(name, vector3f(x, y, z));
     }
-    
+
+    void set_vector(std::string const& name, float x, float y, float z, float w) {
+        set_vector<uniform_vector4>(name, vector4f(x, y, z, w));
+    }
+
     void set_matrix(std::string const& name, matrix2f const& val) {
         set_vector<uniform_mat2>(name, val);
     }

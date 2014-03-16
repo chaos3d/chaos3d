@@ -1,10 +1,10 @@
 #ifndef _RENDER_STATE_H
 #define _RENDER_STATE_H
 
-#include "common/utility.h"
+#include <memory>
 #include <unordered_map>
 #include <Eigen/Dense>
-#include <memory>
+#include "common/utility.h"
 
 // fixed pipeline state
 class render_state{
