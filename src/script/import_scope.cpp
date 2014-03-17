@@ -6,19 +6,29 @@ using namespace script;
 import_scope::import_scope(char const* name, state& st)
 : _state(&st) {
     lua_State* L = _state->internal();
-    if (name == nullptr) {
-        lua_pushvalue(L, LUA_GLOBALSINDEX);
-    } else {
-        lua_pushstring(L, name); // TODO: parse name
-        lua_rawget(L, LUA_GLOBALSINDEX);
-    }
-    
-    if (lua_isnoneornil(L, -1)) {
-        lua_pop(L, 1);
-        lua_newtable(L);
-        lua_pushstring(L, name); // TODO: parse name
-        lua_pushvalue(L, -2);
-        lua_rawset(L, LUA_GLOBALSINDEX);
+    lua_pushvalue(L, LUA_GLOBALSINDEX);
+
+    if (name != nullptr) {
+        char const* dot = nullptr;
+        do {
+            dot = strchr(name, '.');
+            if (dot == nullptr) {
+                dot = name + strlen(name);
+            }
+            if (dot != name) {
+                lua_pushlstring(L, name, dot - name);       // #_G, name
+                lua_rawget(L, -2);                          // #_G, tbl
+                if (lua_isnil(L, -1)) {                     // #_G, nil
+                    lua_pop(L, 1);                          // #_G
+                    lua_newtable(L);                        // #_G, tbl
+                    lua_pushlstring(L, name, dot - name);   // #_G, tbl, key
+                    lua_pushvalue(L, -2);                   // #_G, tbl, key, tbl
+                    lua_rawset(L, -4);                      // #_G, tbl
+                }
+                lua_remove(L, -2);                          // #tbl
+            }
+            name = dot + 1;
+        } while (*dot);
     }
 }
 

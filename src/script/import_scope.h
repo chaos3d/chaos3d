@@ -8,6 +8,8 @@
 #include "script/converter.h"
 #include "script/converter_ptr.h"
 
+#define LUA_ENUM(s, e)     #e, s::e
+
 namespace script {
     class state;
     class type_info;
@@ -20,7 +22,7 @@ namespace script {
         
         // import a variable as a type
         template<class C>
-        import_scope& import(char const* name, C&& value) {
+        import_scope& import(char const* name, C value) {
             converter<C>::to(get_L(), value);
             return save(name);
         }

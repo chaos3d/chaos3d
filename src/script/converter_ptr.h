@@ -37,7 +37,7 @@ namespace script {
             }
             
             void* obj = value.release();
-            lua_getref(L, 1);            
+            lua_getref(L, 1);
             lua_pushlightuserdata(L, obj);
             lua_rawget(L, -2);
             

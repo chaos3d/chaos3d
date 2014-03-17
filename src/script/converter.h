@@ -57,8 +57,7 @@ namespace script {
         static T1<U> from(lua_State* L, int idx, char* storage) {
             using R = T1<U>;
             using E = typename vector_of<R>::type;
-            if (!lua_istable(L, idx))
-                return R();
+            luaL_argcheck(L, lua_istable(L, idx), idx, "expect a table");
             
             R result;
             int i = 0;
@@ -88,12 +87,14 @@ namespace script {
             >::type* = nullptr>
         static T2<U>& from(lua_State* L, int idx, char* storage) {
             object_wrapper* obj = (object_wrapper*)lua_touserdata(L, idx);
-            return *(T2<U>*)obj->object;
+            luaL_argcheck(L, obj != nullptr && obj->object != nullptr, idx, "expect an object");
+            // TODO: check the type as well
+           return *(T2<U>*)obj->object;
         };
 
         template<typename U = T,
         typename std::enable_if<is_number<T1<U>>::value>::type* = nullptr>
-        static void to(lua_State* L, T const&& value) {
+        static void to(lua_State* L, T value) {
             lua_pushnumber(L, value);
         }
 
