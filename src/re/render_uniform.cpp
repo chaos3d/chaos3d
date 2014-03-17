@@ -36,7 +36,7 @@ bool render_uniform::operator==(render_uniform const& rhs) const {
 
 render_uniform& render_uniform::operator=(render_uniform const& rhs) {
     _uniforms.clear();
-    for(auto& ptr : rhs._uniforms) {
+    for (auto& ptr : rhs._uniforms) {
         auto* it = ptr.get();
         if(typeid(*it) == typeid(uniform_float)) {
             _uniforms.emplace_back(new uniform_float(it->name(), static_cast<uniform_float const&>(*it).value));

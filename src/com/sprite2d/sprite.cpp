@@ -83,7 +83,7 @@ sprite_mgr::sprite_mgr(render_device* dev, size_t vsize, size_t isize,
 _channel_names(channels){
     assert(dev != nullptr); // needs a device
 
-#if 1 // QUICK TEST
+#if 0 // QUICK TEST
     const char* vs_source = R"shader(
     attribute vec4 position;
     attribute lowp vec2 uv;
