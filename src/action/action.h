@@ -29,14 +29,24 @@ public:
     // so that it could be added to another sequence
     template<typename C = std::initializer_list<action*> >
     static action* wrap_sequence(C const& list, bool reversed = false) {
-        return (new action())->push(new action(list.begin(), list.end(),
-                                               reversed));
+        return (new action())->push(sequence(list, reversed));
     }
     
     // create a sequence of actions (executing sequencially)
     template<typename C = std::initializer_list<action*> >
     static action* sequence(C const& list, bool reversed = false) {
-        return new action(list.begin(), list.end(), reversed);
+        if (list.size() == 0)
+            return nullptr;
+        
+        action* act = *list.begin();
+        for (auto it = list.begin();++it != list.end(); ) {
+            if(*it != nullptr)
+                act->append(*it);
+        }
+        
+        if (!reversed)
+            act->reverse();
+        return act;
     }
     
     // create a group of actions (executing simultaneously)
@@ -54,18 +64,6 @@ protected:
     virtual bool done() const { return empty(); }
     
     virtual void update();
-    
-    template<typename InputItr>
-    action(InputItr const& begin, InputItr const& end, bool reversed)
-    : action() {
-        for(InputItr it = begin;it != end; ++it) {
-            if(*it != nullptr)
-                append(*it);
-        }
-        
-        if(!reversed)
-            reverse();
-    }
     
     action();
     virtual ~action();

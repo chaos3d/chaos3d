@@ -12,7 +12,7 @@ _next(nullptr), _started(false)
 action* action::push(action* act) {
     assert(act != null_action); // should never happen
     
-    if(!act)
+    if (!act)
         return this;
     
     // already pushed to some action tree?
@@ -22,16 +22,16 @@ action* action::push(action* act) {
     
     // pushing an action to a started one
     // should start it now
-    if(started() && !act->started())
+    if (started() && !act->started())
         act->on_start();
     return this;
 }
 
 bool action::cancellable() const{
-    for(action* cur = _child_head;
+    for (action* cur = _child_head;
         cur != null_action; cur = cur->_next_sibling){
-        for(action* next = cur; next; next = next->_next) {
-            if(!next->cancellable())
+        for (action* next = cur; next; next = next->_next) {
+            if (!next->cancellable())
                 return false;
         }
     }
@@ -54,10 +54,10 @@ void action::append(action* nt){
 }
 
 void action::reverse() {
-    if(_next != nullptr && _next->_next != nullptr){
+    if (_next != nullptr && _next->_next != nullptr) {
         action* pre = _next, *nt = _next->_next;
         pre->_next = nullptr;
-        while(nt != nullptr) {
+        while (nt != nullptr) {
             action* next = nt->_next;
             nt->_next = pre;
             pre = nt;
@@ -93,14 +93,14 @@ void action::on_stop(bool skip) {
     action* child = _child_head;
     _child_head = null_action;
     
-    for(action* next = child->_next_sibling;
+    for (action* next = child->_next_sibling;
         child != null_action;
         next = (child = next)->_next_sibling) {
         child->_next_sibling = nullptr;
         child->on_stop(skip); // stop itself and all its children
         
         // stop the sequence
-        for(action* link = child->_next; link;){
+        for (action* link = child->_next; link;){
             action *del = link;
             link = link->_next;
             
@@ -118,17 +118,17 @@ void action::update() {
     action* child = _child_head;
     _child_head = null_action;
     
-    for(action* next = child->_next_sibling;
+    for (action* next = child->_next_sibling;
         child != null_action;
         next = (child = next)->_next_sibling) {
         child->_next_sibling = nullptr;
         child->update();
-        if(child->done()) {
+        if (child->done()) {
             child->on_end();
             push(child->_next);
             child->_next = nullptr;
             delete child;
-        }else if(child->_next_sibling == nullptr) { // if not pushed to somewhere else
+        } else if (child->_next_sibling == nullptr) { // if not pushed to somewhere else
             push(child);
         }
     }
@@ -152,12 +152,12 @@ void action_functor::on_start() {
 };
     
 void action_functor::on_stop(bool skipping) {
-    if(!started())
+    if (!started())
         on_start();
     action::on_stop(skipping);
-    if(!skipping)
+    if (!skipping)
         _cancel(false); // cancel, go to beginning
-    else if(_cancel)
+    else if (_cancel)
         _cancel(true); // skip, go to end
 }
 
