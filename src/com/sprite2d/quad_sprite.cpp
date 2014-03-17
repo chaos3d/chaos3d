@@ -60,7 +60,7 @@ void quad_sprite::fill_buffer(vertex_layout::locked_buffer const& buffer,
                               com::transform const& trans) const {
     auto& indices = _data.buffer->channel_indices;
     
-    if(indices[layout_buffer::POSITION] >= 0) {
+    if (indices[layout_buffer::POSITION] >= 0) {
         char* raw = buffer.buffer(indices[layout_buffer::POSITION]);
         assert(buffer.type(indices[layout_buffer::POSITION]) == vertex_layout::Float); // no conversion
         size_t data_size = std::min(buffer.unit(indices[layout_buffer::POSITION]), 4) * sizeof(float);
@@ -76,7 +76,7 @@ void quad_sprite::fill_buffer(vertex_layout::locked_buffer const& buffer,
         memcpy(raw+ stride, (vector4f(pos.x(), pos.y(), pos.z(), _alpha)).data(), data_size);
     }
 
-    if(indices[layout_buffer::UV] >= 0) {
+    if (indices[layout_buffer::UV] >= 0) {
         box2f const& uv = frame();
         char* raw = buffer.buffer(indices[layout_buffer::UV]);
         assert(buffer.type(indices[layout_buffer::UV]) == vertex_layout::Float); // no conversion

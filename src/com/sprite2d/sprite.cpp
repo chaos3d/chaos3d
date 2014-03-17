@@ -142,6 +142,10 @@ sprite_material* sprite_mgr::add_material(std::string const& name,
                                           gpu_program* program,
                                           render_state::ptr const& state,
                                           render_uniform::ptr const& uniform) {
+    if (program == nullptr || state.get() == nullptr
+        || uniform.get() == nullptr)
+        return nullptr;
+    
     return add_material(make_unique<sprite_material>(name, program->retain<gpu_program>(),
                                                      state, uniform));
 }
@@ -151,7 +155,7 @@ sprite_material* sprite_mgr::find_first_material(std::string const& name) const 
                                [] (spt_mat_ptr const& other, std::string const& name) {
         return other->name() < name;
     });
-    if(it == _materials.end() || (*it)->name() != name){
+    if (it == _materials.end() || (*it)->name() != name){
         return nullptr;
     }else
         return it->get();
@@ -163,17 +167,17 @@ sprite_material* sprite_mgr::add_material(std::unique_ptr<sprite_material>&& mat
         return other->name() < name;
     });
     bool same = false;
-    if(it != _materials.end() && (*it)->name() == mat->name()){
-        do{
-            if((*it)->compatible(*mat)){
+    if (it != _materials.end() && (*it)->name() == mat->name()){
+        do {
+            if ((*it)->compatible(*mat)){
                 same = true;
                 break;
             }
             ++it;
-        }while(it != _materials.end() && (*it)->name() == mat->name());
+        } while (it != _materials.end() && (*it)->name() == mat->name());
     }
     
-    if(same) {
+    if (same) {
         return it->get();
     } else {
         return _materials.emplace(it, std::move(mat))->get();
@@ -210,23 +214,23 @@ void sprite_mgr::update(goes_t const& gos) {
     auto transform_idx = com::transform_manager::component_idx();
     
     // step 1: update all the indices, remove deleted sprites
-    for(auto& it : _buffers) {
+    for (auto& it : _buffers) {
         //bool& update = it->need_update;
         uint16_t idx = 0;
 
         update_buffer(*it, [&idx] (layout_buffer::sprite_t& sprite) {
-            if(std::get<0>(sprite)->_mark_for_remove)
+            if (std::get<0>(sprite)->_mark_for_remove)
                 return true;
             
 #if 0
             // TODO: move the invisible sprites to the end?
             // this can also be done by re-ordering the sprites in
             // a separate function
-            if(std::get<0>(sprite)->parent()->mark() != mark)
+            if (std::get<0>(sprite)->parent()->mark() != mark)
                 return true;
 #endif
             
-            if(std::get<3>(sprite) != std::get<1>(sprite)
+            if (std::get<3>(sprite) != std::get<1>(sprite)
                || std::get<1>(sprite) != idx) {
                 std::get<0>(sprite)->fill_indices(idx);
                 std::get<1>(sprite) = idx;
@@ -244,15 +248,15 @@ void sprite_mgr::update(goes_t const& gos) {
     auto sprite_flag = flag_offset();
     auto transform_flag = com::transform_manager::flag_offset();
     auto combined_flag = (1 << sprite_flag) | (3 << transform_flag);
-    for(auto& it : _buffers) {
+    for (auto& it : _buffers) {
         // uses the first buffer
         // TODO: asynch locking?
         auto locked = it->layout->lock_channels();
         size_t offset = 0;
         
         //bool no_read = true; // oes extend doesn't allow us to read
-        for(auto each = it->sprites.begin(); each != it->sprites.end();
-            ++each, locked.set_offset(offset += std::get<2>(*each))) {
+        for (auto each = it->sprites.begin(); each != it->sprites.end();
+             ++each, locked.set_offset(offset += std::get<2>(*each))) {
             auto &sprite = *each;
             auto* spt = std::get<0>(sprite).get();
             auto dirty = (spt->parent()->flag() & combined_flag) != 0;
@@ -264,7 +268,7 @@ void sprite_mgr::update(goes_t const& gos) {
                 continue;
             
             auto* transform = spt->parent()->get_component<com::transform>(transform_idx);
-            if(!transform) {
+            if (!transform) {
                 ; // TODO: log
                 continue;
             }
@@ -272,7 +276,7 @@ void sprite_mgr::update(goes_t const& gos) {
             spt->fill_buffer(locked, *transform);
 #if 0
             // TODO: move data instead of re-building the data??
-            if(!no_read)
+            if (!no_read)
                 std::memcpy(buffer, buffer_start + std::get<3>(sprite) * stride,
                             stride * std::get<2>(sprite));
 #endif
@@ -324,7 +328,7 @@ std::unique_ptr<layout_buffer> sprite_mgr::create_buffer(vertices_t const& layou
     channels.reserve(layout.size());
     
     size_t offset = 0;
-    for(auto& it : layout) {
+    for (auto& it : layout) {
         channels.push_back({nullptr, it.type, it.count, offset, 0});
         offset += vertex_layout::type_size(it.type) * it.count;
     }
@@ -332,7 +336,7 @@ std::unique_ptr<layout_buffer> sprite_mgr::create_buffer(vertices_t const& layou
     
     auto buffer = _device->create_buffer(_vertex_buffer_size * offset,
                                          vertex_buffer::Dynamic);
-    for(auto& it : channels) {
+    for (auto& it : channels) {
         it.buffer = buffer->retain<vertex_buffer>();
         it.stride = offset;
     }
@@ -346,7 +350,7 @@ std::unique_ptr<layout_buffer> sprite_mgr::create_buffer(vertices_t const& layou
 
 uint16_t sprite_mgr::add_type(vertices_t const& layout) {
     auto it = std::find(_types.begin(), _types.end(), layout);
-    if(it != _types.end())
+    if (it != _types.end())
         return it - _types.begin();
     _types.push_back(layout);
     std::sort(_types.back().begin(), _types.back().end(),
@@ -364,12 +368,12 @@ uint16_t sprite_mgr::add_type(vertices_t const& layout) {
 
 std::array<int, layout_buffer::MAX> sprite_mgr::map_channel(vertices_t const& layout) const {
     std::array<int, layout_buffer::MAX> indices = {{-1,-1,-1}};
-    for(int i = 0; i<_channel_names.size(); ++i) {
+    for (int i = 0; i<_channel_names.size(); ++i) {
         auto it = std::lower_bound(layout.begin(), layout.end(), _channel_names[i],
                                    [] (sprite_vertex const& vtx, std::string const& channel) {
                                        return vtx.name < channel;
                                    });
-        if(it != layout.end() && it->name == _channel_names[i]) {
+        if (it != layout.end() && it->name == _channel_names[i]) {
             indices[i] = (int)std::distance(layout.begin(), it);
         }
     }
