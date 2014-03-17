@@ -9,5 +9,6 @@ namespace script {
     void def_game_object();     // game_object/transform
     void def_sprite2d();        // sprite_mgr/quad_sprite
     void def_eigen_math();      // vector/matrix/etc
+    void def_asset();           // asset mgr/locators
 }
 #endif

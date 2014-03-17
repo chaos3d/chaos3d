@@ -87,13 +87,14 @@ namespace script {
         class_<render_uniform>::type()
         .def("set_float", LUA_BIND_S(void (render_uniform::*)(std::string const&, float),
                                      &render_uniform::set_vector))
-        .def("set_vec2", LUA_BIND_S(void (render_uniform::*)(std::string const&, float, float),
-                                    &render_uniform::set_vector))
-        .def("set_vec3", LUA_BIND_S(void (render_uniform::*)(std::string const&, float, float,
-                                                             float),
-                                    &render_uniform::set_vector))
-        .def("set_vec4", LUA_BIND_S(void (render_uniform::*)(std::string const&, float, float,
+        .def("set_vec2", LUA_BIND_S(void (render_uniform::*)(std::string const&,
                                                              float, float),
+                                    &render_uniform::set_vector))
+        .def("set_vec3", LUA_BIND_S(void (render_uniform::*)(std::string const&,
+                                                             float, float, float),
+                                    &render_uniform::set_vector))
+        .def("set_vec4", LUA_BIND_S(void (render_uniform::*)(std::string const&,
+                                                             float, float, float, float),
                                     &render_uniform::set_vector))
         .def("set_texture", LUA_BIND(&render_uniform::set_texture))
         ;
@@ -115,6 +116,8 @@ namespace script {
         class_<com::camera>::type()
         .def("set_perspective", LUA_BIND_S(com::camera& (com::camera::*)(float, float, float, float),
                                            &com::camera::set_perspective))
+        .def("set_target", LUA_BIND(&com::camera::set_target))
+        .def("distance", LUA_BIND(&com::camera::distant_for_perfect_pixel))
         ;
     }
 }
