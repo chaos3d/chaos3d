@@ -30,6 +30,7 @@ namespace script {
                                                                          render_state::ptr const&,
                                                                          render_uniform::ptr const&),
                                         &sprite_mgr::add_material))
+        .def("vertex_layout", LUA_BIND(&sprite_mgr::vertex_layout))
         ;
         
 #if 0

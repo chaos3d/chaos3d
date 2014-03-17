@@ -88,7 +88,9 @@ namespace script {
         static T2<U>& from(lua_State* L, int idx, char* storage) {
             object_wrapper* obj = (object_wrapper*)lua_touserdata(L, idx);
             luaL_argcheck(L, obj != nullptr && obj->object != nullptr, idx, "expect an object");
-            // TODO: check the type as well
+            // TODO: check the derived type and use DEBUG
+            luaL_argcheck(L, obj->type == &class_<T2<U>>::type(), idx,
+                          "object type is not matched");
            return *(T2<U>*)obj->object;
         };
 
@@ -170,7 +172,7 @@ namespace script {
         static void to(lua_State* L, T1<U> value) {
             typedef T2<U> R;
             using tag_t = typename std::conditional<std::is_base_of<referenced_count, R>::value,
-                referenced_count_tag, raw_pointer_tag>::type;
+                referenced_count_tag, pure_pointer_tag>::type;
             if (value == nullptr) {
                 lua_pushnil(L);
                 return;
@@ -187,7 +189,8 @@ namespace script {
                 wrapper->object = value;
                 wrapper->type = &class_<R>::type();
                 
-                // we take the ownership as a regular pointer
+                // we take the ownership as a regular pointer if it is a referenced count
+                // otherwise, we ignore it for now
                 object_meta<tag_t>::retain(value);
                 object_meta<tag_t>::template push_metatable<R>(L, std::default_delete<R>());
                 lua_setmetatable(L, -2);

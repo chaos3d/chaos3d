@@ -58,7 +58,9 @@ namespace script {
         static void retain(void* r) {
         }
 
-        static void push_metatable(lua_State *L) {
+        // dummy template to match the signature
+        template<class T = void, class D = std::nullptr_t>
+        static void push_metatable(lua_State *L, D const& = D()) {
             if(luaL_newmetatable(L, "__pure_pointer") == 1) {
                 lua_pushcfunction(L, __index);
                 lua_setfield(L, -2, "__index");
@@ -68,9 +70,6 @@ namespace script {
 
     template<>
     struct object_meta <raw_pointer_tag> : public object_meta <pure_pointer_tag>{
-        static void retain(void* r) {
-        }
-        
         template<class T, class D>
         static int __gc(lua_State* L) {
             object_wrapper* obj = (object_wrapper*) lua_touserdata(L, 1);

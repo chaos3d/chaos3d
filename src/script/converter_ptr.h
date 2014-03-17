@@ -26,12 +26,15 @@ namespace script {
         static std::unique_ptr<P, referenced_count::release_deleter>
         from(lua_State* L, int idx, char* storage) {
             object_wrapper* obj = (object_wrapper*)lua_touserdata(L, idx);
+            // TODO: check the derived type and use DEBUG
+            luaL_argcheck(L, obj == nullptr ||  obj->type == &class_<T>::type(), idx,
+                          "object type is not matched");
             return obj != nullptr ? ((referenced_count*)obj->object)->retain<P>() : nullptr;
         };
         
         // we will take over the ownership
         static void to(lua_State* L, std::unique_ptr<P, D>&& value) {
-            if (value) {
+            if (!value) {
                 lua_pushnil(L);
                 return;
             }
@@ -87,6 +90,9 @@ namespace script {
         template<class U = P, typename std::enable_if<R<U>::value>::type* = nullptr>
         static std::shared_ptr<T> from(lua_State* L, int idx, char* storage) {
             object_wrapper* obj = (object_wrapper*)lua_touserdata(L, idx);
+            // TODO: check the derived type and use DEBUG
+            luaL_argcheck(L, obj == nullptr || obj->type == &class_<T>::type(), idx,
+                          "object type is not matched");
             return obj != nullptr ? ((T*)obj->object)->shared_from_this() : nullptr;
         };
         
