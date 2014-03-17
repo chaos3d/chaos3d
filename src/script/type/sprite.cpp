@@ -1,13 +1,19 @@
 #include "script/type/def.h"
+#include "script/class_type.h"
+#include "script/lua_bind.h"
+#include "script/state.h"
+
 #include "go/game_object.h"
 #include "com/sprite2d/sprite.h"
 #include "com/sprite2d/camera2d.h"
 #include "com/sprite2d/quad_sprite.h"
 #include "com/sprite2d/texture_atlas.h"
-#include "script/class_type.h"
-#include "script/lua_bind.h"
+
+#include "com/scene2d/world_box2d.h"
+#include "com/scene2d/shape_desc.h"
 
 using namespace sprite2d;
+using namespace scene2d;
 
 namespace script {
     static int c3d_lua_add_layout(lua_State* L) {
@@ -31,10 +37,21 @@ namespace script {
         return 1;
     }
     
-    void def_sprite2d() {
+    void def_sprite2d(state* st, std::string const& scope) {
+        st->import((scope + "collider").c_str())
+        .import<uint8_t>(LUA_ENUM(collider2d, dynamic))
+        .import<uint8_t>(LUA_ENUM(collider2d, kinametic))
+        .import<uint8_t>("static", collider2d::static_)
+        .import<uint8_t>("normal", collider2d::type_normal)
+        .import<uint8_t>("character", collider2d::type_character)
+        .import<uint8_t>("bullet", collider2d::type_bullet)
+        
+        ;
+        
         class_<game_object>::type()
         .def("add_quad_sprite", LUA_BIND((&game_object::add_component<quad_sprite, int>)))
         .def("add_camera2d", LUA_BIND((&game_object::add_component<camera2d>)))
+        .def("add_collider2d", LUA_BIND((&game_object::add_component<collider2d, int, int>)))
         ;
         
         class_<sprite2d::sprite>::type()
