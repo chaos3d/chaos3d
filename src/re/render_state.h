@@ -7,7 +7,7 @@
 #include "common/utility.h"
 
 // fixed pipeline state
-class render_state{
+class render_state : public std::enable_shared_from_this<render_state> {
 public:
     typedef Eigen::Vector4f color_t;
     
@@ -15,7 +15,8 @@ public:
     enum {
         DepthNone,
         DepthNever, DepthAlways, DepthLess, DepthLequal,
-        DepthEqual, DepthNotequal, DepthGequal, DepthGreater
+        DepthEqual, DepthNotequal, DepthGequal, DepthGreater,
+        DepthMax,
     };
 
     // blend function
@@ -24,7 +25,8 @@ public:
         BlendOne, BlendZero, BlendDstColor, BlendSrcColor,
         BlendOneMinusDstColor, BlendOneMinusSrcColor,
         BlendDstAlpha, BlendSrcAlpha,
-        BlendOneMinusDstAlpha, BlendOneMinusSrcAlpha
+        BlendOneMinusDstAlpha, BlendOneMinusSrcAlpha,
+        BlendMax,
     };
     
     typedef std::shared_ptr<render_state> ptr;
@@ -32,7 +34,7 @@ public:
 
 public:
     static render_state::const_ptr default_state() {
-        static render_state::const_ptr state(new render_state());
+        static render_state::ptr state(new render_state());
         return state;
     }
 
