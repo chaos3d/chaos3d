@@ -32,10 +32,22 @@ namespace script {
 
     template<class P, class... Args>
     struct is_userdata<std::unique_ptr<P, Args...>> : public std::false_type {};
-
+    
+    template<class P, class... Args>
+    struct is_userdata<std::unique_ptr<P, Args...> const&> : public std::false_type {};
+    
+    template<class P, class... Args>
+    struct is_userdata<std::unique_ptr<P, Args...> const> : public std::false_type {};
+    
     template<class P>
     struct is_userdata<std::shared_ptr<P>> : public std::false_type {};
     
+    template<class P>
+    struct is_userdata<std::shared_ptr<P> const&> : public std::false_type {};
+    
+    template<class P>
+    struct is_userdata<std::shared_ptr<P> const> : public std::false_type {};
+
     template<class P>
     struct is_userdata<std::weak_ptr<P>> : public std::false_type {};
 

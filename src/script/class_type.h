@@ -31,7 +31,7 @@ namespace script {
         
         template<class Base, class... Others>
         class_& derive() {
-            static_assert(std::is_base_of<C0, Base>::value, "invalid base class");
+            static_assert(std::is_base_of<Base, C0>::value, "invalid base class");
             _bases.emplace_back(&class_<Base>::type());
             return derive<Others...>();
         }

@@ -61,6 +61,14 @@ namespace script {
         };
     };
 
+    template<class P, class D>
+    struct converter<std::unique_ptr<P, D> const> : public converter<std::unique_ptr<P, D>> {
+    };
+    
+    template<class P, class D>
+    struct converter<std::unique_ptr<P, D> const&> : public converter<std::unique_ptr<P, D>> {
+    };
+    
     template<class P>
     struct converter<std::shared_ptr<P>> {
         typedef typename std::remove_cv<P>::type T;
@@ -113,5 +121,14 @@ namespace script {
             lua_remove(L, -2);
         }
     };
+    
+    template<class P>
+    struct converter<std::shared_ptr<P> const> : public converter<std::shared_ptr<P>>{
+    };
+    
+    template<class P>
+    struct converter<std::shared_ptr<P> const&> : public converter<std::shared_ptr<P>>{
+    };
+    
 }
 #endif
