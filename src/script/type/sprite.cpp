@@ -37,6 +37,37 @@ namespace script {
         return 1;
     }
     
+    static int c3d_lua_set_gravity(lua_State* L) {
+        world2d_mgr& mgr = converter<world2d_mgr&>::from(L, 1, nullptr);
+        float x = lua_tonumber(L, 2);
+        float y = lua_tonumber(L, 3);
+        mgr.set_gravity(vector2f(x, y));
+        lua_settop(L, 1);
+        return 1;
+    }
+    
+    static int c3d_lua_world_query(lua_State* L) {
+        world2d_mgr& mgr = converter<world2d_mgr&>::from(L, 1, nullptr);
+        luaL_argcheck(L, lua_isfunction(L, 4), 4, "expect a function");
+        float x = lua_tonumber(L, 2);
+        float y = lua_tonumber(L, 3);
+        mgr.query([=] (collider2d *c) {
+            lua_pushvalue(L, 4);
+            converter<collider2d*>::to(L, c);
+            if (lua_pcall(L, 1, 1, 0) != 0) {
+                // TODO: error
+                printf("error: %s", lua_tostring(L, -1));
+                return false; // stop querying
+            } else {
+                bool is_done = lua_toboolean(L, -1);
+                lua_pop(L, 1);
+                return !is_done;
+            }
+        }, vector2f(x, y));
+        lua_settop(L, 1);
+        return 1;
+    }
+    
     void def_sprite2d(state* st, std::string const& scope) {
         st->import((scope + ".collider").c_str())
         .import<uint8_t>(LUA_ENUM(collider2d, dynamic))
@@ -76,6 +107,11 @@ namespace script {
         
         
         class_<camera2d>::type()
+        ;
+        
+        class_<world2d_mgr>::type()
+        .def("set_gravity", c3d_lua_set_gravity)
+        .def("query", c3d_lua_world_query)
         ;
 #if 0
         script::class_<texture_atlas>::type()
