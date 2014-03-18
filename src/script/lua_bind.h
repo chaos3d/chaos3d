@@ -61,9 +61,10 @@ namespace script {
     constexpr size_t storage_of(size_t idx = sizeof...(Ts)) {
         using T0 = typename std::remove_reference<T>::type;
         return idx == 0 ? 0 :
-        ((std::is_lvalue_reference<T>::value && !std::is_const<T0>::value
-              ? sizeof(T0)
-              : 0) + storage_of<Ts...>(idx - 1));
+        ((std::is_lvalue_reference<T>::value && std::is_arithmetic<T0>::value
+          && !std::is_const<T0>::value
+          ? sizeof(T0)
+          : 0) + storage_of<Ts...>(idx - 1));
     };
     
     template<class F>

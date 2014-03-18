@@ -9,9 +9,9 @@ using namespace rapidjson;
 
 // texture_atlas loader for texture packer in json
 template<>
-std::unique_ptr<texture_atlas> texture_atlas::load_from(json_loader const& json,
-                                                        asset_manager& mgr,
-                                                        texture_atlas::TexturePacker &&) {
+texture_atlas::ptr texture_atlas::load_from(json_loader const& json,
+                                            asset_manager& mgr,
+                                            texture_atlas::TexturePacker &&) {
     texture_atlas *atlas = new texture_atlas();
     Document const& root = json.internal<Document>();
 
@@ -41,5 +41,5 @@ std::unique_ptr<texture_atlas> texture_atlas::load_from(json_loader const& json,
                       );
     }
     
-    return std::unique_ptr<texture_atlas>(atlas);
+    return ptr(atlas);
 }

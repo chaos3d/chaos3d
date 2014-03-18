@@ -4,9 +4,8 @@
 #include "script/lua_ref.h"
 
 template<>
-std::unique_ptr<texture_atlas> texture_atlas::load_from(script::ref const& json,
-                                                        /* safer to pass a pointer as dereference can easily fail */
-                                                        asset_manager* mgr) {
+texture_atlas::ptr texture_atlas::load_from(script::ref const& json,
+                                            asset_manager& mgr) {
     texture_atlas *atlas = new texture_atlas();
-    return std::unique_ptr<texture_atlas>(atlas);
+    return ptr(atlas);
 }

@@ -5,11 +5,15 @@
 #include <unordered_map>
 #include <Eigen/Geometry>
 #include "common/utility.h"
+#include "common/referenced_count.h"
 #include "re/texture.h"
 
 // TODO: move up for general purposes?
-class texture_atlas {
+class texture_atlas : public referenced_count {
 public:
+    typedef std::unique_ptr<texture_atlas, release_deleter> ptr;
+    typedef std::unique_ptr<texture_atlas const, release_deleter> const_ptr;
+    
     // TODO: frame spacing
     typedef Eigen::AlignedBox2f box2f;
     typedef std::unordered_map<std::string, box2f> rects_t;

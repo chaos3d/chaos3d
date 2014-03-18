@@ -38,7 +38,7 @@ namespace script {
     }
     
     void def_sprite2d(state* st, std::string const& scope) {
-        st->import((scope + "collider").c_str())
+        st->import((scope + ".collider").c_str())
         .import<uint8_t>(LUA_ENUM(collider2d, dynamic))
         .import<uint8_t>(LUA_ENUM(collider2d, kinametic))
         .import<uint8_t>("static", collider2d::static_)
