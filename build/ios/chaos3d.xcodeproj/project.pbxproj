@@ -13,6 +13,7 @@
 		880BA32D189654A6002542E2 /* camera2d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 880BA329189654A6002542E2 /* camera2d.cpp */; };
 		880BA32E189654A6002542E2 /* sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 880BA32B189654A6002542E2 /* sprite.cpp */; };
 		880F615118D6EE55003BCE3D /* asset.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 880F615018D6EE55003BCE3D /* asset.cpp */; };
+		880F615B18D96468003BCE3D /* event.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 880F615A18D96468003BCE3D /* event.cpp */; };
 		8811357A18D181160069F351 /* texture_atlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8811357918D181160069F351 /* texture_atlas.cpp */; };
 		8811358018D426FA0069F351 /* game_object.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8811357D18D426FA0069F351 /* game_object.cpp */; };
 		8811358118D426FA0069F351 /* sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8811357F18D426FA0069F351 /* sprite.cpp */; };
@@ -119,6 +120,9 @@
 		880BA32B189654A6002542E2 /* sprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sprite.cpp; sourceTree = "<group>"; };
 		880BA32C189654A6002542E2 /* sprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sprite.h; sourceTree = "<group>"; };
 		880F615018D6EE55003BCE3D /* asset.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = asset.cpp; sourceTree = "<group>"; };
+		880F615218D7EB35003BCE3D /* tiled_sprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tiled_sprite.cpp; sourceTree = "<group>"; };
+		880F615318D7EB35003BCE3D /* tiled_sprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tiled_sprite.h; sourceTree = "<group>"; };
+		880F615A18D96468003BCE3D /* event.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = event.cpp; sourceTree = "<group>"; };
 		8811357918D181160069F351 /* texture_atlas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = texture_atlas.cpp; sourceTree = "<group>"; };
 		8811357B18D18FEE0069F351 /* converter_ptr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = converter_ptr.h; sourceTree = "<group>"; };
 		8811357D18D426FA0069F351 /* game_object.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = game_object.cpp; sourceTree = "<group>"; };
@@ -719,6 +723,8 @@
 				880BA32B189654A6002542E2 /* sprite.cpp */,
 				880BA32C189654A6002542E2 /* sprite.h */,
 				8879CE4318B4B93A00BCBFA6 /* texture_atlas.h */,
+				880F615218D7EB35003BCE3D /* tiled_sprite.cpp */,
+				880F615318D7EB35003BCE3D /* tiled_sprite.h */,
 			);
 			path = sprite2d;
 			sourceTree = "<group>";
@@ -737,6 +743,7 @@
 				880F615018D6EE55003BCE3D /* asset.cpp */,
 				8811357E18D426FA0069F351 /* def.h */,
 				8811358418D43F910069F351 /* eigen.cpp */,
+				880F615A18D96468003BCE3D /* event.cpp */,
 				8811357D18D426FA0069F351 /* game_object.cpp */,
 				8811358218D43F1D0069F351 /* re.cpp */,
 				8811357F18D426FA0069F351 /* sprite.cpp */,
@@ -2049,6 +2056,7 @@
 				8814E1C118D04279006C9120 /* type_info.cpp in Sources */,
 				8879CE9118BABCDE00BCBFA6 /* sprite2d.cpp in Sources */,
 				880F615118D6EE55003BCE3D /* asset.cpp in Sources */,
+				880F615B18D96468003BCE3D /* event.cpp in Sources */,
 				882762141872D50D00B1291B /* vertex_layout.cpp in Sources */,
 				8804F8CE18A75DC50055322F /* world_box2d.cpp in Sources */,
 				8879CE6A18BA067D00BCBFA6 /* texture_asset.cpp in Sources */,
