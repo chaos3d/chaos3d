@@ -11,6 +11,7 @@ chaos3d
 * Objects shall define type _ptr_ and const\_ptr
 * Class inheriting from enable\_shared\_ptr\_from\_this should hide the contructors but provide alternative helper functions to create objects, at least when exposing API's, for consistency
 
+### Object 
 ### Layer
 * io
 * render, sg, asset, go

@@ -68,6 +68,17 @@ namespace script {
         return 1;
     }
     
+    static int c3d_lua_cast_from_screen(lua_State* L) {
+        auto& camera = converter<camera2d&>::from(L, 1, nullptr);
+        
+        auto ray = camera.cast_from_screen({lua_tonumber(L, 2), lua_tonumber(L, 3)});
+        float t = -ray.p.z() / ray.d.z();
+        auto cross = ray.p + ray.d * t;
+        lua_pushnumber(L, cross[0]);
+        lua_pushnumber(L, cross[1]);
+        return 2;
+    }
+    
     void def_sprite2d(state* st, std::string const& scope) {
         st->import((scope + ".collider").c_str())
         .import<uint8_t>(LUA_ENUM(collider2d, dynamic))
@@ -83,6 +94,7 @@ namespace script {
         .def("add_quad_sprite", LUA_BIND((&game_object::add_component<quad_sprite, int>)))
         .def("add_camera2d", LUA_BIND((&game_object::add_component<camera2d>)))
         .def("add_collider2d", LUA_BIND((&game_object::add_component<collider2d, int, int>)))
+        .def("get_camera2d", LUA_BIND((&game_object::get_component<camera2d>)))
         ;
         
         class_<sprite2d::sprite>::type()
@@ -107,6 +119,8 @@ namespace script {
         
         
         class_<camera2d>::type()
+        .derive<com::camera>()
+        .def("cast_from_screen", c3d_lua_cast_from_screen)
         ;
         
         class_<world2d_mgr>::type()
