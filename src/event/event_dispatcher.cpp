@@ -1,6 +1,6 @@
 #include "event/event_dispatcher.h"
 
-bool event_dispatcher::register_listener(std::initializer_list<std::type_index> types,
+bool event_dispatcher::register_listener(std::vector<std::type_index> types,
                                          event_listener* listenr) {
     for(auto& it : types) {
         _listeners.emplace(it, listenr->get<event_listener>());

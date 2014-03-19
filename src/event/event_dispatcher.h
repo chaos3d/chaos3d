@@ -6,6 +6,7 @@
 #include <typeinfo>
 #include <memory>
 #include <unordered_map>
+#include <vector>
 #include "common/referenced_count.h"
 #include "event/event_listener.h"
 
@@ -17,7 +18,7 @@ public:
     
 public:
     virtual ~event_dispatcher() {};
-    virtual bool register_listener(std::initializer_list<std::type_index> ,
+    virtual bool register_listener(std::vector<std::type_index> ,
                                    event_listener*);
     
     virtual bool unregister_listener(event_listener*);
