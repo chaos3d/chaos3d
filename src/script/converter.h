@@ -139,7 +139,7 @@ namespace script {
         
         template<typename U = T,
         typename std::enable_if<is_userdata<T1<U>>::value &&
-        !std::is_pointer<T1<U>>::value>::type* = nullptr>
+        !std::is_pointer<T1<U>>::value && std::is_reference<U>::value>::type* = nullptr>
         static void to(lua_State* L, T&& value) {
             typedef T2<U> R;
             using tag_t = typename std::conditional<std::is_base_of<referenced_count, R>::value,
@@ -157,6 +157,32 @@ namespace script {
                 // unless it's a referenced_count object
                 object_meta<tag_t>::retain(&value);
                 object_meta<tag_t>::push_metatable(L);
+                lua_setmetatable(L, -2);
+                lua_pushlightuserdata(L, &value);   // # tbl, value, key
+                lua_pushvalue(L, -2);               // # tbl, value, key, value
+                lua_rawset(L, -4);                  // # tbl, value
+            }
+            
+            // remove the table, the object is already on the stack
+            lua_remove(L, -2);
+        }
+        
+        template<typename U = T,
+        typename std::enable_if<is_userdata<T1<U>>::value &&
+        !std::is_pointer<T1<U>>::value && !std::is_reference<U>::value>::type* = nullptr>
+        static void to(lua_State* L, T&& value) {
+            typedef typename std::remove_cv<U>::type R;
+            lua_getref(L, 1); // state ensures this be 1
+            lua_pushlightuserdata(L, &value);
+            lua_rawget(L, -2);
+            if (lua_isnoneornil(L, -1)) {
+                lua_pop(L, 1); // pop the nil
+                auto* wrapper = (object_wrapper*)lua_newuserdata(L, sizeof(object_wrapper));
+                // TODO: constructor
+                wrapper->object = new R(std::forward<T>(value));
+                wrapper->type = &class_<T2<U>>::type();
+                
+                object_meta<raw_pointer_tag>::push_metatable(L, std::default_delete<R>());
                 lua_setmetatable(L, -2);
                 lua_pushlightuserdata(L, &value);   // # tbl, value, key
                 lua_pushvalue(L, -2);               // # tbl, value, key, value
