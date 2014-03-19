@@ -39,8 +39,9 @@ namespace script {
             object_meta<pure_pointer_tag>::push_metatable(L);
             lua_setmetatable(L, -2);
             
+            lua_pushlightuserdata(L, (void*)&typeid(evt));
             bool is_done = true;
-            if (lua_pcall(L, 1, 1, 0) != 0) {
+            if (lua_pcall(L, 2, 1, 0) != 0) {
                 // TODO: error
                 printf("error: %s", lua_tostring(L, -1));
             } else {

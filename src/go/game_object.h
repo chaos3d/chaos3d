@@ -101,7 +101,8 @@ public:
     // get component - non-fixed version
     template<typename C>
     typename std::enable_if<std::is_base_of<component, C>::value &&
-    !C::manager_t::component_fixed_t::value, C*>::type get_component(int start = component_manager::fixed_component()) const {
+    !C::manager_t::component_fixed_t::value, C*>::type get_component(int = 0) const {
+        int start = component_manager::fixed_component();
         typedef typename C::manager_t trait; // manager class is a trait for the component
         if (trait::sealed_t::value) {
             for (auto it = std::next(_components.begin(), start);
