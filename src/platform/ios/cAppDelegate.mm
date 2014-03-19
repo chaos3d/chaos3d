@@ -50,6 +50,10 @@
     
     self.displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(frameLoop:)];
     displayLink.frameInterval = 1;
+    
+    // run once before the view shows up
+    [self frameLoop: self.displayLink];
+    
     [displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
 }
 

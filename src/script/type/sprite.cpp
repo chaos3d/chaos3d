@@ -123,6 +123,10 @@ namespace script {
         .def("cast_from_screen", c3d_lua_cast_from_screen)
         ;
         
+        class_<collider2d>::type()
+        //.def("", )
+        ;
+        
         class_<world2d_mgr>::type()
         .def("set_gravity", c3d_lua_set_gravity)
         .def("query", c3d_lua_world_query)
