@@ -44,6 +44,13 @@ import_scope& import_scope::def(const char *name, lua_function_t func) {
     return *this;
 }
 
+template<>
+import_scope& import_scope::import<std::type_info const*>(char const* name,
+                                                          std::type_info const* value) {
+    lua_pushlightuserdata(_state->internal(), (void*)value);
+    return save(name);
+}
+
 import_scope& import_scope::save(char const* name) {
     lua_State* L = _state->internal();
     lua_pushstring(L, name);

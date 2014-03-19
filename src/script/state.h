@@ -129,7 +129,20 @@ namespace script {
             return *this;// import_internal<C0>(value, name, scope);
         }
         
+        template<class C, class... Cs>
+        state& import_type() {
+            lua_pushlightuserdata(_L, (void*)&typeid(C));
+            lua_pushlightuserdata(_L, (void*)&class_<C>::type());
+            lua_rawset(_L, LUA_REGISTRYINDEX);
+            return import_type<Cs...>();
+        }
+        
     private:
+        template<class... Cs, typename std::enable_if<sizeof...(Cs)==0>::type* = nullptr>
+        state& import_type() {
+            return *this;
+        }
+        
         template<class C, typename std::enable_if<std::is_pointer<C>::value>::type* = nullptr>
         state& import_internal(C&& value, char const* name, char const* scope) {
             using C1 = typename std::remove_pointer<C>::type;

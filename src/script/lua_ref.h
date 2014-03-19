@@ -55,7 +55,9 @@ namespace script {
         // reset the internal reference to a new one at the top of stack
         void reset(state* = nullptr);
         
+        // FIXME: cycular reference
         parent_ptr const& parent() const { return _parent; }
+        
     private:
         int _ref;
         parent_ptr _parent;

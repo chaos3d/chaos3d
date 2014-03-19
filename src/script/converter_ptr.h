@@ -91,7 +91,8 @@ namespace script {
         static std::shared_ptr<T> from(lua_State* L, int idx, char* storage) {
             object_wrapper* obj = (object_wrapper*)lua_touserdata(L, idx);
             // TODO: check the derived type and use DEBUG
-            luaL_argcheck(L, obj == nullptr || obj->type == &class_<T>::type(), idx,
+            luaL_argcheck(L, obj == nullptr || obj->type == &class_<T>::type() ||
+                          obj->type->is_derived(&class_<T>::type()), idx,
                           "object type is not matched");
             return obj != nullptr ? ((T*)obj->object)->shared_from_this() : nullptr;
         };

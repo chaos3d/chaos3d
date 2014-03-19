@@ -1,6 +1,8 @@
 #ifndef _CHAOS3D_SCRIPT_CLASS_TYPE_H
 #define _CHAOS3D_SCRIPT_CLASS_TYPE_H
 
+#include <algorithm>
+#include <cassert>
 #include <typeinfo>
 #include <utility>
 #include <liblua/lua/lua.hpp>
@@ -12,34 +14,27 @@ namespace script {
     template<class T>
     struct gc_policy;
     
-    // load meta table
-    
-    template<class C>
-    class class_ : public type_info{
-        typedef typename std::remove_reference<C>::type C0;
-        typedef typename std::remove_cv<C0>::type C1;
-        typedef typename std::remove_pointer<C1>::type C2;
-        typedef typename std::remove_cv<C2>::type C3;
-        typedef typename std::remove_pointer<C3>::type C4;
-        static_assert(std::is_same<C4, C>::value, "define only raw type");
+    // type info for the object in Lua
+    class type_info {
+    public:
+        typedef std::unordered_map<std::string, lua_function_t> meta_t;
+        typedef std::vector<type_info const*> bases_t;
         
     public:
-        template<class... Others, typename std::enable_if<sizeof...(Others) == 0>::type* = nullptr>
-        class_& derive() {
-            return *this;
-        }
-        
-        template<class Base, class... Others>
-        class_& derive() {
-            static_assert(std::is_base_of<Base, C0>::value, "invalid base class");
-            _bases.emplace_back(&class_<Base>::type());
-            return derive<Others...>();
-        }
-        
         // TODO: wrapper a type struct to do sanity check
-        class_& def(char const* name, lua_function_t func) {
+        type_info& def(char const* name, lua_function_t func) {
             _meta.emplace(name, func);
             return *this;
+        }
+        
+        bool is_derived(type_info const* base) const {
+            for (auto& it : _bases) {
+                if (it == base)
+                    return true;
+                else if (it->is_derived(base))
+                    return true;
+            }
+            return false;
         }
 
 #if 0
@@ -56,7 +51,7 @@ namespace script {
         }
 #endif
 
-        virtual lua_function_t find(std::string const& name) const override {
+        lua_function_t find(std::string const& name) const {
             auto it = _meta.find(name);
             if (it == _meta.end()) {
                 lua_function_t found = nullptr;
@@ -71,24 +66,50 @@ namespace script {
             }
         }
         
-        static class_<C>& type() {
-            static class_<C> _type;
-            return _type;
-        }
-        
-    private:
-        class_() {
+    protected:
+        type_info() {
             //def("__gc", gc_policy<C>::gc);
             // TODO: some other meta function?
         }
         
-        class_(class_ const&) = delete;
-        class_& operator=(class_ const&) = delete;
+        type_info(type_info const&) = delete;
+        type_info& operator=(type_info const&) = delete;
         
         bases_t _bases;
         meta_t _meta;
         
         friend class state;
+    };
+    
+    template<class C>
+    class class_ : public type_info {
+    public:
+        typedef typename std::remove_reference<C>::type C0;
+        typedef typename std::remove_cv<C0>::type C1;
+        typedef typename std::remove_pointer<C1>::type C2;
+        typedef typename std::remove_cv<C2>::type C3;
+        typedef typename std::remove_pointer<C3>::type C4;
+        static_assert(std::is_same<C4, C>::value, "define only raw type");
+        
+    public:
+        template<class... Others, typename std::enable_if<sizeof...(Others) == 0>::type* = nullptr>
+        class_& derive() {
+            return *this;
+        }
+        
+        template<class Base, class... Others>
+        class_& derive() {
+            static_assert(std::is_base_of<Base, C0>::value, "invalid base class");
+            assert(std::find(_bases.begin(), _bases.end(), &class_<Base>::type())
+                   == _bases.end());
+            _bases.emplace_back(&class_<Base>::type());
+            return derive<Others...>();
+        }
+        
+        static class_& type() {
+            static class_ _type;
+            return _type;
+        }
     };
 }
 #endif

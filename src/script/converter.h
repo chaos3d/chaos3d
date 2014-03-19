@@ -88,8 +88,9 @@ namespace script {
         static T2<U>& from(lua_State* L, int idx, char* storage) {
             object_wrapper* obj = (object_wrapper*)lua_touserdata(L, idx);
             luaL_argcheck(L, obj != nullptr && obj->object != nullptr, idx, "expect an object");
-            // TODO: check the derived type and use DEBUG
-            luaL_argcheck(L, obj->type == &class_<T2<U>>::type(), idx,
+            // TODO: use DEBUG mode
+            luaL_argcheck(L, obj->type == &class_<T2<U>>::type() ||
+                          obj->type->is_derived(&class_<T2<U>>::type()), idx,
                           "object type is not matched");
            return *(T2<U>*)obj->object;
         };

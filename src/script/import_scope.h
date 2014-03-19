@@ -27,6 +27,14 @@ namespace script {
             return save(name);
         }
 
+        template<class C>
+        import_scope& import_type() {
+            auto* L = get_L();
+            lua_pushlightuserdata(L, (void*)&typeid(C));
+            lua_pushlightuserdata(L, (void*)&class_<C>::type());
+            lua_rawset(L, LUA_REGISTRYINDEX);
+            return *this;
+        }
 #if 0
         template<class C>
         import_scope& def(char const* name, C*&& value) {
@@ -58,5 +66,8 @@ namespace script {
         state* _state;
         friend class state;
     };
+    
+    template<>
+    import_scope& import_scope::import<std::type_info const*>(char const*, std::type_info const*);
 }
 #endif

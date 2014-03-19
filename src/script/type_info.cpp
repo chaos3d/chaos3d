@@ -1,4 +1,5 @@
 #include "script/type_info.h"
+#include "script/class_type.h"
 
 using namespace script;
 
