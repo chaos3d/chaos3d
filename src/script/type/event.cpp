@@ -68,7 +68,7 @@ namespace script {
         state* st = nullptr;
         lua_getallocf(L, (void**)&st);
 
-        luaL_argcheck(L, lua_gettop(L) > 3, 4, "no event specified");
+        luaL_argcheck(L, lua_gettop(L) >= 3, 3, "no event specified");
         event_dispatcher& dispatcher = converter<event_dispatcher&>::from(L, 1, nullptr);
         
         if (lua_isfunction(L, 2)) {
@@ -81,7 +81,7 @@ namespace script {
         }
 
         std::vector<std::type_index> evts;
-        evts.reserve(lua_gettop(L) - 3);
+        evts.reserve(lua_gettop(L) - 2);
         for (int i = 3, t = lua_gettop(L); i <= t; ++i) {
             auto* type = (std::type_info*) lua_touserdata(L, i);
             luaL_argcheck(L, type != nullptr, i, "not valid event type");

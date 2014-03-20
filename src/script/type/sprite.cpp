@@ -170,6 +170,13 @@ namespace script {
         .def("mass", c3d_lua_create_mass)
         ;
         
+        st->import((scope + ".evt").c_str())
+        .import("contact_began", &typeid(contact_began_event))
+        .import("contact_ended", &typeid(contact_ended_event))
+        .import_type<contact_began_event>()
+        .import_type<contact_ended_event>()
+        ;
+        
         st->import((scope + ".atlas").c_str())
         .def("load", c3d_lua_atlas_load)
         ;
@@ -216,6 +223,7 @@ namespace script {
         ;
         
         class_<world2d_mgr>::type()
+        .derive<event_dispatcher>()
         .def("set_gravity", c3d_lua_set_gravity)
         .def("query", c3d_lua_world_query)
         ;
