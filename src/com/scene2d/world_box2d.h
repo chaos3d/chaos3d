@@ -34,6 +34,9 @@ namespace scene2d {
         collider2d& reset_shapes(std::initializer_list<shape::init_t> const&,
                                  mass const& = mass());
         
+        collider2d& reset_shapes(std::vector<shape*> const&,
+                                 mass const& = mass());
+        
         void* internal_data() const; // b2Body
         
         template<class C>

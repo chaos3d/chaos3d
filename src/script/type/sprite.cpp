@@ -12,6 +12,9 @@
 #include "com/scene2d/world_box2d.h"
 #include "com/scene2d/shape_desc.h"
 
+#include "asset/asset_manager.h"
+#include "loader/json/json_loader.h"
+
 using namespace sprite2d;
 using namespace scene2d;
 
@@ -79,6 +82,82 @@ namespace script {
         return 2;
     }
     
+    static int c3d_lua_atlas_load(lua_State* L) {
+        data_stream& ds = converter<data_stream&>::from(L, 1, nullptr);
+        asset_manager& am = converter<asset_manager&>::from(L, 2, nullptr);
+        
+        auto atlas_ptr = texture_atlas::load_from<json_loader, asset_manager&, texture_atlas::TexturePacker&&>
+        (json_document(&ds).as_json_loader(), am, texture_atlas::TexturePacker());
+
+        converter<decltype(atlas_ptr)>::to(L, std::move(atlas_ptr));
+        return 1;
+    }
+    
+    static int c3d_lua_create_shape(lua_State* L) {
+        typedef std::unique_ptr<shape> ptr;
+        if (lua_gettop(L) == 0) {
+            converter<ptr>::to(L, ptr(new shape()));
+            return 1;
+        }
+                               
+        shape* sp = nullptr;
+        luaL_checktype(L, 1, LUA_TTABLE);
+        
+        lua_getfield(L, 1, "type");
+        char const* type = lua_isstring(L, -1) ? lua_tostring(L, -1) : nullptr;
+        if (type == nullptr) {
+            sp = new shape();
+        } if (strcmp(type, "box")) {
+            lua_getfield(L, 1, "x");
+            lua_getfield(L, 1, "y");
+            lua_getfield(L, 1, "w");
+            lua_getfield(L, 1, "h");
+            lua_getfield(L, 1, "angle");
+            sp = new box(lua_tonumber(L, -5), lua_tonumber(L, -4), lua_tonumber(L, -3),
+                         lua_tonumber(L, -2), lua_tonumber(L, -1));
+            lua_pop(L, 5);
+        } else if (strcmp(type, "circle")) {
+            lua_getfield(L, 1, "x");
+            lua_getfield(L, 1, "y");
+            lua_getfield(L, 1, "r");
+            
+            sp = new circle(lua_tonumber(L, -3), lua_tonumber(L, -2), lua_tonumber(L, -1));
+            lua_pop(L, 3);
+        } else
+            luaL_argerror(L, 1, "type not valid");
+        
+        int t = lua_gettop(L);
+        lua_getfield(L, 1, "rest");
+        lua_getfield(L, 1, "friction");
+        lua_getfield(L, 1, "density");
+        lua_getfield(L, 1, "group");
+        lua_getfield(L, 1, "mask");
+        lua_getfield(L, 1, "category");
+        lua_getfield(L, 1, "collidable");
+#define ASSIGN(top, v) (lua_isnoneornil(L, t + top) ? (v) : lua_tonumber(L, t + top))
+        sp->restitution() = ASSIGN(1, 0.f);
+        sp->friction() = ASSIGN(2, 0.2f);
+        sp->density() = ASSIGN(3, 1.f);
+        sp->collision_group() = (int16_t)ASSIGN(4, 0);
+        sp->collision_mask() = (uint16_t)ASSIGN(5, 0xFFFF);
+        sp->collision_category() = (uint16_t)ASSIGN(6, 0x1);
+        sp->is_collidable() = lua_isnoneornil(L, t + 7) ? false : lua_toboolean(L, t + 7);
+#undef ASSIGN
+        converter<ptr>::to(L, ptr(sp));
+        return 1;
+    }
+
+    static int c3d_lua_create_mass(lua_State* L) {
+        typedef std::unique_ptr<mass> ptr;
+        mass* ms = new mass();
+        ms->x = lua_tonumber(L, 1);
+        ms->y = lua_tonumber(L, 2);
+        ms->rotate = lua_tonumber(L, 3);
+        ms->weight = lua_tonumber(L, 4);
+        converter<ptr>::to(L, ptr(ms));
+        return 1;
+    }
+    
     void def_sprite2d(state* st, std::string const& scope) {
         st->import((scope + ".collider").c_str())
         .import<uint8_t>(LUA_ENUM(collider2d, dynamic))
@@ -87,7 +166,12 @@ namespace script {
         .import<uint8_t>("normal", collider2d::type_normal)
         .import<uint8_t>("character", collider2d::type_character)
         .import<uint8_t>("bullet", collider2d::type_bullet)
+        .def("shape", c3d_lua_create_shape)
+        .def("mass", c3d_lua_create_mass)
+        ;
         
+        st->import((scope + ".atlas").c_str())
+        .def("load", c3d_lua_atlas_load)
         ;
         
         class_<game_object>::type()
@@ -113,6 +197,7 @@ namespace script {
                                                                          render_state::ptr const&,
                                                                          render_uniform::ptr const&),
                                         &sprite_mgr::add_material))
+        .def("get_material", LUA_BIND(&sprite_mgr::find_first_material))
         .def("vertex_layout", LUA_BIND(&sprite_mgr::vertex_layout))
         .def("add_layout", c3d_lua_add_layout)
         ;
@@ -124,7 +209,10 @@ namespace script {
         ;
         
         class_<collider2d>::type()
-        //.def("", )
+        .def("reset_shapes", LUA_BIND_S(collider2d& (collider2d::*)(std::vector<shape*> const&,
+                                                                    mass const&),
+                                        &collider2d::reset_shapes))
+        .def("from_quad_sprite", LUA_BIND(&collider2d::reset_from<quad_sprite>))
         ;
         
         class_<world2d_mgr>::type()

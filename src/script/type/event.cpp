@@ -109,7 +109,7 @@ namespace script {
         .import("touch_ended", &typeid(touch_ended_event))
         .import("touch_cancelled", &typeid(touch_cancelled_event))
         .import_type<touch_began_event>()
-        .import_type<touch_ended_event>()
+        .import_type<touch_moved_event>()
         .import_type<touch_ended_event>()
         .import_type<touch_cancelled_event>()
         ;
