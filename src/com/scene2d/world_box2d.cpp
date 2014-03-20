@@ -75,6 +75,26 @@ collider2d& collider2d::reset_shapes(std::initializer_list<shape::init_t> const&
     return *this;
 }
 
+collider2d& collider2d::reset_shapes(std::vector<shape*> const& shapes,
+                                     mass const& m) {
+    if (shapes.size() == 0)
+        return *this;
+    
+    clear_shapes();
+    
+    float ratio = world2d_mgr::instance().pixel_meter_ratio();
+    for (auto& it : shapes) {
+        it->append_to(this, ratio);
+    }
+    
+    if (m.weight > 0.f) {
+        b2MassData data { m.weight, {m.x,m.y}, m.rotate};
+        _internal->body->SetMassData(&data);
+    }
+    
+    return *this;
+}
+
 void collider2d::clear_shapes() {
     for (auto* fixture = _internal->body->GetFixtureList(); fixture;) {
         auto* del = fixture;
@@ -225,7 +245,7 @@ void world2d_mgr::query(query_callback_t const& query,
                                });
 }
 
-void world2d_mgr::pre_update(goes_t const& goes) {
+void world2d_mgr::update(goes_t const& goes) {
     auto& world = _internal->world;
     auto offset = com::transform_manager::flag_offset();
     auto transform_idx = com::transform_manager::component_idx();
@@ -259,7 +279,7 @@ void world2d_mgr::pre_update(goes_t const& goes) {
     }
 }
 
-void world2d_mgr::update(goes_t const&) {
+void world2d_mgr::pre_update(goes_t const&) {
     auto& world = _internal->world;
     auto transform_idx = com::transform_manager::component_idx();
     
