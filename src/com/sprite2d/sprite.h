@@ -237,7 +237,8 @@ namespace sprite2d {
         typedef std::vector<sprite_vertex> vertices_t;
         typedef std::vector<vertices_t> types_t; // vertex layout types
        
-        typedef std::vector<std::unique_ptr<layout_buffer>> buffers_t; // layout buffers, sorted by types
+        typedef std::unique_ptr<layout_buffer> buffer_ptr;
+        typedef std::vector<buffer_ptr> buffers_t; // layout buffers, sorted by types
 
         typedef std::unique_ptr<sprite_material> spt_mat_ptr; // mgr owns the materials
         typedef std::vector<spt_mat_ptr> materials_t; // shared materials, sorted by names
@@ -266,6 +267,7 @@ namespace sprite2d {
         // to fill out the buffer and then the index buffer
         // note: the mgr will take over the ownership
         layout_buffer* assign_buffer(sprite*, uint32_t count, uint32_t typeIdx);
+        uint32_t buffer_index(layout_buffer*) const;
 
         // add a vertice layout/type, returned value to be used
         // to request the buffer

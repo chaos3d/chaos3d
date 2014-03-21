@@ -28,6 +28,9 @@ void camera2d::collect(const std::vector<game_object *> &goes) {
         return spt;
     };
     auto* spt = next_sprite();
+    if (spt == nullptr)
+        return;
+    
     auto buffer = spt->index_buffer();
     char* buffer_raw = reinterpret_cast<char*>(buffer->lock());
     

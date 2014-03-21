@@ -18,7 +18,6 @@ struct image_desc {
 
 // decode the png data and load the image
 // into the memory buffer
-// FIXME: shared_ptr should be just fine, or just unique_ptr?
 class png_loader : public referenced_count{
 public:
     typedef std::unique_ptr<png_loader, referenced_count::release_deleter> ptr;

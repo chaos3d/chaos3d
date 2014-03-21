@@ -12,7 +12,8 @@ quad_sprite::quad_sprite(game_object* go, int type)
 }
 
 quad_sprite* quad_sprite::clone(game_object* go) const {
-    quad_sprite* quad = new quad_sprite(go, 0); //FIXME: type
+    int type = sprite_mgr::instance().buffer_index(_data.buffer);
+    quad_sprite* quad = new quad_sprite(go, type);
     quad->_data.material = _data.material;
     quad->_frame = _frame;
     quad->_bound = _bound;

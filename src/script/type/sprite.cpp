@@ -226,6 +226,7 @@ namespace script {
         .derive<event_dispatcher>()
         .def("set_gravity", c3d_lua_set_gravity)
         .def("query", c3d_lua_world_query)
+        .def("set_step", LUA_BIND_S(world2d_mgr& (world2d_mgr::*)(float&&), &world2d_mgr::set_step))
         ;
 #if 0
         script::class_<texture_atlas>::type()

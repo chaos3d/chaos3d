@@ -323,6 +323,14 @@ layout_buffer* sprite_mgr::assign_buffer(sprite* spt, uint32_t count, uint32_t t
     return buf;
 }
 
+uint32_t sprite_mgr::buffer_index(layout_buffer* buffer) const {
+    auto found = std::find_if(_buffers.begin(), _buffers.end(), [=] (buffer_ptr const& ptr) {
+        return ptr.get() == buffer;
+    });
+    return std::distance(_buffers.begin(), found);
+}
+
+
 std::unique_ptr<layout_buffer> sprite_mgr::create_buffer(vertices_t const& layout) {
     vertex_layout::channels_t channels;
     channels.reserve(layout.size());
