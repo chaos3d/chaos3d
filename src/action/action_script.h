@@ -13,7 +13,7 @@ public:
 public:
     virtual ~yieldable() {};
     virtual bool is_done() const = 0;
-    virtual void update() = 0;
+    virtual void update(double delta) = 0;
 };
 
 class action_script : public action {

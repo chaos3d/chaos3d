@@ -65,6 +65,7 @@ public:
     // tick delta, return the delta frames
     frame_t tick(tick_t delta) {
         frame_t previous = _current;
+        _previous_tick = _tick;
         _tick += delta;
         while (_tick - _last_frame_tick > _frame_rate) {
             _last_frame_tick += _frame_rate;
@@ -91,6 +92,14 @@ public:
 #endif
     }
     
+    time_t recent_delta() const {
+#ifdef __APPLE__
+        return (time_t)(_tick - _previous_tick) / _tick_per_second;
+#else
+        return (time_t)(_tick - _previous_tick) / CLOCKS_PER_SEC;
+#endif
+    }
+    
     // current absolute time
     static tick_t current() {
 #ifdef __APPLE__
@@ -113,7 +122,7 @@ private:
     
 private:
     frame_t _current = 0;
-    tick_t _tick = 0, _last_frame_tick = 0;
+    tick_t _tick = 0, _last_frame_tick = 0, _previous_tick = 0;
     tick_t _frame_rate = _tick_per_second / 30;
 };
 
