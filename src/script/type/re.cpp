@@ -113,10 +113,20 @@ namespace script {
         .def("link", LUA_BIND(&gpu_program::link))
         ;
         
+        class_<render_target>::type()
+        .def("aspect_ratio", LUA_BIND(&render_target::aspect_ratio))
+        ;
+        
+        class_<render_window>::type()
+        .derive<event_dispatcher, render_target>()
+        ;
+        
         class_<com::camera>::type()
         .def("set_perspective", LUA_BIND_S(com::camera& (com::camera::*)(float, float, float, float),
                                            &com::camera::set_perspective))
         .def("set_target", LUA_BIND(&com::camera::set_target))
+        .def("set_viewport_from_target", LUA_BIND(&com::camera::set_viewport_from_target))
+        .def("move_for_perfect_pixel", LUA_BIND(&com::camera::move_for_perfect_pixel))
         .def("distance", LUA_BIND(&com::camera::distant_for_perfect_pixel))
         ;
     }
