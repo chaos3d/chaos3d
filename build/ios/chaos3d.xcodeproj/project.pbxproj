@@ -23,7 +23,6 @@
 		8812C28F185DB7F8001C4D0B /* file_stream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8812C28D185DB7F8001C4D0B /* file_stream.cpp */; };
 		8812C292185E5F77001C4D0B /* gl_texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8812C290185E5F77001C4D0B /* gl_texture.cpp */; };
 		8812C295185E6359001C4D0B /* render_device.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8812C294185E6359001C4D0B /* render_device.cpp */; };
-		8812C298185EF4FA001C4D0B /* resource_manager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8812C297185EF4FA001C4D0B /* resource_manager.cpp */; };
 		8812C29B185EF887001C4D0B /* asset_locator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8812C299185EF887001C4D0B /* asset_locator.cpp */; };
 		8812C2A0185F0992001C4D0B /* asset_locator.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8812C29F185F0992001C4D0B /* asset_locator.mm */; };
 		8812C2A718618055001C4D0B /* screen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8812C2A318618055001C4D0B /* screen.cpp */; };
@@ -66,7 +65,6 @@
 		8879CE9518BC984700BCBFA6 /* collider2d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8879CE9418BC984700BCBFA6 /* collider2d.cpp */; };
 		8879CE9C18BDBDF100BCBFA6 /* ui_control.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8879CE9A18BDBDF100BCBFA6 /* ui_control.cpp */; };
 		8879CE9D18BDC25100BCBFA6 /* ui_manager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8879CE9718BD977F00BCBFA6 /* ui_manager.cpp */; };
-		8879CEA118BDE7C800BCBFA6 /* asset_collection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8879CE9F18BDE7C800BCBFA6 /* asset_collection.cpp */; };
 		8879CEA418C0A10F00BCBFA6 /* application.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8879CEA218C0A10F00BCBFA6 /* application.cpp */; };
 		8879CEB218C7097200BCBFA6 /* liblua.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8879CEAB18C7097200BCBFA6 /* liblua.a */; };
 		8879CEFC18C848BB00BCBFA6 /* state.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8879CEFB18C848BB00BCBFA6 /* state.cpp */; };
@@ -138,8 +136,6 @@
 		8812C291185E5F77001C4D0B /* gl_texture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gl_texture.h; sourceTree = "<group>"; };
 		8812C293185E61EA001C4D0B /* gles2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gles2.h; sourceTree = "<group>"; };
 		8812C294185E6359001C4D0B /* render_device.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = render_device.cpp; sourceTree = "<group>"; };
-		8812C296185E72FE001C4D0B /* resource_manager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = resource_manager.h; path = asset/resource_manager.h; sourceTree = "<group>"; };
-		8812C297185EF4FA001C4D0B /* resource_manager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = resource_manager.cpp; path = asset/resource_manager.cpp; sourceTree = "<group>"; };
 		8812C299185EF887001C4D0B /* asset_locator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = asset_locator.cpp; path = asset/asset_locator.cpp; sourceTree = "<group>"; };
 		8812C29A185EF887001C4D0B /* asset_locator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = asset_locator.h; path = asset/asset_locator.h; sourceTree = "<group>"; };
 		8812C29F185F0992001C4D0B /* asset_locator.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = asset_locator.mm; path = asset/asset_locator.mm; sourceTree = "<group>"; };
@@ -574,8 +570,6 @@
 		8879CE9A18BDBDF100BCBFA6 /* ui_control.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ui_control.cpp; sourceTree = "<group>"; };
 		8879CE9B18BDBDF100BCBFA6 /* ui_control.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ui_control.h; sourceTree = "<group>"; };
 		8879CE9E18BDDF0600BCBFA6 /* world_event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = world_event.h; sourceTree = "<group>"; };
-		8879CE9F18BDE7C800BCBFA6 /* asset_collection.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = asset_collection.cpp; path = asset/asset_collection.cpp; sourceTree = "<group>"; };
-		8879CEA018BDE7C800BCBFA6 /* asset_collection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = asset_collection.h; path = asset/asset_collection.h; sourceTree = "<group>"; };
 		8879CEA218C0A10F00BCBFA6 /* application.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = application.cpp; path = app/application.cpp; sourceTree = "<group>"; };
 		8879CEA318C0A10F00BCBFA6 /* application.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = application.h; path = app/application.h; sourceTree = "<group>"; };
 		8879CEA518C0A17F00BCBFA6 /* event_listener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = event_listener.h; sourceTree = "<group>"; };
@@ -1902,8 +1896,6 @@
 			isa = PBXGroup;
 			children = (
 				8879CE4F18B707E300BCBFA6 /* asset_bundle.h */,
-				8879CE9F18BDE7C800BCBFA6 /* asset_collection.cpp */,
-				8879CEA018BDE7C800BCBFA6 /* asset_collection.h */,
 				8879CE6618B9F44E00BCBFA6 /* asset_handle.h */,
 				8812C299185EF887001C4D0B /* asset_locator.cpp */,
 				8812C29A185EF887001C4D0B /* asset_locator.h */,
@@ -1912,8 +1904,6 @@
 				8879CE4D18B6F76100BCBFA6 /* asset_manager.h */,
 				8879CE5918B7698F00BCBFA6 /* locator_asset_bundle.cpp */,
 				8879CE5A18B7698F00BCBFA6 /* locator_asset_bundle.h */,
-				8812C297185EF4FA001C4D0B /* resource_manager.cpp */,
-				8812C296185E72FE001C4D0B /* resource_manager.h */,
 			);
 			name = asset;
 			sourceTree = "<group>";
@@ -2005,7 +1995,6 @@
 				8812C295185E6359001C4D0B /* render_device.cpp in Sources */,
 				8812C2AF18618ACE001C4D0B /* cAppDelegate.mm in Sources */,
 				8879CEA418C0A10F00BCBFA6 /* application.cpp in Sources */,
-				8812C298185EF4FA001C4D0B /* resource_manager.cpp in Sources */,
 				880BA3271895D261002542E2 /* camera.cpp in Sources */,
 				883246CF183CC04C0022EA4A /* render_target.cpp in Sources */,
 				880BA3251895131E002542E2 /* render_component_mgr.cpp in Sources */,
@@ -2037,7 +2026,6 @@
 				8879CE9D18BDC25100BCBFA6 /* ui_manager.cpp in Sources */,
 				8811358518D43F910069F351 /* eigen.cpp in Sources */,
 				8879CE5B18B7698F00BCBFA6 /* locator_asset_bundle.cpp in Sources */,
-				8879CEA118BDE7C800BCBFA6 /* asset_collection.cpp in Sources */,
 				88A84B0E183067AF009F7ECD /* transform.cpp in Sources */,
 				8879CE9518BC984700BCBFA6 /* collider2d.cpp in Sources */,
 				8812C2A0185F0992001C4D0B /* asset_locator.mm in Sources */,
