@@ -2,10 +2,8 @@
 #define _RENDER_VIEW_IOS_H
 
 #include "re/render_window.h"
-
-#include <OpenGLES/ES2/gl.h>
-#include <OpenGLES/ES2/glext.h>
-#import <OpenGLES/EAGL.h>
+#include "re/gles20/gles2.h"
+#include <OpenGLES/EAGL.h>
 
 @class EAGLView;
 

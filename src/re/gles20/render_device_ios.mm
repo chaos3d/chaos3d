@@ -1,7 +1,7 @@
 #include "re/gles20/render_gles20.h"
 #include "re/gles20/render_device.h"
 #include "re/gles20/render_view_ios.h"
-#include "re/gles20/gl_context.h"
+#include "re/gles20/gl_context_ios.h"
 
 #import <OpenGLES/EAGL.h>
 #import <OpenGLES/EAGLDrawable.h>
@@ -29,7 +29,7 @@ bool render_device::init_context() {
     if([EAGLContext currentContext] != nil)
         return true;
     
-    EAGLContext* context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2
+    EAGLContext* context = [[EAGLContext alloc] initWithAPI: kEAGLRenderingAPIOpenGLES2
                                                  sharegroup: _internal->sharegroup];
     
     if(context == nil)
@@ -40,8 +40,8 @@ bool render_device::init_context() {
     return true;
 }
 
-render_context* render_device::create_context() {
-    EAGLContext* context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2
+render_context* render_device::create_context(render_window*) {
+    EAGLContext* context = [[EAGLContext alloc] initWithAPI: kEAGLRenderingAPIOpenGLES2
                                                  sharegroup: _internal->sharegroup];
     
     if(context == nil)
@@ -52,7 +52,7 @@ render_context* render_device::create_context() {
     [EAGLContext setCurrentContext: context];
     GLint texture_units = 0;
     glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &texture_units);
-    return new gl_context(context, texture_units);
+    return new gl_context_ios(context, texture_units);
 }
     
 render_window* render_device::create_window(render_target::target_size_t const& size_,

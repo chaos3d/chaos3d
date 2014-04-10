@@ -1,0 +1,24 @@
+#ifndef _CHAOS3D_RE_GLES20_GL_CONTEXT_EGL_H
+#define _CHAOS3D_RE_GLES20_GL_CONTEXT_EGL_H
+
+#include "re/gles20/gl_context.h"
+#import <EGL/egl.h>
+
+class gl_context_egl : public gl_context {
+public:
+    gl_context_egl(EGLDisplay display, EGLSurface surface,
+                   EGLContext context,  size_t max)
+    : gl_context(max), _context(context)
+    {}
+    
+    EGLContext context() const { return _context; }
+    virtual void set_current() override {
+    }
+    
+private:
+    EGLDisplay _display;
+    EGLSurface _surface;
+    EGLContext _context;
+};
+
+#endif

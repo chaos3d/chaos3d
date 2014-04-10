@@ -327,7 +327,7 @@ uint32_t sprite_mgr::buffer_index(layout_buffer* buffer) const {
     auto found = std::find_if(_buffers.begin(), _buffers.end(), [=] (buffer_ptr const& ptr) {
         return ptr.get() == buffer;
     });
-    return std::distance(_buffers.begin(), found);
+    return static_cast<uint32_t>(std::distance(_buffers.begin(), found));
 }
 
 

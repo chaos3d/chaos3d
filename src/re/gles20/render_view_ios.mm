@@ -4,8 +4,7 @@
 #include <UIKit/UIKit.h>
 
 #include "render_view_ios.h"
-#include "re/gles20/gl_context.h"
-#include "re/gles20/gles2.h"
+#include "re/gles20/gl_context_ios.h"
 #include "event/touch_event.h"
 
 @interface EAGLView : UIView
@@ -183,10 +182,10 @@ bool render_view::bind(render_context*) {
 }
     
 bool render_view::flush(render_context* context) {
-    assert(typeid(*context) == typeid(gl_context));
+    assert(typeid(*context) == typeid(gl_context_ios));
     glBindRenderbuffer(GL_RENDERBUFFER, _colorbuffer_id);
     GLNOERROR;
-    return [static_cast<gl_context*>(context)->context() presentRenderbuffer:GL_RENDERBUFFER];
+    return [static_cast<gl_context_ios*>(context)->context() presentRenderbuffer:GL_RENDERBUFFER];
 }
 
 }

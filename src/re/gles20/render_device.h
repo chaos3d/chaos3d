@@ -10,11 +10,6 @@
 #include "re/gles20/gl_vertex_layout.h"
 #include "re/gles20/gl_gpu.h"
 
-#if defined(__OBJC__)
-#import <OpenGLES/EAGL.h>
-#import <OpenGLES/EAGLDrawable.h>
-#endif
-
 namespace gles20 {
 
 class render_device : public ::render_device {
@@ -22,7 +17,7 @@ public:
     render_device();
     virtual ~render_device();
     virtual bool init_context() override;
-    virtual render_context* create_context() override; // TODO: thread-safe
+    virtual render_context* create_context(render_window*) override; // TODO: thread-safe
     
     virtual texture::ptr create_texture(texture::vector2i const&, texture::attribute_t const&) override;
     virtual render_texture* create_render_texture() override;

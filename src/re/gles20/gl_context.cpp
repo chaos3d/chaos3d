@@ -22,16 +22,6 @@ static GLenum _blend_func_map [] = {
     GL_ONE_MINUS_DST_ALPHA,	GL_ONE_MINUS_SRC_ALPHA
 };
 
-gl_context::gl_context(EAGLContext* context, size_t max)
-: _context(context), render_context(max)
-{
-    
-}
-
-void gl_context::set_current() {
-    [EAGLContext setCurrentContext: context()];
-}
-
 void gl_context::apply() {
     render_state const& cur = _cur_state;
     render_state const& bound = _bound_state;

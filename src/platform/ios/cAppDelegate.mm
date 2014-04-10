@@ -72,8 +72,10 @@
     add(locator::dir_locator::home_dir());
 }
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+- (BOOL)application:(UIApplication *)application_ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    application& app = application::instance();
+    app.on_initialize();
     CGRect rt = [[UIScreen mainScreen] bounds];
     self.window = [[[UIWindow alloc] initWithFrame:rt] autorelease];
     
@@ -89,17 +91,22 @@
     
     // create the device
     _default_device = render_device::get_device([self renderType]);
+    _default_device->init_context();
+
+    _main_window = _default_device->create_window(render_target::target_size_t(rt.size.width, rt.size.height));
     
     // init the context for the current thread
-    _main_context = _default_device->create_context();
+    _main_context = _default_device->create_context(_main_window);
     _main_context->set_current();
     
-    _main_window = _default_device->create_window(render_target::target_size_t(rt.size.width, rt.size.height));
     [self.controller.view addSubview: (UIView*)_main_window->native_handle()];
     
     application::instance().get_screen().on_start();
     
     [self startLoop];
+    
+    app.on_launch();
+    
     return YES;
 }
 

@@ -56,13 +56,13 @@ public:
     // returns false if it doesn't support the current
     // device
     virtual bool init_context() { return false; };
-    virtual render_context* create_context() = 0;
-    virtual void release_context(render_context* );
+    virtual render_context* create_context(render_window*) = 0;
+    virtual void release_context(render_context*);
     
     virtual texture::ptr create_texture(texture::vector2i const&, texture::attribute_t const&) = 0;
     virtual render_texture* create_render_texture() = 0;
     virtual render_window* create_window(render_target::target_size_t const&,
-                                         render_window::window_pos_t const& pos = render_window::window_pos_t(0.f,0.f)) = 0;
+                                         render_window::window_pos_t const& = render_window::window_pos_t(0.f,0.f)) = 0;
     virtual vertex_layout::ptr create_layout(vertex_layout::channels_t&&,
                                              vertex_index_buffer::ptr&&, uint8_t mode) = 0;
 
