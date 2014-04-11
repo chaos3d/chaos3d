@@ -140,9 +140,11 @@
 		88A84ADE1830652F009F7ECD /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88A84ADD1830652F009F7ECD /* XCTest.framework */; };
 		88A84ADF1830652F009F7ECD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88A84ACF1830652F009F7ECD /* Foundation.framework */; };
 		88A84AE11830652F009F7ECD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88A84AE01830652F009F7ECD /* UIKit.framework */; };
-		88A84AE41830652F009F7ECD /* libchaos3d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 88A84ACC1830652F009F7ECD /* libchaos3d.a */; };
+		88A84AE41830652F009F7ECD /* libchaos3d_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 88A84ACC1830652F009F7ECD /* libchaos3d_ios.a */; };
 		88A84B0E183067AF009F7ECD /* transform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88A84B0C183067AF009F7ECD /* transform.cpp */; };
 		88A84B121830B6D9009F7ECD /* game_object.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88A84B111830B6D9009F7ECD /* game_object.cpp */; };
+		88C0045418F7DD450012EC1D /* render_window_mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 886CC17C18F68E79006A3AF5 /* render_window_mac.mm */; };
+		88C0045918F7E22C0012EC1D /* render_device_mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 88C0045718F7E1BF0012EC1D /* render_device_mac.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -695,7 +697,8 @@
 		886CC17518F662BB006A3AF5 /* libchaos3d copy.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libchaos3d copy.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		886CC17618F67D4D006A3AF5 /* gl_render_window_egl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gl_render_window_egl.cpp; sourceTree = "<group>"; };
 		886CC17718F67D4D006A3AF5 /* gl_render_window_egl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gl_render_window_egl.h; sourceTree = "<group>"; };
-		886CC17818F67D4D006A3AF5 /* gl_render_window.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gl_render_window.h; sourceTree = "<group>"; };
+		886CC17C18F68E79006A3AF5 /* render_window_mac.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = render_window_mac.mm; sourceTree = "<group>"; };
+		886CC17D18F68E79006A3AF5 /* render_window_mac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = render_window_mac.h; sourceTree = "<group>"; };
 		887711DE18CB24B700BA5508 /* class_type.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = class_type.h; sourceTree = "<group>"; };
 		887711DF18CB2FA600BA5508 /* import_scope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = import_scope.h; sourceTree = "<group>"; };
 		887711E018CBC5F500BA5508 /* type_info.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = type_info.h; sourceTree = "<group>"; };
@@ -817,7 +820,7 @@
 		8882E4DE18A74E2D0044CFE4 /* b2WheelJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2WheelJoint.h; sourceTree = "<group>"; };
 		8882E4E018A74E2D0044CFE4 /* b2Rope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2Rope.h; sourceTree = "<group>"; };
 		8882E4E218A74E2D0044CFE4 /* libBox2D.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libBox2D.a; sourceTree = "<group>"; };
-		88A84ACC1830652F009F7ECD /* libchaos3d.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libchaos3d.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		88A84ACC1830652F009F7ECD /* libchaos3d_ios.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libchaos3d_ios.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		88A84ACF1830652F009F7ECD /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		88A84ADC1830652F009F7ECD /* chaos3dTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = chaos3dTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		88A84ADD1830652F009F7ECD /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -828,6 +831,7 @@
 		88A84B0C183067AF009F7ECD /* transform.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = transform.cpp; sourceTree = "<group>"; };
 		88A84B0D183067AF009F7ECD /* transform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = transform.h; sourceTree = "<group>"; };
 		88A84B111830B6D9009F7ECD /* game_object.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = game_object.cpp; sourceTree = "<group>"; };
+		88C0045718F7E1BF0012EC1D /* render_device_mac.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = render_device_mac.mm; sourceTree = "<group>"; };
 		AACCE35D185D89CA0017CEEE /* data_stream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = data_stream.h; path = io/data_stream.h; sourceTree = "<group>"; };
 		AACCE35E185D8AF80017CEEE /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = README.md; path = ../../README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -860,7 +864,7 @@
 				88A84ADE1830652F009F7ECD /* XCTest.framework in Frameworks */,
 				88A84AE11830652F009F7ECD /* UIKit.framework in Frameworks */,
 				88A84ADF1830652F009F7ECD /* Foundation.framework in Frameworks */,
-				88A84AE41830652F009F7ECD /* libchaos3d.a in Frameworks */,
+				88A84AE41830652F009F7ECD /* libchaos3d_ios.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1688,7 +1692,6 @@
 				886CC09918F658B9006A3AF5 /* gl_context_ios.h */,
 				8827620F1870F9E600B1291B /* gl_gpu.cpp */,
 				882762101870F9E600B1291B /* gl_gpu.h */,
-				886CC17818F67D4D006A3AF5 /* gl_render_window.h */,
 				886CC17618F67D4D006A3AF5 /* gl_render_window_egl.cpp */,
 				886CC17718F67D4D006A3AF5 /* gl_render_window_egl.h */,
 				8812C290185E5F77001C4D0B /* gl_texture.cpp */,
@@ -1702,9 +1705,12 @@
 				883246AC183237220022EA4A /* render_device.h */,
 				886CC09B18F65FEB006A3AF5 /* render_device_egl.cpp */,
 				883246AD183237220022EA4A /* render_device_ios.mm */,
+				88C0045718F7E1BF0012EC1D /* render_device_mac.mm */,
 				883246AE183237220022EA4A /* render_gles20.h */,
 				883246AF183237220022EA4A /* render_view_ios.h */,
 				883246B0183237220022EA4A /* render_view_ios.mm */,
+				886CC17D18F68E79006A3AF5 /* render_window_mac.h */,
+				886CC17C18F68E79006A3AF5 /* render_window_mac.mm */,
 			);
 			path = gles20;
 			sourceTree = "<group>";
@@ -2436,7 +2442,7 @@
 		88A84ACD1830652F009F7ECD /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				88A84ACC1830652F009F7ECD /* libchaos3d.a */,
+				88A84ACC1830652F009F7ECD /* libchaos3d_ios.a */,
 				88A84ADC1830652F009F7ECD /* chaos3dTests.xctest */,
 				886CC17518F662BB006A3AF5 /* libchaos3d copy.a */,
 			);
@@ -2570,7 +2576,7 @@
 			);
 			name = chaos3d_ios;
 			productName = chaos3d;
-			productReference = 88A84ACC1830652F009F7ECD /* libchaos3d.a */;
+			productReference = 88A84ACC1830652F009F7ECD /* libchaos3d_ios.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		88A84ADB1830652F009F7ECD /* chaos3dTests */ = {
@@ -2682,6 +2688,7 @@
 				886CC15A18F662BB006A3AF5 /* texture_atlas.cpp in Sources */,
 				886CC15B18F662BB006A3AF5 /* asset_manager.cpp in Sources */,
 				886CC15C18F662BB006A3AF5 /* quad_sprite.cpp in Sources */,
+				88C0045418F7DD450012EC1D /* render_window_mac.mm in Sources */,
 				886CC15D18F662BB006A3AF5 /* vertex_buffer.cpp in Sources */,
 				886CC15E18F662BB006A3AF5 /* shape_desc.cpp in Sources */,
 				886CC15F18F662BB006A3AF5 /* ui_control.cpp in Sources */,
@@ -2692,6 +2699,7 @@
 				886CC16418F662BB006A3AF5 /* event.cpp in Sources */,
 				886CC16518F662BB006A3AF5 /* vertex_layout.cpp in Sources */,
 				886CC16618F662BB006A3AF5 /* world_box2d.cpp in Sources */,
+				88C0045918F7E22C0012EC1D /* render_device_mac.mm in Sources */,
 				886CC16718F662BB006A3AF5 /* texture_asset.cpp in Sources */,
 				886CC16818F662BB006A3AF5 /* gl_vertex_buffer.cpp in Sources */,
 				886CC16918F662BB006A3AF5 /* gl_vertex_layout.cpp in Sources */,

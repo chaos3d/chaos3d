@@ -12,7 +12,16 @@ public:
     {}
     
     EGLContext context() const { return _context; }
+    EGLDisplay display() const { return _display; }
+    
+    // bind the current context with the given surface
+    bool set_current(EGLSurface surface) {
+        return eglMakeCurrent(_display, surface, surface, _context) == EGL_TRUE;
+    }
+    
+    // bind the current context with the default surface (usually the main window)
     virtual void set_current() override {
+        eglMakeCurrent(_display, _surface, _surface, _context);
     }
     
 private:

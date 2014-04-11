@@ -3,13 +3,19 @@
 
 #include <EGL/egl.h>
 #include "gles2.h"
+#include "re/render_window.h"
+#include "re/gles20/gl_context_egl.h"
 
 namespace gles20 {
     
-    class render_window_egl : public render_window{
+    class render_window_egl : public render_window {
     public:
-        render_window_egl(target_size_t const&, window_pos_t const& pos = window_pos_t(0.f,0.f));
-        virtual ~gl_render_window();
+        render_window_egl(target_size_t const& size, window_pos_t const& pos)
+        : render_window(size, pos)
+        {
+        }
+        
+        virtual ~render_window_egl();
 
         EGLSurface surface() const { return _surface; }
         
@@ -22,11 +28,9 @@ namespace gles20 {
         
         virtual bool bind(render_context*) override;
         virtual bool flush(render_context*) override;
-        void create_native();
-        void create_view();
         
-    private:
-        EGLSurface _surface;
+    protected:
+        EGLSurface _surface; // subclass to initialize this
     };
     
 }

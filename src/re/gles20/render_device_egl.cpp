@@ -7,6 +7,7 @@
 
 namespace gles20 {
     
+    // TODO: make sure to sync up with mac.mm
     struct render_device::internal {
         EGLDisplay display = EGL_NO_DISPLAY;
         EGLContext context = EGL_NO_CONTEXT;
@@ -75,11 +76,6 @@ namespace gles20 {
         glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &texture_units);
         return new gl_context_egl(_internal->display, egl_window->surface(),
                                   context, texture_units);
-    }
-    
-    render_window* render_device::create_window(render_target::target_size_t const& size_,
-                                                render_window::window_pos_t const& pos_) {
-        return nullptr;
     }
     
     render_texture* render_device::create_render_texture() {
