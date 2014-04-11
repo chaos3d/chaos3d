@@ -8,6 +8,10 @@ using namespace gles20;
 
 @end
 
+@implementation EGLView
+
+@end
+
 render_window_mac::render_window_mac(EGLDisplay display,
                                      target_size_t const& size, window_pos_t const& pos)
 : render_window_egl(size, pos) {

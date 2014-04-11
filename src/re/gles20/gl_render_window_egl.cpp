@@ -44,3 +44,9 @@ void render_window_egl::clear_stencil(int set) {
     glClearStencil(set);
     GLNOERROR;
 }
+
+void render_window_egl::set_viewport(rect2d const& view) {
+    glViewport(view.min().x(), view.min().y(),
+               view.max().x(), view.max().y());
+    GLNOERROR;
+}
