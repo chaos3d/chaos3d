@@ -15,10 +15,6 @@ public:
 public:
     static vector2i screen_size();
     static std::string device_name();
-    
-    static render_window* main_window();
-    static render_context* main_context();
-    static render_device* main_device();
 };
 
 #endif

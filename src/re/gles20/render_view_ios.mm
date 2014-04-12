@@ -78,6 +78,7 @@
 
 namespace gles20 {
 
+    // FIXME: removing scaling factor
 render_view::render_view(target_size_t const& size_, window_pos_t const& pos_)
 : render_window(size_ * [UIScreen mainScreen].scale,
                 pos_ * [UIScreen mainScreen].scale),

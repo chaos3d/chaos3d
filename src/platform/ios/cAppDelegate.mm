@@ -39,8 +39,6 @@
     application::instance().get_screen().loop();
     
     global_timer_base::instance().update();
-    //_main_window->do_render(_main_context); // clear batch
-    
 }
 
 - (void) startLoop {
@@ -72,16 +70,17 @@
     add(locator::dir_locator::home_dir());
 }
 
-- (BOOL)application:(UIApplication *)application_ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{
+- (BOOL)application:(UIApplication *)application_ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     application& app = application::instance();
     app.on_initialize();
+    
     CGRect rt = [[UIScreen mainScreen] bounds];
     self.window = [[[UIWindow alloc] initWithFrame:rt] autorelease];
     
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor blackColor];
     self.controller = [[[cViewController alloc] init] autorelease];
+    [self.controller.view addSubview: (UIView*)app.main_window()->native_handle()];
 
     self.window.rootViewController = controller;
     [self.window makeKeyAndVisible];
@@ -89,18 +88,7 @@
     // init the locators
     [self initLocators];
     
-    // create the device
-    _default_device = render_device::get_device([self renderType]);
-    _default_device->init_context();
-
-    _main_window = _default_device->create_window(render_target::target_size_t(rt.size.width, rt.size.height));
-    
-    // init the context for the current thread
-    _main_context = _default_device->create_context(_main_window);
-    _main_context->set_current();
-    
-    [self.controller.view addSubview: (UIView*)_main_window->native_handle()];
-    
+    // TODO: move this to application
     application::instance().get_screen().on_start();
     
     [self startLoop];

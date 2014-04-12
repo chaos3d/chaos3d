@@ -5,6 +5,9 @@
 #include "event/event_listener.h"
 
 class screen;
+class render_window;
+class render_device;
+class render_context;
 
 namespace evt {
     class memory_warning : public event {
@@ -22,7 +25,7 @@ public:
     // called before everything is initialized
     //  this should be to initialize global singletons etc
     //  but don't touch any part of engine
-    virtual void on_initialize() = 0;
+    virtual bool on_initialize();
     
     // called before the run loop starts
     //  this should be to initialize components, actions to
@@ -31,6 +34,20 @@ public:
     
     // get the main screen
     virtual screen& get_screen() const;
+    
+    render_window* main_window() const { return _main_window; }
+    render_device* main_device() const { return _main_device; }
+    render_context* main_context() const { return _main_context; }
+    
+protected:
+    application& set_main_window(render_window* window) { _main_window = window; return *this; }
+    application& set_main_device(render_device* device) { _main_device = device; return *this; }
+    application& set_main_context(render_context* context) { _main_context = context; return *this; }
+    
+private:
+    render_window* _main_window = nullptr;
+    render_device* _main_device = nullptr;
+    render_context* _main_context = nullptr;
 };
 
 #endif

@@ -54,6 +54,7 @@ namespace com {
         }
         
         camera& set_target(render_target* target) {
+            assert(target != nullptr);
             _target = target->retain<render_target>(); // TODO: weak reference?
             return *this;
         }
