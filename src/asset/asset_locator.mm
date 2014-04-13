@@ -4,7 +4,7 @@
 namespace locator {
     dir_locator::ptr dir_locator::app_dir(int priority) {
         @autoreleasepool{
-            asset_locator* locator = new dir_locator([[[NSBundle mainBundle] bundlePath] UTF8String],
+            asset_locator* locator = new dir_locator([[[NSBundle mainBundle] resourcePath] UTF8String],
                                                      priority);
 
             return ptr(locator);
