@@ -3,7 +3,8 @@
 #include "re/gles20/gl_context_egl.h"
 #include "re/gles20/gl_render_window_egl.h"
 
-#import <EGL/egl.h>
+#include <EGL/egl.h>
+#include <iostream>
 
 namespace gles20 {
     
@@ -36,14 +37,15 @@ namespace gles20 {
         
         // TODO: log version
         
-        if (!eglBindAPI(EGL_OPENGL_ES_BIT)) {
+        if (!eglBindAPI(EGL_OPENGL_ES_API)) {
             return false;
         }
 
         if (!eglSwapInterval(_internal->display, 1)) {
             return false;
         }
-            
+        
+        std::cout << eglQueryString(_internal->display, EGL_EXTENSIONS) << std::endl;
         return true;
     }
     
@@ -63,7 +65,9 @@ namespace gles20 {
         }
         
         bool is_created = _internal->context != EGL_NO_CONTEXT;
-        EGLContext context = eglCreateContext(_internal->display, egl_config, _internal->context, NULL);
+        EGLint context_attrs[] = { EGL_CONTEXT_CLIENT_VERSION, 2, EGL_NONE };
+        EGLContext context = eglCreateContext(_internal->display, egl_config,
+                                              _internal->context, context_attrs);
         
         if (!is_created) {
             _internal->context = context;
@@ -72,8 +76,22 @@ namespace gles20 {
         render_window_egl* egl_window = dynamic_cast<render_window_egl*>(window);
         assert(egl_window != nullptr);
         
-        GLint texture_units = 0;
+        // immediate make it the current context
+        EGLSurface surface = egl_window->surface();
+        eglMakeCurrent(_internal->display, surface, surface, context);
+        
+//        GLuint tex;
+//        glGenTextures(1, &tex);
+//        glBindTexture(GL_TEXTURE_2D, tex);
+//        glTexStorage2DEXT(GL_TEXTURE_2D, 1, GL_ALPHA8_EXT, 128, 128);
+        
+        GLint texture_units = 1;
         glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &texture_units);
+        
+        std::cout << glGetString(GL_VENDOR) << std::endl;
+        std::cout << glGetString(GL_RENDERER) << std::endl;
+        std::cout << glGetString(GL_VERSION) << std::endl;
+        std::cout << glGetString(GL_EXTENSIONS) << std::endl;
         return new gl_context_egl(_internal->display, egl_window->surface(),
                                   context, texture_units);
     }

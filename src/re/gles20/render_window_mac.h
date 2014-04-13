@@ -11,7 +11,9 @@ namespace gles20 {
     public:
         render_window_mac(EGLDisplay, target_size_t const&, window_pos_t const&);
         virtual void *native_handle() override { return _window; }
-        
+
+        virtual void set_title(char const*) override;
+
     private:
         void create_native();
         void create_surface(EGLDisplay);

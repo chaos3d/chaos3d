@@ -19,6 +19,10 @@ render_window_mac::render_window_mac(EGLDisplay display,
     create_surface(display);
 }
 
+void render_window_mac::set_title(char const* title) {
+    [_window setTitle: [NSString stringWithUTF8String: title]];
+}
+
 void render_window_mac::create_native() {
     // TODO: retina window
     NSRect frame = NSMakeRect(get_position()(0), get_position()(1),
@@ -27,14 +31,14 @@ void render_window_mac::create_native() {
                                           styleMask: NSMiniaturizableWindowMask | NSTitledWindowMask | NSClosableWindowMask
                                             backing: NSBackingStoreBuffered
                                               defer: NO];
-
+    
     // Create our view
     EGLView* view = [[EGLView alloc] initWithFrame: frame];
-
+    
     // Now we have a view, add it to our window
     [_window setContentView: view];
     [_window makeKeyAndOrderFront: nil];
-    
+    [_window setTitle: @"No Title"];
     [view release];
 }
 

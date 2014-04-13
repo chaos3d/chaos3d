@@ -14,6 +14,9 @@ namespace gles20 {
 
 class render_device : public ::render_device {
 public:
+    struct internal;
+    
+public:
     render_device();
     virtual ~render_device();
     virtual bool init_context() override;
@@ -39,9 +42,9 @@ public:
 
     virtual render_device_capacity const& get_capacity() const override;
     
-private:
-    struct internal;
+    internal* internal_() const { return _internal.get(); }
     
+private:
     std::unique_ptr<internal> _internal;
     render_device_capacity _capacity;
 };

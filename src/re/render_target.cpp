@@ -11,18 +11,18 @@ render_target::render_target(target_size_t const& size)
 void render_target::do_render(render_context* context) {
     // TODO: profile and logging
     
-    if(!bind(context))
+    if (!bind(context))
         return;
     // sorting should be done by the client level
     //sort();
     
-    for(auto& it : _batches) {
+    for (auto& it : _batches) {
         context->set_state(*it.state());
         it.program()->bind(context, it.uniform(), _uniforms);
         it.layout()->draw(context, it.start(), it.count());
     }
     
-    if(!_batch_retained)
+    if (!_batch_retained)
         _batches.clear();
     
     flush(context);

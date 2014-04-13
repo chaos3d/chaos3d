@@ -12,6 +12,7 @@ static GLenum _type_map [] = {
 // FIXME: for non storage support
 static GLenum _color_map [] = {
     GL_RGBA8_OES,    //RGBA8888,
+                     //GL_BGRA8_EXT,
     GL_RGB565,      //RGB565,
     GL_ALPHA8_EXT,   //ALPHA,
     GL_LUMINANCE,   //LUMINANCE
@@ -41,7 +42,8 @@ gl_texture::gl_texture(texture::vector2i const& size, texture::attribute_t const
 #if GL_EXT_texture_storage
     glTexStorage2DEXT(_type_map[attr.type], attr.mipmap, _color_map[attr.color], size[0], size[1]);
 #else
-    glTexImage2D(_type_map[attr.type], 0, _color_map[attr.color],  size[0], size[1], 0, GL_UNSIGNED_BYTE, NULL);
+    // glTexImage2D(_type_map[attr.type], 0, _color_map[attr.color], size[0], size[1], 0, GL_UNSIGNED_BYTE, NULL);
+    glTexImage2D(_type_map[attr.type], 0, GL_RGBA, size[0], size[1], 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
 #endif
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, _filter_map[attr.min_filter]);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, _filter_map[attr.max_filter]);

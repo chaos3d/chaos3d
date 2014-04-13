@@ -19,6 +19,8 @@ public:
     //void set_position();
     //void set_size();
     
+    virtual void set_title(char const*) {}
+    
 protected:
     window_pos_t _position;
 };
