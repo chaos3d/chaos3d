@@ -65,9 +65,6 @@
 }
 
 - (void) initLocators {
-    locator_mgr::instance().
-    add(locator::dir_locator::app_dir())->
-    add(locator::dir_locator::home_dir());
 }
 
 - (BOOL)application:(UIApplication *)application_ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
@@ -85,15 +82,12 @@
     self.window.rootViewController = controller;
     [self.window makeKeyAndVisible];
     
-    // init the locators
-    [self initLocators];
-    
     // TODO: move this to application
     application::instance().get_screen().on_start();
     
-    [self startLoop];
-    
     app.on_launch();
+    
+    [self startLoop];
     
     return YES;
 }

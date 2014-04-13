@@ -1,5 +1,6 @@
 #include "app/application.h"
 #include "app/screen.h"
+#include "asset/asset_locator.h"
 #include "re/render_device.h"
 
 screen& application::get_screen() const {
@@ -17,5 +18,8 @@ bool application::on_initialize() {
     _main_context = _main_device->create_context(_main_window);
     _main_context->set_current();
     
+    locator_mgr::instance().
+    add(locator::dir_locator::app_dir())->
+    add(locator::dir_locator::home_dir());
     return true;
 }

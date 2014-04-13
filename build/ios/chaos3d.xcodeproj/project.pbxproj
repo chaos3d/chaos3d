@@ -67,14 +67,12 @@
 		886CC13F18F662BB006A3AF5 /* game_object.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88A84B111830B6D9009F7ECD /* game_object.cpp */; };
 		886CC14018F662BB006A3AF5 /* component_manager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8827622C1881482F00B1291B /* component_manager.cpp */; };
 		886CC14118F662BB006A3AF5 /* render_uniform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8812C2D6186841B4001C4D0B /* render_uniform.cpp */; };
-		886CC14218F662BB006A3AF5 /* render_device_egl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 886CC09B18F65FEB006A3AF5 /* render_device_egl.cpp */; };
 		886CC14318F662BB006A3AF5 /* png_loader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8879CE5D18B9D13300BCBFA6 /* png_loader.cpp */; };
 		886CC14418F662BB006A3AF5 /* action_json_loader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8879CE9218BB4D2E00BCBFA6 /* action_json_loader.cpp */; };
 		886CC14518F662BB006A3AF5 /* render_context.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882762171873806A00B1291B /* render_context.cpp */; };
 		886CC14618F662BB006A3AF5 /* game_object.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8811357D18D426FA0069F351 /* game_object.cpp */; };
 		886CC14718F662BB006A3AF5 /* scene2d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8879CE8E18BABCDE00BCBFA6 /* scene2d.cpp */; };
 		886CC14818F662BB006A3AF5 /* render_device.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 883246B5183237220022EA4A /* render_device.cpp */; };
-		886CC14918F662BB006A3AF5 /* gl_context_egl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 886CC09518F6584B006A3AF5 /* gl_context_egl.cpp */; };
 		886CC14A18F662BB006A3AF5 /* state.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8879CEFB18C848BB00BCBFA6 /* state.cpp */; };
 		886CC14B18F662BB006A3AF5 /* gl_texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8812C290185E5F77001C4D0B /* gl_texture.cpp */; };
 		886CC14C18F662BB006A3AF5 /* json_loader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8879CE8718BAB5A400BCBFA6 /* json_loader.cpp */; };
@@ -108,7 +106,6 @@
 		886CC16B18F662BB006A3AF5 /* aabb.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 883246A0183233F10022EA4A /* aabb.cpp */; };
 		886CC16E18F662BB006A3AF5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88A84ACF1830652F009F7ECD /* Foundation.framework */; };
 		886CC17018F662BB006A3AF5 /* libBox2D.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8882E4E218A74E2D0044CFE4 /* libBox2D.a */; };
-		886CC17A18F67E3F006A3AF5 /* gl_render_window_egl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 886CC17618F67D4D006A3AF5 /* gl_render_window_egl.cpp */; };
 		886CC17B18F68205006A3AF5 /* render_device_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 883246AD183237220022EA4A /* render_device_ios.mm */; };
 		887711E518CD32CE00BA5508 /* import_scope.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 887711E418CD32CE00BA5508 /* import_scope.cpp */; };
 		8879CE1E18A8146400BCBFA6 /* shape_desc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8879CE1D18A8146400BCBFA6 /* shape_desc.cpp */; };
@@ -143,14 +140,16 @@
 		88A84AE41830652F009F7ECD /* libchaos3d_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 88A84ACC1830652F009F7ECD /* libchaos3d_ios.a */; };
 		88A84B0E183067AF009F7ECD /* transform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88A84B0C183067AF009F7ECD /* transform.cpp */; };
 		88A84B121830B6D9009F7ECD /* game_object.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88A84B111830B6D9009F7ECD /* game_object.cpp */; };
-		88C0045418F7DD450012EC1D /* render_window_mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 886CC17C18F68E79006A3AF5 /* render_window_mac.mm */; };
-		88C0045918F7E22C0012EC1D /* render_device_mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 88C0045718F7E1BF0012EC1D /* render_device_mac.mm */; };
 		88C0046118F7EA7A0012EC1D /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88C0046018F7EA7A0012EC1D /* AppKit.framework */; };
 		88C0046218F91BD20012EC1D /* libEGL.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 886CC10D18F66221006A3AF5 /* libEGL.dylib */; };
 		88C0046318F91BD70012EC1D /* libGLESv2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 886CC10F18F66221006A3AF5 /* libGLESv2.dylib */; };
 		88C0046418F91BE90012EC1D /* liblua.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8879CEAB18C7097200BCBFA6 /* liblua.a */; };
 		88C0046518F91BEC0012EC1D /* libpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8812C2C71866D892001C4D0B /* libpng.a */; };
 		88C0046718F91C130012EC1D /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 88C0046618F91C130012EC1D /* libz.dylib */; };
+		88C0049418FA38030012EC1D /* render_device_egl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 886CC09B18F65FEB006A3AF5 /* render_device_egl.cpp */; };
+		88C0049618FA380C0012EC1D /* gl_render_window_egl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 886CC17618F67D4D006A3AF5 /* gl_render_window_egl.cpp */; };
+		88C0049718FA380C0012EC1D /* render_device_mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 88C0045718F7E1BF0012EC1D /* render_device_mac.mm */; };
+		88C0049818FA380C0012EC1D /* render_window_mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 886CC17C18F68E79006A3AF5 /* render_window_mac.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -598,7 +597,6 @@
 		883246CB183A01730022EA4A /* vertex_buffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vertex_buffer.h; sourceTree = "<group>"; };
 		883246CD183CC04C0022EA4A /* render_target.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = render_target.cpp; sourceTree = "<group>"; };
 		883246CE183CC04C0022EA4A /* render_target.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = render_target.h; sourceTree = "<group>"; };
-		886CC09518F6584B006A3AF5 /* gl_context_egl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gl_context_egl.cpp; sourceTree = "<group>"; };
 		886CC09618F6584B006A3AF5 /* gl_context.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gl_context.cpp; sourceTree = "<group>"; };
 		886CC09918F658B9006A3AF5 /* gl_context_ios.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gl_context_ios.h; sourceTree = "<group>"; };
 		886CC09A18F658B9006A3AF5 /* gl_context_egl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gl_context_egl.h; sourceTree = "<group>"; };
@@ -700,7 +698,7 @@
 		886CC12518F66221006A3AF5 /* libGLESv2.dll */ = {isa = PBXFileReference; lastKnownFileType = file; path = libGLESv2.dll; sourceTree = "<group>"; };
 		886CC12618F66221006A3AF5 /* libGLESv2.lib */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGLESv2.lib; sourceTree = "<group>"; };
 		886CC12718F66221006A3AF5 /* PVRScopeDeveloper.lib */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = PVRScopeDeveloper.lib; sourceTree = "<group>"; };
-		886CC17518F662BB006A3AF5 /* libchaos3d_mac.dylib */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libchaos3d_mac.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		886CC17518F662BB006A3AF5 /* libchaos3d_mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libchaos3d_mac.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		886CC17618F67D4D006A3AF5 /* gl_render_window_egl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gl_render_window_egl.cpp; sourceTree = "<group>"; };
 		886CC17718F67D4D006A3AF5 /* gl_render_window_egl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gl_render_window_egl.h; sourceTree = "<group>"; };
 		886CC17C18F68E79006A3AF5 /* render_window_mac.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = render_window_mac.mm; sourceTree = "<group>"; };
@@ -1701,7 +1699,6 @@
 			children = (
 				886CC09618F6584B006A3AF5 /* gl_context.cpp */,
 				8827621D187384EF00B1291B /* gl_context.h */,
-				886CC09518F6584B006A3AF5 /* gl_context_egl.cpp */,
 				886CC09A18F658B9006A3AF5 /* gl_context_egl.h */,
 				886CC09918F658B9006A3AF5 /* gl_context_ios.h */,
 				8827620F1870F9E600B1291B /* gl_gpu.cpp */,
@@ -2458,7 +2455,7 @@
 			children = (
 				88A84ACC1830652F009F7ECD /* libchaos3d_ios.a */,
 				88A84ADC1830652F009F7ECD /* chaos3dTests.xctest */,
-				886CC17518F662BB006A3AF5 /* libchaos3d_mac.dylib */,
+				886CC17518F662BB006A3AF5 /* libchaos3d_mac.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2575,7 +2572,7 @@
 			);
 			name = chaos3d_mac;
 			productName = chaos3d;
-			productReference = 886CC17518F662BB006A3AF5 /* libchaos3d_mac.dylib */;
+			productReference = 886CC17518F662BB006A3AF5 /* libchaos3d_mac.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		88A84ACB1830652F009F7ECD /* chaos3d_ios */ = {
@@ -2662,9 +2659,9 @@
 				886CC12D18F662BB006A3AF5 /* action_timed.cpp in Sources */,
 				886CC12E18F662BB006A3AF5 /* render_device.cpp in Sources */,
 				886CC13018F662BB006A3AF5 /* application.cpp in Sources */,
-				886CC17A18F67E3F006A3AF5 /* gl_render_window_egl.cpp in Sources */,
 				886CC13118F662BB006A3AF5 /* camera.cpp in Sources */,
 				886CC13218F662BB006A3AF5 /* render_target.cpp in Sources */,
+				88C0049718FA380C0012EC1D /* render_device_mac.mm in Sources */,
 				886CC13318F662BB006A3AF5 /* render_component_mgr.cpp in Sources */,
 				886CC13418F662BB006A3AF5 /* memory_stream.cpp in Sources */,
 				886CC13518F662BB006A3AF5 /* texture_atlas.cpp in Sources */,
@@ -2679,23 +2676,24 @@
 				886CC13F18F662BB006A3AF5 /* game_object.cpp in Sources */,
 				886CC14018F662BB006A3AF5 /* component_manager.cpp in Sources */,
 				886CC14118F662BB006A3AF5 /* render_uniform.cpp in Sources */,
-				886CC14218F662BB006A3AF5 /* render_device_egl.cpp in Sources */,
 				886CC14318F662BB006A3AF5 /* png_loader.cpp in Sources */,
 				886CC14418F662BB006A3AF5 /* action_json_loader.cpp in Sources */,
+				88C0049418FA38030012EC1D /* render_device_egl.cpp in Sources */,
 				886CC14518F662BB006A3AF5 /* render_context.cpp in Sources */,
 				886CC14618F662BB006A3AF5 /* game_object.cpp in Sources */,
 				886CC14718F662BB006A3AF5 /* scene2d.cpp in Sources */,
 				886CC14818F662BB006A3AF5 /* render_device.cpp in Sources */,
-				886CC14918F662BB006A3AF5 /* gl_context_egl.cpp in Sources */,
 				886CC14A18F662BB006A3AF5 /* state.cpp in Sources */,
 				886CC14B18F662BB006A3AF5 /* gl_texture.cpp in Sources */,
 				886CC14C18F662BB006A3AF5 /* json_loader.cpp in Sources */,
 				886CC14F18F662BB006A3AF5 /* ui_manager.cpp in Sources */,
+				88C0049818FA380C0012EC1D /* render_window_mac.mm in Sources */,
 				886CC15018F662BB006A3AF5 /* eigen.cpp in Sources */,
 				886CC15118F662BB006A3AF5 /* locator_asset_bundle.cpp in Sources */,
 				886CC15218F662BB006A3AF5 /* transform.cpp in Sources */,
 				886CC15318F662BB006A3AF5 /* collider2d.cpp in Sources */,
 				886CC15418F662BB006A3AF5 /* asset_locator.mm in Sources */,
+				88C0049618FA380C0012EC1D /* gl_render_window_egl.cpp in Sources */,
 				886CC15518F662BB006A3AF5 /* gl_context.cpp in Sources */,
 				886CC15618F662BB006A3AF5 /* asset_locator.cpp in Sources */,
 				886CC15718F662BB006A3AF5 /* gl_gpu.cpp in Sources */,
@@ -2704,7 +2702,6 @@
 				886CC15A18F662BB006A3AF5 /* texture_atlas.cpp in Sources */,
 				886CC15B18F662BB006A3AF5 /* asset_manager.cpp in Sources */,
 				886CC15C18F662BB006A3AF5 /* quad_sprite.cpp in Sources */,
-				88C0045418F7DD450012EC1D /* render_window_mac.mm in Sources */,
 				886CC15D18F662BB006A3AF5 /* vertex_buffer.cpp in Sources */,
 				886CC15E18F662BB006A3AF5 /* shape_desc.cpp in Sources */,
 				886CC15F18F662BB006A3AF5 /* ui_control.cpp in Sources */,
@@ -2715,7 +2712,6 @@
 				886CC16418F662BB006A3AF5 /* event.cpp in Sources */,
 				886CC16518F662BB006A3AF5 /* vertex_layout.cpp in Sources */,
 				886CC16618F662BB006A3AF5 /* world_box2d.cpp in Sources */,
-				88C0045918F7E22C0012EC1D /* render_device_mac.mm in Sources */,
 				886CC16718F662BB006A3AF5 /* texture_asset.cpp in Sources */,
 				886CC16818F662BB006A3AF5 /* gl_vertex_buffer.cpp in Sources */,
 				886CC16918F662BB006A3AF5 /* gl_vertex_layout.cpp in Sources */,
@@ -2816,7 +2812,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DSTROOT = /tmp/chaos3d.dst;
-				EXECUTABLE_EXTENSION = dylib;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					../../dependency/ios,
@@ -2832,7 +2827,7 @@
 					/Users/wuh/dev/tdgame/chaos3d/external/libpng,
 					/Users/wuh/dev/tdgame/chaos3d/external/box2d/lib,
 				);
-				MACH_O_TYPE = mh_dylib;
+				MACH_O_TYPE = staticlib;
 				PRODUCT_NAME = chaos3d_mac;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -2843,7 +2838,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DSTROOT = /tmp/chaos3d.dst;
-				EXECUTABLE_EXTENSION = dylib;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					../../dependency/ios,
@@ -2859,7 +2853,7 @@
 					/Users/wuh/dev/tdgame/chaos3d/external/libpng,
 					/Users/wuh/dev/tdgame/chaos3d/external/box2d/lib,
 				);
-				MACH_O_TYPE = mh_dylib;
+				MACH_O_TYPE = staticlib;
 				PRODUCT_NAME = chaos3d_mac;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -2904,9 +2898,6 @@
 					../../external/box2d/include,
 					../../external/powervr32/Include,
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = iphoneos;
 			};
 			name = Debug;
 		};
@@ -2942,9 +2933,6 @@
 					../../external/box2d/include,
 					../../external/powervr32/Include,
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				SDKROOT = iphoneos;
-				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
@@ -2966,6 +2954,7 @@
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 			};
 			name = Debug;
@@ -2988,6 +2977,7 @@
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 			};
 			name = Release;
