@@ -26,6 +26,9 @@ asset_bundle::handle_ptr png_asset_bundle::get(std::string const& name,
             1
         });
         tex->load(png.data().get(), texture::RGBA8888);
+        
+        // auto-fill all the mipmaps for png textures
+        tex->generate_mipmap();
     }));
 }
 

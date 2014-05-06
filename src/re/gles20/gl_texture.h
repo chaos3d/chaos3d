@@ -11,6 +11,7 @@ namespace gles20 {
         virtual ~gl_texture();
         
         virtual bool load(memory_stream*, int color, int level = 0) override;
+        virtual bool generate_mipmap() override;
         
         GLuint tex_id() const { return _tex_id; }
     private:

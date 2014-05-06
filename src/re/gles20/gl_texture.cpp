@@ -12,11 +12,21 @@ static GLenum _type_map [] = {
     0,  // T3D
 };
 
-// FIXME: for non storage support
-static GLenum _color_map [] = {
+static GLenum _color_map_storage [] = {
     GL_RGBA8_OES,    //RGBA8888,
-    GL_RGB565,      //RGB565,
+    GL_RGB565,       //RGB565,
     GL_ALPHA8_EXT,   //ALPHA,
+    GL_LUMINANCE,    //LUMINANCE
+    GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG, //PRVTC4_RGB
+    GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG, //PRVTC2_RGB
+    GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG,//PVRTC4_RGBA
+    GL_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG,//PVRTC2_RGBA
+};
+
+static GLenum _color_map [] = {
+    GL_RGBA,        //RGBA8888,
+    GL_RGB,         //RGB565,
+    GL_ALPHA,       //ALPHA,
     GL_LUMINANCE,   //LUMINANCE
     GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG, //PRVTC4_RGB
     GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG, //PRVTC2_RGB
@@ -38,20 +48,23 @@ static GLenum _wrap_map [] = {
 gl_texture::gl_texture(texture::vector2i const& size, texture::attribute_t const& attr)
 : texture(size, attr){
     glGenTextures(1, &_tex_id);
-    
     glBindTexture(_type_map[attr.type], _tex_id);
+    
     if (glTexStorage2DEXT != nullptr) {
-        glTexStorage2DEXT(_type_map[attr.type], attr.mipmap, _color_map[attr.color], size[0], size[1]);
+        glTexStorage2DEXT(_type_map[attr.type], attr.mipmap,
+                          _color_map_storage[attr.color], size[0], size[1]);
     } else {
-        // FIXME:
-        // glTexImage2D(_type_map[attr.type], 0, _color_map[attr.color], size[0], size[1], 0, GL_UNSIGNED_BYTE, NULL);
-        glTexImage2D(_type_map[attr.type], 0, GL_RGBA, size[0], size[1], 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+        // FIXME: allocate mipmaps/compressed data
+        glTexImage2D(_type_map[attr.type], 0, _color_map[attr.color],
+                     size[0], size[1], 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
     }
+    
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, _filter_map[attr.min_filter]);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, _filter_map[attr.max_filter]);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, _wrap_map[attr.wrap_s]);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, _wrap_map[attr.wrap_t]);
     
+    GLNOERROR;
     glBindTexture(_type_map[attr.type], 0);
 }
 
@@ -59,11 +72,18 @@ gl_texture::~gl_texture() {
     glDeleteTextures(1, &_tex_id);
 }
 
-bool gl_texture::load(memory_stream* stream, int color, int level) {
-    glBindTexture(GL_TEXTURE_2D, _tex_id);
-#if GL_EXT_texture_storage
-    // TODO: fix width based on mipmap level
+bool gl_texture::generate_mipmap() {
     GLenum target = _type_map[attribute().type];
+    glBindTexture(target, _tex_id);    
+    glGenerateMipmap(target);
+    return glGetError() == GL_NO_ERROR;
+}
+
+bool gl_texture::load(memory_stream* stream, int color, int level) {
+    GLenum target = _type_map[attribute().type];
+    glBindTexture(target, _tex_id);
+
+    // TODO: fix width based on mipmap level
     switch (color) {
         case RGBA8888:
             glTexSubImage2D(target, level, 0, 0, size()[0], size()[1],
@@ -100,10 +120,7 @@ bool gl_texture::load(memory_stream* stream, int color, int level) {
                                       (GLsizei)stream->size(), stream->address());
             break;
     }
-#else
-    // FIXME
-    glTexImage2D(GL_TEXTURE_2D, level, GL_RGBA, 128, 128, 0, GL_RGBA, GL_UNSIGNED_BYTE,
-                 static_cast<memory_stream*>(ds)->address());
-#endif
+
+    GLNOERROR;
     return true;
 }
