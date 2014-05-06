@@ -8,7 +8,8 @@ class gl_context_egl : public gl_context {
 public:
     gl_context_egl(EGLDisplay display, EGLSurface surface,
                    EGLContext context,  size_t max)
-    : gl_context(max), _context(context)
+    : gl_context(max),
+    _display(display), _context(context), _surface(surface)
     {}
     
     EGLContext context() const { return _context; }
@@ -22,6 +23,7 @@ public:
     // bind the current context with the default surface (usually the main window)
     virtual void set_current() override {
         eglMakeCurrent(_display, _surface, _surface, _context);
+        assert(eglGetError() == EGL_SUCCESS);
     }
     
 private:

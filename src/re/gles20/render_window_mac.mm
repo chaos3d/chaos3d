@@ -58,4 +58,5 @@ void render_window_mac::create_surface(EGLDisplay display) {
     }
     
     _surface = eglCreateWindowSurface(display, egl_config, (EGLNativeWindowType) _window.contentView, NULL);
+    assert(_surface != EGL_NO_SURFACE);
 }

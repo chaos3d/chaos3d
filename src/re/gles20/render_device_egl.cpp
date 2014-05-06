@@ -75,9 +75,13 @@ namespace gles20 {
         // immediate make it the current context
         EGLSurface surface = egl_window->surface();
         eglMakeCurrent(_internal->display, surface, surface, context);
+        EGLint err_code = eglGetError();
         
         GLint texture_units = 1;
         glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &texture_units);
+        
+        // initialize the externsion API's if needed
+        c3d_gl_load_extensions();
         
         std::cout << glGetString(GL_VENDOR) << std::endl;
         std::cout << glGetString(GL_RENDERER) << std::endl;

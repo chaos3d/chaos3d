@@ -1,6 +1,10 @@
 #ifndef _UTILITY_H
 #define _UTILITY_H
 
+#ifdef __APPLE__
+#include <TargetConditionals.h>
+#endif
+
 #include <type_traits>
 #include <memory>
 #include <cfloat>

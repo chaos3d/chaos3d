@@ -1,6 +1,9 @@
 #include "re/gles20/gl_texture.h"
 #include "io/memory_stream.h"
 
+#include <EGL/egl.h>
+#include <GLES2/gl2ext.h>
+
 using namespace gles20;
 
 static GLenum _type_map [] = {
@@ -12,7 +15,6 @@ static GLenum _type_map [] = {
 // FIXME: for non storage support
 static GLenum _color_map [] = {
     GL_RGBA8_OES,    //RGBA8888,
-                     //GL_BGRA8_EXT,
     GL_RGB565,      //RGB565,
     GL_ALPHA8_EXT,   //ALPHA,
     GL_LUMINANCE,   //LUMINANCE
@@ -37,14 +39,14 @@ gl_texture::gl_texture(texture::vector2i const& size, texture::attribute_t const
 : texture(size, attr){
     glGenTextures(1, &_tex_id);
     
-    // FIXME:
     glBindTexture(_type_map[attr.type], _tex_id);
-#if GL_EXT_texture_storage
-    glTexStorage2DEXT(_type_map[attr.type], attr.mipmap, _color_map[attr.color], size[0], size[1]);
-#else
-    // glTexImage2D(_type_map[attr.type], 0, _color_map[attr.color], size[0], size[1], 0, GL_UNSIGNED_BYTE, NULL);
-    glTexImage2D(_type_map[attr.type], 0, GL_RGBA, size[0], size[1], 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
-#endif
+    if (glTexStorage2DEXT != nullptr) {
+        glTexStorage2DEXT(_type_map[attr.type], attr.mipmap, _color_map[attr.color], size[0], size[1]);
+    } else {
+        // FIXME:
+        // glTexImage2D(_type_map[attr.type], 0, _color_map[attr.color], size[0], size[1], 0, GL_UNSIGNED_BYTE, NULL);
+        glTexImage2D(_type_map[attr.type], 0, GL_RGBA, size[0], size[1], 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+    }
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, _filter_map[attr.min_filter]);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, _filter_map[attr.max_filter]);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, _wrap_map[attr.wrap_s]);
