@@ -26,6 +26,7 @@ public:
     struct context {
         float scale; // scaling factor
     };
+    
 public:
     // load the asset by the given name (usually filename without ext)
     // return null if the meta doens't exist

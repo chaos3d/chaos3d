@@ -2,6 +2,7 @@
 #include "app/screen.h"
 #include "asset/asset_locator.h"
 #include "re/render_device.h"
+#include "platform/device.h"
 
 screen& application::get_screen() const {
     static screen _default;
@@ -12,7 +13,8 @@ bool application::on_initialize() {
     _main_device = render_device::get_device(render_device::OpenGLES20);
     _main_device->init_context();
     
-    _main_window = _main_device->create_window(render_target::target_size_t(320, 568));
+    auto size = device::screen_size();
+    _main_window = _main_device->create_window(render_target::target_size_t(size(0), size(1)));
     
     // init the context for the current thread
     _main_context = _main_device->create_context(_main_window);

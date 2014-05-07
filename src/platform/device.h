@@ -1,7 +1,7 @@
-#ifndef _DEVICE_H
-#define _DEVICE_H
+#ifndef _CHAOS3D_PLATFORM_DEVICE_H
+#define _CHAOS3D_PLATFORM_DEVICE_H
 
-#include "Eigen/Dense"
+#include <Eigen/Dense>
 #include <string>
 
 class render_window;

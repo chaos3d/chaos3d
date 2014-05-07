@@ -110,6 +110,7 @@
 		8870F3EB1919C5630038B012 /* cAppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8870F3E71919C5630038B012 /* cAppDelegate.mm */; };
 		8870F3EC1919C5640038B012 /* cViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8870F3E91919C5630038B012 /* cViewController.mm */; };
 		8870F3EF1919C56E0038B012 /* cAppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8870F3EE1919C56E0038B012 /* cAppDelegate.mm */; };
+		8870F3F01919DE0F0038B012 /* device.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8812C2B218619E33001C4D0B /* device.mm */; };
 		887711E518CD32CE00BA5508 /* import_scope.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 887711E418CD32CE00BA5508 /* import_scope.cpp */; };
 		8879CE1E18A8146400BCBFA6 /* shape_desc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8879CE1D18A8146400BCBFA6 /* shape_desc.cpp */; };
 		8879CE2A18B1EAB500BCBFA6 /* action.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8879CE2618B1EAB500BCBFA6 /* action.cpp */; };
@@ -2687,6 +2688,7 @@
 				886CC12E18F662BB006A3AF5 /* render_device.cpp in Sources */,
 				886CC13018F662BB006A3AF5 /* application.cpp in Sources */,
 				886CC13118F662BB006A3AF5 /* camera.cpp in Sources */,
+				8870F3F01919DE0F0038B012 /* device.mm in Sources */,
 				886CC13218F662BB006A3AF5 /* render_target.cpp in Sources */,
 				88C0049718FA380C0012EC1D /* render_device_mac.mm in Sources */,
 				886CC13318F662BB006A3AF5 /* render_component_mgr.cpp in Sources */,
