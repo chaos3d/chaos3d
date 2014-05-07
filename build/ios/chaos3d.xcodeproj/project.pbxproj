@@ -26,8 +26,6 @@
 		8812C29B185EF887001C4D0B /* asset_locator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8812C299185EF887001C4D0B /* asset_locator.cpp */; };
 		8812C2A0185F0992001C4D0B /* asset_locator.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8812C29F185F0992001C4D0B /* asset_locator.mm */; };
 		8812C2A718618055001C4D0B /* screen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8812C2A318618055001C4D0B /* screen.cpp */; };
-		8812C2AE18618ACE001C4D0B /* cViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8812C2AA18618ACE001C4D0B /* cViewController.mm */; };
-		8812C2AF18618ACE001C4D0B /* cAppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8812C2AC18618ACE001C4D0B /* cAppDelegate.mm */; };
 		8812C2B418619E33001C4D0B /* device.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8812C2B218619E33001C4D0B /* device.mm */; };
 		8812C2BD18644221001C4D0B /* gl_vertex_buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8812C2BA18644221001C4D0B /* gl_vertex_buffer.cpp */; };
 		8812C2C81866D892001C4D0B /* libpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8812C2C71866D892001C4D0B /* libpng.a */; };
@@ -109,6 +107,9 @@
 		886CC16E18F662BB006A3AF5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88A84ACF1830652F009F7ECD /* Foundation.framework */; };
 		886CC17018F662BB006A3AF5 /* libBox2D.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8882E4E218A74E2D0044CFE4 /* libBox2D.a */; };
 		886CC17B18F68205006A3AF5 /* render_device_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 883246AD183237220022EA4A /* render_device_ios.mm */; };
+		8870F3EB1919C5630038B012 /* cAppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8870F3E71919C5630038B012 /* cAppDelegate.mm */; };
+		8870F3EC1919C5640038B012 /* cViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8870F3E91919C5630038B012 /* cViewController.mm */; };
+		8870F3EF1919C56E0038B012 /* cAppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8870F3EE1919C56E0038B012 /* cAppDelegate.mm */; };
 		887711E518CD32CE00BA5508 /* import_scope.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 887711E418CD32CE00BA5508 /* import_scope.cpp */; };
 		8879CE1E18A8146400BCBFA6 /* shape_desc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8879CE1D18A8146400BCBFA6 /* shape_desc.cpp */; };
 		8879CE2A18B1EAB500BCBFA6 /* action.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8879CE2618B1EAB500BCBFA6 /* action.cpp */; };
@@ -223,10 +224,6 @@
 		8812C29F185F0992001C4D0B /* asset_locator.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = asset_locator.mm; path = asset/asset_locator.mm; sourceTree = "<group>"; };
 		8812C2A318618055001C4D0B /* screen.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = screen.cpp; path = app/screen.cpp; sourceTree = "<group>"; };
 		8812C2A418618055001C4D0B /* screen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = screen.h; path = app/screen.h; sourceTree = "<group>"; };
-		8812C2AA18618ACE001C4D0B /* cViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = cViewController.mm; path = platform/ios/cViewController.mm; sourceTree = "<group>"; };
-		8812C2AB18618ACE001C4D0B /* cViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cViewController.h; path = platform/ios/cViewController.h; sourceTree = "<group>"; };
-		8812C2AC18618ACE001C4D0B /* cAppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = cAppDelegate.mm; path = platform/ios/cAppDelegate.mm; sourceTree = "<group>"; };
-		8812C2AD18618ACE001C4D0B /* cAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cAppDelegate.h; path = platform/ios/cAppDelegate.h; sourceTree = "<group>"; };
 		8812C2B218619E33001C4D0B /* device.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = device.mm; path = platform/ios/device.mm; sourceTree = "<group>"; };
 		8812C2B318619E33001C4D0B /* device.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = device.h; path = platform/device.h; sourceTree = "<group>"; };
 		8812C2BA18644221001C4D0B /* gl_vertex_buffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gl_vertex_buffer.cpp; sourceTree = "<group>"; };
@@ -706,6 +703,12 @@
 		886CC17718F67D4D006A3AF5 /* gl_render_window_egl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gl_render_window_egl.h; sourceTree = "<group>"; };
 		886CC17C18F68E79006A3AF5 /* render_window_mac.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = render_window_mac.mm; sourceTree = "<group>"; };
 		886CC17D18F68E79006A3AF5 /* render_window_mac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = render_window_mac.h; sourceTree = "<group>"; };
+		8870F3E71919C5630038B012 /* cAppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = cAppDelegate.mm; sourceTree = "<group>"; };
+		8870F3E81919C5630038B012 /* cAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cAppDelegate.h; sourceTree = "<group>"; };
+		8870F3E91919C5630038B012 /* cViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = cViewController.mm; sourceTree = "<group>"; };
+		8870F3EA1919C5630038B012 /* cViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cViewController.h; sourceTree = "<group>"; };
+		8870F3ED1919C56E0038B012 /* cAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cAppDelegate.h; sourceTree = "<group>"; };
+		8870F3EE1919C56E0038B012 /* cAppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = cAppDelegate.mm; sourceTree = "<group>"; };
 		887711DE18CB24B700BA5508 /* class_type.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = class_type.h; sourceTree = "<group>"; };
 		887711DF18CB2FA600BA5508 /* import_scope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = import_scope.h; sourceTree = "<group>"; };
 		887711E018CBC5F500BA5508 /* type_info.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = type_info.h; sourceTree = "<group>"; };
@@ -965,12 +968,10 @@
 		8812C2A918618A8C001C4D0B /* platform */ = {
 			isa = PBXGroup;
 			children = (
+				8870F3E51919C5220038B012 /* ios */,
+				8870F3E61919C52A0038B012 /* mac */,
 				8812C2B218619E33001C4D0B /* device.mm */,
 				8812C2B318619E33001C4D0B /* device.h */,
-				8812C2AA18618ACE001C4D0B /* cViewController.mm */,
-				8812C2AB18618ACE001C4D0B /* cViewController.h */,
-				8812C2AC18618ACE001C4D0B /* cAppDelegate.mm */,
-				8812C2AD18618ACE001C4D0B /* cAppDelegate.h */,
 			);
 			name = platform;
 			sourceTree = "<group>";
@@ -2162,6 +2163,28 @@
 			path = Lib;
 			sourceTree = "<group>";
 		};
+		8870F3E51919C5220038B012 /* ios */ = {
+			isa = PBXGroup;
+			children = (
+				8870F3E71919C5630038B012 /* cAppDelegate.mm */,
+				8870F3E81919C5630038B012 /* cAppDelegate.h */,
+				8870F3E91919C5630038B012 /* cViewController.mm */,
+				8870F3EA1919C5630038B012 /* cViewController.h */,
+			);
+			name = ios;
+			path = platform/ios;
+			sourceTree = "<group>";
+		};
+		8870F3E61919C52A0038B012 /* mac */ = {
+			isa = PBXGroup;
+			children = (
+				8870F3ED1919C56E0038B012 /* cAppDelegate.h */,
+				8870F3EE1919C56E0038B012 /* cAppDelegate.mm */,
+			);
+			name = mac;
+			path = platform/mac;
+			sourceTree = "<group>";
+		};
 		8879CE2518B1EAB500BCBFA6 /* action */ = {
 			isa = PBXGroup;
 			children = (
@@ -2699,6 +2722,7 @@
 				886CC15418F662BB006A3AF5 /* asset_locator.mm in Sources */,
 				88C0049618FA380C0012EC1D /* gl_render_window_egl.cpp in Sources */,
 				886CC15518F662BB006A3AF5 /* gl_context.cpp in Sources */,
+				8870F3EF1919C56E0038B012 /* cAppDelegate.mm in Sources */,
 				886CC15618F662BB006A3AF5 /* asset_locator.cpp in Sources */,
 				886CC15718F662BB006A3AF5 /* gl_gpu.cpp in Sources */,
 				886CC15818F662BB006A3AF5 /* render_utility2d.cpp in Sources */,
@@ -2733,7 +2757,6 @@
 				8879CF0618C8873D00BCBFA6 /* lua_ref.cpp in Sources */,
 				8879CE3618B2F27000BCBFA6 /* action_timed.cpp in Sources */,
 				8812C295185E6359001C4D0B /* render_device.cpp in Sources */,
-				8812C2AF18618ACE001C4D0B /* cAppDelegate.mm in Sources */,
 				8879CEA418C0A10F00BCBFA6 /* application.cpp in Sources */,
 				880BA3271895D261002542E2 /* camera.cpp in Sources */,
 				883246CF183CC04C0022EA4A /* render_target.cpp in Sources */,
@@ -2746,6 +2769,7 @@
 				880BA32E189654A6002542E2 /* sprite.cpp in Sources */,
 				8879CE3318B2E0C900BCBFA6 /* timer.cpp in Sources */,
 				8811358118D426FA0069F351 /* sprite.cpp in Sources */,
+				8870F3EC1919C5640038B012 /* cViewController.mm in Sources */,
 				887711E518CD32CE00BA5508 /* import_scope.cpp in Sources */,
 				8882E4A518A382A20044CFE4 /* event_dispatcher.cpp in Sources */,
 				8869FDCE19186D9E00946FD0 /* gles2.cpp in Sources */,
@@ -2763,7 +2787,6 @@
 				8879CEFC18C848BB00BCBFA6 /* state.cpp in Sources */,
 				8812C292185E5F77001C4D0B /* gl_texture.cpp in Sources */,
 				8879CE8918BAB5A400BCBFA6 /* json_loader.cpp in Sources */,
-				8812C2AE18618ACE001C4D0B /* cViewController.mm in Sources */,
 				8879CE9D18BDC25100BCBFA6 /* ui_manager.cpp in Sources */,
 				8811358518D43F910069F351 /* eigen.cpp in Sources */,
 				8879CE5B18B7698F00BCBFA6 /* locator_asset_bundle.cpp in Sources */,
@@ -2784,6 +2807,7 @@
 				880BA32D189654A6002542E2 /* camera2d.cpp in Sources */,
 				8814E1C118D04279006C9120 /* type_info.cpp in Sources */,
 				8879CE9118BABCDE00BCBFA6 /* sprite2d.cpp in Sources */,
+				8870F3EB1919C5630038B012 /* cAppDelegate.mm in Sources */,
 				880F615118D6EE55003BCE3D /* asset.cpp in Sources */,
 				880F615B18D96468003BCE3D /* event.cpp in Sources */,
 				882762141872D50D00B1291B /* vertex_layout.cpp in Sources */,

@@ -75,7 +75,6 @@ namespace gles20 {
         // immediate make it the current context
         EGLSurface surface = egl_window->surface();
         eglMakeCurrent(_internal->display, surface, surface, context);
-        EGLint err_code = eglGetError();
         
         GLint texture_units = 1;
         glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &texture_units);
