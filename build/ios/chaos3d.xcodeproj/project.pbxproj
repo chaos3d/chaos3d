@@ -2854,10 +2854,10 @@
 					"$(inherited)",
 					../../external/libpng,
 					../../external/box2d/lib,
-					/Users/wuh/dev/tdgame/chaos3d/external/liblua,
-					/Users/wuh/dev/tdgame/chaos3d/external/powervr32/OSX/x86/Lib,
-					/Users/wuh/dev/tdgame/chaos3d/external/libpng,
-					/Users/wuh/dev/tdgame/chaos3d/external/box2d/lib,
+					../../external/liblua,
+					../../external/powervr32/OSX/x86/Lib,
+					../../external/libpng,
+					../../external/box2d/lib,
 				);
 				MACH_O_TYPE = staticlib;
 				PRODUCT_NAME = chaos3d_mac;
@@ -2880,10 +2880,10 @@
 					"$(inherited)",
 					../../external/libpng,
 					../../external/box2d/lib,
-					/Users/wuh/dev/tdgame/chaos3d/external/liblua,
-					/Users/wuh/dev/tdgame/chaos3d/external/powervr32/OSX/x86/Lib,
-					/Users/wuh/dev/tdgame/chaos3d/external/libpng,
-					/Users/wuh/dev/tdgame/chaos3d/external/box2d/lib,
+					../../external/liblua,
+					../../external/powervr32/OSX/x86/Lib,
+					../../external/libpng,
+					../../external/box2d/lib,
 				);
 				MACH_O_TYPE = staticlib;
 				PRODUCT_NAME = chaos3d_mac;
@@ -2982,7 +2982,7 @@
 					"$(inherited)",
 					../../external/libpng,
 					../../external/box2d/lib,
-					/Users/wuh/dev/tdgame/chaos3d/external/liblua,
+					../../external/liblua,
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3005,7 +3005,7 @@
 					"$(inherited)",
 					../../external/libpng,
 					../../external/box2d/lib,
-					/Users/wuh/dev/tdgame/chaos3d/external/liblua,
+					../../external/liblua,
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
