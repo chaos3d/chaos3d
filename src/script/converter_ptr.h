@@ -29,6 +29,10 @@ namespace script {
             // TODO: check the derived type and use DEBUG
             luaL_argcheck(L, obj == nullptr ||  obj->type == &class_<T>::type(), idx,
                           "object type is not matched");
+            
+            // make sure the object is valid if obj is not null
+            assert(obj == nullptr || obj->object != nullptr);
+            
             return obj != nullptr ? ((referenced_count*)obj->object)->retain<P>() : nullptr;
         };
         

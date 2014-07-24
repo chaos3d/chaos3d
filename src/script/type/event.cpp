@@ -85,6 +85,7 @@ namespace script {
         for (int i = 3, t = lua_gettop(L); i <= t; ++i) {
             auto* type = (std::type_info*) lua_touserdata(L, i);
             luaL_argcheck(L, type != nullptr, i, "not valid event type");
+            assert(type != nullptr);
             evts.emplace_back(*type);
         }
         

@@ -107,7 +107,7 @@ namespace script {
         char const* type = lua_isstring(L, -1) ? lua_tostring(L, -1) : nullptr;
         if (type == nullptr) {
             sp = new shape();
-        } if (strcmp(type, "box")) {
+        } else if (strcmp(type, "box")) {
             lua_getfield(L, 1, "x");
             lua_getfield(L, 1, "y");
             lua_getfield(L, 1, "w");
@@ -123,8 +123,10 @@ namespace script {
             
             sp = new circle(lua_tonumber(L, -3), lua_tonumber(L, -2), lua_tonumber(L, -1));
             lua_pop(L, 3);
-        } else
+        } else {
             luaL_argerror(L, 1, "type not valid");
+            assert(sp != nullptr);
+        }
         
         int t = lua_gettop(L);
         lua_getfield(L, 1, "rest");
