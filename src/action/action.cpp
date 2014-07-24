@@ -30,7 +30,8 @@ action* action::push(action* act) {
 bool action::cancellable() const{
     for (action* cur = _child_head;
         cur != null_action; cur = cur->_next_sibling){
-        for (action* next = cur; next; next = next->_next) {
+        for (action* next = cur; next != null_action;
+             next = next->_next) {
             if (!next->cancellable())
                 return false;
         }
@@ -79,7 +80,7 @@ void action::on_start() {
 void action::on_end() {
     action* child = _child_head;
     _child_head = null_action;
-    for (action *next = _child_head->_next_sibling;
+    for (action *next = child->_next_sibling;
          child != null_action; next = (child = next)->_next_sibling) {
         child->on_end();
         child->_next_sibling = null_action;
