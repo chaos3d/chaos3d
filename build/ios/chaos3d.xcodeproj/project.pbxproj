@@ -847,6 +847,16 @@
 		88C0046618F91C130012EC1D /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/usr/lib/libz.dylib; sourceTree = DEVELOPER_DIR; };
 		AACCE35D185D89CA0017CEEE /* data_stream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = data_stream.h; path = io/data_stream.h; sourceTree = "<group>"; };
 		AACCE35E185D8AF80017CEEE /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = README.md; path = ../../README.md; sourceTree = "<group>"; };
+		F9380AAC198778DF009B9911 /* no_guard.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = no_guard.hpp; sourceTree = "<group>"; };
+		F9380AAD198778DF009B9911 /* state_representation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = state_representation.hpp; sourceTree = "<group>"; };
+		F9380AAE198778DF009B9911 /* transition.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = transition.hpp; sourceTree = "<group>"; };
+		F9380AAF198778DF009B9911 /* trigger_behaviour.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = trigger_behaviour.hpp; sourceTree = "<group>"; };
+		F9380AB0198778DF009B9911 /* error.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = error.hpp; sourceTree = "<group>"; };
+		F9380AB1198778DF009B9911 /* print_state.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = print_state.hpp; sourceTree = "<group>"; };
+		F9380AB2198778DF009B9911 /* print_trigger.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = print_trigger.hpp; sourceTree = "<group>"; };
+		F9380AB5198778DF009B9911 /* state_configuration.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = state_configuration.hpp; sourceTree = "<group>"; };
+		F9380AB6198778DF009B9911 /* state_machine.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = state_machine.hpp; sourceTree = "<group>"; };
+		F9380AB7198778DF009B9911 /* trigger_with_parameters.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = trigger_with_parameters.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2518,6 +2528,7 @@
 				883246A3183237220022EA4A /* re */,
 				8879CEB418C70A9200BCBFA6 /* script */,
 				88A84B0B183067AF009F7ECD /* sg */,
+				F9380AA8198778DF009B9911 /* state */,
 				8879CE9618BD977F00BCBFA6 /* ui */,
 			);
 			name = chaos3d;
@@ -2581,6 +2592,39 @@
 				8879CE5A18B7698F00BCBFA6 /* locator_asset_bundle.h */,
 			);
 			name = asset;
+			sourceTree = "<group>";
+		};
+		F9380AA8198778DF009B9911 /* state */ = {
+			isa = PBXGroup;
+			children = (
+				F9380AA9198778DF009B9911 /* cpp-stateless */,
+			);
+			path = state;
+			sourceTree = "<group>";
+		};
+		F9380AA9198778DF009B9911 /* cpp-stateless */ = {
+			isa = PBXGroup;
+			children = (
+				F9380AAB198778DF009B9911 /* detail */,
+				F9380AB0198778DF009B9911 /* error.hpp */,
+				F9380AB1198778DF009B9911 /* print_state.hpp */,
+				F9380AB2198778DF009B9911 /* print_trigger.hpp */,
+				F9380AB5198778DF009B9911 /* state_configuration.hpp */,
+				F9380AB6198778DF009B9911 /* state_machine.hpp */,
+				F9380AB7198778DF009B9911 /* trigger_with_parameters.hpp */,
+			);
+			path = "cpp-stateless";
+			sourceTree = "<group>";
+		};
+		F9380AAB198778DF009B9911 /* detail */ = {
+			isa = PBXGroup;
+			children = (
+				F9380AAC198778DF009B9911 /* no_guard.hpp */,
+				F9380AAD198778DF009B9911 /* state_representation.hpp */,
+				F9380AAE198778DF009B9911 /* transition.hpp */,
+				F9380AAF198778DF009B9911 /* trigger_behaviour.hpp */,
+			);
+			path = detail;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
