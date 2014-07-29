@@ -183,7 +183,6 @@ void png_loader::load(data_stream& ds) {
             ((unsigned short)(*(in+2) >> 3));
         
 		delete [] data;
-		data = tempData;
     }
 
 	png_read_end(png_ptr, NULL);
