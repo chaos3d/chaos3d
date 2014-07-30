@@ -77,7 +77,7 @@ void camera2d::collect(const std::vector<game_object *> &goes) {
     target()->set_batch_retained(false);
 }
 
-void camera2d::do_render(const com::render_component_mgr &mgr) {
+void camera2d::do_render(const com::camera_mgr &mgr) {
     update_from_transform();
     
     target()->set_viewport(viewport());

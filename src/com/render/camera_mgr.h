@@ -1,5 +1,5 @@
-#ifndef _RENDER_COMPONENT_MGR_H
-#define _RENDER_COMPONENT_MGR_H
+#ifndef _CHAOS3D_COM_RENDER_CAMERA_MGR_H
+#define _CHAOS3D_COM_RENDER_CAMERA_MGR_H
 
 #include "go/component.h"
 #include "go/component_manager.h"
@@ -13,9 +13,7 @@ namespace com {
     class camera;
     class renderable;
     
-    // probably bad name, it now only deals with cameras
-    // TODO: rename to camera mgr?
-    class render_component_mgr : public component_manager_base<render_component_mgr> {
+    class camera_mgr : public component_manager_base<camera_mgr> {
     public:
         typedef std::unique_ptr<com::camera, component::component_deleter> camera_ptr;
         typedef std::forward_list<camera_ptr> cameras_t;
@@ -24,8 +22,8 @@ namespace com {
         typedef render_context* render_context_ptr;
 
     public:
-        render_component_mgr(render_device_ptr, render_context_ptr);
-        ~render_component_mgr();
+        camera_mgr(render_device_ptr, render_context_ptr);
+        ~camera_mgr();
         
         void add_camera(camera*);
         void remove_camera(camera*);

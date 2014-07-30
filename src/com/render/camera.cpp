@@ -15,11 +15,11 @@ _proj_inverse(matrix4f::Identity()),
 _uniform(make_uniforms_ptr({
     make_uniform<render_uniform::Mat4>("c_ProjViewMat", matrix4f::Identity())
 })){
-    render_component_mgr::instance().add_camera(this);
+    camera_mgr::instance().add_camera(this);
 }
 
 camera::~camera() {
-    render_component_mgr::instance().remove_camera(this);
+    camera_mgr::instance().remove_camera(this);
 }
 
 camera& camera::operator=(camera const& rhs) {
@@ -70,7 +70,7 @@ void camera::collect(std::vector<game_object*> const&) {
     
 }
 
-void camera::do_render(render_component_mgr const&) {
+void camera::do_render(camera_mgr const&) {
     
 }
 

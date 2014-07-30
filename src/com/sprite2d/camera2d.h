@@ -15,7 +15,7 @@ namespace sprite2d {
         // TODO: the sprite may have a different config for AABB to do culling
         // instead of using collider2d
         virtual void collect(std::vector<game_object*> const&) override;
-        virtual void do_render(com::render_component_mgr const&) override;
+        virtual void do_render(com::camera_mgr const&) override;
         
         SIMPLE_CLONE(camera2d);
         COMPONENT_FROM_LOADER(camera2d, camera2d);

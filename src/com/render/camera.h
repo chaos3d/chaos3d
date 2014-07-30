@@ -12,7 +12,7 @@
 
 namespace com {
     class renderable;
-    class render_component_mgr;
+    class camera_mgr;
     // TODO: culling interface
     
     // represent a rendering algorithm
@@ -43,7 +43,7 @@ namespace com {
         // renders to the target
         // render_mgr would be used as an environmental reference
         // i.e. the lights/shadows etc
-        virtual void do_render(render_component_mgr const&);
+        virtual void do_render(camera_mgr const&);
         
         void set_orthographic();
         camera& set_perspective(float fovY, float aspect, float near, float far);
