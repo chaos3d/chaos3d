@@ -1,6 +1,6 @@
 #include "com/sprite2d/camera2d.h"
 #include "com/sprite2d/sprite.h"
-#include "com/render/render_component_mgr.h"
+#include "com/render/camera_mgr.h"
 #include "go/game_object.h"
 #include "sg/transform.h"
 #include "re/render_target.h"

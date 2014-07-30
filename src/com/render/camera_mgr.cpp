@@ -1,4 +1,4 @@
-#include "com/render/render_component_mgr.h"
+#include "com/render/camera_mgr.h"
 #include "com/render/camera.h"
 using namespace com;
 

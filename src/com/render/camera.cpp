@@ -1,5 +1,5 @@
 #include "com/render/camera.h"
-#include "com/render/render_component_mgr.h"
+#include "com/render/camera_mgr.h"
 #include "go/game_object.h"
 #include "sg/transform.h"
 
