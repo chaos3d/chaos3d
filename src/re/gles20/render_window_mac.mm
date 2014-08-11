@@ -10,6 +10,8 @@ using namespace gles20;
 
 @implementation EGLView
 
+//TODO handle events
+
 @end
 
 render_window_mac::render_window_mac(EGLDisplay display,
@@ -19,27 +21,13 @@ render_window_mac::render_window_mac(EGLDisplay display,
     create_surface(display);
 }
 
-void render_window_mac::set_title(char const* title) {
-    [_window setTitle: [NSString stringWithUTF8String: title]];
-}
-
 void render_window_mac::create_native() {
     // TODO: retina window
     NSRect frame = NSMakeRect(get_position()(0), get_position()(1),
                               size()(0), size()(1));
-    _window = [[NSWindow alloc] initWithContentRect: frame
-                                          styleMask: NSMiniaturizableWindowMask | NSTitledWindowMask | NSClosableWindowMask
-                                            backing: NSBackingStoreBuffered
-                                              defer: NO];
     
     // Create our view
-    EGLView* view = [[EGLView alloc] initWithFrame: frame];
-    
-    // Now we have a view, add it to our window
-    [_window setContentView: view];
-    [_window makeKeyAndOrderFront: nil];
-    [_window setTitle: @"No Title"];
-    [view release];
+    _view = [[EGLView alloc] initWithFrame: frame];
 }
 
 void render_window_mac::create_surface(EGLDisplay display) {
@@ -57,6 +45,6 @@ void render_window_mac::create_surface(EGLDisplay display) {
         assert(false);
     }
     
-    _surface = eglCreateWindowSurface(display, egl_config, (EGLNativeWindowType) _window.contentView, NULL);
+    _surface = eglCreateWindowSurface(display, egl_config, (EGLNativeWindowType) _view, NULL);
     assert(_surface != EGL_NO_SURFACE);
 }

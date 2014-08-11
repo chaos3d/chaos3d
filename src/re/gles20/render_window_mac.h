@@ -6,20 +6,20 @@
 #include <AppKit/NSScreen.h>
 #include <AppKit/NSView.h>
 
+@class EGLView;
+
 namespace gles20 {
     class render_window_mac : public render_window_egl {
     public:
         render_window_mac(EGLDisplay, target_size_t const&, window_pos_t const&);
-        virtual void *native_handle() override { return _window; }
-
-        virtual void set_title(char const*) override;
+        virtual void *native_handle() override { return _view; }
 
     private:
         void create_native();
         void create_surface(EGLDisplay);
         
     private:
-        NSWindow* _window;
+        EGLView* _view;
     };
 }
 #endif
