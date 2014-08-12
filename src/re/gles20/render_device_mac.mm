@@ -14,7 +14,8 @@ namespace gles20 {
     };
     
     render_window* render_device::create_window(render_target::target_size_t const& size_,
-                                                render_window::window_pos_t const& pos_) {
-        return new render_window_mac(_internal->display, size_, pos_);
+                                                render_window::window_pos_t const& pos_,
+                                                float backing_ratio) {
+        return new render_window_mac(_internal->display, size_, pos_, backing_ratio);
     }
 }

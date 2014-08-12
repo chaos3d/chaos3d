@@ -61,7 +61,7 @@ namespace com {
 
         camera& set_viewport_from_target() {
             set_viewport(Eigen::Vector2i{0,0},
-                         Eigen::Vector2i{_target->size().x(),_target->size().y()});
+                         Eigen::Vector2i{_target->get_size().x(),_target->get_size().y()});
             return *this;
         }
         
@@ -81,7 +81,7 @@ namespace com {
         // is in pixels based on the current target
         // and the perspective matrix
         float distant_for_perfect_pixel(float height = 0.f) const {
-            return (height <= FLT_EPSILON ? target()->size().y() : height)
+            return (height <= FLT_EPSILON ? target()->get_size().y() : height)
             * .5f * _proj_mat(1,1);
         }
         

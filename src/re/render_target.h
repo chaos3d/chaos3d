@@ -29,7 +29,8 @@ public:
     render_target(target_size_t const& size);
     virtual ~render_target() {};
     
-    target_size_t const& size() const { return _size; };
+    // this is the size in pixels
+    target_size_t const& get_size() const { return _size; };
     
     template<class... Args>
     void add_batch(Args&&... args) {
@@ -43,7 +44,14 @@ public:
     // convert to normalized-device position
     // (range is in [-1,1] and y-axis is reversed)
     virtual vector3f normalize_position(vector3f const& screen_pos,
-                                        rect2d const& viewport) const = 0;
+                                        rect2d const& viewport) const {
+        return vector3f(
+                        (screen_pos.x() - viewport.min().x()) / viewport.sizes().x() * 2.f -1.f,
+                        1.f - (screen_pos.y() - viewport.min().y()) / viewport.sizes().y() * 2.f,
+                        screen_pos.z() * 2.f - 1.f
+                        );
+        
+    }
     
     void do_render(render_context*);
     void sort(); // TODO: comparor

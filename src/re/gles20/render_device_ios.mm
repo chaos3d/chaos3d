@@ -56,8 +56,9 @@ render_context* render_device::create_context(render_window*) {
 }
     
 render_window* render_device::create_window(render_target::target_size_t const& size_,
-                                            render_window::window_pos_t const& pos_) {
-    return new render_view(size_, pos_);
+                                            render_window::window_pos_t const& pos_,
+                                            float backing_ratio) {
+    return new render_view(size_, pos_, backing_ratio);
 }
 
 render_texture* render_device::create_render_texture() {

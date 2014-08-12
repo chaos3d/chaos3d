@@ -62,7 +62,8 @@ public:
     virtual texture::ptr create_texture(texture::vector2i const&, texture::attribute_t const&) = 0;
     virtual render_texture* create_render_texture() = 0;
     virtual render_window* create_window(render_target::target_size_t const&,
-                                         render_window::window_pos_t const& = render_window::window_pos_t(0.f,0.f)) = 0;
+                                         render_window::window_pos_t const& = render_window::window_pos_t(0.f,0.f),
+                                         float backing_ratio = 1.f) = 0;
     virtual vertex_layout::ptr create_layout(vertex_layout::channels_t&&,
                                              vertex_index_buffer::ptr&&, uint8_t mode) = 0;
 

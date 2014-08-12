@@ -11,7 +11,9 @@ namespace gles20 {
     
 class render_view : public render_window{
 public:
-    render_view(target_size_t const&, window_pos_t const& pos = window_pos_t(0.f,0.f));
+    render_view(target_size_t const&,
+                window_pos_t const& pos = window_pos_t(0.f,0.f),
+                float backing_ratio = 1.f);
     virtual ~render_view();
     
     virtual void *native_handle() { return _native_view; };

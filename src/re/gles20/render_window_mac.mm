@@ -15,19 +15,40 @@ using namespace gles20;
 @end
 
 render_window_mac::render_window_mac(EGLDisplay display,
-                                     target_size_t const& size, window_pos_t const& pos)
-: render_window_egl(size, pos) {
+                                     target_size_t const& size,
+                                     window_pos_t const& pos,
+                                     float backing_ratio)
+: render_window_egl(size, pos, backing_ratio) {
     create_native();
     create_surface(display);
 }
 
+// TODO: this can be removed if the scaling factor is set manually
+render_window::window_pos_t render_window_mac::convert_to_backing(window_pos_t const& pos) {
+    // make sure they are the same for now
+    assert(fabs(_view.layer.contentsScale - get_backing_ratio()) <= DBL_EPSILON);
+    return pos * _view.layer.contentsScale;
+}
+
+render_window::window_pos_t render_window_mac::convert_from_backing(window_pos_t const& pos) {
+    assert(fabs(_view.layer.contentsScale - get_backing_ratio()) <= DBL_EPSILON);
+    return pos / _view.layer.contentsScale;
+}
+
 void render_window_mac::create_native() {
-    // TODO: retina window
+    target_size_t size = convert_from_backing(get_size());
     NSRect frame = NSMakeRect(get_position()(0), get_position()(1),
-                              size()(0), size()(1));
+                              size(0), size(1));
     
     // Create our view
     _view = [[EGLView alloc] initWithFrame: frame];
+    
+    // TODO: set content scale manually
+    // we only suppports 2 ratios now
+    assert(get_backing_ratio() == 2.f ||
+           get_backing_ratio() == 1.f);
+    if (get_backing_ratio() == 2.f)
+        [_view setWantsBestResolutionOpenGLSurface: YES];
 }
 
 void render_window_mac::create_surface(EGLDisplay display) {

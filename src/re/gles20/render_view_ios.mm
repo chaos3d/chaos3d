@@ -78,11 +78,8 @@
 
 namespace gles20 {
 
-    // FIXME: removing scaling factor
-render_view::render_view(target_size_t const& size_, window_pos_t const& pos_)
-: render_window(size_ * [UIScreen mainScreen].scale,
-                pos_ * [UIScreen mainScreen].scale),
-_native_view(nil) {
+render_view::render_view(target_size_t const& size_, window_pos_t const& pos_, float backing_ratio)
+ : render_window(size_, pos_, backing_ratio), _native_view(nil) {
     create_native();
     create_view();
 }
@@ -94,15 +91,16 @@ render_view::~render_view() {
 void render_view::create_native() {
     assert(_native_view == nil);
     
-    float scaling = [UIScreen mainScreen].scale;
-    _native_view = [[EAGLView alloc] initWithFrame: CGRectMake(_position(0) / scaling, _position(1) / scaling,
-                                                               size()(0) / scaling, size()(1) / scaling)];
+    _native_view = [[EAGLView alloc] initWithFrame: CGRectMake(_position(0), _position(1),
+                                                               size()(0), size()(1))];
     _native_view.host = this;
 	_native_view.userInteractionEnabled = YES;
 	_native_view.opaque = TRUE;
 	_native_view.autoresizesSubviews = NO;
 	_native_view.autoresizingMask = UIViewAutoresizingNone;
     _native_view.backgroundColor = [UIColor yellowColor];
+
+    float scaling = get_backing_ratio();
     _native_view.contentScaleFactor = scaling;
     _native_view.scaling = scaling;
 }

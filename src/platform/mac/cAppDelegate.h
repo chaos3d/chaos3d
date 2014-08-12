@@ -7,9 +7,13 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import <AppKit/AppKit.h>
 
 @interface cAppDelegate : NSObject <NSApplicationDelegate> {
     NSTimer* timer;
 }
+
+@property (nonatomic, retain) NSWindow* window;
+@property (nonatomic, readonly) NSString* title;
 
 @end
