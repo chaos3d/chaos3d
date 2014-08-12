@@ -24,7 +24,7 @@ render_window_mac::render_window_mac(EGLDisplay display,
 }
 
 // TODO: this can be removed if the scaling factor is set manually
-render_window::window_pos_t render_window_mac::convert_to_backing(window_pos_t const& pos) {
+render_window::window_pos_t render_window_mac::convert_to_backing(window_pos_t const& pos) const {
     // make sure they are the same for now
     assert(_view == nil || abs(_view.layer.contentsScale - get_backing_ratio()) <= DBL_EPSILON);
     return pos * get_backing_ratio();

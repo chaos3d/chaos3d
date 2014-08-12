@@ -22,11 +22,11 @@ public:
     
     float get_backing_ratio() const { return _backing_ratio; };
     
-    virtual window_pos_t convert_to_backing(window_pos_t const& pos) {
+    virtual window_pos_t convert_to_backing(window_pos_t const& pos) const {
         return pos * get_backing_ratio();
     }
 
-    virtual window_pos_t convert_from_backing(window_pos_t const& pos) {
+    virtual window_pos_t convert_from_backing(window_pos_t const& pos) const {
         return pos / get_backing_ratio();
     }
     

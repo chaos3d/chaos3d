@@ -14,8 +14,8 @@ namespace gles20 {
         virtual void *native_handle() override { return _view; }
 
     protected:
-        virtual window_pos_t convert_to_backing(window_pos_t const&) override;
-        virtual window_pos_t convert_from_backing(window_pos_t const&) override;
+        virtual window_pos_t convert_to_backing(window_pos_t const&) const override;
+        virtual window_pos_t convert_from_backing(window_pos_t const&) const override;
         
     private:
         void create_native();
