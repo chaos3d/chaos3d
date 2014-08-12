@@ -90,9 +90,9 @@ render_view::~render_view() {
 
 void render_view::create_native() {
     assert(_native_view == nil);
-    
+    target_size_t size = convert_from_backing(get_size());
     _native_view = [[EAGLView alloc] initWithFrame: CGRectMake(_position(0), _position(1),
-                                                               size()(0), size()(1))];
+                                                               size(0), size(1))];
     _native_view.host = this;
 	_native_view.userInteractionEnabled = YES;
 	_native_view.opaque = TRUE;

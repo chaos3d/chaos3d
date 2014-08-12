@@ -87,6 +87,10 @@
     
     app.on_launch();
     
+    assert(app.main_context() != nullptr);
+    assert(app.main_device() != nullptr);
+    assert(app.main_window() != nullptr);
+
     [self startLoop];
     
     return YES;
