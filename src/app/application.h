@@ -30,6 +30,7 @@ public:
     // called before the run loop starts
     //  this should be to initialize components, actions to
     //  actually start the game
+    //  it also needs to init render context
     virtual void on_launch() = 0;
     
     // get the main screen

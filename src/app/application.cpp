@@ -14,12 +14,10 @@ bool application::on_initialize() {
     _main_device->init_context();
     
     auto size = device::screen_size();
-    _main_window = _main_device->create_window(render_target::target_size_t(size(0), size(1)));
-    
-    // init the context for the current thread
-    _main_context = _main_device->create_context(_main_window);
-    _main_context->set_current();
-    
+    _main_window = _main_device->create_window(render_target::target_size_t(size(0), size(1)),
+                                               render_window::window_pos_t(),
+                                               device::best_pixel_ratio());
+        
     locator_mgr::instance().
     add(locator::dir_locator::app_dir())->
     add(locator::dir_locator::home_dir());

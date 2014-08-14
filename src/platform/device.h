@@ -13,6 +13,7 @@ public:
     typedef Eigen::Vector2i vector2i;
     
 public:
+    static float best_pixel_ratio();
     static vector2i screen_size();
     static std::string device_name();
 };
