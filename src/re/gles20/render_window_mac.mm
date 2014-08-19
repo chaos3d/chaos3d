@@ -23,6 +23,12 @@ render_window_mac::render_window_mac(EGLDisplay display,
     create_surface(display);
 }
 
+render_window_mac::~render_window_mac() {
+    [_view removeFromSuperview];
+    [_view release];
+    _view = nil;
+}
+
 // TODO: this can be removed if the scaling factor is set manually
 render_window::window_pos_t render_window_mac::convert_to_backing(window_pos_t const& pos) const {
     // make sure they are the same for now
@@ -30,7 +36,7 @@ render_window::window_pos_t render_window_mac::convert_to_backing(window_pos_t c
     return pos * get_backing_ratio();
 }
 
-render_window::window_pos_t render_window_mac::convert_from_backing(window_pos_t const& pos) {
+render_window::window_pos_t render_window_mac::convert_from_backing(window_pos_t const& pos) const {
     assert(_view == nil || abs(_view.layer.contentsScale - get_backing_ratio()) <= DBL_EPSILON);
     return pos / get_backing_ratio();
 }
