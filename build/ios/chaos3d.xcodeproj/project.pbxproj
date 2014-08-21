@@ -138,10 +138,6 @@
 		8882E4A518A382A20044CFE4 /* event_dispatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8882E4A418A382A20044CFE4 /* event_dispatcher.cpp */; };
 		8882E4E318A74E2D0044CFE4 /* libBox2D.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8882E4E218A74E2D0044CFE4 /* libBox2D.a */; };
 		88A84AD01830652F009F7ECD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88A84ACF1830652F009F7ECD /* Foundation.framework */; };
-		88A84ADE1830652F009F7ECD /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88A84ADD1830652F009F7ECD /* XCTest.framework */; };
-		88A84ADF1830652F009F7ECD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88A84ACF1830652F009F7ECD /* Foundation.framework */; };
-		88A84AE11830652F009F7ECD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88A84AE01830652F009F7ECD /* UIKit.framework */; };
-		88A84AE41830652F009F7ECD /* libchaos3d_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 88A84ACC1830652F009F7ECD /* libchaos3d_ios.a */; };
 		88A84B0E183067AF009F7ECD /* transform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88A84B0C183067AF009F7ECD /* transform.cpp */; };
 		88A84B121830B6D9009F7ECD /* game_object.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88A84B111830B6D9009F7ECD /* game_object.cpp */; };
 		88C0046118F7EA7A0012EC1D /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88C0046018F7EA7A0012EC1D /* AppKit.framework */; };
@@ -155,16 +151,6 @@
 		88C0049718FA380C0012EC1D /* render_device_mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 88C0045718F7E1BF0012EC1D /* render_device_mac.mm */; };
 		88C0049818FA380C0012EC1D /* render_window_mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 886CC17C18F68E79006A3AF5 /* render_window_mac.mm */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		88A84AE21830652F009F7ECD /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 88A84AC41830652F009F7ECD /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 88A84ACB1830652F009F7ECD;
-			remoteInfo = chaos3d;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		886CC17118F662BB006A3AF5 /* CopyFiles */ = {
@@ -833,7 +819,6 @@
 		8882E4E218A74E2D0044CFE4 /* libBox2D.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libBox2D.a; sourceTree = "<group>"; };
 		88A84ACC1830652F009F7ECD /* libchaos3d_ios.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libchaos3d_ios.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		88A84ACF1830652F009F7ECD /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		88A84ADC1830652F009F7ECD /* chaos3dTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = chaos3dTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		88A84ADD1830652F009F7ECD /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		88A84AE01830652F009F7ECD /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		88A84B0718306671009F7ECD /* chaos3d-prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "chaos3d-prefix.pch"; sourceTree = SOURCE_ROOT; };
@@ -884,17 +869,6 @@
 				88A84AD01830652F009F7ECD /* Foundation.framework in Frameworks */,
 				8812C2C81866D892001C4D0B /* libpng.a in Frameworks */,
 				8882E4E318A74E2D0044CFE4 /* libBox2D.a in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		88A84AD91830652F009F7ECD /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				88A84ADE1830652F009F7ECD /* XCTest.framework in Frameworks */,
-				88A84AE11830652F009F7ECD /* UIKit.framework in Frameworks */,
-				88A84ADF1830652F009F7ECD /* Foundation.framework in Frameworks */,
-				88A84AE41830652F009F7ECD /* libchaos3d_ios.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2493,7 +2467,6 @@
 			isa = PBXGroup;
 			children = (
 				88A84ACC1830652F009F7ECD /* libchaos3d_ios.a */,
-				88A84ADC1830652F009F7ECD /* chaos3dTests.xctest */,
 				886CC17518F662BB006A3AF5 /* libchaos3d_mac.a */,
 			);
 			name = Products;
@@ -2666,24 +2639,6 @@
 			productReference = 88A84ACC1830652F009F7ECD /* libchaos3d_ios.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		88A84ADB1830652F009F7ECD /* chaos3dTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 88A84AF21830652F009F7ECD /* Build configuration list for PBXNativeTarget "chaos3dTests" */;
-			buildPhases = (
-				88A84AD81830652F009F7ECD /* Sources */,
-				88A84AD91830652F009F7ECD /* Frameworks */,
-				88A84ADA1830652F009F7ECD /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				88A84AE31830652F009F7ECD /* PBXTargetDependency */,
-			);
-			name = chaos3dTests;
-			productName = chaos3dTests;
-			productReference = 88A84ADC1830652F009F7ECD /* chaos3dTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -2706,21 +2661,10 @@
 			projectRoot = "";
 			targets = (
 				88A84ACB1830652F009F7ECD /* chaos3d_ios */,
-				88A84ADB1830652F009F7ECD /* chaos3dTests */,
 				886CC12818F662BB006A3AF5 /* chaos3d_mac */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXResourcesBuildPhase section */
-		88A84ADA1830652F009F7ECD /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		886CC12918F662BB006A3AF5 /* Sources */ = {
@@ -2868,22 +2812,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		88A84AD81830652F009F7ECD /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		88A84AE31830652F009F7ECD /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 88A84ACB1830652F009F7ECD /* chaos3d_ios */;
-			targetProxy = 88A84AE21830652F009F7ECD /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		886CC17318F662BB006A3AF5 /* Debug */ = {
@@ -3060,42 +2989,6 @@
 			};
 			name = Release;
 		};
-		88A84AF31830652F009F7ECD /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "chaos3d/chaos3d-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "chaos3dTests/chaos3dTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = xctest;
-			};
-			name = Debug;
-		};
-		88A84AF41830652F009F7ECD /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "chaos3d/chaos3d-Prefix.pch";
-				INFOPLIST_FILE = "chaos3dTests/chaos3dTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = xctest;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -3122,15 +3015,6 @@
 			buildConfigurations = (
 				88A84AF01830652F009F7ECD /* Debug */,
 				88A84AF11830652F009F7ECD /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		88A84AF21830652F009F7ECD /* Build configuration list for PBXNativeTarget "chaos3dTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				88A84AF31830652F009F7ECD /* Debug */,
-				88A84AF41830652F009F7ECD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
