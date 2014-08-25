@@ -29,7 +29,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "886CC12818F662BB006A3AF5"
-               BuildableName = "libchaos3d_mac.a"
+               BuildableName = "libchaos3d_mac.dylib"
                BlueprintName = "chaos3d_mac"
                ReferencedContainer = "container:chaos3d.xcodeproj">
             </BuildableReference>
