@@ -50,6 +50,6 @@ fi
 
 cp output-ios/*.a ../libs/ios/.
 cp output-macosx/*.a ../libs/macosx/.
-cp output-include/*.h ../liblua/$VERSION/
+cp output-include/*.h output-include/*.hpp ../liblua/$VERSION/
 
 cd ..
