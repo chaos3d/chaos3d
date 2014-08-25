@@ -1,8 +1,8 @@
 /* pnglibconf.h - library build configuration */
 
-/* libpng version 1.6.7 - November 14, 2013 */
+/* libpng version 1.7.0beta36 - August 6, 2014 */
 
-/* Copyright (c) 1998-2012 Glenn Randers-Pehrson */
+/* Copyright (c) 1998-2013 Glenn Randers-Pehrson */
 
 /* This code is released under the libpng license. */
 /* For conditions of distribution and use, see the disclaimer */
@@ -16,7 +16,7 @@
 /* options */
 #define PNG_16BIT_SUPPORTED
 #define PNG_ALIGNED_MEMORY_SUPPORTED
-/*#undef PNG_ARM_NEON_API_SUPPORTED*/
+#define PNG_ARM_NEON_API_SUPPORTED
 /*#undef PNG_ARM_NEON_CHECK_SUPPORTED*/
 #define PNG_BENIGN_ERRORS_SUPPORTED
 #define PNG_BENIGN_READ_ERRORS_SUPPORTED
@@ -100,8 +100,6 @@
 #define PNG_SAVE_UNKNOWN_CHUNKS_SUPPORTED
 #define PNG_SEQUENTIAL_READ_SUPPORTED
 #define PNG_SETJMP_SUPPORTED
-#define PNG_SET_CHUNK_CACHE_LIMIT_SUPPORTED
-#define PNG_SET_CHUNK_MALLOC_LIMIT_SUPPORTED
 #define PNG_SET_OPTION_SUPPORTED
 #define PNG_SET_UNKNOWN_CHUNKS_SUPPORTED
 #define PNG_SET_USER_LIMITS_SUPPORTED
@@ -184,9 +182,9 @@
 #define PNG_zTXt_SUPPORTED
 /* end of options */
 /* settings */
+#define PNG_ABORT { (abort()); }
 #define PNG_API_RULE 0
-#define PNG_ARM_NEON_OPT 2
-#define PNG_CALLOC_SUPPORTED
+#define PNG_ARM_NEON_OPT 1
 #define PNG_COST_SHIFT 3
 #define PNG_DEFAULT_READ_MACROS 1
 #define PNG_GAMMA_THRESHOLD_FIXED 5000
@@ -200,6 +198,7 @@
 #define PNG_TEXT_Z_DEFAULT_STRATEGY 0
 #define PNG_WEIGHT_SHIFT 8
 #define PNG_ZBUF_SIZE 8192
+#define PNG_ZLIB_HEADER <zlib.h>
 #define PNG_ZLIB_VERNUM 0x1250
 #define PNG_Z_DEFAULT_COMPRESSION (-1)
 #define PNG_Z_DEFAULT_NOFILTER_STRATEGY 0

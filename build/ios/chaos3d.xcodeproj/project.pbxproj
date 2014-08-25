@@ -28,7 +28,6 @@
 		8812C2A718618055001C4D0B /* screen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8812C2A318618055001C4D0B /* screen.cpp */; };
 		8812C2B418619E33001C4D0B /* device.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8812C2B218619E33001C4D0B /* device.mm */; };
 		8812C2BD18644221001C4D0B /* gl_vertex_buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8812C2BA18644221001C4D0B /* gl_vertex_buffer.cpp */; };
-		8812C2C81866D892001C4D0B /* libpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8812C2C71866D892001C4D0B /* libpng.a */; };
 		8812C2D518683BE0001C4D0B /* render_utility2d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8812C2D318683BE0001C4D0B /* render_utility2d.cpp */; };
 		8812C2D8186841B4001C4D0B /* render_uniform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8812C2D6186841B4001C4D0B /* render_uniform.cpp */; };
 		8814E1C118D04279006C9120 /* type_info.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8814E1C018D04279006C9120 /* type_info.cpp */; };
@@ -141,10 +140,9 @@
 		88A84B0E183067AF009F7ECD /* transform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88A84B0C183067AF009F7ECD /* transform.cpp */; };
 		88A84B121830B6D9009F7ECD /* game_object.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88A84B111830B6D9009F7ECD /* game_object.cpp */; };
 		88C0046118F7EA7A0012EC1D /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88C0046018F7EA7A0012EC1D /* AppKit.framework */; };
-		88C0046218F91BD20012EC1D /* libEGL.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 886CC10D18F66221006A3AF5 /* libEGL.dylib */; };
-		88C0046318F91BD70012EC1D /* libGLESv2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 886CC10F18F66221006A3AF5 /* libGLESv2.dylib */; };
+		88C0046218F91BD20012EC1D /* libEGL.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 886CC10D18F66221006A3AF5 /* libEGL.dylib */; settings = {ATTRIBUTES = (Weak, ); }; };
+		88C0046318F91BD70012EC1D /* libGLESv2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 886CC10F18F66221006A3AF5 /* libGLESv2.dylib */; settings = {ATTRIBUTES = (Weak, ); }; };
 		88C0046418F91BE90012EC1D /* liblua.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8879CEAB18C7097200BCBFA6 /* liblua.a */; };
-		88C0046518F91BEC0012EC1D /* libpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8812C2C71866D892001C4D0B /* libpng.a */; };
 		88C0046718F91C130012EC1D /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 88C0046618F91C130012EC1D /* libz.dylib */; };
 		88C0049418FA38030012EC1D /* render_device_egl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 886CC09B18F65FEB006A3AF5 /* render_device_egl.cpp */; };
 		88C0049618FA380C0012EC1D /* gl_render_window_egl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 886CC17618F67D4D006A3AF5 /* gl_render_window_egl.cpp */; };
@@ -215,13 +213,6 @@
 		8812C2B318619E33001C4D0B /* device.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = device.h; path = platform/device.h; sourceTree = "<group>"; };
 		8812C2BA18644221001C4D0B /* gl_vertex_buffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gl_vertex_buffer.cpp; sourceTree = "<group>"; };
 		8812C2BB18644221001C4D0B /* gl_vertex_buffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gl_vertex_buffer.h; sourceTree = "<group>"; };
-		8812C2C11866D892001C4D0B /* png.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = png.h; sourceTree = "<group>"; };
-		8812C2C21866D892001C4D0B /* pngconf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pngconf.h; sourceTree = "<group>"; };
-		8812C2C31866D892001C4D0B /* pnglibconf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pnglibconf.h; sourceTree = "<group>"; };
-		8812C2C41866D892001C4D0B /* png.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = png.h; sourceTree = "<group>"; };
-		8812C2C51866D892001C4D0B /* pngconf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pngconf.h; sourceTree = "<group>"; };
-		8812C2C61866D892001C4D0B /* pnglibconf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pnglibconf.h; sourceTree = "<group>"; };
-		8812C2C71866D892001C4D0B /* libpng.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libpng.a; sourceTree = "<group>"; };
 		8812C2D11866E1EB001C4D0B /* utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utility.h; sourceTree = "<group>"; };
 		8812C2D318683BE0001C4D0B /* render_utility2d.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = render_utility2d.cpp; sourceTree = "<group>"; };
 		8812C2D418683BE0001C4D0B /* render_utility2d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = render_utility2d.h; sourceTree = "<group>"; };
@@ -1010,6 +1001,9 @@
 		F99065A619A5D01E003A3323 /* writerappender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = writerappender.h; sourceTree = "<group>"; };
 		F99065A819A5D01E003A3323 /* domconfigurator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = domconfigurator.h; sourceTree = "<group>"; };
 		F99065A919A5D01E003A3323 /* xmllayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = xmllayout.h; sourceTree = "<group>"; };
+		F99065CC19AB0959003A3323 /* png.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = png.h; sourceTree = "<group>"; };
+		F99065CD19AB0959003A3323 /* pngconf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pngconf.h; sourceTree = "<group>"; };
+		F99065CE19AB0959003A3323 /* pnglibconf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pnglibconf.h; sourceTree = "<group>"; };
 		F9FE2A891988D85300039B92 /* no_guard.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = no_guard.hpp; sourceTree = "<group>"; };
 		F9FE2A8A1988D85300039B92 /* state_representation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = state_representation.hpp; sourceTree = "<group>"; };
 		F9FE2A8B1988D85300039B92 /* transition.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = transition.hpp; sourceTree = "<group>"; };
@@ -1034,7 +1028,6 @@
 				88C0046318F91BD70012EC1D /* libGLESv2.dylib in Frameworks */,
 				88C0046418F91BE90012EC1D /* liblua.a in Frameworks */,
 				886CC17018F662BB006A3AF5 /* libBox2D.a in Frameworks */,
-				88C0046518F91BEC0012EC1D /* libpng.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1044,7 +1037,6 @@
 			files = (
 				88A84AD01830652F009F7ECD /* Foundation.framework in Frameworks */,
 				8879CEB218C7097200BCBFA6 /* liblua.a in Frameworks */,
-				8812C2C81866D892001C4D0B /* libpng.a in Frameworks */,
 				8882E4E318A74E2D0044CFE4 /* libBox2D.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1142,31 +1134,11 @@
 		8812C2BE1866D892001C4D0B /* libpng */ = {
 			isa = PBXGroup;
 			children = (
-				8812C2BF1866D892001C4D0B /* include */,
-				8812C2C71866D892001C4D0B /* libpng.a */,
+				F99065CC19AB0959003A3323 /* png.h */,
+				F99065CD19AB0959003A3323 /* pngconf.h */,
+				F99065CE19AB0959003A3323 /* pnglibconf.h */,
 			);
 			path = libpng;
-			sourceTree = "<group>";
-		};
-		8812C2BF1866D892001C4D0B /* include */ = {
-			isa = PBXGroup;
-			children = (
-				8812C2C01866D892001C4D0B /* libpng16 */,
-				8812C2C41866D892001C4D0B /* png.h */,
-				8812C2C51866D892001C4D0B /* pngconf.h */,
-				8812C2C61866D892001C4D0B /* pnglibconf.h */,
-			);
-			path = include;
-			sourceTree = "<group>";
-		};
-		8812C2C01866D892001C4D0B /* libpng16 */ = {
-			isa = PBXGroup;
-			children = (
-				8812C2C11866D892001C4D0B /* png.h */,
-				8812C2C21866D892001C4D0B /* pngconf.h */,
-				8812C2C31866D892001C4D0B /* pnglibconf.h */,
-			);
-			path = libpng16;
 			sourceTree = "<group>";
 		};
 		8812C2CB1866E1EB001C4D0B /* common */ = {
