@@ -3380,6 +3380,7 @@
 					"-ObjC",
 					"-llog4cxx",
 					"-lpng",
+					"-llua",
 				);
 			};
 			name = Debug;
@@ -3421,6 +3422,7 @@
 					"-ObjC",
 					"-llog4cxx",
 					"-lpng",
+					"-llua",
 				);
 			};
 			name = Release;
