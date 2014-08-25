@@ -9,6 +9,7 @@ if [ ! -f libpng.tar.gz ]; then
     exit 1
 fi
 
+rm -rf libpng-$LIBNAME
 tar xvf libpng.tar.gz
 cd libpng-$LIBNAME
 ./autogen.sh
