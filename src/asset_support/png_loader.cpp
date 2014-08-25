@@ -1,6 +1,6 @@
 #include "asset_support/png_loader.h"
 #include "io/memory_stream.h"
-#include "libpng/include/png.h"
+#include <png.h>
 
 png_loader::png_loader(data_stream* source, int format)
 : _buf_size(0), _buffer(nullptr), _desc{{0, 0}, format}{

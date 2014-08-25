@@ -3269,15 +3269,11 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					../../external/libs/macosx,
-					../../external/libpng,
 					../../external/box2d/lib,
 					../../external/liblua,
 					../../external/powervr32/OSX/x86/Lib,
-					../../external/libpng,
-					../../external/box2d/lib,
 				);
 				MACH_O_TYPE = mh_dylib;
-				OTHER_LDFLAGS = "-llog4cxx";
 				PRODUCT_NAME = chaos3d_mac;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -3300,15 +3296,11 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					../../external/libs/macosx,
-					../../external/libpng,
 					../../external/box2d/lib,
 					../../external/liblua,
 					../../external/powervr32/OSX/x86/Lib,
-					../../external/libpng,
-					../../external/box2d/lib,
 				);
 				MACH_O_TYPE = mh_dylib;
-				OTHER_LDFLAGS = "-llog4cxx";
 				PRODUCT_NAME = chaos3d_mac;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -3352,6 +3344,12 @@
 					../../external/,
 					../../external/box2d/include,
 					../../external/powervr32/Include,
+					../../external/libpng,
+				);
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-llog4cxx",
+					"-lpng",
 				);
 			};
 			name = Debug;
@@ -3387,6 +3385,12 @@
 					../../external/,
 					../../external/box2d/include,
 					../../external/powervr32/Include,
+					../../external/libpng,
+				);
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-llog4cxx",
+					"-lpng",
 				);
 			};
 			name = Release;
@@ -3403,11 +3407,10 @@
 				GCC_PREFIX_HEADER = "chaos3d-prefix.pch";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					../../external/libpng,
 					../../external/box2d/lib,
 					../../external/liblua,
+					../../external/libs/ios/,
 				);
-				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -3426,11 +3429,10 @@
 				GCC_PREFIX_HEADER = "chaos3d-prefix.pch";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					../../external/libpng,
 					../../external/box2d/lib,
 					../../external/liblua,
+					../../external/libs/ios/,
 				);
-				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
