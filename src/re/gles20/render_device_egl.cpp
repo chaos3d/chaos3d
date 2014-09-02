@@ -2,6 +2,7 @@
 #include "re/gles20/render_device.h"
 #include "re/gles20/gl_context_egl.h"
 #include "re/gles20/gl_render_window_egl.h"
+#include "common/log.h"
 
 #include <EGL/egl.h>
 #include <iostream>
@@ -35,13 +36,15 @@ namespace gles20 {
             return false;
         }
         
-        // TODO: log version
+        LOG_INFO("EGL version: " << major_ver << '.' << minor_ver);
         
         if (!eglBindAPI(EGL_OPENGL_ES_API)) {
+            LOG_ERROR("Unable to bind the OpenGL ES API");
             return false;
         }
 
-        std::cout << eglQueryString(_internal->display, EGL_EXTENSIONS) << std::endl;
+        LOG_INFO("EGL extensions: " << eglQueryString(_internal->display, EGL_EXTENSIONS));
+        LOG_DEBUG("EGL context init'd");
         return true;
     }
     
@@ -55,6 +58,7 @@ namespace gles20 {
         EGLint num_configs;
         EGLConfig egl_config;
         
+        LOG_DEBUG("GL creating the context");
         if (!eglChooseConfig(_internal->display, attrs, &egl_config, 1, &num_configs)
             || (num_configs != 1)) {
             return nullptr;
@@ -66,7 +70,11 @@ namespace gles20 {
                                               _internal->context, context_attrs);
         
         if (!is_created) {
+            LOG_DEBUG("Created the first context:" << std::hex << (void*)context);
             _internal->context = context;
+        } else {
+            LOG_DEBUG("Created the context:" << std::hex << (void*)context <<
+                      " using the shared context" << std::hex << (void*)_internal->context);
         }
         
         render_window_egl* egl_window = dynamic_cast<render_window_egl*>(window);
@@ -82,10 +90,10 @@ namespace gles20 {
         // initialize the externsion API's if needed
         c3d_gl_load_extensions();
         
-        std::cout << glGetString(GL_VENDOR) << std::endl;
-        std::cout << glGetString(GL_RENDERER) << std::endl;
-        std::cout << glGetString(GL_VERSION) << std::endl;
-        std::cout << glGetString(GL_EXTENSIONS) << std::endl;
+        LOG_INFO("GL Vendor:" << glGetString(GL_VENDOR));
+        LOG_INFO("GL Renderer:" << glGetString(GL_RENDERER));
+        LOG_INFO("GL Version:" << glGetString(GL_VERSION));
+        LOG_INFO("GL Extension:" << glGetString(GL_EXTENSIONS));
         return new gl_context_egl(_internal->display, egl_window->surface(),
                                   context, texture_units);
     }

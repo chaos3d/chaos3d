@@ -9,6 +9,7 @@
 #include "re/gles20/gl_vertex_buffer.h"
 #include "re/gles20/gl_vertex_layout.h"
 #include "re/gles20/gl_gpu.h"
+#include "common/log.h"
 
 namespace gles20 {
 
@@ -51,5 +52,7 @@ private:
 };
 
 }
+
+INHERIT_LOGGER(gles20::render_device, render_device);
 
 #endif

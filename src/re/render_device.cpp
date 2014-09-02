@@ -1,7 +1,9 @@
 #include "render_device.h"
-
 #include "gles20/render_gles20.h"
+#include "common/log.h"
 #include <cassert>
+
+DEFINE_LOGGER(render_device, "render");
 
 render_device* render_device::get_device(uint8_t type) {
     static render_device* _one_device_for_now = nullptr;

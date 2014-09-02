@@ -1,6 +1,8 @@
 #include "re/gles20/render_device.h"
+#include "common/log.h"
 
 namespace gles20 {
+    
     texture::ptr render_device::create_texture(texture::vector2i const&size,
                                               texture::attribute_t const&attr) {
         return texture::ptr(new gl_texture(size, attr));
