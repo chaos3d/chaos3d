@@ -1,7 +1,11 @@
 #include "script/state.h"
 #include "io/data_stream.h"
+#include "common/log.h"
 
 using namespace script;
+
+DEFINE_LOGGER(state, "script");
+INHERIT_LOGGER(coroutine, state);
 
 static const char *_stream_reader (lua_State *L, void *data, size_t *size){
     static constexpr uint32_t BUF_SIZE = 1024;
@@ -33,8 +37,8 @@ bool coroutine::resume_with(int nargs) {
         return false;
     int ret = lua_resume(_L, nargs);
     if (ret > 1) {
-        // TODO: proper log
-        printf("runtime errors: %s", lua_tostring(_L, -1));
+        // TODO: track stack
+        LOG_ERROR("Runtime error:" << lua_tostring(_L, -1));
     }
     return ret <= 1;
 }
@@ -124,8 +128,7 @@ coroutine state::load(char const* s, char const* name) {
     
     int ret = luaL_loadbuffer(L, s, strlen(s), name);
     if (ret != 0) {
-        // TODO: proper log
-        printf("compiling errors: %s", lua_tostring(L, -1));
+        LOG_ERROR("Compiling errors: " << lua_tostring(L, -1));
     }
     return co;
 }
@@ -138,8 +141,7 @@ coroutine state::load(data_stream *ds, char const* name) {
     auto* L = co.internal();
     int ret = lua_load(L, _stream_reader, (void*)ds, name);
     if (ret != 0) {
-        // TODO: proper log
-        printf("compiling errors: %s", lua_tostring(L, -1));
+        LOG_ERROR("Compiling errors: " << lua_tostring(L, -1));
     } 
     return co;
 }
