@@ -12,7 +12,6 @@
 
 #include "io/data_stream.h"
 
-
 /**
  * data stream wrapper for memory
  *  creating from existing memory won't transfer ownership

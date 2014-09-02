@@ -8,23 +8,30 @@
  */
 
 #include "io/memory_stream.h"
+#include "common/log.h"
+
+INHERIT_LOGGER(memory_stream, data_stream);
 
 memory_stream::memory_stream(data_stream* ds)
 : _address(nullptr), _end(nullptr), _current(nullptr),
 _owned(true)
 {
     _current = _address = new char [ds->size()];
+    if (!_address) {
+        LOG_ERROR("Unable to allocate enough memory");
+        return;
+    }
+    LOG_DEBUG("Allocate for memory stream, " << ds->size() << " at 0x" << std::hex << this);
+
     ds->read(_address, ds->size());
+    LOG_DEBUG("Initiazlie data from another stream, " << std::hex << ds);
     _end = _address + ds->size();
 }
 
 memory_stream::memory_stream(const char* address, size_t size)
-: _address(nullptr), _end(nullptr), _current(nullptr),
-_owned(true)
+: memory_stream(const_cast<char*>(address), // removing const won't hurt here...
+                size, true)
 {
-    _current = _address = new char [size];
-    memcpy(_address, address, size);
-    _end = _address + size;
 }
 
 memory_stream::memory_stream(char* address, size_t size, bool copy)
@@ -33,7 +40,16 @@ _owned(copy)
 {
     if (copy) {
         _address = new char [size];
+        if (!_address) {
+            LOG_ERROR("Unable to allocate enough memory");
+            return;
+        }
+        LOG_DEBUG("Allocate for memory stream, " << size << " at 0x" << std::hex << this);
         memcpy(_address, address, size);
+        LOG_DEBUG("Initiazlie data from another memory, " << std::hex << address);
+    } else {
+        LOG_DEBUG("Inialize memory stream with unmanaged memory at 0x" << std::hex << this
+                  << "from: 0x" << address);
     }
 }
 
@@ -43,9 +59,10 @@ _owned(true)
 {
     _address = new char [size];
     if (!_address) {
-        // TODO: logging or throw?
+        LOG_ERROR("Unable to allocate enough memory");
         return;
     }
+    LOG_DEBUG("Allocate for memory stream, " << size << " at 0x" << std::hex << this);
     _end = _address + size;
     _current = _address;
 }
@@ -54,6 +71,8 @@ memory_stream::~memory_stream() {
     if (_owned && _address) {
         delete [] _address;
     }
+    LOG_DEBUG("Deallocate memory stream? " << (_owned ? "true" : "false")
+              << " at 0x" << std::hex << this);
     _address = nullptr;
 }
 
