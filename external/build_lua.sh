@@ -48,7 +48,7 @@ make CC="xcrun -sdk macosx clang -arch i386 -mmacosx-version-min=10.7" CFLAGS="-
 make TO_LIB="liblua.dylib" INSTALL_TOP=`pwd`/install-macosx32 install
 cp install-macosx32/bin/luac output-macosx/luac32
 lipo -create $(find install-macosx*/lib -name "*.dylib") -o output-macosx/liblua.$VERSION.dylib
-install_name_tool -id @executable_path/liblua.$VERSION.dylib output-macosx/liblua.$VERSION.dylib
+install_name_tool -id @executable_path/liblua.dylib output-macosx/liblua.$VERSION.dylib
 
 mkdir -p ../liblua/$VERSION/
 if [ "$1" == "link" ]; then
