@@ -28,7 +28,7 @@ make -j8 && make install || (>&2 echo error building wx; exit 1)
 ./change-install-names install/lib/ install/bin/ "@executable_path" `pwd`/install/lib
 
 mkdir -p $CURDIR/libs/wx $CURDIR/libwx
-cp -r install/lib/* $CURDIR/libs/wx/.
-cp -r install/include/* $CURDIR/libwx/.
+cp -a install/lib/*.dylib $CURDIR/libs/wx/.
+cp -a install/include/* $CURDIR/libwx/.
 install/bin/wx-config --cxxflags | sed -e "s:`pwd`/install/::g" -e "s:lib/:libs/wx/:"> $CURDIR/libs/wx/config
 cd $CURDIR
