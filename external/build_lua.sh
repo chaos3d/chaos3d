@@ -40,15 +40,16 @@ cp install-arm64/include/* output-include/.
 make CC="xcrun -sdk macosx clang -arch x86_64 -mmacosx-version-min=10.7" CFLAGS="-Ofast -DLUA_USE_LINUX" MYLIBS="-lreadline" MYLDFLAGS="-flto" \
     LUA_A="liblua.dylib" AR="xcrun -sdk macosx clang -arch x86_64 -dynamiclib -o" RANLIB="strip -u -r" clean generic
 make TO_LIB="liblua.dylib" INSTALL_TOP=`pwd`/install-macosx64 install
-cp install-macosx64/bin/luac output-macosx/luac64
-cp install-macosx64/bin/lua output-macosx/lua64
 
 make CC="xcrun -sdk macosx clang -arch i386 -mmacosx-version-min=10.7" CFLAGS="-Ofast -DLUA_USE_LINUX" MYLIBS="-lreadline" MYLDFLAGS="-flto" \
     LUA_A="liblua.dylib" AR="xcrun -sdk macosx clang -arch i386 -dynamiclib -o" RANLIB="strip -u -r" clean generic
 make TO_LIB="liblua.dylib" INSTALL_TOP=`pwd`/install-macosx32 install
-cp install-macosx32/bin/luac output-macosx/luac32
+
 lipo -create $(find install-macosx*/lib -name "*.dylib") -o output-macosx/liblua.$VERSION.dylib
 install_name_tool -id @executable_path/liblua.dylib output-macosx/liblua.$VERSION.dylib
+
+lipo -create $(find install-macosx*/bin/ -name "lua") -o output-macosx/lua
+lipo -create $(find install-macosx*/bin/ -name "luac") -o output-macosx/luac
 
 mkdir -p ../liblua/$VERSION/
 if [ "$1" == "link" ]; then
