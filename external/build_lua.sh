@@ -50,6 +50,8 @@ install_name_tool -id @executable_path/liblua.dylib output-macosx/liblua.$VERSIO
 
 lipo -create $(find install-macosx*/bin/ -name "lua") -o output-macosx/lua
 lipo -create $(find install-macosx*/bin/ -name "luac") -o output-macosx/luac
+install_name_tool -change liblua.dylib @executable_path/liblua.dylib output-macosx/lua
+install_name_tool -change liblua.dylib @executable_path/liblua.dylib output-macosx/luac
 
 mkdir -p ../liblua/$VERSION/
 if [ "$1" == "link" ]; then
