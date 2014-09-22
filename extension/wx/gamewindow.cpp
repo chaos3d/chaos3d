@@ -1,14 +1,15 @@
 #include <wx/wxprec.h>
 #include <wx/wx.h>
 
-#include "gamewindow.h"
 #include <EGL/egl.h>
 #include <GLES2/gl2.h>
 
-class MyWindow : public wxWindow
+#include "gamewindow.h"
+
+class wxGameWindow : public wxWindow
 {
 public:
-    MyWindow()
+    wxGameWindow()
     : m_spinTimer(this, wxID_HIGHEST + 1)
     {
         SetBackgroundStyle(wxBG_STYLE_CUSTOM);
@@ -105,7 +106,7 @@ private:
     wxDECLARE_EVENT_TABLE();
 };
 
-wxBEGIN_EVENT_TABLE(MyWindow, wxWindow)
-EVT_PAINT(MyWindow::OnPaint)
-EVT_TIMER(wxID_HIGHEST + 1, MyWindow::OnSpinTimer)
+wxBEGIN_EVENT_TABLE(wxGameWindow, wxWindow)
+EVT_PAINT(wxGameWindow::OnPaint)
+EVT_TIMER(wxID_HIGHEST + 1, wxGameWindow::OnSpinTimer)
 wxEND_EVENT_TABLE()

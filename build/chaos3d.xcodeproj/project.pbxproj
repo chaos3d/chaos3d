@@ -148,6 +148,8 @@
 		88C0049818FA380C0012EC1D /* render_window_mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 886CC17C18F68E79006A3AF5 /* render_window_mac.mm */; };
 		F9589EBE19D00D74004BDB1D /* libchaos3d_mac.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 886CC17518F662BB006A3AF5 /* libchaos3d_mac.dylib */; };
 		F9589EBF19D00DBB004BDB1D /* gamewindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F9589EAB19D00C35004BDB1D /* gamewindow.cpp */; };
+		F9589EC219D01628004BDB1D /* luachaos3d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F9589EC019D01628004BDB1D /* luachaos3d.cpp */; };
+		F9589EC319D01628004BDB1D /* luachaos3d.h in Headers */ = {isa = PBXBuildFile; fileRef = F9589EC119D01628004BDB1D /* luachaos3d.h */; };
 		F9AF0F8719B5B4950047C431 /* data_stream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F9AF0F8619B5B4950047C431 /* data_stream.cpp */; };
 		F9AF0F8819B5B4950047C431 /* data_stream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F9AF0F8619B5B4950047C431 /* data_stream.cpp */; };
 /* End PBXBuildFile section */
@@ -832,6 +834,8 @@
 		F9589EAD19D00C35004BDB1D /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		F9589EAE19D00C35004BDB1D /* test.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test.lua; sourceTree = "<group>"; };
 		F9589EB519D00C8E004BDB1D /* libwxchaos3d.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libwxchaos3d.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		F9589EC019D01628004BDB1D /* luachaos3d.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = luachaos3d.cpp; sourceTree = "<group>"; };
+		F9589EC119D01628004BDB1D /* luachaos3d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = luachaos3d.h; sourceTree = "<group>"; };
 		F98A04A8198AC046000FE65D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		F99064EB19A5D01E003A3323 /* appender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = appender.h; sourceTree = "<group>"; };
 		F99064EC19A5D01E003A3323 /* appenderskeleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = appenderskeleton.h; sourceTree = "<group>"; };
@@ -2755,6 +2759,8 @@
 			children = (
 				F9589EAB19D00C35004BDB1D /* gamewindow.cpp */,
 				F9589EAC19D00C35004BDB1D /* gamewindow.h */,
+				F9589EC019D01628004BDB1D /* luachaos3d.cpp */,
+				F9589EC119D01628004BDB1D /* luachaos3d.h */,
 				F9589EAD19D00C35004BDB1D /* README.md */,
 				F9589EAE19D00C35004BDB1D /* test.lua */,
 			);
@@ -3128,6 +3134,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F9589EC319D01628004BDB1D /* luachaos3d.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3371,6 +3378,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F9589EC219D01628004BDB1D /* luachaos3d.cpp in Sources */,
 				F9589EBF19D00DBB004BDB1D /* gamewindow.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3477,7 +3485,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					../external/box2d/lib,
-					../external/liblua,
 					../external/powervr32/OSX/x86/Lib,
 				);
 				OTHER_LDFLAGS = (
@@ -3526,7 +3533,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					../external/box2d/lib,
-					../external/liblua,
 					../external/powervr32/OSX/x86/Lib,
 				);
 				OTHER_LDFLAGS = (
