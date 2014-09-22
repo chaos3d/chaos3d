@@ -6,12 +6,14 @@
 #include <OpenGLES/EAGL.h>
 
 @class EAGLView;
+@class UIView;
 
 namespace gles20 {
     
 class render_view : public render_window{
 public:
-    render_view(target_size_t const&,
+    render_view(UIView* parent,
+                target_size_t const&,
                 window_pos_t const& pos = window_pos_t(0.f,0.f),
                 float backing_ratio = 1.f);
     virtual ~render_view();
@@ -29,7 +31,7 @@ protected:
 
     virtual bool bind(render_context*) override;
     virtual bool flush(render_context*) override;
-    void create_native();
+    void create_native(UIView* parent);
     void create_view();
     
 private:

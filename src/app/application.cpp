@@ -14,7 +14,8 @@ bool application::on_initialize() {
     _main_device->init_context();
     
     auto size = device::screen_size();
-    _main_window = _main_device->create_window(render_target::target_size_t(size(0), size(1)),
+    _main_window = _main_device->create_window(nullptr,
+                                               render_target::target_size_t(size(0), size(1)),
                                                render_window::window_pos_t(),
                                                device::best_pixel_ratio());
         

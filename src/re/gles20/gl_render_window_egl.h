@@ -10,9 +10,9 @@ namespace gles20 {
     
     class render_window_egl : public render_window {
     public:
-        render_window_egl(target_size_t const& size, window_pos_t const& pos,
+        render_window_egl(void* parent, target_size_t const& size, window_pos_t const& pos,
                           float backing_ratio)
-        : render_window(size, pos, backing_ratio)
+        : render_window(parent, size, pos, backing_ratio)
         {
         }
         

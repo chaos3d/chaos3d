@@ -78,9 +78,9 @@
 
 namespace gles20 {
 
-render_view::render_view(target_size_t const& size_, window_pos_t const& pos_, float backing_ratio)
- : render_window(size_, pos_, backing_ratio), _native_view(nil) {
-    create_native();
+render_view::render_view(UIView* parent, target_size_t const& size_, window_pos_t const& pos_, float backing_ratio)
+ : render_window(parent, size_, pos_, backing_ratio), _native_view(nil) {
+    create_native(parent);
     create_view();
 }
 
@@ -88,7 +88,7 @@ render_view::~render_view() {
     [_native_view release];
 }
 
-void render_view::create_native() {
+void render_view::create_native(UIView* parent) {
     assert(_native_view == nil);
     target_size_t size = convert_from_backing(get_size());
     _native_view = [[EAGLView alloc] initWithFrame: CGRectMake(_position(0), _position(1),

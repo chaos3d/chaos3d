@@ -14,12 +14,13 @@ using namespace gles20;
 
 @end
 
-render_window_mac::render_window_mac(EGLDisplay display,
+render_window_mac::render_window_mac(id parent,
+                                     EGLDisplay display,
                                      target_size_t const& size,
                                      window_pos_t const& pos,
                                      float backing_ratio)
-: render_window_egl(size, pos, backing_ratio), _view(nil) {
-    create_native();
+: render_window_egl(parent, size, pos, backing_ratio), _view(nil) {
+    create_native(parent);
     create_surface(display);
 }
 
@@ -41,7 +42,7 @@ render_window::window_pos_t render_window_mac::convert_from_backing(window_pos_t
     return pos / get_backing_ratio();
 }
 
-void render_window_mac::create_native() {
+void render_window_mac::create_native(id parent) {
     target_size_t size = convert_from_backing(get_size());
     NSRect frame = NSMakeRect(get_position()(0), get_position()(1),
                               size(0), size(1));
@@ -55,6 +56,12 @@ void render_window_mac::create_native() {
            get_backing_ratio() == 1.f);
     if (get_backing_ratio() == 2.f)
         [_view setWantsBestResolutionOpenGLSurface: YES];
+    
+    if ([parent isKindOfClass: [NSWindow class]]) {
+        [((NSWindow*) parent) setContentView: _view];
+    } else if ([parent isKindOfClass: [NSView class]]) {
+        [((NSView*) parent) addSubview: _view];
+    }
 }
 
 void render_window_mac::create_surface(EGLDisplay display) {

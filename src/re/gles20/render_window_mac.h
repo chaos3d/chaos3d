@@ -9,7 +9,7 @@
 namespace gles20 {
     class render_window_mac : public render_window_egl {
     public:
-        render_window_mac(EGLDisplay, target_size_t const&,
+        render_window_mac(id parent, EGLDisplay, target_size_t const&,
                           window_pos_t const&, float);
         virtual ~render_window_mac();
         virtual void *native_handle() override { return _view; }
@@ -19,7 +19,7 @@ namespace gles20 {
         virtual window_pos_t convert_from_backing(window_pos_t const&) const override;
         
     private:
-        void create_native();
+        void create_native(id);
         void create_surface(EGLDisplay);
         
     private:
