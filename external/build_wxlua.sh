@@ -29,8 +29,8 @@ cd wxlua/$(ls wxlua)/wxLua
 mkdir macosx && cd macosx
 cmake .. -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX=`pwd`/install -DCMAKE_BUILD_TYPE=MinSizeRel \
     -DCMAKE_C_COMPILER=`xcrun -f clang` -DCMAKE_CXX_COMPILER=`xcrun -f clang++` \
-    -DwxWidgets_CONFIG_EXECUTABLE=$WXDIR/install/bin/wx-config  -DwxWidgets_COMPONENTS="stc;html;aui;adv;core;net;base" \
-    -DwxLuaBind_COMPONENTS="stc;html;aui;adv;core;net;base" -DwxLua_LUA_LIBRARY_USE_BUILTIN=FALSE \
+    -DwxWidgets_CONFIG_EXECUTABLE=$WXDIR/install/bin/wx-config  -DwxWidgets_COMPONENTS="stc;html;aui;adv;core;net;base;webview;xrc;xml;media" \
+    -DwxLuaBind_COMPONENTS="stc;html;aui;adv;core;net;base;webview;xrc;xml;media" -DwxLua_LUA_LIBRARY_USE_BUILTIN=FALSE \
     -DCMAKE_CXX_FLAGS='-std=c++11 -stdlib=libc++ -Wno-c++11-narrowing' \
     -DwxLua_LUA_LIBRARY_BUILD_SHARED=TRUE -DwxLua_LUA_INCLUDE_DIR=$LUADIR -DwxLua_LUA_LIBRARY=$LUALIB
 

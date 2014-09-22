@@ -1,3 +1,8 @@
 #!/usr/bin/env bash
 
-echo hello;
+cd "$(dirname $0)"/..
+
+export LUA_CPATH="MacOS/lib?.dylib;"
+export LUA_PATH="./?.lua;script/?.lua;"
+
+MacOS/lua $*
