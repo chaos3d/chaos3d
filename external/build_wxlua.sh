@@ -8,8 +8,8 @@ if ! test -f wxlua.tar.gz; then
     exit 1;
 fi;
 
-rm -rf wxlua
-(mkdir wxlua && tar xvf wxlua.tar.gz -C wxlua)
+rm -rf wxlua-src
+(mkdir wxlua-src && tar xvf wxlua.tar.gz -C wxlua-src)
 
 CURDIR=`pwd`
 WXDIR=`pwd`/wx/$(ls wx)/
@@ -24,7 +24,7 @@ elif ! test -d $WXDIR; then
     exit -1;
 fi
 
-cd wxlua/$(ls wxlua)/wxLua
+cd wxlua-src/$(ls wxlua-src)/wxLua
 
 mkdir macosx && cd macosx
 cmake .. -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX=`pwd`/install -DCMAKE_BUILD_TYPE=MinSizeRel \
@@ -34,9 +34,11 @@ cmake .. -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX=`pwd`/install -DCMAKE_BUILD_
     -DCMAKE_CXX_FLAGS='-std=c++11 -stdlib=libc++ -Wno-c++11-narrowing' \
     -DwxLua_LUA_LIBRARY_BUILD_SHARED=TRUE -DwxLua_LUA_INCLUDE_DIR=$LUADIR -DwxLua_LUA_LIBRARY=$LUALIB
 
-make wxLuaModule || (>&2 echo error building wxlua module && exit -1;)
+make && make install || (>&2 echo error building wxlua module && exit -1;)
 
-cp lib/MinSizeRel/libwx.dylib $CURDIR/libs/macosx/.
+mkdir -p $CURDIR/wxlua/.
+cp install/lib/libwx.dylib $CURDIR/libs/macosx/.
+cp -r install/include/wxlua/* $CURDIR/wxlua/.
 install_name_tool -id @executable_path/libwx.dylib $CURDIR/libs/macosx/libwx.dylib
 
 cd $CURDIR
