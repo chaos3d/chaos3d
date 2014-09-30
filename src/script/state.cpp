@@ -77,6 +77,16 @@ static void *l_alloc (void *ud, void *ptr, size_t osize,
 
 state::state(bool open_all) {
     _L = lua_newstate(l_alloc, this);
+#pragma mark - TODO: fix this cpath for iOS build
+#if 0
+    // link with -exported_symbols_list
+    // strip -x => keep global symbols
+    lua_getglobal(_L, "package");
+    lua_getfield(_L, -1, "cpath");
+    lua_pushstring(_L, ";path_to_binary");
+    lua_concat(_L, 2);
+    lua_setfield(_L, -2, "cpath");
+#endif
     ensure_objlink();
     if (open_all) {
         luaL_openlibs(_L);
