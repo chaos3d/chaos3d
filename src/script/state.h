@@ -94,6 +94,10 @@ namespace script {
         typedef std::vector<int> coroutine_refs_t;
         
     public:
+        state(state const&) = delete;
+        state& operator=(state const&) = delete;
+        state(state &&) = delete;
+        state& operator=(state &&) = delete;
         ~state();
         
         coroutine load(char const*, char const* = nullptr);
@@ -160,7 +164,7 @@ namespace script {
         // push the named scope(table) or the global table
         void push_scope(lua_State*, char const* scope);
         
-        state(bool = true);
+        state(lua_State* L = nullptr, bool = true);
         
         // make sure the table to link all the objects are reference as 1
         void ensure_objlink();
@@ -169,6 +173,7 @@ namespace script {
         coroutine fetch();
         
         lua_State* _L;
+        bool _managed_L;
         
         coroutines_t _coroutines;
         coroutine_refs_t _co_refs;

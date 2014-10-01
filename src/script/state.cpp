@@ -75,8 +75,22 @@ static void *l_alloc (void *ud, void *ptr, size_t osize,
         return realloc(ptr, nsize);
 }
 
-state::state(bool open_all) {
-    _L = lua_newstate(l_alloc, this);
+state::state(lua_State* L, bool open_all)
+: _managed_L(L == nullptr) {
+    if (L == nullptr) {
+        _L = lua_newstate(l_alloc, this);
+    } else {
+        void *ud(nullptr);
+        lua_Alloc alloc_ = lua_getallocf(L, &ud);
+
+        if (ud != nullptr) {
+            LOG_ERROR("the userdata has been set for the given state. "
+                      "this may cause misbehaviors since it'll be overriden.");
+        }
+        
+        lua_setallocf(L, alloc_, this);
+        _L = L;
+    }
 #pragma mark - TODO: fix this cpath for iOS build
 #if 0
     // link with -exported_symbols_list
@@ -94,7 +108,8 @@ state::state(bool open_all) {
 }
 
 state::~state() {
-    lua_close(_L);
+    if (_managed_L)
+        lua_close(_L);
 }
 
 void state::ensure_objlink() {
