@@ -2670,7 +2670,6 @@
 				883246A3183237220022EA4A /* re */,
 				8879CEB418C70A9200BCBFA6 /* script */,
 				88A84B0B183067AF009F7ECD /* sg */,
-				F9380AA8198778DF009B9911 /* state */,
 				8879CE9618BD977F00BCBFA6 /* ui */,
 			);
 			name = chaos3d;
@@ -2736,13 +2735,6 @@
 				8879CE5A18B7698F00BCBFA6 /* locator_asset_bundle.h */,
 			);
 			name = asset;
-			sourceTree = "<group>";
-		};
-		F9380AA8198778DF009B9911 /* state */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = state;
 			sourceTree = "<group>";
 		};
 		F9589EA919D00BF8004BDB1D /* extension */ = {
@@ -3403,7 +3395,6 @@
 					"$(inherited)",
 					../external/libs/macosx,
 				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "chaos3d-prefix.pch";
 				INSTALL_GROUP = "";
 				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/libchaos3d_mac.dylib";
@@ -3427,7 +3418,6 @@
 					"$(inherited)",
 					../external/libs/macosx,
 				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "chaos3d-prefix.pch";
 				INSTALL_GROUP = "";
 				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/libchaos3d_mac.dylib";
@@ -3552,7 +3542,6 @@
 					"$(inherited)",
 					../dependency/ios,
 				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "chaos3d-prefix.pch";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3572,7 +3561,6 @@
 					"$(inherited)",
 					../dependency/ios,
 				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "chaos3d-prefix.pch";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
