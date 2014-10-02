@@ -147,7 +147,7 @@
 		88C0049718FA380C0012EC1D /* render_device_mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 88C0045718F7E1BF0012EC1D /* render_device_mac.mm */; };
 		88C0049818FA380C0012EC1D /* render_window_mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 886CC17C18F68E79006A3AF5 /* render_window_mac.mm */; };
 		F9589EBE19D00D74004BDB1D /* libchaos3d_mac.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 886CC17518F662BB006A3AF5 /* libchaos3d_mac.dylib */; };
-		F9589EBF19D00DBB004BDB1D /* gamewindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F9589EAB19D00C35004BDB1D /* gamewindow.cpp */; };
+		F9589EBF19D00DBB004BDB1D /* render_wxwindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F9589EAB19D00C35004BDB1D /* render_wxwindow.cpp */; };
 		F9589EC219D01628004BDB1D /* luachaos3d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F9589EC019D01628004BDB1D /* luachaos3d.cpp */; };
 		F9589EC319D01628004BDB1D /* luachaos3d.h in Headers */ = {isa = PBXBuildFile; fileRef = F9589EC119D01628004BDB1D /* luachaos3d.h */; };
 		F9AF0F8719B5B4950047C431 /* data_stream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F9AF0F8619B5B4950047C431 /* data_stream.cpp */; };
@@ -829,8 +829,8 @@
 		88C0046618F91C130012EC1D /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/usr/lib/libz.dylib; sourceTree = DEVELOPER_DIR; };
 		AACCE35D185D89CA0017CEEE /* data_stream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = data_stream.h; path = io/data_stream.h; sourceTree = "<group>"; };
 		AACCE35E185D8AF80017CEEE /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
-		F9589EAB19D00C35004BDB1D /* gamewindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gamewindow.cpp; sourceTree = "<group>"; };
-		F9589EAC19D00C35004BDB1D /* gamewindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gamewindow.h; sourceTree = "<group>"; };
+		F9589EAB19D00C35004BDB1D /* render_wxwindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = render_wxwindow.cpp; sourceTree = "<group>"; };
+		F9589EAC19D00C35004BDB1D /* render_wxwindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = render_wxwindow.h; sourceTree = "<group>"; };
 		F9589EAD19D00C35004BDB1D /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		F9589EAE19D00C35004BDB1D /* test.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test.lua; sourceTree = "<group>"; };
 		F9589EB519D00C8E004BDB1D /* libwxchaos3d.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libwxchaos3d.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1033,6 +1033,43 @@
 		F99065F419AB1DCB003A3323 /* lua.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = lua.hpp; sourceTree = "<group>"; };
 		F99065F519AB1DCB003A3323 /* luaconf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = luaconf.h; sourceTree = "<group>"; };
 		F99065F619AB1DCB003A3323 /* lualib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lualib.h; sourceTree = "<group>"; };
+		F99A48E619DD1D1600DDDD09 /* atomic.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = atomic.h; sourceTree = "<group>"; };
+		F99A48E819DD1D1600DDDD09 /* wxldebug.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wxldebug.h; sourceTree = "<group>"; };
+		F99A48E919DD1D1600DDDD09 /* wxlstack.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wxlstack.h; sourceTree = "<group>"; };
+		F99A48EA19DD1D1600DDDD09 /* wxluadebugdefs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wxluadebugdefs.h; sourceTree = "<group>"; };
+		F99A48EC19DD1D1600DDDD09 /* wxldserv.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wxldserv.h; sourceTree = "<group>"; };
+		F99A48ED19DD1D1600DDDD09 /* wxldtarg.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wxldtarg.h; sourceTree = "<group>"; };
+		F99A48EE19DD1D1600DDDD09 /* wxlsock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wxlsock.h; sourceTree = "<group>"; };
+		F99A48EF19DD1D1600DDDD09 /* wxluadebugger_bind.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wxluadebugger_bind.h; sourceTree = "<group>"; };
+		F99A48F019DD1D1600DDDD09 /* wxluadebuggerdefs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wxluadebuggerdefs.h; sourceTree = "<group>"; };
+		F99A48F119DD1D1600DDDD09 /* sharedptr.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sharedptr.h; sourceTree = "<group>"; };
+		F99A48F419DD1D1600DDDD09 /* wxadv_bind.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wxadv_bind.h; sourceTree = "<group>"; };
+		F99A48F519DD1D1600DDDD09 /* wxadv_wxladv.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wxadv_wxladv.h; sourceTree = "<group>"; };
+		F99A48F619DD1D1600DDDD09 /* wxaui_bind.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wxaui_bind.h; sourceTree = "<group>"; };
+		F99A48F719DD1D1600DDDD09 /* wxbase_bind.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wxbase_bind.h; sourceTree = "<group>"; };
+		F99A48F819DD1D1600DDDD09 /* wxbinddefs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wxbinddefs.h; sourceTree = "<group>"; };
+		F99A48F919DD1D1600DDDD09 /* wxcore_bind.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wxcore_bind.h; sourceTree = "<group>"; };
+		F99A48FA19DD1D1600DDDD09 /* wxcore_wxlcore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wxcore_wxlcore.h; sourceTree = "<group>"; };
+		F99A48FB19DD1D1600DDDD09 /* wxgl_bind.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wxgl_bind.h; sourceTree = "<group>"; };
+		F99A48FC19DD1D1600DDDD09 /* wxhtml_bind.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wxhtml_bind.h; sourceTree = "<group>"; };
+		F99A48FD19DD1D1600DDDD09 /* wxhtml_wxlhtml.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wxhtml_wxlhtml.h; sourceTree = "<group>"; };
+		F99A48FE19DD1D1600DDDD09 /* wxmedia_bind.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wxmedia_bind.h; sourceTree = "<group>"; };
+		F99A48FF19DD1D1600DDDD09 /* wxnet_bind.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wxnet_bind.h; sourceTree = "<group>"; };
+		F99A490019DD1D1600DDDD09 /* wxpropgrid_bind.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wxpropgrid_bind.h; sourceTree = "<group>"; };
+		F99A490119DD1D1600DDDD09 /* wxrichtext_bind.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wxrichtext_bind.h; sourceTree = "<group>"; };
+		F99A490219DD1D1600DDDD09 /* wxstc_bind.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wxstc_bind.h; sourceTree = "<group>"; };
+		F99A490319DD1D1600DDDD09 /* wxwebview_bind.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wxwebview_bind.h; sourceTree = "<group>"; };
+		F99A490419DD1D1600DDDD09 /* wxxml_bind.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wxxml_bind.h; sourceTree = "<group>"; };
+		F99A490519DD1D1600DDDD09 /* wxxrc_bind.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wxxrc_bind.h; sourceTree = "<group>"; };
+		F99A490619DD1D1600DDDD09 /* wxlbind.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wxlbind.h; sourceTree = "<group>"; };
+		F99A490719DD1D1600DDDD09 /* wxlcallb.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wxlcallb.h; sourceTree = "<group>"; };
+		F99A490819DD1D1600DDDD09 /* wxlconsole.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wxlconsole.h; sourceTree = "<group>"; };
+		F99A490919DD1D1600DDDD09 /* wxldefs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wxldefs.h; sourceTree = "<group>"; };
+		F99A490A19DD1D1600DDDD09 /* wxlobject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wxlobject.h; sourceTree = "<group>"; };
+		F99A490B19DD1D1600DDDD09 /* wxlstate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wxlstate.h; sourceTree = "<group>"; };
+		F99A490C19DD1D1600DDDD09 /* wxlua.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wxlua.h; sourceTree = "<group>"; };
+		F99A490D19DD1D1600DDDD09 /* wxlua_bind.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wxlua_bind.h; sourceTree = "<group>"; };
+		F99A490E19DD1D1600DDDD09 /* wxlversion.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wxlversion.h; sourceTree = "<group>"; };
 		F9AF0F8519B599DD0047C431 /* log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = log.h; sourceTree = "<group>"; };
 		F9AF0F8619B5B4950047C431 /* data_stream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = data_stream.cpp; path = io/data_stream.cpp; sourceTree = "<group>"; };
 		F9FE2A891988D85300039B92 /* no_guard.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = no_guard.hpp; sourceTree = "<group>"; };
@@ -1213,6 +1250,7 @@
 				F99064EA19A5D01E003A3323 /* log4cxx */,
 				886CC09D18F66221006A3AF5 /* powervr32 */,
 				8879CE7918BA951A00BCBFA6 /* rapidjson */,
+				F99A48E519DD1D1600DDDD09 /* wxlua */,
 			);
 			name = external;
 			path = ../external;
@@ -2749,8 +2787,8 @@
 		F9589EAA19D00C35004BDB1D /* wx */ = {
 			isa = PBXGroup;
 			children = (
-				F9589EAB19D00C35004BDB1D /* gamewindow.cpp */,
-				F9589EAC19D00C35004BDB1D /* gamewindow.h */,
+				F9589EAB19D00C35004BDB1D /* render_wxwindow.cpp */,
+				F9589EAC19D00C35004BDB1D /* render_wxwindow.h */,
 				F9589EC019D01628004BDB1D /* luachaos3d.cpp */,
 				F9589EC119D01628004BDB1D /* luachaos3d.h */,
 				F9589EAD19D00C35004BDB1D /* README.md */,
@@ -3094,6 +3132,82 @@
 			path = lua;
 			sourceTree = "<group>";
 		};
+		F99A48E519DD1D1600DDDD09 /* wxlua */ = {
+			isa = PBXGroup;
+			children = (
+				F99A48E719DD1D1600DDDD09 /* debug */,
+				F99A48EB19DD1D1600DDDD09 /* debugger */,
+				F99A48F219DD1D1600DDDD09 /* wxbind */,
+				F99A48E619DD1D1600DDDD09 /* atomic.h */,
+				F99A48F119DD1D1600DDDD09 /* sharedptr.h */,
+				F99A490619DD1D1600DDDD09 /* wxlbind.h */,
+				F99A490719DD1D1600DDDD09 /* wxlcallb.h */,
+				F99A490819DD1D1600DDDD09 /* wxlconsole.h */,
+				F99A490919DD1D1600DDDD09 /* wxldefs.h */,
+				F99A490A19DD1D1600DDDD09 /* wxlobject.h */,
+				F99A490B19DD1D1600DDDD09 /* wxlstate.h */,
+				F99A490D19DD1D1600DDDD09 /* wxlua_bind.h */,
+				F99A490C19DD1D1600DDDD09 /* wxlua.h */,
+				F99A490E19DD1D1600DDDD09 /* wxlversion.h */,
+			);
+			path = wxlua;
+			sourceTree = "<group>";
+		};
+		F99A48E719DD1D1600DDDD09 /* debug */ = {
+			isa = PBXGroup;
+			children = (
+				F99A48E819DD1D1600DDDD09 /* wxldebug.h */,
+				F99A48E919DD1D1600DDDD09 /* wxlstack.h */,
+				F99A48EA19DD1D1600DDDD09 /* wxluadebugdefs.h */,
+			);
+			path = debug;
+			sourceTree = "<group>";
+		};
+		F99A48EB19DD1D1600DDDD09 /* debugger */ = {
+			isa = PBXGroup;
+			children = (
+				F99A48EC19DD1D1600DDDD09 /* wxldserv.h */,
+				F99A48ED19DD1D1600DDDD09 /* wxldtarg.h */,
+				F99A48EE19DD1D1600DDDD09 /* wxlsock.h */,
+				F99A48EF19DD1D1600DDDD09 /* wxluadebugger_bind.h */,
+				F99A48F019DD1D1600DDDD09 /* wxluadebuggerdefs.h */,
+			);
+			path = debugger;
+			sourceTree = "<group>";
+		};
+		F99A48F219DD1D1600DDDD09 /* wxbind */ = {
+			isa = PBXGroup;
+			children = (
+				F99A48F319DD1D1600DDDD09 /* include */,
+			);
+			path = wxbind;
+			sourceTree = "<group>";
+		};
+		F99A48F319DD1D1600DDDD09 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				F99A48F419DD1D1600DDDD09 /* wxadv_bind.h */,
+				F99A48F519DD1D1600DDDD09 /* wxadv_wxladv.h */,
+				F99A48F619DD1D1600DDDD09 /* wxaui_bind.h */,
+				F99A48F719DD1D1600DDDD09 /* wxbase_bind.h */,
+				F99A48F819DD1D1600DDDD09 /* wxbinddefs.h */,
+				F99A48F919DD1D1600DDDD09 /* wxcore_bind.h */,
+				F99A48FA19DD1D1600DDDD09 /* wxcore_wxlcore.h */,
+				F99A48FB19DD1D1600DDDD09 /* wxgl_bind.h */,
+				F99A48FC19DD1D1600DDDD09 /* wxhtml_bind.h */,
+				F99A48FD19DD1D1600DDDD09 /* wxhtml_wxlhtml.h */,
+				F99A48FE19DD1D1600DDDD09 /* wxmedia_bind.h */,
+				F99A48FF19DD1D1600DDDD09 /* wxnet_bind.h */,
+				F99A490019DD1D1600DDDD09 /* wxpropgrid_bind.h */,
+				F99A490119DD1D1600DDDD09 /* wxrichtext_bind.h */,
+				F99A490219DD1D1600DDDD09 /* wxstc_bind.h */,
+				F99A490319DD1D1600DDDD09 /* wxwebview_bind.h */,
+				F99A490419DD1D1600DDDD09 /* wxxml_bind.h */,
+				F99A490519DD1D1600DDDD09 /* wxxrc_bind.h */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
 		F9FE2A861988D85300039B92 /* cpp-stateless */ = {
 			isa = PBXGroup;
 			children = (
@@ -3371,7 +3485,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F9589EC219D01628004BDB1D /* luachaos3d.cpp in Sources */,
-				F9589EBF19D00DBB004BDB1D /* gamewindow.cpp in Sources */,
+				F9589EBF19D00DBB004BDB1D /* render_wxwindow.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
