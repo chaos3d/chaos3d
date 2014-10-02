@@ -31,6 +31,7 @@ public:
     
     // this is the size in pixels
     target_size_t const& get_size() const { return _size; };
+    virtual void set_size(target_size_t const& size) { _size = size; };
     
     template<class... Args>
     void add_batch(Args&&... args) {

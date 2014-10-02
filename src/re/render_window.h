@@ -32,7 +32,6 @@ public:
     }
     
     //void set_position();
-    //void set_size();
     
 protected:
     window_pos_t _position;

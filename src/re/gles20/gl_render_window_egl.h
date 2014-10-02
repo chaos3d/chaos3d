@@ -21,6 +21,8 @@ namespace gles20 {
         EGLSurface surface() const { return _surface; }
         
     protected:
+        void create_surface(EGLDisplay, EGLNativeWindowType);
+        
         virtual void set_viewport(rect2d const& view) override;
         virtual void clear(int mask, color_t const& color = {}) override;
         virtual void clear_stencil(int set) override;

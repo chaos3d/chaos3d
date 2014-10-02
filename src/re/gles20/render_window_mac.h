@@ -20,7 +20,6 @@ namespace gles20 {
         
     private:
         void create_native(id);
-        void create_surface(EGLDisplay);
         
     private:
         EGLView* _view;

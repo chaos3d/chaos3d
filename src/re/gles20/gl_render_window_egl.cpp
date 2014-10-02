@@ -7,6 +7,25 @@ render_window_egl::~render_window_egl() {
     
 }
 
+void render_window_egl::create_surface(EGLDisplay display, EGLNativeWindowType view) {
+    // TODO: depth buffer etc
+    EGLint attrs[] = {
+        EGL_SURFACE_TYPE, EGL_WINDOW_BIT,
+        EGL_RENDERABLE_TYPE, EGL_OPENGL_ES2_BIT,
+        EGL_NONE
+    };
+    
+    EGLint num_configs;
+    EGLConfig egl_config;
+    
+    if (!eglChooseConfig(display, attrs, &egl_config, 1, &num_configs) || (num_configs != 1)) {
+        assert(false);
+    }
+    
+    _surface = eglCreateWindowSurface(display, egl_config, view, NULL);
+    assert(_surface != EGL_NO_SURFACE);
+}
+
 bool render_window_egl::bind(render_context* context) {
     assert(dynamic_cast<gl_context_egl*>(context) != nullptr);
     gl_context_egl* context_egl = static_cast<gl_context_egl*>(context);

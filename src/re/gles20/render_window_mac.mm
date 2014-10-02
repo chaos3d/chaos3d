@@ -21,7 +21,7 @@ render_window_mac::render_window_mac(id parent,
                                      float backing_ratio)
 : render_window_egl(parent, size, pos, backing_ratio), _view(nil) {
     create_native(parent);
-    create_surface(display);
+    create_surface(display, _view);
 }
 
 render_window_mac::~render_window_mac() {
@@ -34,12 +34,12 @@ render_window_mac::~render_window_mac() {
 render_window::window_pos_t render_window_mac::convert_to_backing(window_pos_t const& pos) const {
     // make sure they are the same for now
     assert(_view == nil || abs(_view.layer.contentsScale - get_backing_ratio()) <= DBL_EPSILON);
-    return pos * get_backing_ratio();
+    return render_window::convert_to_backing(pos);
 }
 
 render_window::window_pos_t render_window_mac::convert_from_backing(window_pos_t const& pos) const {
     assert(_view == nil || abs(_view.layer.contentsScale - get_backing_ratio()) <= DBL_EPSILON);
-    return pos / get_backing_ratio();
+    return render_window::convert_from_backing(pos);
 }
 
 void render_window_mac::create_native(id parent) {
@@ -62,23 +62,4 @@ void render_window_mac::create_native(id parent) {
     } else if ([parent isKindOfClass: [NSView class]]) {
         [((NSView*) parent) addSubview: _view];
     }
-}
-
-void render_window_mac::create_surface(EGLDisplay display) {
-    // TODO: depth buffer etc
-    EGLint attrs[] = {
-        EGL_SURFACE_TYPE, EGL_WINDOW_BIT,
-        EGL_RENDERABLE_TYPE, EGL_OPENGL_ES2_BIT,
-        EGL_NONE
-    };
-    
-    EGLint num_configs;
-    EGLConfig egl_config;
-    
-    if (!eglChooseConfig(display, attrs, &egl_config, 1, &num_configs) || (num_configs != 1)) {
-        assert(false);
-    }
-    
-    _surface = eglCreateWindowSurface(display, egl_config, (EGLNativeWindowType) _view, NULL);
-    assert(_surface != EGL_NO_SURFACE);
 }
