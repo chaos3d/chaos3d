@@ -1033,6 +1033,7 @@
 		F99065F419AB1DCB003A3323 /* lua.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = lua.hpp; sourceTree = "<group>"; };
 		F99065F519AB1DCB003A3323 /* luaconf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = luaconf.h; sourceTree = "<group>"; };
 		F99065F619AB1DCB003A3323 /* lualib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lualib.h; sourceTree = "<group>"; };
+		F995097D19DE869F0082D19C /* render_device-internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "render_device-internal.h"; sourceTree = "<group>"; };
 		F99A48E619DD1D1600DDDD09 /* atomic.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = atomic.h; sourceTree = "<group>"; };
 		F99A48E819DD1D1600DDDD09 /* wxldebug.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wxldebug.h; sourceTree = "<group>"; };
 		F99A48E919DD1D1600DDDD09 /* wxlstack.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wxlstack.h; sourceTree = "<group>"; };
@@ -1932,6 +1933,7 @@
 				8812C293185E61EA001C4D0B /* gles2.h */,
 				8812C294185E6359001C4D0B /* render_device.cpp */,
 				883246AC183237220022EA4A /* render_device.h */,
+				F995097D19DE869F0082D19C /* render_device-internal.h */,
 				886CC09B18F65FEB006A3AF5 /* render_device_egl.cpp */,
 				883246AD183237220022EA4A /* render_device_ios.mm */,
 				88C0045718F7E1BF0012EC1D /* render_device_mac.mm */,
