@@ -1073,6 +1073,7 @@
 		F99A490E19DD1D1600DDDD09 /* wxlversion.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wxlversion.h; sourceTree = "<group>"; };
 		F9AF0F8519B599DD0047C431 /* log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = log.h; sourceTree = "<group>"; };
 		F9AF0F8619B5B4950047C431 /* data_stream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = data_stream.cpp; path = io/data_stream.cpp; sourceTree = "<group>"; };
+		F9E19B0719DE9EA10019E358 /* wxllua.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wxllua.h; sourceTree = "<group>"; };
 		F9FE2A891988D85300039B92 /* no_guard.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = no_guard.hpp; sourceTree = "<group>"; };
 		F9FE2A8A1988D85300039B92 /* state_representation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = state_representation.hpp; sourceTree = "<group>"; };
 		F9FE2A8B1988D85300039B92 /* transition.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = transition.hpp; sourceTree = "<group>"; };
@@ -3150,6 +3151,7 @@
 				F99A490B19DD1D1600DDDD09 /* wxlstate.h */,
 				F99A490D19DD1D1600DDDD09 /* wxlua_bind.h */,
 				F99A490C19DD1D1600DDDD09 /* wxlua.h */,
+				F9E19B0719DE9EA10019E358 /* wxllua.h */,
 				F99A490E19DD1D1600DDDD09 /* wxlversion.h */,
 			);
 			path = wxlua;
