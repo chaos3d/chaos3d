@@ -1,5 +1,6 @@
 #include "re/gles20/render_gles20.h"
 #include "re/gles20/render_device.h"
+#include "re/gles20/render_device-internal.h"
 #include "re/gles20/gl_context_egl.h"
 #include "re/gles20/gl_render_window_egl.h"
 #include "common/log.h"
@@ -8,12 +9,6 @@
 #include <iostream>
 
 namespace gles20 {
-    
-    // TODO: make sure to sync up with mac.mm
-    struct render_device::internal {
-        EGLDisplay display = EGL_NO_DISPLAY;
-        EGLContext context = EGL_NO_CONTEXT;
-    };
     
     ::render_device* create_device() {
         return new render_device();

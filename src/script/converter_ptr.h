@@ -44,7 +44,8 @@ namespace script {
             }
             
             void* obj = value.release();
-            lua_getref(L, 1);
+            // state ensures its existence
+            lua_getfield(L, LUA_REGISTRYINDEX, "__objlink");
             lua_pushlightuserdata(L, obj);
             lua_rawget(L, -2);
             
@@ -109,7 +110,8 @@ namespace script {
                 return;
             }
             
-            lua_getref(L, 1);
+            // state ensures its existence
+            lua_getfield(L, LUA_REGISTRYINDEX, "__objlink");
             lua_pushlightuserdata(L, obj);
             lua_rawget(L, -2);
             

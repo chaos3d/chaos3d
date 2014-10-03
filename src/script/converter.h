@@ -147,7 +147,8 @@ namespace script {
             typedef T2<U> R;
             using tag_t = typename std::conditional<std::is_base_of<referenced_count, R>::value,
                 referenced_count_tag, pure_pointer_tag>::type;
-            lua_getref(L, 1); // state ensures this be 1
+            // state ensures its existence
+            lua_getfield(L, LUA_REGISTRYINDEX, "__objlink");
             lua_pushlightuserdata(L, &value);
             lua_rawget(L, -2);
             if (lua_isnoneornil(L, -1)) {
@@ -175,7 +176,8 @@ namespace script {
         !std::is_pointer<T1<U>>::value && !std::is_reference<U>::value>::type* = nullptr>
         static void to(lua_State* L, T&& value) {
             typedef typename std::remove_cv<U>::type R;
-            lua_getref(L, 1); // state ensures this be 1
+            // state ensures its existence
+            lua_getfield(L, LUA_REGISTRYINDEX, "__objlink");
             lua_pushlightuserdata(L, &value);
             lua_rawget(L, -2);
             if (lua_isnoneornil(L, -1)) {
@@ -207,9 +209,9 @@ namespace script {
                 lua_pushnil(L);
                 return;
             }
-            
-            lua_getref(L, 1); // state ensures this be 1
-            
+
+            // state ensures its existence
+            lua_getfield(L, LUA_REGISTRYINDEX, "__objlink");
             lua_pushlightuserdata(L, value);
             lua_rawget(L, -2);
             

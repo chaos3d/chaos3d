@@ -115,14 +115,13 @@ state::~state() {
 void state::ensure_objlink() {
     lua_newtable(_L);
     lua_newtable(_L);
-    lua_pushstring(_L, "kv");
-    lua_setfield(_L, -2, "__mode");
-    lua_setmetatable(_L, -2);
+    lua_pushstring(_L, "kv");       // #T, M, "kv"
+    lua_setfield(_L, -2, "__mode"); // #T, M (["__mode"] = "kv")
+    lua_setmetatable(_L, -2);       // #T
 #if 0
     // TODO: add debug tracking info for __index/__newindex
 #endif
-    int ref = lua_ref(_L, 1);
-    assert(ref == 1);
+    lua_setfield(_L, LUA_REGISTRYINDEX, "__objlink");
 }
 
 void state::recycle(script::coroutine &&co) {
