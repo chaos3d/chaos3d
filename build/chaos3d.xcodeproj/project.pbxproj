@@ -3507,7 +3507,6 @@
 		886CC17318F662BB006A3AF5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				DSTROOT = /tmp/chaos3d.dst;
 				EXECUTABLE_EXTENSION = dylib;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3530,7 +3529,6 @@
 		886CC17418F662BB006A3AF5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				DSTROOT = /tmp/chaos3d.dst;
 				EXECUTABLE_EXTENSION = dylib;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3566,6 +3564,9 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEPLOYMENT_LOCATION = YES;
+				DEPLOYMENT_POSTPROCESSING = YES;
+				DSTROOT = "${PROJECT_DIR}";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -3589,7 +3590,7 @@
 					../external/powervr32/Include,
 					../external/libpng,
 				);
-				INSTALL_PATH = ../output/;
+				INSTALL_PATH = /;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					../external/box2d/lib,
@@ -3620,6 +3621,9 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = YES;
+				DEPLOYMENT_LOCATION = YES;
+				DEPLOYMENT_POSTPROCESSING = YES;
+				DSTROOT = "${PROJECT_DIR}";
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -3637,7 +3641,7 @@
 					../external/powervr32/Include,
 					../external/libpng,
 				);
-				INSTALL_PATH = ../output/;
+				INSTALL_PATH = /;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					../external/box2d/lib,
@@ -3655,7 +3659,6 @@
 		88A84AF01830652F009F7ECD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				DSTROOT = /tmp/chaos3d.dst;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					../dependency/ios,
@@ -3667,14 +3670,12 @@
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
 		88A84AF11830652F009F7ECD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				DSTROOT = /tmp/chaos3d.dst;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					../dependency/ios,
@@ -3686,7 +3687,6 @@
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
 			};
 			name = Release;
 		};
