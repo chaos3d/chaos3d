@@ -38,21 +38,21 @@ make clean && make -j8 && make install
 
 # build universal
 mkdir -p output-ios
-xcrun lipo -create $(find install_*/lib -name "libpng.a") -o output-ios/libpng.a
+xcrun lipo -create $(find install_*/lib -name "libpng.a") -o output-ios/libpng17.a
 cp -r install_armv7/include output-ios/.
 
 # build macosx
 ./configure --prefix=`pwd`/install_macosx CFLAGS="-Ofast -mmacosx-version-min=10.7" LDFLAGS="-flto" CC="xcrun -sdk macosx clang -arch x86_64"
 make clean && make -j8 && make install
-install_name_tool -id "@executable_path/../Frameworkds/libpng.dylib" install_macosx/lib/libpng.dylib
+install_name_tool -id "@rpath/libpng17.dylib" install_macosx/lib/libpng.dylib
 
 mkdir -p output-macosx
 cp -r install_macosx/include output-macosx/.
 LIB=libpng.dylib; while readlink install_macosx/lib/$LIB > /dev/null; do LIB=$(readlink install_macosx/lib/$LIB); done;
-cp install_macosx/lib/$LIB output-macosx/libpng.dylib
+cp install_macosx/lib/$LIB output-macosx/libpng17.dylib
 
-cp output-macosx/libpng.dylib ../libs/macosx/.
-cp output-ios/libpng.a ../libs/ios/.
+cp output-macosx/libpng17.dylib ../libs/macosx/.
+cp output-ios/libpng17.a ../libs/ios/.
 cp output-ios/include/*.h ../libpng/.
 
 cd ..
