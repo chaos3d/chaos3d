@@ -15,6 +15,10 @@ rm -rf lua-$VERSION
 tar xvf lua.tar.gz
 cd lua-$VERSION
 
+# back up the original loadlib
+cp src/loadlib.c src/loadlib.c.bk
+
+# patch for ios
 if [ $VERSION = "5.1.5" ]; then
     patch -p0 <<EOF
 --- src/loadlib.c
@@ -74,6 +78,9 @@ mkdir -p output-ios output-macosx output-include
 lipo -create $(find install-*/lib -name "*.a") -o output-ios/liblua.$VERSION.a
 cp install-arm64/include/* output-include/.
 
+# revert the patch
+cp src/loadlib.c.bk src/loadlib.c
+
 make CC="env DEVELOPER_DIR=$DEV_DIR xcrun -sdk macosx clang -arch x86_64 -mmacosx-version-min=10.7" CFLAGS="-Ofast -DLUA_USE_LINUX" MYLIBS="-lreadline" MYLDFLAGS="-flto" \
     LUA_A="liblua.dylib" AR="xcrun -sdk macosx clang -arch x86_64 -dynamiclib -o" RANLIB="strip -u -r" clean generic
 make TO_LIB="liblua.dylib" INSTALL_TOP=`pwd`/install-macosx64 install
@@ -83,12 +90,12 @@ make CC="env DEVELOPER_DIR=$DEV_DIR xcrun -sdk macosx clang -arch i386 -mmacosx-
 make TO_LIB="liblua.dylib" INSTALL_TOP=`pwd`/install-macosx32 install
 
 lipo -create $(find install-macosx*/lib -name "*.dylib") -o output-macosx/liblua.$VERSION.dylib
-install_name_tool -id @executable_path/liblua.dylib output-macosx/liblua.$VERSION.dylib
+install_name_tool -id @rpath/liblua.dylib output-macosx/liblua.$VERSION.dylib
 
 lipo -create $(find install-macosx*/bin/ -name "lua") -o output-macosx/lua
 lipo -create $(find install-macosx*/bin/ -name "luac") -o output-macosx/luac
-install_name_tool -change liblua.dylib @executable_path/liblua.dylib output-macosx/lua
-install_name_tool -change liblua.dylib @executable_path/liblua.dylib output-macosx/luac
+install_name_tool -change liblua.dylib @rpath/liblua.dylib output-macosx/lua
+install_name_tool -change liblua.dylib @rpath/liblua.dylib output-macosx/luac
 
 mkdir -p ../liblua/$VERSION/
 if [ "$1" == "link" ]; then
