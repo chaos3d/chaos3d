@@ -14,6 +14,9 @@ CURDIR=`pwd`
 rm -rf wxsys
 mkdir -p wxsys/include
 (cd wxsys && ln -sF ../libs/macosx lib)
+
+# symlink to system-alike
+(cd wxsys/lib/ && ln -sF libpng17.dylib libpng.dylib)
 cp libpng/* wxsys/include/.
 
 cd wx/$(ls wx)
@@ -25,10 +28,13 @@ cd wx/$(ls wx)
     --with-libpng=sys --with-libtiff=no --disable-richtext --with-cocoa -with-macosx-version-min=10.7 --enable-compat28
 
 make -j8 && make install || (>&2 echo error building wx; exit 1)
-./change-install-names install/lib/ install/bin/ "@executable_path" `pwd`/install/lib
+./change-install-names install/lib/ install/bin/ "@rpath" `pwd`/install/lib
 
 mkdir -p $CURDIR/libs/wx $CURDIR/libwx
 cp -a install/lib/*.dylib $CURDIR/libs/wx/.
 cp -a install/include/* $CURDIR/libwx/.
 install/bin/wx-config --cxxflags | sed -e "s:`pwd`/install/::g" -e "s:lib/:libs/wx/:"> $CURDIR/libs/wx/config
 cd $CURDIR
+
+# remove the hack
+rm wxsys/lib/libpng.dylib
