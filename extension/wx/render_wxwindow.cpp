@@ -43,11 +43,6 @@ private:
     }
     
 private:
-    EGLDisplay       m_Display;
-    EGLSurface       m_Surface;
-    EGLContext       m_Context;
-    
-private:
     render_wxwindow_egl* _peer;
     
     wxDECLARE_EVENT_TABLE();
