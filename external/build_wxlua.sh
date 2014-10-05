@@ -39,6 +39,12 @@ make && make install || (>&2 echo error building wxlua module && exit -1;)
 mkdir -p $CURDIR/wxlua/.
 cp install/lib/libwx.dylib $CURDIR/libs/macosx/.
 cp -r install/include/wxlua/* $CURDIR/wxlua/.
-install_name_tool -id @executable_path/libwx.dylib $CURDIR/libs/macosx/libwx.dylib
+#install_name_tool -id @executable_path/libwx.dylib $CURDIR/libs/macosx/libwx.dylib
+otool -l $CURDIR/libs/macosx/libwx.dylib | grep -A 4 RPATH | egrep "path.*" -o | cut -d ' ' -f 2 | \
+    while read line; do
+        install_name_tool -delete_rpath $line $CURDIR/libs/macosx/libwx.dylib
+    done;
+
+install_name_tool -add_rpath @loader_path/ $CURDIR/libs/macosx/libwx.dylib
 
 cd $CURDIR
