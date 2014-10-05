@@ -146,7 +146,7 @@
 		88C0049618FA380C0012EC1D /* gl_render_window_egl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 886CC17618F67D4D006A3AF5 /* gl_render_window_egl.cpp */; };
 		88C0049718FA380C0012EC1D /* render_device_mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 88C0045718F7E1BF0012EC1D /* render_device_mac.mm */; };
 		88C0049818FA380C0012EC1D /* render_window_mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 886CC17C18F68E79006A3AF5 /* render_window_mac.mm */; };
-		F9589EBE19D00D74004BDB1D /* libchaos3d_mac.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 886CC17518F662BB006A3AF5 /* libchaos3d_mac.dylib */; };
+		F9589EBE19D00D74004BDB1D /* libchaos3d_core_mac.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 886CC17518F662BB006A3AF5 /* libchaos3d_core_mac.dylib */; settings = {ATTRIBUTES = (Weak, ); }; };
 		F9589EBF19D00DBB004BDB1D /* render_wxwindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F9589EAB19D00C35004BDB1D /* render_wxwindow.cpp */; };
 		F9589EC219D01628004BDB1D /* luachaos3d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F9589EC019D01628004BDB1D /* luachaos3d.cpp */; };
 		F9589EC319D01628004BDB1D /* luachaos3d.h in Headers */ = {isa = PBXBuildFile; fileRef = F9589EC119D01628004BDB1D /* luachaos3d.h */; };
@@ -690,7 +690,7 @@
 		886CC12518F66221006A3AF5 /* libGLESv2.dll */ = {isa = PBXFileReference; lastKnownFileType = file; path = libGLESv2.dll; sourceTree = "<group>"; };
 		886CC12618F66221006A3AF5 /* libGLESv2.lib */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGLESv2.lib; sourceTree = "<group>"; };
 		886CC12718F66221006A3AF5 /* PVRScopeDeveloper.lib */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = PVRScopeDeveloper.lib; sourceTree = "<group>"; };
-		886CC17518F662BB006A3AF5 /* libchaos3d_mac.dylib */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libchaos3d_mac.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		886CC17518F662BB006A3AF5 /* libchaos3d_core_mac.dylib */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libchaos3d_core_mac.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		886CC17618F67D4D006A3AF5 /* gl_render_window_egl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gl_render_window_egl.cpp; sourceTree = "<group>"; };
 		886CC17718F67D4D006A3AF5 /* gl_render_window_egl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gl_render_window_egl.h; sourceTree = "<group>"; };
 		886CC17C18F68E79006A3AF5 /* render_window_mac.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = render_window_mac.mm; sourceTree = "<group>"; };
@@ -816,7 +816,7 @@
 		8882E4DE18A74E2D0044CFE4 /* b2WheelJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2WheelJoint.h; sourceTree = "<group>"; };
 		8882E4E018A74E2D0044CFE4 /* b2Rope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2Rope.h; sourceTree = "<group>"; };
 		8882E4E218A74E2D0044CFE4 /* libBox2D.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libBox2D.a; sourceTree = "<group>"; };
-		88A84ACC1830652F009F7ECD /* libchaos3d_ios.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libchaos3d_ios.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		88A84ACC1830652F009F7ECD /* libchaos3d_core_ios.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libchaos3d_core_ios.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		88A84ACF1830652F009F7ECD /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		88A84B0718306671009F7ECD /* chaos3d-prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "chaos3d-prefix.pch"; sourceTree = SOURCE_ROOT; };
 		88A84B09183067AF009F7ECD /* component.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = component.h; sourceTree = "<group>"; };
@@ -833,7 +833,7 @@
 		F9589EAC19D00C35004BDB1D /* render_wxwindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = render_wxwindow.h; sourceTree = "<group>"; };
 		F9589EAD19D00C35004BDB1D /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		F9589EAE19D00C35004BDB1D /* test.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test.lua; sourceTree = "<group>"; };
-		F9589EB519D00C8E004BDB1D /* libwxchaos3d.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libwxchaos3d.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		F9589EB519D00C8E004BDB1D /* libchaos3d.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libchaos3d.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9589EC019D01628004BDB1D /* luachaos3d.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = luachaos3d.cpp; sourceTree = "<group>"; };
 		F9589EC119D01628004BDB1D /* luachaos3d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = luachaos3d.h; sourceTree = "<group>"; };
 		F98A04A8198AC046000FE65D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -1113,7 +1113,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F9589EBE19D00D74004BDB1D /* libchaos3d_mac.dylib in Frameworks */,
+				F9589EBE19D00D74004BDB1D /* libchaos3d_core_mac.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2675,9 +2675,9 @@
 		88A84ACD1830652F009F7ECD /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				88A84ACC1830652F009F7ECD /* libchaos3d_ios.a */,
-				886CC17518F662BB006A3AF5 /* libchaos3d_mac.dylib */,
-				F9589EB519D00C8E004BDB1D /* libwxchaos3d.dylib */,
+				88A84ACC1830652F009F7ECD /* libchaos3d_core_ios.a */,
+				886CC17518F662BB006A3AF5 /* libchaos3d_core_mac.dylib */,
+				F9589EB519D00C8E004BDB1D /* libchaos3d.dylib */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -3251,9 +3251,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		886CC12818F662BB006A3AF5 /* chaos3d_mac */ = {
+		886CC12818F662BB006A3AF5 /* chaos3d_core_mac */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 886CC17218F662BB006A3AF5 /* Build configuration list for PBXNativeTarget "chaos3d_mac" */;
+			buildConfigurationList = 886CC17218F662BB006A3AF5 /* Build configuration list for PBXNativeTarget "chaos3d_core_mac" */;
 			buildPhases = (
 				886CC12918F662BB006A3AF5 /* Sources */,
 				886CC16C18F662BB006A3AF5 /* Frameworks */,
@@ -3263,14 +3263,14 @@
 			);
 			dependencies = (
 			);
-			name = chaos3d_mac;
+			name = chaos3d_core_mac;
 			productName = chaos3d;
-			productReference = 886CC17518F662BB006A3AF5 /* libchaos3d_mac.dylib */;
+			productReference = 886CC17518F662BB006A3AF5 /* libchaos3d_core_mac.dylib */;
 			productType = "com.apple.product-type.library.static";
 		};
-		88A84ACB1830652F009F7ECD /* chaos3d_ios */ = {
+		88A84ACB1830652F009F7ECD /* chaos3d_core_ios */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 88A84AEF1830652F009F7ECD /* Build configuration list for PBXNativeTarget "chaos3d_ios" */;
+			buildConfigurationList = 88A84AEF1830652F009F7ECD /* Build configuration list for PBXNativeTarget "chaos3d_core_ios" */;
 			buildPhases = (
 				88A84AC81830652F009F7ECD /* Sources */,
 				88A84AC91830652F009F7ECD /* Frameworks */,
@@ -3280,14 +3280,14 @@
 			);
 			dependencies = (
 			);
-			name = chaos3d_ios;
+			name = chaos3d_core_ios;
 			productName = chaos3d;
-			productReference = 88A84ACC1830652F009F7ECD /* libchaos3d_ios.a */;
+			productReference = 88A84ACC1830652F009F7ECD /* libchaos3d_core_ios.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		F9589EB419D00C8E004BDB1D /* wxchaos3d */ = {
+		F9589EB419D00C8E004BDB1D /* chaos3d */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = F9589EB619D00C8E004BDB1D /* Build configuration list for PBXNativeTarget "wxchaos3d" */;
+			buildConfigurationList = F9589EB619D00C8E004BDB1D /* Build configuration list for PBXNativeTarget "chaos3d" */;
 			buildPhases = (
 				F9589EB119D00C8E004BDB1D /* Sources */,
 				F9589EB219D00C8E004BDB1D /* Frameworks */,
@@ -3298,9 +3298,9 @@
 			dependencies = (
 				F9589EBD19D00D6D004BDB1D /* PBXTargetDependency */,
 			);
-			name = wxchaos3d;
+			name = chaos3d;
 			productName = wxchaos3d;
-			productReference = F9589EB519D00C8E004BDB1D /* libwxchaos3d.dylib */;
+			productReference = F9589EB519D00C8E004BDB1D /* libchaos3d.dylib */;
 			productType = "com.apple.product-type.library.dynamic";
 		};
 /* End PBXNativeTarget section */
@@ -3329,9 +3329,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				88A84ACB1830652F009F7ECD /* chaos3d_ios */,
-				886CC12818F662BB006A3AF5 /* chaos3d_mac */,
-				F9589EB419D00C8E004BDB1D /* wxchaos3d */,
+				88A84ACB1830652F009F7ECD /* chaos3d_core_ios */,
+				886CC12818F662BB006A3AF5 /* chaos3d_core_mac */,
+				F9589EB419D00C8E004BDB1D /* chaos3d */,
 			);
 		};
 /* End PBXProject section */
@@ -3498,7 +3498,7 @@
 /* Begin PBXTargetDependency section */
 		F9589EBD19D00D6D004BDB1D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 886CC12818F662BB006A3AF5 /* chaos3d_mac */;
+			target = 886CC12818F662BB006A3AF5 /* chaos3d_core_mac */;
 			targetProxy = F9589EBC19D00D6D004BDB1D /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -3514,14 +3514,14 @@
 				);
 				GCC_PREFIX_HEADER = "chaos3d-prefix.pch";
 				INSTALL_GROUP = "";
-				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/libchaos3d_mac.dylib";
+				LD_DYLIB_INSTALL_NAME = "@executable_path/${EXECUTABLE_PATH}";
 				LD_RUNPATH_SEARCH_PATHS = "";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					../external/libs/macosx,
 				);
 				MACH_O_TYPE = mh_dylib;
-				PRODUCT_NAME = chaos3d_mac;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 			};
 			name = Debug;
@@ -3536,14 +3536,14 @@
 				);
 				GCC_PREFIX_HEADER = "chaos3d-prefix.pch";
 				INSTALL_GROUP = "";
-				LD_DYLIB_INSTALL_NAME = "@executable_path/../Frameworks/libchaos3d_mac.dylib";
+				LD_DYLIB_INSTALL_NAME = "@executable_path/${EXECUTABLE_PATH}";
 				LD_RUNPATH_SEARCH_PATHS = "";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					../external/libs/macosx,
 				);
 				MACH_O_TYPE = mh_dylib;
-				PRODUCT_NAME = chaos3d_mac;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 			};
 			name = Release;
@@ -3590,6 +3590,7 @@
 					../external/powervr32/Include,
 					../external/libpng,
 				);
+				INSTALL_GROUP = "";
 				INSTALL_PATH = /;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3599,7 +3600,7 @@
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-llog4cxx",
-					"-lpng",
+					"-lpng17",
 					"-llua",
 				);
 			};
@@ -3641,6 +3642,7 @@
 					../external/powervr32/Include,
 					../external/libpng,
 				);
+				INSTALL_GROUP = "";
 				INSTALL_PATH = /;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3650,7 +3652,7 @@
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-llog4cxx",
-					"-lpng",
+					"-lpng17",
 					"-llua",
 				);
 			};
@@ -3695,6 +3697,8 @@
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEPLOYMENT_POSTPROCESSING = NO;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -3719,8 +3723,14 @@
 				OTHER_LDFLAGS = (
 					"-undefined",
 					dynamic_lookup,
-					"-lEGL",
-					"-lGLESv2",
+					"-weak_library",
+					../external/powervr32/OSX/x86/Lib/libEGL.dylib,
+					"-weak_library",
+					../external/powervr32/OSX/x86/Lib/libGLESv2.dylib,
+					"-weak_library",
+					../external/libs/macosx/libwx.dylib,
+					"-weak_library",
+					"../external/libs/wx/libwx_osx_cocoau_core-3.0.dylib",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
@@ -3756,8 +3766,14 @@
 				OTHER_LDFLAGS = (
 					"-undefined",
 					dynamic_lookup,
-					"-lEGL",
-					"-lGLESv2",
+					"-weak_library",
+					../external/powervr32/OSX/x86/Lib/libEGL.dylib,
+					"-weak_library",
+					../external/powervr32/OSX/x86/Lib/libGLESv2.dylib,
+					"-weak_library",
+					../external/libs/macosx/libwx.dylib,
+					"-weak_library",
+					"../external/libs/wx/libwx_osx_cocoau_core-3.0.dylib",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
@@ -3767,7 +3783,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		886CC17218F662BB006A3AF5 /* Build configuration list for PBXNativeTarget "chaos3d_mac" */ = {
+		886CC17218F662BB006A3AF5 /* Build configuration list for PBXNativeTarget "chaos3d_core_mac" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				886CC17318F662BB006A3AF5 /* Debug */,
@@ -3785,7 +3801,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		88A84AEF1830652F009F7ECD /* Build configuration list for PBXNativeTarget "chaos3d_ios" */ = {
+		88A84AEF1830652F009F7ECD /* Build configuration list for PBXNativeTarget "chaos3d_core_ios" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				88A84AF01830652F009F7ECD /* Debug */,
@@ -3794,7 +3810,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		F9589EB619D00C8E004BDB1D /* Build configuration list for PBXNativeTarget "wxchaos3d" */ = {
+		F9589EB619D00C8E004BDB1D /* Build configuration list for PBXNativeTarget "chaos3d" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F9589EB719D00C8E004BDB1D /* Debug */,
