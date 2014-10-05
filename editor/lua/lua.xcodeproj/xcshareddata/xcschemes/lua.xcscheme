@@ -70,6 +70,11 @@
             value = "./libs/lib?.dylib"
             isEnabled = "YES">
          </EnvironmentVariable>
+         <EnvironmentVariable
+            key = "LUA_PATH"
+            value = "./libs/?.lua;./libs/?/init.lua;./script/?.lua;"
+            isEnabled = "YES">
+         </EnvironmentVariable>
       </EnvironmentVariables>
       <AdditionalOptions>
       </AdditionalOptions>

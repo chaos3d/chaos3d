@@ -1,4 +1,4 @@
-require "script.calculator"
+require "calculator"
 require "chaos3d.wx"
 
 print "hello"
