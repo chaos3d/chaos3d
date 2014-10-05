@@ -3729,6 +3729,7 @@
 					../external/libs/macosx/libwx.dylib,
 					"-weak_library",
 					"../external/libs/wx/libwx_osx_cocoau_core-3.0.dylib",
+					"-llog4cxx",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
@@ -3772,6 +3773,7 @@
 					../external/libs/macosx/libwx.dylib,
 					"-weak_library",
 					"../external/libs/wx/libwx_osx_cocoau_core-3.0.dylib",
+					"-llog4cxx",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
