@@ -94,16 +94,15 @@ extern "C" int luaopen_chaos3d(lua_State *L) {
     .def("get_asset_mgr", &c3d_lua_singleton_getter<global_asset_mgr>)
     .def("get_locator", &c3d_lua_singleton_getter<locator_mgr>)
     //.import("render", main_device())
-    .import("root", &game_object::root())
     //.import<render_window*>("window", main_window())
     ;
     
-    script::def_render_device(state.get());
-    script::def_game_object(state.get());
+    script::def_render_device(state.get(), "chaos3d");
+    script::def_game_object(state.get(), "chaos3d");
     script::def_eigen_math();
-    script::def_sprite2d(state.get());
+    script::def_sprite2d(state.get(), "chaos3d");
     script::def_asset();
-    script::def_event(state.get());
+    script::def_event(state.get(), "chaos3d");
 
     lua_getglobal(L, "chaos3d");
     return 1;
