@@ -3669,6 +3669,15 @@
 					"$(inherited)",
 					../external/libs/ios/,
 				);
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-lexpat",
+					"-lapr-1",
+					"-laprutil-1",
+					"-llog4cxx",
+					"-lpng17",
+					"-llua",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 			};
@@ -3685,6 +3694,15 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					../external/libs/ios/,
+				);
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-lexpat",
+					"-lapr-1",
+					"-laprutil-1",
+					"-llog4cxx",
+					"-lpng17",
+					"-llua",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
