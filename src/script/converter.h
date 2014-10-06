@@ -258,6 +258,16 @@ namespace script {
             }
             return result;
         };
+        
+        static void to(lua_State* L, R && value) {
+            lua_newtable(L);
+            int i = 0;
+            for (auto& it : value) {
+                converter<E>::to(L, std::move(it));
+                lua_rawseti(L, -2, ++i);
+            }
+        }
+        
     };
 }
 
