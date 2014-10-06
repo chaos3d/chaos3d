@@ -59,6 +59,11 @@ namespace script {
         typedef C type;
     };
 
+    template<class C, class... As>
+    struct vector_of<std::list<C, As...>> {
+        typedef C type;
+    };
+    
     template<class P>
     struct unwrap_ptr {
         typedef P type;

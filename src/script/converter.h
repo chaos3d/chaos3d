@@ -4,6 +4,7 @@
 #include <type_traits>
 #include <string>
 #include <vector>
+#include <list>
 #include <memory>
 #include <liblua/lua/lua.hpp>
 #include "script/type_info.h"
@@ -52,8 +53,10 @@ namespace script {
         };
         
         template<typename U = T,
-        typename std::enable_if<std::is_same<T1<T>,
-        std::vector<typename vector_of<T1<U>>::type>>::value>::type* = nullptr>
+        typename std::enable_if<
+        std::is_same<T1<T>, std::vector<typename vector_of<T1<U>>::type>>::value ||
+        std::is_same<T1<T>, std::list<typename vector_of<T1<U>>::type>>::value
+        >::type* = nullptr>
         static T1<U> from(lua_State* L, int idx, char* storage) {
             using R = T1<U>;
             using E = typename vector_of<R>::type;
@@ -236,6 +239,26 @@ namespace script {
         }
     };
     
+    template<class E, size_t _S>
+    struct converter<std::array<E, _S>> {
+        using R = std::array<E, _S>;
+        static R from(lua_State* L, int idx, char* storage) {
+            luaL_argcheck(L, lua_istable(L, idx), idx, "expect a table");
+            
+            R result;
+            for (int i = 1;i <= _S; ++i) {
+                lua_rawgeti(L, idx, i);
+                if (lua_isnoneornil(L, -1)) {
+                    lua_pop(L, 1);
+                    break;
+                }
+                // E will never be a reference
+                result[i-1] = converter<E>::from(L, -1, nullptr);
+                lua_pop(L, 1);
+            }
+            return result;
+        };
+    };
 }
 
 #endif
