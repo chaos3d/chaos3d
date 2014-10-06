@@ -7,7 +7,17 @@
 #include "script/class_type.h"
 #include "script/lua_bind.h"
 #include "script/state.h"
+#include "script/lua_ref.h"
+#include "script/import_scope.h"
 #include "script/converter_ptr.h"
+
+#include "go/game_object.h"
+#include "com/sprite2d/sprite.h"
+#include "com/sprite2d/texture_atlas.h"
+#include "com/scene2d/world_box2d.h"
+
+#include "asset/asset_manager.h"
+#include "asset/asset_locator.h"
 
 #include "wxlua/wxlstate.h"
 #include "wxlua/wxlbind.h"
@@ -36,6 +46,12 @@ static int c3d_lua_create_wxwindow(lua_State* L) {
                                             render_window::window_pos_t(dim[0], dim[1]));
     converter<gles20::render_wxwindow_egl*>::to(L, window);
     window->release();
+    return 1;
+}
+
+template<typename C>
+static int c3d_lua_singleton_getter(lua_State *L) {
+    converter<C*>::to(L, &C::instance());
     return 1;
 }
 
@@ -68,18 +84,18 @@ extern "C" int luaopen_chaos3d(lua_State *L) {
     // need a render device
     asset_mgr.add_from_bundle(png_asset_bundle::bundle(main_device(),
                                                        locator::dir_locator::app_dir()).get());
+#endif
+    auto state = state::create(L);
     
-    auto state = script::state::create();
-    
-    state->import()
-    .def("load_atlas", LUA_BIND((&texture_atlas::load_from<script::ref, asset_manager&>)))
-    .import<sprite2d::sprite_mgr&>("sprite_mgr", sprite2d::sprite_mgr::instance())
-    .import<scene2d::world2d_mgr&>("world2d", scene2d::world2d_mgr::instance())
-    .import<asset_manager&>("asset", global_asset_mgr::instance())
-    .import("render", main_device())
+    state->import("chaos3d")
+    .def("load_atlas", LUA_BIND((&texture_atlas::load_from<ref, asset_manager&>)))
+    .def("get_sprite_mgr", &c3d_lua_singleton_getter<sprite2d::sprite_mgr>)
+    .def("get_world2d_mgr", &c3d_lua_singleton_getter<scene2d::world2d_mgr>)
+    .def("get_asset_mgr", &c3d_lua_singleton_getter<global_asset_mgr>)
+    .def("get_locator", &c3d_lua_singleton_getter<locator_mgr>)
+    //.import("render", main_device())
     .import("root", &game_object::root())
-    .import<render_window*>("window", main_window())
-    .import<locator_mgr&>("locator", locator_mgr::instance())
+    //.import<render_window*>("window", main_window())
     ;
     
     script::def_render_device(state.get());
@@ -88,6 +104,7 @@ extern "C" int luaopen_chaos3d(lua_State *L) {
     script::def_sprite2d(state.get());
     script::def_asset();
     script::def_event(state.get());
-#endif
+
+    lua_getglobal(L, "chaos3d");
     return 1;
 }
