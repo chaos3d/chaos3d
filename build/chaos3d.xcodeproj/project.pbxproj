@@ -3708,6 +3708,10 @@
 					"../external/libs/wx/wx/include/osx_cocoa-unicode-3.0",
 				);
 				LD_DYLIB_INSTALL_NAME = "@executable_path/$(EXECUTABLE_PATH)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					../external/libs/wx,
+				);
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CPLUSPLUSFLAGS = (
@@ -3721,14 +3725,9 @@
 				OTHER_LDFLAGS = (
 					"-undefined",
 					dynamic_lookup,
-					"-weak_library",
-					../external/powervr32/OSX/x86/Lib/libEGL.dylib,
-					"-weak_library",
-					../external/powervr32/OSX/x86/Lib/libGLESv2.dylib,
-					"-weak_library",
-					../external/libs/macosx/libwx.dylib,
-					"-weak_library",
-					"../external/libs/wx/libwx_osx_cocoau_core-3.0.dylib",
+					"-lEGL",
+					"-lGLESv2",
+					"-lwx_osx_cocoau_core-3.0",
 					"-llog4cxx",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3753,6 +3752,10 @@
 					"../external/libs/wx/wx/include/osx_cocoa-unicode-3.0",
 				);
 				LD_DYLIB_INSTALL_NAME = "@executable_path/$(EXECUTABLE_PATH)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					../external/libs/wx,
+				);
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(OTHER_CFLAGS)",
@@ -3765,14 +3768,9 @@
 				OTHER_LDFLAGS = (
 					"-undefined",
 					dynamic_lookup,
-					"-weak_library",
-					../external/powervr32/OSX/x86/Lib/libEGL.dylib,
-					"-weak_library",
-					../external/powervr32/OSX/x86/Lib/libGLESv2.dylib,
-					"-weak_library",
-					../external/libs/macosx/libwx.dylib,
-					"-weak_library",
-					"../external/libs/wx/libwx_osx_cocoau_core-3.0.dylib",
+					"-lEGL",
+					"-lGLESv2",
+					"-lwx_osx_cocoau_core-3.0",
 					"-llog4cxx",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
