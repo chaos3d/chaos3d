@@ -1,5 +1,6 @@
 chaos3d
 =======
+[![Build Statue](https://travis-ci.org/chaos3d/chaos3d.svg?branch=master)](https://travis-ci.org/chaos3d/chaos3d)
 
 ### Memory Management
 * Use unique\_ptr and shared\_ptr wherever possible  
