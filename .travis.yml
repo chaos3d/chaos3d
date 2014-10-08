@@ -1,4 +1,4 @@
-language: cpp
+language: objective-c
 script:
     - xcodebuild -project build/chaos3d.xcodeproj -target chaos3d_core_mac
     - xcodebuild -project build/chaos3d.xcodeproj -target chaos3d_core_ios
