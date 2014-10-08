@@ -15,5 +15,5 @@ deploy:
     repo: chaos3d/chaos3d
     tags: true
     all_branches: true
-    api-key:
+    api_key:
       secure: WGwNnuk/RtuptYEEkhuzfUZaMu6k7uSUSnj5a2jnqarB26E1Ry9E/+ZQPzoJKXd+22Qt9qZr5AWNrsFUHyNSTGdJLYTwz5Ksvx67RGtROiwlebQ9nrfaIkqFx9BjJZx8H5WvXpRFK8M4hTa5yMo17sdmw/9V1vlM6Xs/zYT7HMo=
