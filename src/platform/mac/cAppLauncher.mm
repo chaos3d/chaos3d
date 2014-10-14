@@ -27,7 +27,9 @@
         applicationObject.delegate = delegate;
     }
     
+    [applicationObject setActivationPolicy: NSApplicationActivationPolicyRegular];
     [applicationObject finishLaunching];
+
     return applicationObject;
 }
 
@@ -36,7 +38,7 @@
         NSApplication* app = [NSApplication sharedApplication];
         for (;;) {
             NSEvent *event = [app nextEventMatchingMask: NSAnyEventMask
-                                              untilDate: [NSDate distantFuture]
+                                              untilDate: [NSDate distantPast]
                                                  inMode: NSDefaultRunLoopMode
                                                 dequeue: YES];
             
@@ -63,3 +65,11 @@
 }
 
 @end
+
+extern "C" void c3d_initialize() {
+    [c3dApplication initialize: nil];
+}
+
+extern "C" void c3d_poll_event() {
+    [c3dApplication runLoopOnce];
+}
