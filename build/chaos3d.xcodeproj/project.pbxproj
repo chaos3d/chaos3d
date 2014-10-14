@@ -3309,7 +3309,7 @@
 		88A84AC41830652F009F7ECD /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = cHaos3D;
 				TargetAttributes = {
 					F9589EB419D00C8E004BDB1D = {
@@ -3521,6 +3521,13 @@
 					../external/libs/macosx,
 				);
 				MACH_O_TYPE = mh_dylib;
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-llog4cxx",
+					"-lpng17",
+					"-undefined",
+					dynamic_lookup,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 			};
@@ -3543,6 +3550,13 @@
 					../external/libs/macosx,
 				);
 				MACH_O_TYPE = mh_dylib;
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-llog4cxx",
+					"-lpng17",
+					"-undefined",
+					dynamic_lookup,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 			};
@@ -3563,6 +3577,7 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEPLOYMENT_LOCATION = YES;
 				DSTROOT = "${PROJECT_DIR}";
@@ -3584,7 +3599,6 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					../src,
-					../external/,
 					../external/box2d/include,
 					../external/powervr32/Include,
 					../external/libpng,
@@ -3596,11 +3610,16 @@
 					../external/box2d/lib,
 					../external/powervr32/OSX/x86/Lib,
 				);
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CPLUSPLUSFLAGS = (
+					"$(OTHER_CFLAGS)",
+					"-isystem",
+					../external/,
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-llog4cxx",
 					"-lpng17",
-					"-llua",
 				);
 			};
 			name = Debug;
@@ -3620,6 +3639,7 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				DEPLOYMENT_LOCATION = YES;
 				DEPLOYMENT_POSTPROCESSING = YES;
@@ -3636,7 +3656,6 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					../src,
-					../external/,
 					../external/box2d/include,
 					../external/powervr32/Include,
 					../external/libpng,
@@ -3648,11 +3667,15 @@
 					../external/box2d/lib,
 					../external/powervr32/OSX/x86/Lib,
 				);
+				OTHER_CPLUSPLUSFLAGS = (
+					"$(OTHER_CFLAGS)",
+					"-isystem",
+					../external/,
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-llog4cxx",
 					"-lpng17",
-					"-llua",
 				);
 			};
 			name = Release;
@@ -3734,7 +3757,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CPLUSPLUSFLAGS = (
-					"$(OTHER_CFLAGS)",
+					"$(inherited)",
 					"-D_FILE_OFFSET_BITS=64",
 					"-DWXUSINGDLL",
 					"-D__WXMAC__",
@@ -3778,7 +3801,7 @@
 				);
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_CPLUSPLUSFLAGS = (
-					"$(OTHER_CFLAGS)",
+					"$(inherited)",
 					"-D_FILE_OFFSET_BITS=64",
 					"-DWXUSINGDLL",
 					"-D__WXMAC__",
