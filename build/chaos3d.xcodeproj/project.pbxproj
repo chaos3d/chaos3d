@@ -150,6 +150,7 @@
 		F9589EBF19D00DBB004BDB1D /* render_wxwindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F9589EAB19D00C35004BDB1D /* render_wxwindow.cpp */; };
 		F9589EC219D01628004BDB1D /* luachaos3d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F9589EC019D01628004BDB1D /* luachaos3d.cpp */; };
 		F9589EC319D01628004BDB1D /* luachaos3d.h in Headers */ = {isa = PBXBuildFile; fileRef = F9589EC119D01628004BDB1D /* luachaos3d.h */; };
+		F962470C19ED054300FBBB0A /* cAppLauncher.mm in Sources */ = {isa = PBXBuildFile; fileRef = F962470B19ED054300FBBB0A /* cAppLauncher.mm */; };
 		F9AF0F8719B5B4950047C431 /* data_stream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F9AF0F8619B5B4950047C431 /* data_stream.cpp */; };
 		F9AF0F8819B5B4950047C431 /* data_stream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F9AF0F8619B5B4950047C431 /* data_stream.cpp */; };
 /* End PBXBuildFile section */
@@ -836,6 +837,8 @@
 		F9589EB519D00C8E004BDB1D /* libchaos3d.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libchaos3d.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9589EC019D01628004BDB1D /* luachaos3d.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = luachaos3d.cpp; sourceTree = "<group>"; };
 		F9589EC119D01628004BDB1D /* luachaos3d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = luachaos3d.h; sourceTree = "<group>"; };
+		F962470A19ED054300FBBB0A /* cAppLauncher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cAppLauncher.h; sourceTree = "<group>"; };
+		F962470B19ED054300FBBB0A /* cAppLauncher.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = cAppLauncher.mm; sourceTree = "<group>"; };
 		F98A04A8198AC046000FE65D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		F99064EB19A5D01E003A3323 /* appender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = appender.h; sourceTree = "<group>"; };
 		F99064EC19A5D01E003A3323 /* appenderskeleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = appenderskeleton.h; sourceTree = "<group>"; };
@@ -2394,6 +2397,8 @@
 		8870F3E61919C52A0038B012 /* mac */ = {
 			isa = PBXGroup;
 			children = (
+				F962470A19ED054300FBBB0A /* cAppLauncher.h */,
+				F962470B19ED054300FBBB0A /* cAppLauncher.mm */,
 				8870F3ED1919C56E0038B012 /* cAppDelegate.h */,
 				8870F3EE1919C56E0038B012 /* cAppDelegate.mm */,
 			);
@@ -3354,6 +3359,7 @@
 				88C0049718FA380C0012EC1D /* render_device_mac.mm in Sources */,
 				886CC13318F662BB006A3AF5 /* camera_mgr.cpp in Sources */,
 				886CC13418F662BB006A3AF5 /* memory_stream.cpp in Sources */,
+				F962470C19ED054300FBBB0A /* cAppLauncher.mm in Sources */,
 				886CC13518F662BB006A3AF5 /* texture_atlas.cpp in Sources */,
 				886CC13718F662BB006A3AF5 /* re.cpp in Sources */,
 				886CC13818F662BB006A3AF5 /* file_stream.cpp in Sources */,
@@ -3569,6 +3575,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
@@ -3631,6 +3638,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;

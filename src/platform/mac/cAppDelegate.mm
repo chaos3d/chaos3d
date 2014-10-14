@@ -60,7 +60,7 @@
                                               defer: NO];
     
     // Now we have a view, add it to our window
-    [_window setContentView: (NSView*)app.main_window()->native_handle()];
+    [_window setContentView: (__bridge NSView*)app.main_window()->native_handle()];
     [_window makeKeyAndOrderFront: nil];
     [_window setTitle: self.title];
     

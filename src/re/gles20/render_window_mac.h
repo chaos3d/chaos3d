@@ -12,7 +12,7 @@ namespace gles20 {
         render_window_mac(id parent, EGLDisplay, target_size_t const&,
                           window_pos_t const&, float);
         virtual ~render_window_mac();
-        virtual void *native_handle() override { return _view; }
+        virtual void *native_handle() override { return (__bridge void*)_view; }
 
     protected:
         virtual window_pos_t convert_to_backing(window_pos_t const&) const override;

@@ -19,14 +19,14 @@ render_window_mac::render_window_mac(id parent,
                                      target_size_t const& size,
                                      window_pos_t const& pos,
                                      float backing_ratio)
-: render_window_egl(parent, size, pos, backing_ratio), _view(nil) {
+: render_window_egl((__bridge void*)parent, size, pos, backing_ratio), _view(nil) {
     create_native(parent);
-    create_surface(display, _view);
+    create_surface(display, (__bridge_retained EGLNativeWindowType)_view);
 }
 
 render_window_mac::~render_window_mac() {
     [_view removeFromSuperview];
-    [_view release];
+    CFRelease((CFTypeRef)_view);
     _view = nil;
 }
 
