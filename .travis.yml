@@ -5,7 +5,11 @@ before_script:
   - (cd checker-276/ && ln -sfF lib include)
 script:
   - xcodebuild -project build/chaos3d.xcodeproj -target chaos3d_core_mac
+  - xcodebuild -project build/chaos3d.xcodeproj -sdk iphonesimulator -target chaos3d_core_ios
+  - mv build/libchaos3d_core_ios.a build/libchaos3d_core_ios_sim.a
   - xcodebuild -project build/chaos3d.xcodeproj -target chaos3d_core_ios
+  - mv build/libchaos3d_core_ios.a build/libchaos3d_core_ios_dev.a
+  - lipo -create build/libchaos3d_core_ios_dev.a build/libchaos3d_core_ios_sim.a -o build/libchaos3d_core_ios.a
   - xcodebuild -project build/chaos3d.xcodeproj -target chaos3d
 os:
   - osx
