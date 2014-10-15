@@ -30,7 +30,6 @@
 {
     self.controller = nil;
     self.window = nil;
-    [super dealloc];
 }
 
 - (void) frameLoop: (CADisplayLink*) _{
@@ -72,12 +71,12 @@
     app.on_initialize();
     
     CGRect rt = [[UIScreen mainScreen] bounds];
-    self.window = [[[UIWindow alloc] initWithFrame:rt] autorelease];
+    self.window = [[UIWindow alloc] initWithFrame:rt];
     
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor blackColor];
-    self.controller = [[[cViewController alloc] init] autorelease];
-    [self.controller.view addSubview: (UIView*)app.main_window()->native_handle()];
+    self.controller = [[cViewController alloc] init];
+    [self.controller.view addSubview: (__bridge UIView*)app.main_window()->native_handle()];
 
     self.window.rootViewController = controller;
     [self.window makeKeyAndVisible];

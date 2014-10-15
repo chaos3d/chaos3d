@@ -79,13 +79,13 @@
 namespace gles20 {
 
 render_view::render_view(UIView* parent, target_size_t const& size_, window_pos_t const& pos_, float backing_ratio)
- : render_window(parent, size_, pos_, backing_ratio), _native_view(nil) {
+ : render_window((__bridge void*)parent, size_, pos_, backing_ratio), _native_view(nil) {
     create_native(parent);
     create_view();
 }
 
 render_view::~render_view() {
-    [_native_view release];
+    CFRelease((CFTypeRef)_native_view);
 }
 
 void render_view::create_native(UIView* parent) {

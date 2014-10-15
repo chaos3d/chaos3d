@@ -11,10 +11,6 @@
 
 @implementation cViewController
 
-- (void) dealloc{
-    [super dealloc];
-}
-
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -27,7 +23,7 @@
 // Implement loadView to create a view hierarchy programmatically, without using a nib.
 - (void) loadView {
 	// create a full screen view by default
-	self.view = [[[UIView alloc] initWithFrame: [UIScreen mainScreen].bounds] autorelease];
+	self.view = [[UIView alloc] initWithFrame: [UIScreen mainScreen].bounds];
 	self.view.userInteractionEnabled = YES;
 	self.view.multipleTouchEnabled = YES;
 }

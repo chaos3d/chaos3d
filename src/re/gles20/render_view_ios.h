@@ -18,7 +18,7 @@ public:
                 float backing_ratio = 1.f);
     virtual ~render_view();
     
-    virtual void *native_handle() { return _native_view; };
+    virtual void *native_handle() { return (__bridge void*)_native_view; };
     
     using render_window::dispatch;
     
