@@ -19,15 +19,14 @@
 #include "asset/asset_manager.h"
 #include "asset/asset_locator.h"
 
+#include "platform/launcher.h"
+
 #include <array>
 
 using namespace script;
 
-extern "C" void c3d_initialize();
-extern "C" void c3d_poll_event();
-
 extern "C" int luaopen_chaos3d(lua_State *L) {
-    auto checker = &c3d_initialize;
+    auto checker = &launcher::initialize;
     if (checker == nullptr) {
         luaL_error(L, "core lib isn't being loaded.");
         return 0;
@@ -57,15 +56,21 @@ extern "C" int luaopen_chaos3d(lua_State *L) {
     auto state = state::create(L);
     
     state->import("chaos3d")
-    .def("init", LUA_BIND(&c3d_initialize))
-    .def("poll_event", LUA_BIND(&c3d_poll_event))
+    //.def("init", LUA_BIND(&c3d_initialize))
+    //.def("poll_event", LUA_BIND(&c3d_poll_event))
+    .def("init", LUA_BIND(&launcher::initialize))
     .def("load_atlas", LUA_BIND((&texture_atlas::load_from<ref, asset_manager&>)))
+    .def_singleton_getter<launcher>("get_launcher")
     .def_singleton_getter<sprite2d::sprite_mgr>("get_sprite_mgr")
     .def_singleton_getter<scene2d::world2d_mgr>("get_world2d_mgr")
     .def_singleton_getter<global_asset_mgr>("get_asset_mgr")
     .def_singleton_getter<locator_mgr>("get_locator")
     //.import("render", main_device())
     //.import<render_window*>("window", main_window())
+    ;
+    
+    class_<launcher>()
+    .def("create_game_window", LUA_BIND(&launcher::create_game_window))
     ;
     
     script::def_render_device(state.get(), "chaos3d");

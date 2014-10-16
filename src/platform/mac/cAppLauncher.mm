@@ -1,4 +1,6 @@
 #include "cAppLauncher.h"
+#include "platform/launcher.h"
+#include "platform/game_window.h"
 
 @implementation c3dApplication
 
@@ -66,8 +68,33 @@
 
 @end
 
+class mac_launcher : public launcher {
+private:
+    mac_launcher() {
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            [c3dApplication initialize: nil];
+        });
+    }
+    
+    virtual game_window::ptr create_game_window(vector2f const& size,
+                                                vector2f const& origin = vector2f::Zero()) override {
+        return nullptr;
+    }
+    
+    friend launcher& launcher::initialize();
+};
+
+launcher& launcher::initialize() {
+    static mac_launcher mac;
+    return mac;
+}
+
 extern "C" void c3d_initialize() {
-    [c3dApplication initialize: nil];
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        [c3dApplication initialize: nil];
+    });
 }
 
 extern "C" void c3d_poll_event() {
