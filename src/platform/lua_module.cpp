@@ -23,12 +23,6 @@
 
 using namespace script;
 
-template<typename C>
-static int c3d_lua_singleton_getter(lua_State *L) {
-    converter<C*>::to(L, &C::instance());
-    return 1;
-}
-
 extern "C" void c3d_initialize();
 extern "C" void c3d_poll_event();
 
@@ -60,17 +54,16 @@ extern "C" int luaopen_chaos3d(lua_State *L) {
     asset_mgr.add_from_bundle(png_asset_bundle::bundle(main_device(),
                                                        locator::dir_locator::app_dir()).get());
 #endif
-    c3d_initialize();
-    
     auto state = state::create(L);
     
     state->import("chaos3d")
+    .def("init", LUA_BIND(&c3d_initialize))
     .def("poll_event", LUA_BIND(&c3d_poll_event))
     .def("load_atlas", LUA_BIND((&texture_atlas::load_from<ref, asset_manager&>)))
-    .def("get_sprite_mgr", &c3d_lua_singleton_getter<sprite2d::sprite_mgr>)
-    .def("get_world2d_mgr", &c3d_lua_singleton_getter<scene2d::world2d_mgr>)
-    .def("get_asset_mgr", &c3d_lua_singleton_getter<global_asset_mgr>)
-    .def("get_locator", &c3d_lua_singleton_getter<locator_mgr>)
+    .def_singleton_getter<sprite2d::sprite_mgr>("get_sprite_mgr")
+    .def_singleton_getter<scene2d::world2d_mgr>("get_world2d_mgr")
+    .def_singleton_getter<global_asset_mgr>("get_asset_mgr")
+    .def_singleton_getter<locator_mgr>("get_locator")
     //.import("render", main_device())
     //.import<render_window*>("window", main_window())
     ;

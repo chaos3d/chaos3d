@@ -20,6 +20,15 @@ namespace script {
         // import functions
         import_scope& def(char const* name, lua_function_t func);
         
+        template<typename C>
+        import_scope& def_singleton_getter(char const* name) {
+            auto* L = get_L();
+            lua_pushstring(L, name);
+            converter<C*>::to(L, &C::instance());
+            lua_rawset(L, -3);
+            return *this;
+        }
+        
         // import a variable as a type
         template<class C>
         import_scope& import(char const* name, C value) {
