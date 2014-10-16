@@ -125,6 +125,7 @@ namespace script {
         }
         
         static int __gc(lua_State* L) {
+            // TODO: log
             object_wrapper* obj = (object_wrapper*) lua_touserdata(L, 1);
             if (obj->object == nullptr)
                 return 0;

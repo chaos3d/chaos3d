@@ -36,7 +36,40 @@ namespace script {
             return obj != nullptr ? ((referenced_count*)obj->object)->retain<P>() : nullptr;
         };
         
+        // referenced_count object, reuse the meta table
+        template<class U = P, typename std::enable_if<R<U>::value>::type* = nullptr>
+        static void to(lua_State* L, std::unique_ptr<P, D>&& value) {
+            if (!value) {
+                lua_pushnil(L);
+                return;
+            }
+            
+            void* obj = value.release();
+            // state ensures its existence
+            lua_getfield(L, LUA_REGISTRYINDEX, "__objlink");
+            lua_pushlightuserdata(L, obj);
+            lua_rawget(L, -2);
+            
+            if (lua_isnoneornil(L, -1)) {
+                lua_pop(L, 1); // pop the nil
+                auto* wrapper = (object_wrapper*)lua_newuserdata(L, sizeof(object_wrapper));
+                wrapper->object = obj;
+                wrapper->type = &class_<T>::type();
+                
+                // we take the ownership as a referenced count
+                object_meta<referenced_count_tag>::push_metatable<T>(L);
+                lua_setmetatable(L, -2);
+                lua_pushlightuserdata(L, obj); // # tbl, value, key
+                lua_pushvalue(L, -2); // # tbl, value, key, value
+                lua_rawset(L, -4); // # tbl, value
+            }
+            
+            // remove the table, the object is already on the stack
+            lua_remove(L, -2);
+        };
+
         // we will take over the ownership
+        template<class U = P, typename std::enable_if<!R<U>::value>::type* = nullptr>
         static void to(lua_State* L, std::unique_ptr<P, D>&& value) {
             if (!value) {
                 lua_pushnil(L);

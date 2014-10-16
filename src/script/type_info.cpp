@@ -4,6 +4,7 @@
 using namespace script;
 
 int object_meta <pure_pointer_tag>::__index(lua_State* L) {
+    // TODO: error log
     object_wrapper* obj = (object_wrapper*) lua_touserdata(L, 1);
     if (obj->object == nullptr)
         return 0;

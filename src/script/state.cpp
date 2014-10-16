@@ -91,6 +91,10 @@ state::state(lua_State* L, bool open_all)
         lua_setallocf(L, alloc_, this);
         _L = L;
     }
+    
+    if (!_managed_L) {
+        LOG_TRACE("state not managed, may be out of scope. " << std::hex << _L);
+    }
 #pragma mark - TODO: fix this cpath for iOS build
 #if 0
     // link with -exported_symbols_list
