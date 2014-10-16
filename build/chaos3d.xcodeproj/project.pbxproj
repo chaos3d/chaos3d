@@ -844,6 +844,8 @@
 		F962470B19ED054300FBBB0A /* cAppLauncher.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = cAppLauncher.mm; sourceTree = "<group>"; };
 		F962473919ED221E00FBBB0A /* lua_module.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = lua_module.cpp; path = platform/lua_module.cpp; sourceTree = "<group>"; };
 		F962473A19ED221E00FBBB0A /* lua_module.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lua_module.h; path = platform/lua_module.h; sourceTree = "<group>"; };
+		F962473E19F07CD900FBBB0A /* game_window.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = game_window.h; path = platform/game_window.h; sourceTree = "<group>"; };
+		F962473F19F07CD900FBBB0A /* launcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = launcher.h; path = platform/launcher.h; sourceTree = "<group>"; };
 		F98A04A8198AC046000FE65D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		F99064EB19A5D01E003A3323 /* appender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = appender.h; sourceTree = "<group>"; };
 		F99064EC19A5D01E003A3323 /* appenderskeleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = appenderskeleton.h; sourceTree = "<group>"; };
@@ -1209,8 +1211,10 @@
 			children = (
 				8870F3E51919C5220038B012 /* ios */,
 				8870F3E61919C52A0038B012 /* mac */,
-				8812C2B218619E33001C4D0B /* device.mm */,
 				8812C2B318619E33001C4D0B /* device.h */,
+				8812C2B218619E33001C4D0B /* device.mm */,
+				F962473E19F07CD900FBBB0A /* game_window.h */,
+				F962473F19F07CD900FBBB0A /* launcher.h */,
 				F962473919ED221E00FBBB0A /* lua_module.cpp */,
 				F962473A19ED221E00FBBB0A /* lua_module.h */,
 			);
