@@ -68,6 +68,32 @@
 
 @end
 
+class mac_game_window : public game_window {
+public:
+    typedef Eigen::Vector2f vector2f;
+
+public:
+    mac_game_window(char const* title,
+                    vector2f const& size,
+                    vector2f const& origin) {
+        NSRect contentRect = NSMakeRect(origin(0), origin(1), size(0), size(1));
+        NSUInteger style = NSMiniaturizableWindowMask | NSTitledWindowMask | NSClosableWindowMask;
+        NSRect frame = [NSWindow frameRectForContentRect: contentRect styleMask: style];
+        _window = [[NSWindow alloc] initWithContentRect: frame
+                                              styleMask: style
+                                                backing: NSBackingStoreBuffered
+                                                  defer: NO];
+        
+        [_window makeKeyAndOrderFront: nil];
+        [_window setTitle: [NSString stringWithUTF8String: title]];
+    }
+    
+    ~mac_game_window() {
+    }
+private:
+    NSWindow* _window;
+};
+
 class mac_launcher : public launcher {
 private:
     mac_launcher() {
@@ -82,9 +108,11 @@ private:
         return true;
     }
     
-    virtual game_window::ptr create_game_window(vector2f const& size,
-                                                vector2f const& origin = vector2f::Zero()) override {
-        return nullptr;
+    virtual game_window::ptr create_game_window(char const* title,
+                                                std::array<float, 4> const& dim) override {
+        return game_window::ptr(new mac_game_window(title,
+                                                    mac_game_window::vector2f(dim[2], dim[3]),
+                                                    mac_game_window::vector2f(dim[0], dim[1])));
     }
     
     friend launcher& launcher::initialize();

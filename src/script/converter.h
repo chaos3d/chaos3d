@@ -269,6 +269,12 @@ namespace script {
         }
         
     };
+    
+    template<class E, size_t _S>
+    struct converter<std::array<E, _S> const> : public converter<std::array<E, _S>> {};
+
+    template<class E, size_t _S>
+    struct converter<std::array<E, _S> const&> : public converter<std::array<E, _S>> {};
 }
 
 #endif

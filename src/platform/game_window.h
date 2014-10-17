@@ -5,7 +5,7 @@
 #include "event/event_dispatcher.h"
 #include "common/referenced_count.h"
 
-class game_window : public event_dispatcher, public referenced_count {
+class game_window : public referenced_count, public event_dispatcher {
 public:
     typedef std::unique_ptr<game_window, referenced_count::release_deleter> ptr;
     typedef std::unique_ptr<game_window const, referenced_count::release_deleter> const_ptr;
