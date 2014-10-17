@@ -77,6 +77,11 @@ private:
         });
     }
     
+    virtual bool poll_event(bool wait) override {
+        [c3dApplication runLoopOnce];
+        return true;
+    }
+    
     virtual game_window::ptr create_game_window(vector2f const& size,
                                                 vector2f const& origin = vector2f::Zero()) override {
         return nullptr;
@@ -88,15 +93,4 @@ private:
 launcher& launcher::initialize() {
     static mac_launcher mac;
     return mac;
-}
-
-extern "C" void c3d_initialize() {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        [c3dApplication initialize: nil];
-    });
-}
-
-extern "C" void c3d_poll_event() {
-    [c3dApplication runLoopOnce];
 }

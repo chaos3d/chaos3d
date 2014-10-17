@@ -56,8 +56,6 @@ extern "C" int luaopen_chaos3d(lua_State *L) {
     auto state = state::create(L);
     
     state->import("chaos3d")
-    //.def("init", LUA_BIND(&c3d_initialize))
-    //.def("poll_event", LUA_BIND(&c3d_poll_event))
     .def("init", LUA_BIND(&launcher::initialize))
     .def("load_atlas", LUA_BIND((&texture_atlas::load_from<ref, asset_manager&>)))
     .def_singleton_getter<launcher>("get_launcher")
@@ -69,8 +67,9 @@ extern "C" int luaopen_chaos3d(lua_State *L) {
     //.import<render_window*>("window", main_window())
     ;
     
-    class_<launcher>()
+    class_<launcher>::type()
     .def("create_game_window", LUA_BIND(&launcher::create_game_window))
+    .def("poll_event", LUA_BIND(&launcher::poll_event))
     ;
     
     script::def_render_device(state.get(), "chaos3d");

@@ -13,6 +13,9 @@ public:
 public:
     virtual ~launcher() {};
     
+    // polling system events
+    virtual bool poll_event(bool wait = false) = 0;
+    
     // create the main window
     // TODO: could be const? or track windows?
     virtual game_window::ptr create_game_window(vector2f const& size,
