@@ -10,8 +10,7 @@
 #include "script/class_type.h"
 #include "script/lua_ref.h"
 #include "script/import_scope.h"
-
-class data_stream;
+#include "io/data_stream.h"
 
 namespace script {
     class state;
