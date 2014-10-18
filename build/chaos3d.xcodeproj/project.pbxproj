@@ -154,6 +154,8 @@
 		F962473B19ED221E00FBBB0A /* lua_module.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F962473919ED221E00FBBB0A /* lua_module.cpp */; };
 		F962473C19ED221E00FBBB0A /* lua_module.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F962473919ED221E00FBBB0A /* lua_module.cpp */; };
 		F962473D19ED221E00FBBB0A /* lua_module.h in Headers */ = {isa = PBXBuildFile; fileRef = F962473A19ED221E00FBBB0A /* lua_module.h */; };
+		F962474219F3271600FBBB0A /* lua_import.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F962474119F3271600FBBB0A /* lua_import.cpp */; };
+		F962474319F3271600FBBB0A /* lua_import.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F962474119F3271600FBBB0A /* lua_import.cpp */; };
 		F9AF0F8719B5B4950047C431 /* data_stream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F9AF0F8619B5B4950047C431 /* data_stream.cpp */; };
 		F9AF0F8819B5B4950047C431 /* data_stream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F9AF0F8619B5B4950047C431 /* data_stream.cpp */; };
 /* End PBXBuildFile section */
@@ -844,8 +846,9 @@
 		F962470B19ED054300FBBB0A /* cAppLauncher.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = cAppLauncher.mm; sourceTree = "<group>"; };
 		F962473919ED221E00FBBB0A /* lua_module.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = lua_module.cpp; path = platform/lua_module.cpp; sourceTree = "<group>"; };
 		F962473A19ED221E00FBBB0A /* lua_module.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lua_module.h; path = platform/lua_module.h; sourceTree = "<group>"; };
-		F962473E19F07CD900FBBB0A /* game_window.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = game_window.h; path = platform/game_window.h; sourceTree = "<group>"; };
 		F962473F19F07CD900FBBB0A /* launcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = launcher.h; path = platform/launcher.h; sourceTree = "<group>"; };
+		F962474019F25AF900FBBB0A /* native_window.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = native_window.h; sourceTree = "<group>"; };
+		F962474119F3271600FBBB0A /* lua_import.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = lua_import.cpp; path = platform/lua_import.cpp; sourceTree = "<group>"; };
 		F98A04A8198AC046000FE65D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		F99064EB19A5D01E003A3323 /* appender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = appender.h; sourceTree = "<group>"; };
 		F99064EC19A5D01E003A3323 /* appenderskeleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = appenderskeleton.h; sourceTree = "<group>"; };
@@ -1213,8 +1216,8 @@
 				8870F3E61919C52A0038B012 /* mac */,
 				8812C2B318619E33001C4D0B /* device.h */,
 				8812C2B218619E33001C4D0B /* device.mm */,
-				F962473E19F07CD900FBBB0A /* game_window.h */,
 				F962473F19F07CD900FBBB0A /* launcher.h */,
+				F962474119F3271600FBBB0A /* lua_import.cpp */,
 				F962473919ED221E00FBBB0A /* lua_module.cpp */,
 				F962473A19ED221E00FBBB0A /* lua_module.h */,
 			);
@@ -1904,6 +1907,7 @@
 			children = (
 				883246AB183237220022EA4A /* gles20 */,
 				883246B1183237220022EA4A /* gpu_program.h */,
+				F962474019F25AF900FBBB0A /* native_window.h */,
 				883246B4183237220022EA4A /* render_batch.h */,
 				882762171873806A00B1291B /* render_context.cpp */,
 				882762181873806A00B1291B /* render_context.h */,
@@ -3390,6 +3394,7 @@
 				886CC14518F662BB006A3AF5 /* render_context.cpp in Sources */,
 				886CC14618F662BB006A3AF5 /* game_object.cpp in Sources */,
 				886CC14718F662BB006A3AF5 /* scene2d.cpp in Sources */,
+				F962474319F3271600FBBB0A /* lua_import.cpp in Sources */,
 				886CC14818F662BB006A3AF5 /* render_device.cpp in Sources */,
 				886CC14A18F662BB006A3AF5 /* state.cpp in Sources */,
 				886CC14B18F662BB006A3AF5 /* gl_texture.cpp in Sources */,
@@ -3436,6 +3441,7 @@
 				8879CE8D18BABC5100BCBFA6 /* game_object.h in Sources */,
 				8812C2A718618055001C4D0B /* screen.cpp in Sources */,
 				8879CF0618C8873D00BCBFA6 /* lua_ref.cpp in Sources */,
+				F962474219F3271600FBBB0A /* lua_import.cpp in Sources */,
 				8879CE3618B2F27000BCBFA6 /* action_timed.cpp in Sources */,
 				8812C295185E6359001C4D0B /* render_device.cpp in Sources */,
 				8879CEA418C0A10F00BCBFA6 /* application.cpp in Sources */,
