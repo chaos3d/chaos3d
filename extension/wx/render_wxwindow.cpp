@@ -7,6 +7,7 @@
 #include "render_wxwindow.h"
 #include "re/gles20/render_device.h"
 #include "re/gles20/render_device-internal.h"
+#include "re/native_window.h"
 
 using namespace gles20;
 
@@ -54,8 +55,12 @@ EVT_SIZE(wxGameWindow::OnSize)
 EVT_SIZING(wxGameWindow::OnSize)
 wxEND_EVENT_TABLE()
 
+class native_wx_window : public native_window {
+    
+};
+
 // FIXME: ratio
-render_wxwindow_egl::render_wxwindow_egl(wxWindow* parent, EGLDisplay display,
+render_wxwindow_egl::render_wxwindow_egl(native_window* parent, EGLDisplay display,
                                          target_size_t const& size, window_pos_t const& pos)
 : render_window_egl(parent, size, pos, 1.f) {
     _window = new wxGameWindow(this);
@@ -74,7 +79,7 @@ render_wxwindow_egl::~render_wxwindow_egl() {
 }
 
 render_wxwindow_egl* render_wxwindow_egl::create(render_device* device,
-                                                 wxWindow* parent,
+                                                 native_window* parent,
                                                  render_target::target_size_t const& size,
                                                  render_window::window_pos_t const& pos
                                                  ){

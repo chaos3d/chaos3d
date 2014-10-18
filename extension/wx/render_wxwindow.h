@@ -11,7 +11,7 @@ namespace gles20 {
     
     class render_wxwindow_egl : public render_window_egl {
     public:
-        render_wxwindow_egl(wxWindow* parent, EGLDisplay display,
+        render_wxwindow_egl(native_window* parent, EGLDisplay display,
                             target_size_t const& size, window_pos_t const& pos);
         virtual ~render_wxwindow_egl();
         
@@ -21,7 +21,7 @@ namespace gles20 {
         
     public:
         static render_wxwindow_egl* create(render_device*,
-                                           wxWindow* parent,
+                                           native_window* parent,
                                            render_target::target_size_t const&,
                                            render_window::window_pos_t const&
                                            );

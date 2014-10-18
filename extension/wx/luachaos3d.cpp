@@ -47,7 +47,7 @@ static int c3d_lua_create_wxwindow(lua_State* L) {
 
     gles20::render_wxwindow_egl* window =
         gles20::render_wxwindow_egl::create(dynamic_cast<gles20::render_device*>(&device),
-                                            parent,
+                                            nullptr, // FIXME
                                             render_target::target_size_t(dim[2], dim[3]),
                                             render_window::window_pos_t(dim[0], dim[1]));
     converter<gles20::render_wxwindow_egl*>::to(L, window);
@@ -55,10 +55,8 @@ static int c3d_lua_create_wxwindow(lua_State* L) {
     return 1;
 }
 
-template<typename C>
-static int c3d_lua_singleton_getter(lua_State *L) {
-    converter<C*>::to(L, &C::instance());
-    return 1;
+static void init_wx() {
+    
 }
 
 extern "C" int luaopen_chaos3d_wx(lua_State *L) {
@@ -66,5 +64,12 @@ extern "C" int luaopen_chaos3d_wx(lua_State *L) {
     .def("create_wxwindow", c3d_lua_create_wxwindow)
     ;
     
-    return 0;
+    auto state = state::create(L);
+    state->import("chaos3d")
+    .def("init", LUA_BIND(&init_wx))
+    ;
+
+    lua_getglobal(L, "chaos3d");
+   
+    return 1;
 }
