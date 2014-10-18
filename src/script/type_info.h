@@ -46,7 +46,8 @@ namespace script {
     struct object_meta<pure_pointer_tag> {
         static int __index(lua_State* L);
 
-        static void retain(void* r) {
+        static void* retain(void* r) {
+            return r;
         }
 
         // dummy template to match the signature
@@ -120,8 +121,9 @@ namespace script {
     
     template<>
     struct object_meta <referenced_count_tag> : public object_meta <pure_pointer_tag>{
-        static void retain(referenced_count* r) {
+        static void* retain(referenced_count* r) {
             r->retain();
+            return r;
         }
         
         static int __gc(lua_State* L) {
