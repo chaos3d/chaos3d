@@ -7,6 +7,10 @@
 #include <utility>
 #include <liblua/lua/lua.hpp>
 #include "script/type_info.h"
+#include "common/log.h"
+
+#define IMPORT_CLASS_TYPE(clz) \
+    extern template class script::class_<clz>
 
 namespace script {
     class state;
@@ -109,6 +113,12 @@ namespace script {
         static class_& type() {
             static class_ _type;
             return _type;
+        }
+        
+    protected:
+        class_() {
+            LOG_TRACE(state, "initialize type for: " << typeid(C).name()
+                      << " at " << std::hex << (void*)this);
         }
     };
 }
