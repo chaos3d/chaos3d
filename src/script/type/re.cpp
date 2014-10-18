@@ -77,11 +77,17 @@ namespace script {
         .import<uint8_t>(LUA_ENUM(gpu_shader, Fragment))
         ;
 
-        class_<render_device>::type()
-        .def("create_shader", LUA_BIND(&render_device::create_shader))
-        .def("create_program", LUA_BIND(&render_device::create_program))
-        .def("create_uniform", c3d_lua_create_uniform)
-        .def("create_state", c3d_lua_create_state)
+        class_<::render_device>::type()
+        .def("new_context", LUA_BIND(&render_device::create_context))
+        .def("new_shader", LUA_BIND(&render_device::create_shader))
+        .def("new_program", LUA_BIND(&render_device::create_program))
+        .def("new_window", LUA_BIND(&render_device::create_window2))
+        .def("new_uniform", c3d_lua_create_uniform)
+        .def("new_state", c3d_lua_create_state)
+        ;
+        
+        class_<render_context>::type()
+        .def("set_current", LUA_BIND(&render_context::set_current))
         ;
         
         class_<render_uniform>::type()
