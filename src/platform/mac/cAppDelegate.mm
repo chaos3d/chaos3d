@@ -52,13 +52,13 @@
     
     auto size = device::screen_size();
     NSRect contentRect = NSMakeRect(0.f, 0.f, size(0), size(1));
-    NSUInteger style = NSMiniaturizableWindowMask | NSTitledWindowMask | NSClosableWindowMask;
+    NSUInteger style = NSBorderlessWindowMask;//NSMiniaturizableWindowMask | NSTitledWindowMask | NSClosableWindowMask;
     NSRect frame = [NSWindow frameRectForContentRect: contentRect styleMask: style];
     _window = [[NSWindow alloc] initWithContentRect: frame
                                           styleMask: style
                                             backing: NSBackingStoreBuffered
                                               defer: NO];
-    
+
     // Now we have a view, add it to our window
     [_window setContentView: (__bridge NSView*)app.main_window()->native_handle()];
     [_window makeKeyAndOrderFront: nil];

@@ -70,6 +70,7 @@ extern "C" int luaopen_chaos3d(lua_State *L) {
     class_<launcher>::type()
     .def("create_game_window", LUA_BIND(&launcher::create_game_window))
     .def("poll_event", LUA_BIND(&launcher::poll_event))
+    .def("get_render_device", LUA_BIND(&launcher::get_render_device))
     ;
     
     script::def_render_device(state.get(), "chaos3d");

@@ -4,7 +4,8 @@
 #include <array>
 #include "common/singleton.h"
 #include "event/event_dispatcher.h"
-#include "game_window.h"
+#include "re/native_window.h"
+#include "re/render_device.h"
 
 class launcher : public singleton<launcher>, public event_dispatcher {
 public:
@@ -15,8 +16,13 @@ public:
     
     // create the main window
     // TODO: could be const? or track windows?
-    virtual game_window::ptr create_game_window(char const*,
-                                                std::array<float, 4> const&) = 0;
+    virtual native_window::ptr create_game_window(char const*,
+                                                  std::array<float, 4> const&) = 0;
+    
+    // create the render device, only OGL ES2 for now (TODO)
+    virtual ::render_device* get_render_device() {
+        return render_device::get_device();
+    }
     
 public:
     // to initialize the environment
