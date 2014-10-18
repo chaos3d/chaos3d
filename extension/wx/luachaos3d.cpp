@@ -27,6 +27,8 @@
 
 using namespace script;
 
+IMPORT_CLASS_TYPE(render_device);
+
 static int c3d_lua_create_wxwindow(lua_State* L) {
     auto checker = &wxLuaState::wxlua_Error;
     if (checker == nullptr) {
