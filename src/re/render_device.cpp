@@ -8,7 +8,7 @@ DEFINE_LOGGER(render_device, "render");
 render_device* render_device::get_device(uint8_t type) {
     static render_device* _one_device_for_now = nullptr;
     
-    assert(_one_device_for_now == nullptr || type != None);
+    assert(_one_device_for_now == nullptr || type == None);
     if(_one_device_for_now != nullptr)
         return _one_device_for_now;
     

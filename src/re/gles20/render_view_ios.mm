@@ -5,6 +5,7 @@
 
 #include "render_view_ios.h"
 #include "re/gles20/gl_context_ios.h"
+#include "re/native_window.h"
 #include "event/touch_event.h"
 
 @interface EAGLView : UIView
@@ -78,9 +79,9 @@
 
 namespace gles20 {
 
-render_view::render_view(UIView* parent, target_size_t const& size_, window_pos_t const& pos_, float backing_ratio)
- : render_window((__bridge void*)parent, size_, pos_, backing_ratio), _native_view(nil) {
-    create_native(parent);
+render_view::render_view(native_window* parent, target_size_t const& size_, window_pos_t const& pos_, float backing_ratio)
+ : render_window(parent, size_, pos_, backing_ratio), _native_view(nil) {
+    create_native((__bridge UIView*)parent->handle());
     create_view();
 }
 

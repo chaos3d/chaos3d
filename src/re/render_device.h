@@ -2,6 +2,7 @@
 #define _RENDER_DEVICE_H
 
 #include <initializer_list>
+#include <array>
 #include "common/common.h"
 #include "re/texture.h"
 #include "re/vertex_buffer.h"
@@ -61,10 +62,20 @@ public:
     
     virtual texture::ptr create_texture(texture::vector2i const&, texture::attribute_t const&) = 0;
     virtual render_texture* create_render_texture() = 0;
-    virtual render_window* create_window(void* native_parent,
+    
+    virtual render_window* create_window(native_window* native_parent,
                                          render_target::target_size_t const&,
                                          render_window::window_pos_t const& = render_window::window_pos_t(0.f,0.f),
                                          float backing_ratio = 1.f) = 0;
+    // helper for Lua for now, TODO: remove this?
+    render_window* create_window2(native_window* native_parent,
+                                  std::array<float, 4> const& dim,
+                                  float backing_ratio) {
+        return create_window(native_parent, render_target::target_size_t(dim[2], dim[3]),
+                             render_window::window_pos_t(dim[0], dim[1]),
+                             backing_ratio);
+    }
+
     virtual vertex_layout::ptr create_layout(vertex_layout::channels_t&&,
                                              vertex_index_buffer::ptr&&, uint8_t mode) = 0;
 

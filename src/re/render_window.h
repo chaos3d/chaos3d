@@ -4,11 +4,13 @@
 #include "re/render_target.h"
 #include "event/event_dispatcher.h"
 
+class native_window;
+
 class render_window : public render_target, public event_dispatcher {
 public:
     typedef Eigen::Vector2f window_pos_t;
     
-    render_window(void* parent, ///! native parent handle
+    render_window(native_window* parent, ///! native parent handle
                   target_size_t const& size_,
                   window_pos_t const& pos_ = window_pos_t(0.f,0.f),
                   float backing_ratio = 1.f)

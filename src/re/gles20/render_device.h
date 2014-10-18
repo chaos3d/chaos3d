@@ -25,7 +25,7 @@ public:
     
     virtual texture::ptr create_texture(texture::vector2i const&, texture::attribute_t const&) override;
     virtual render_texture* create_render_texture() override;
-    virtual render_window* create_window(void* native_parent,
+    virtual render_window* create_window(native_window* native_parent,
                                          render_target::target_size_t const&,
                                          render_window::window_pos_t const&,
                                          float backing_ratio) override;

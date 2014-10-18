@@ -55,11 +55,11 @@ render_context* render_device::create_context(render_window*) {
     return new gl_context_ios(context, texture_units);
 }
     
-render_window* render_device::create_window(void* native_parent,
+render_window* render_device::create_window(native_window* native_parent,
                                             render_target::target_size_t const& size_,
                                             render_window::window_pos_t const& pos_,
                                             float backing_ratio) {
-    return new render_view((__bridge UIView*)native_parent, size_, pos_, backing_ratio);
+    return new render_view(native_parent, size_, pos_, backing_ratio);
 }
 
 render_texture* render_device::create_render_texture() {
