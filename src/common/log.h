@@ -19,7 +19,7 @@ template <typename T> struct logger_trait { typedef T logger_t; };
     template <> struct logger_trait<clz> { typedef parent logger_t; };
 
 #define LOGGER_TYPE(clz) \
-    logger_trait< \
+    typename logger_trait< \
         typename std::remove_cv< \
             typename std::remove_reference<clz>::type \
         >::type \

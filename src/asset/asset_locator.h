@@ -77,6 +77,8 @@ private:
     locators_t _locators;
 };
 
+IMPORT_SINGLETON(locator_mgr);
+
 class asset_locator : public std::enable_shared_from_this<asset_locator> {
 public:
     typedef std::shared_ptr<asset_locator const> const_ptr;

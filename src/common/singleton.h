@@ -27,6 +27,12 @@ _CHAOS_BEGIN
 	initialization to create singletons.
 */
 
+// explicitly import singleton symbol from core lib only when
+// it's managed statically
+#define IMPORT_SINGLETON(clz) \
+    extern template class singleton<clz, Static_Instance>
+#define DEFINE_SINGLETON(clz) \
+    template class singleton<clz, Static_Instance>
 
 struct Static_Instance {}; // the class holds a static variable
 struct Client_Instance {}; // the client manually creates the instance

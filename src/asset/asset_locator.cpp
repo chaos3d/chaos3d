@@ -7,6 +7,8 @@
 #include <sys/stat.h>
 #include <dirent.h>
 
+DEFINE_SINGLETON(locator_mgr);
+
 struct priority_sorter {
     bool operator() (locator_mgr::locator_ptr const& lhs,
                      locator_mgr::locator_ptr const& rhs) const {
