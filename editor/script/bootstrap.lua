@@ -8,6 +8,13 @@ local rwin = rd:new_window(win, {0,0,1024,768}, 2);
 local context = rd:new_context(rwin);
 context:set_current();
 
+c3d.init_mgr(rd, context);
+
+local c = c3d.go.new(c3d.go.root)
+c:set_tag"camera"
+c = c:add_camera2d()
+c:set_target(rwin):set_viewport_from_target()
+
 --collectgarbage();
 while true do
     launcher:poll_event();
