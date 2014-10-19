@@ -1,5 +1,8 @@
 #include "asset/asset_manager.h"
 #include "asset/asset_bundle.h"
+#include "common/log.h"
+
+DEFINE_LOGGER(asset_manager, "asset");
 
 #pragma mark - asset bundle
 

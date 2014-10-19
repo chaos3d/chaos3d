@@ -19,7 +19,7 @@
 
 #include "asset/asset_manager.h"
 #include "asset/asset_locator.h"
-
+#include "asset_support/texture_asset.h"
 #include <array>
 
 using namespace script;
@@ -34,6 +34,11 @@ static bool initialize_mgr(render_device* dev, render_context* ctx) {
                                    make_manager<sprite2d::sprite_mgr>(dev),
                                    make_manager<com::camera_mgr>(dev, ctx)
                                    );
+
+    auto& asset_mgr = global_asset_mgr::create({.scale = 2.f});
+    
+    asset_mgr.add_from_bundle(png_asset_bundle::bundle(dev,
+                                                       locator::dir_locator::app_dir()).get());
     return true;
 }
 
@@ -66,7 +71,7 @@ extern "C" void c3d_lua_import(lua_State *L) {
     .def("init_mgr", LUA_BIND(&initialize_mgr))
     .def_singleton_getter<sprite2d::sprite_mgr>("get_sprite_mgr")
     .def_singleton_getter<scene2d::world2d_mgr>("get_world2d_mgr")
-    .def_singleton_getter<global_asset_mgr>("get_asset_mgr")
+    .def_singleton_getter<global_asset_mgr, asset_manager>("get_asset_mgr")
     .def_singleton_getter<locator_mgr>("get_locator")
     //.import("render", main_device())
     //.import<render_window*>("window", main_window())

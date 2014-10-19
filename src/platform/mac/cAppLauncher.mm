@@ -7,6 +7,7 @@
 #include "common/timer.h"
 
 #include "asset/asset_locator.h"
+#include "asset/asset_manager.h"
 
 #pragma mark - Mac Game Window
 

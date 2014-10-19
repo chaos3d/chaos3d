@@ -98,7 +98,7 @@ namespace script {
             luaL_argcheck(L, obj->type == &class_<T2<U>>::type() ||
                           obj->type->is_derived(&class_<T2<U>>::type()), idx,
                           "object type is not matched");
-            return *(T2<U>*)obj->object;
+            return *(T2<U>*)(obj->object);
         };
 
         template<typename U = T,

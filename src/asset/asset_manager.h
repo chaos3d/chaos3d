@@ -95,7 +95,7 @@ public:
         static std::shared_ptr<global_asset_mgr> _instance(new global_asset_mgr(ctx));
         return *_instance;
     }
-        
+
 private:
     global_asset_mgr(context const& ctx)
     : asset_manager(ctx) {

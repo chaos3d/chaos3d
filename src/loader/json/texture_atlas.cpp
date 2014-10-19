@@ -1,3 +1,4 @@
+#include "common/log.h"
 #include "asset/asset_manager.h"
 #include "asset_support/texture_asset.h"
 #include "com/sprite2d/texture_atlas.h"
@@ -12,15 +13,17 @@ template<>
 texture_atlas::ptr texture_atlas::load_from(json_loader const& json,
                                             asset_manager& mgr,
                                             texture_atlas::TexturePacker &&) {
-    texture_atlas *atlas = new texture_atlas();
     Document const& root = json.internal<Document>();
 
     std::string file_name(root["meta"]["image"].GetString());
     
     if (!mgr.contains(file_name)) {
-        assert(0); // FIXME: manual add meta, and load
+        LOG_WARN(asset_manager, "expected asset not loaded:" << file_name);
+        // FIXME: manual add meta, and load
+        return nullptr;
     }
 
+    texture_atlas *atlas = new texture_atlas();
     atlas->_texture = mgr.load<texture>(file_name);
     auto size = atlas->_texture->size();
 

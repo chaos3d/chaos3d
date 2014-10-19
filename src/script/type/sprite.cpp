@@ -230,6 +230,10 @@ namespace script {
         .def("query", c3d_lua_world_query)
         .def("set_step", LUA_BIND_S(world2d_mgr& (world2d_mgr::*)(float&&), &world2d_mgr::set_step))
         ;
+        
+        class_<global_asset_mgr>::type()
+        .derive<asset_manager>()
+        ;
 #if 0
         script::class_<texture_atlas>::type()
         ;

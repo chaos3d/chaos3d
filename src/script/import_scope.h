@@ -20,9 +20,9 @@ namespace script {
         // import functions
         import_scope& def(char const* name, lua_function_t func);
         
-        template<typename C>
+        template<typename C, typename R = C>
         import_scope& def_singleton_getter(char const* name) {
-            return def(name, &singleton_getter<C>);
+            return def(name, &singleton_getter<C, R>);
         }
         
         // import a variable as a type
@@ -56,9 +56,9 @@ namespace script {
         };
         
     public:
-        template<typename C>
+        template<typename C, typename R = C>
         static int singleton_getter(lua_State* L) {
-            converter<C*>::to(L, &C::instance());
+            converter<R*>::to(L, &C::instance());
             return 1;
         }
     private:
