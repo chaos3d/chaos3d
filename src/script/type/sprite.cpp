@@ -185,7 +185,7 @@ namespace script {
         
         class_<game_object>::type()
         .def("add_quad_sprite", LUA_BIND((&game_object::add_component<quad_sprite, int>)))
-        .def("add_camera2d", LUA_BIND((&game_object::add_component<camera2d>)))
+        .def("add_camera2d", LUA_BIND((&game_object::add_component<camera2d, render_target*, int>)))
         .def("add_collider2d", LUA_BIND((&game_object::add_component<collider2d, int, int>)))
         .def("get_camera2d", LUA_BIND((&game_object::get_component<camera2d>)))
         ;

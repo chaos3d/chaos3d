@@ -7,7 +7,7 @@ namespace sprite2d {
     // 2D atlas batched sprite renderer
     class camera2d : public com::camera {
     public:
-        camera2d(game_object*, int priority = 0);
+        camera2d(game_object*, render_target* = nullptr, int priority = 0);
         
     protected:
         camera2d& operator=(camera2d const& rhs);

@@ -34,7 +34,7 @@ namespace com {
             vector3f d; // normalized direction
         };
     public:
-        camera(game_object*, int priority = 0);
+        camera(game_object*, render_target* = nullptr, int priority = 0);
         
         // collect all the visual components (renderables)
         // there can be various algorithms (aabb-tree, or bullet3d?)

@@ -8,8 +8,8 @@
 
 using namespace sprite2d;
 
-camera2d::camera2d(game_object* go, int priority)
-: camera(go, priority) {
+camera2d::camera2d(game_object* go, render_target* tgt, int priority)
+: camera(go, tgt, priority) {
 }
 
 camera2d& camera2d::operator=(camera2d const& rhs) {
