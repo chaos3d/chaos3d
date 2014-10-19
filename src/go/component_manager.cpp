@@ -22,13 +22,15 @@ public:
     
     // remove mgr from the list and release the ownership.
     void remove(component_manager* mgr) {
-        _mgrs.erase(std::find_if(_mgrs.begin(), _mgrs.end(), [=](mgr_t& elmt) {
-            if(elmt.get() == mgr) {
+        auto found = std::find_if(_mgrs.begin(), _mgrs.end(), [=](mgr_t& elmt) {
+            if (elmt.get() == mgr) {
                 elmt.release();
                 return true;
-            }else
+            } else
                 return false;
-        }));
+        });
+        if (found != _mgrs.end())
+            _mgrs.erase(found);
     }
              
 private:

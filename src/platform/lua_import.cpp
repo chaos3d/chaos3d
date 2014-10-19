@@ -11,9 +11,11 @@
 #include "script/converter_ptr.h"
 
 #include "go/game_object.h"
+#include "sg/transform.h"
 #include "com/sprite2d/sprite.h"
 #include "com/sprite2d/texture_atlas.h"
 #include "com/scene2d/world_box2d.h"
+#include "com/render/camera_mgr.h"
 
 #include "asset/asset_manager.h"
 #include "asset/asset_locator.h"
@@ -24,6 +26,16 @@ using namespace script;
 
 template class script::class_<native_window>;
 template class script::class_<render_device>;
+
+static bool initialize_mgr(render_device* dev, render_context* ctx) {
+    component_manager::initializer(
+                                   make_manager<com::transform_manager>(),
+                                   make_manager<scene2d::world2d_mgr>(0.02f, Eigen::Vector2f{0.f,0.f}),
+                                   make_manager<sprite2d::sprite_mgr>(dev),
+                                   make_manager<com::camera_mgr>(dev, ctx)
+                                   );
+    return true;
+}
 
 extern "C" void c3d_lua_import(lua_State *L) {
 #if 0
@@ -51,6 +63,7 @@ extern "C" void c3d_lua_import(lua_State *L) {
     
     state->import("chaos3d")
     .def("load_atlas", LUA_BIND((&texture_atlas::load_from<ref, asset_manager&>)))
+    .def("init_mgr", LUA_BIND(&initialize_mgr))
     .def_singleton_getter<sprite2d::sprite_mgr>("get_sprite_mgr")
     .def_singleton_getter<scene2d::world2d_mgr>("get_world2d_mgr")
     .def_singleton_getter<global_asset_mgr>("get_asset_mgr")
