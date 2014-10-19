@@ -97,6 +97,9 @@ public:
     // go through all the possible names
     virtual void traverse(visitor_t const&) const = 0;
     
+    // the name for the locator
+    virtual std::string name() const { return "(null)"; }
+    
     // the priority to look up the asset so the 'local' asset
     // will be able to override. probably change to a different
     // approach
@@ -119,7 +122,8 @@ namespace locator {
         virtual bool contains(std::string const&) const override;
         virtual data_stream::ptr from(std::string const&) const override;
         virtual void traverse(visitor_t const&) const override;
-        
+        virtual std::string name() const override { return _base; }
+
         static ptr home_dir(int priority = 0);
         static ptr app_dir(int priority = 1);
     private:

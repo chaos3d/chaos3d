@@ -1,5 +1,6 @@
 #include "asset/asset_locator.h"
 #include "io/file_stream.h"
+#include "common/log.h"
 
 #include <queue>
 #include <algorithm>
@@ -8,6 +9,7 @@
 #include <dirent.h>
 
 DEFINE_SINGLETON(locator_mgr);
+INHERIT_LOGGER(locator_mgr, data_stream);
 
 struct priority_sorter {
     bool operator() (locator_mgr::locator_ptr const& lhs,
@@ -22,11 +24,21 @@ void locator_mgr::sort_locators() {
 
 data_stream::ptr locator_mgr::from(std::string const& name) const {
     assert(std::is_sorted(_locators.begin(), _locators.end(), priority_sorter()));
+    if (_locators.size() == 0) {
+        LOG_WARN("no locators are added, loading: " << name);
+        return nullptr;
+    }
+    
+    LOG_TRACE("loading stream: " << name);
     for (auto& it : _locators) {
         auto stream = it->from(name);
-        if (stream.get() != nullptr)
+        LOG_TRACE("searching in:" << it->name());
+        if (stream.get() != nullptr) {
+            LOG_TRACE("found");
             return stream;
+        }
     }
+    LOG_WARN(name << " couldn't be found.");
     return nullptr;
 }
 
