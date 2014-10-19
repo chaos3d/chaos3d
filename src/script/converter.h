@@ -78,17 +78,17 @@ namespace script {
         };
         
         template<typename U = T,
-        typename std::enable_if<is_userdata<T2<U>>::value && std::is_pointer<U>::value
+        typename std::enable_if<is_userdata<T2<U>>::value && std::is_pointer<T1<U>>::value
             >::type* = nullptr>
-        static T2<U>* from(lua_State* L, int idx, char* storage) {
+        static T1<U> from(lua_State* L, int idx, char* storage) {
             object_wrapper* obj = (object_wrapper*)lua_touserdata(L, idx);
-            return obj != nullptr ? (T2<U>*)obj->object : nullptr;
+            return obj != nullptr ? (T1<U>)obj->object : nullptr;
         };
         
         template<typename U = T,
-        typename std::enable_if<is_userdata<T2<U>>::value && std::is_reference<U>::value
+        typename std::enable_if<is_userdata<T2<U>>::value && !std::is_pointer<T1<U>>::value
             >::type* = nullptr>
-        static T2<U>& from(lua_State* L, int idx, char* storage) {
+        static U from(lua_State* L, int idx, char* storage) {
             object_wrapper* obj = (object_wrapper*)lua_touserdata(L, idx);
             luaL_argcheck(L, obj != nullptr && obj->object != nullptr, idx, "expect an object");
             assert(obj != nullptr && obj->object != nullptr);
