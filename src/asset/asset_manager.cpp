@@ -27,6 +27,7 @@ _context(ctx)
 }
 
 asset_manager::~asset_manager() {
+    _loading_thread.detach();
     // TODO:
     // To signal the loading thread to stop
 }
