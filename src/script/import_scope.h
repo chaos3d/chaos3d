@@ -22,11 +22,7 @@ namespace script {
         
         template<typename C>
         import_scope& def_singleton_getter(char const* name) {
-            auto* L = get_L();
-            lua_pushstring(L, name);
-            converter<C*>::to(L, &C::instance());
-            lua_rawset(L, -3);
-            return *this;
+            return def(name, &singleton_getter<C>);
         }
         
         // import a variable as a type
@@ -59,6 +55,12 @@ namespace script {
                 end();
         };
         
+    public:
+        template<typename C>
+        static int singleton_getter(lua_State* L) {
+            converter<C*>::to(L, &C::instance());
+            return 1;
+        }
     private:
         import_scope(char const*, state&);
         

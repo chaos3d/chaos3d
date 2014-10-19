@@ -179,8 +179,8 @@ namespace script {
         .import_type<contact_ended_event>()
         ;
         
-        st->import((scope + ".atlas").c_str())
-        .def("load", c3d_lua_atlas_load)
+        st->import(scope.c_str())
+        .def("load_atlas", c3d_lua_atlas_load)
         ;
         
         class_<game_object>::type()

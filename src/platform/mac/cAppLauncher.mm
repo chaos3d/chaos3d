@@ -6,6 +6,8 @@
 #include "go/game_object.h"
 #include "common/timer.h"
 
+#include "asset/asset_locator.h"
+
 #pragma mark - Mac Game Window
 
 @interface MacGameWindow : NSWindow
@@ -155,5 +157,10 @@ launcher& launcher::initialize() {
     device->init_context();
     
     make_global_timer<timer::ticker_realtime>();
+    
+    locator_mgr::instance().
+    add(locator::dir_locator::app_dir())->
+    add(locator::dir_locator::home_dir());
+
     return mac;
 }
