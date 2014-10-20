@@ -52,9 +52,25 @@
     }
     
     [applicationObject setActivationPolicy: NSApplicationActivationPolicyRegular];
+    applicationObject.mainMenu = [self createMainMenu];
     [applicationObject finishLaunching];
 
     return applicationObject;
+}
+
++ (NSMenu*) createMainMenu {
+    NSMenu* appMenu = [[NSMenu alloc] initWithTitle: @""];
+    [appMenu addItemWithTitle: @"Quit"
+                    action: @selector(terminate:)
+             keyEquivalent: @"q"];
+
+    NSMenu* menu = [NSMenu new];
+    [menu setSubmenu: appMenu
+             forItem: [menu addItemWithTitle: @""
+                                      action: NULL
+                               keyEquivalent: @""]];
+    
+    return menu;
 }
 
 + (BOOL) runLoopOnce {
@@ -130,10 +146,10 @@ private:
 class mac_launcher : public launcher {
 private:
     mac_launcher() {
-        //static dispatch_once_t onceToken;
-        //dispatch_once(&onceToken, ^{
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
             [c3dApplication initialize: nil];
-        //});
+        });
     }
     
     virtual bool poll_event(bool wait) override {
