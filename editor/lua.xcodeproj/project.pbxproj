@@ -452,7 +452,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "ln -sF `pwd`/../external/libs/macosx/liblog4cxx.dylib $BUILT_PRODUCTS_DIR/liblog4cxx.dylib\n\nLIBS=\"../external/libs/macosx/* ../external/libs/wx/lib*.dylib ../build/*.dylib ../external/powervr32/OSX/x86/Lib/*.dylib\"\n: ${LIB_DIR:=\"$PROJECT_DIR/libs\"}\n\nmkdir -p $LIB_DIR\n\nfor each in $LIBS; do\n    ln -sF $each $LIB_DIR/`basename $each` ||:\ndone";
+			shellScript = "ln -sF `pwd`/../external/libs/macosx/liblog4cxx.dylib $BUILT_PRODUCTS_DIR/liblog4cxx.dylib\n\nLIBS=\"../../external/libs/macosx/* ../../external/libs/wx/lib*.dylib ../../build/*.dylib ../../external/powervr32/OSX/x86/Lib/*.dylib\"\n: ${LIB_DIR:=\"$PROJECT_DIR/libs\"}\n\nmkdir -p $LIB_DIR\ncd $LIB_DIR\n\nfor each in $LIBS; do\n    ln -sF $each $LIB_DIR/`basename $each` ||:\ndone";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -570,6 +570,7 @@
 		F9617FF319E0AB4400945A43 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEPLOYMENT_LOCATION = YES;
 				DSTROOT = "${PROJECT_DIR}/";
 				INSTALL_PATH = /;
 				LD_RUNPATH_SEARCH_PATHS = "${PROJECT_DIR}/libs/";
@@ -580,6 +581,7 @@
 		F9617FF419E0AB4400945A43 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEPLOYMENT_LOCATION = YES;
 				DSTROOT = "${PROJECT_DIR}/";
 				INSTALL_PATH = /;
 				LD_RUNPATH_SEARCH_PATHS = "${PROJECT_DIR}/libs/";
