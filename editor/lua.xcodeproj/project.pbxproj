@@ -452,7 +452,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "ln -sF `pwd`/../external/libs/macosx/liblog4cxx.dylib $BUILT_PRODUCTS_DIR/liblog4cxx.dylib\n\nLIBS=\"../../external/libs/macosx/* ../../external/libs/wx/lib*.dylib ../../build/*.dylib ../../external/powervr32/OSX/x86/Lib/*.dylib\"\n: ${LIB_DIR:=\"$PROJECT_DIR/libs\"}\n\nmkdir -p $LIB_DIR\ncd $LIB_DIR\n\nfor each in $LIBS; do\n    ln -sF $each $LIB_DIR/`basename $each` ||:\ndone";
+			shellScript = "ln -sF `pwd`/../external/libs/macosx/liblog4cxx.dylib $BUILT_PRODUCTS_DIR/liblog4cxx.dylib\nln -sF libs/liblog4cxx.dylib liblog4cxx.dylib\n\nLIBS=\"../../external/libs/macosx/* ../../external/libs/wx/lib*.dylib ../../build/*.dylib ../../external/powervr32/OSX/x86/Lib/*.dylib\"\n: ${LIB_DIR:=\"$PROJECT_DIR/libs\"}\n\nmkdir -p $LIB_DIR\ncd $LIB_DIR\n\nfor each in $LIBS; do\n    ln -sF $each $LIB_DIR/`basename $each` ||:\ndone\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

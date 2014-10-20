@@ -3540,7 +3540,7 @@
 				);
 				GCC_PREFIX_HEADER = "chaos3d-prefix.pch";
 				INSTALL_GROUP = "";
-				LD_DYLIB_INSTALL_NAME = "@executable_path/${EXECUTABLE_PATH}";
+				LD_DYLIB_INSTALL_NAME = "@rpath/${EXECUTABLE_PATH}";
 				LD_RUNPATH_SEARCH_PATHS = "";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3569,7 +3569,7 @@
 				);
 				GCC_PREFIX_HEADER = "chaos3d-prefix.pch";
 				INSTALL_GROUP = "";
-				LD_DYLIB_INSTALL_NAME = "@executable_path/${EXECUTABLE_PATH}";
+				LD_DYLIB_INSTALL_NAME = "@rpath/${EXECUTABLE_PATH}";
 				LD_RUNPATH_SEARCH_PATHS = "";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
