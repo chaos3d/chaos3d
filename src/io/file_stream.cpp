@@ -30,11 +30,11 @@ file_stream::file_stream( char const* filename ) : _size(0) {
 
 file_stream::~file_stream(){
     if (_file != 0)
-        fclose(_file );
+        fclose(_file);
 }
 
 bool file_stream::end( ){
-    return feof( _file ) == 0;
+    return feof(_file) != 0;
 }
 
 bool file_stream::valid( ){
