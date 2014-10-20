@@ -86,4 +86,5 @@ extern "C" void c3d_lua_import(lua_State *L) {
     script::def_sprite2d(state.get(), "chaos3d");
     script::def_asset();
     script::def_event(state.get(), "chaos3d");
+    script::def_stream(state.get(), "chaos3d");
 }

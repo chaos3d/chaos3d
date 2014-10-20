@@ -4,6 +4,7 @@
 #include <cassert>
 
 DEFINE_LOGGER(render_device, "render");
+DEFINE_LOGGER(gpu_shader, "render.gpu");
 
 render_device* render_device::get_device(uint8_t type) {
     static render_device* _one_device_for_now = nullptr;

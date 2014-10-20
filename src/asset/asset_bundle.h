@@ -39,6 +39,9 @@ public:
     // get all the assets meta in this bundle
     virtual handles_t all_assets(asset_manager::context const&) const;
     
+    // get bundle name
+    virtual std::string name() const { return "(null)"; }
+    
 protected:
     asset_bundle() = default;
     

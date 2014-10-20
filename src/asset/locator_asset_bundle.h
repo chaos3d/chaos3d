@@ -20,6 +20,7 @@ protected:
     
     asset_locator::ptr const& locator() const { return _locator;}
     std::string const& extension() const { return _extension; }
+    virtual std::string name() const override { return _locator->name(); }
     
 private:
     std::string _extension;

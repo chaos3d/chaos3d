@@ -4,7 +4,9 @@
 #include "re/gles20/gl_gpu.h"
 #include "re/gles20/gles2.h"
 #include "re/render_context.h"
-#include "io/data_stream.h"
+#include "common/log.h"
+
+INHERIT_LOGGER(gl_gpu_shader, gpu_shader);
 
 static int _shader_map [] = {
     GL_VERTEX_SHADER,
@@ -22,6 +24,13 @@ gl_gpu_shader::~gl_gpu_shader() {
 }
 
 void gl_gpu_shader::compile(std::vector<char const*> const& ds) {
+    if (ds.size() == 0 || std::find_if(ds.begin(), ds.end(), [&] (char const* b) {
+        return b == nullptr;
+    }) != ds.end()) {
+        LOG_WARN("no sources are given, ignored");
+        return;
+    }
+    
     glShaderSource(_shader_id, (GLsizei)ds.size(), ds.data(), NULL); // null-terminated
     glCompileShader(_shader_id);
     
@@ -36,7 +45,7 @@ void gl_gpu_shader::compile(std::vector<char const*> const& ds) {
 		
 		glGetShaderInfoLog(_shader_id, length, &length, src);
         
-        printf("%s\n", src);
+        LOG_ERROR("compiling shader errors:\n" << src);
         free(src);
     }
 }

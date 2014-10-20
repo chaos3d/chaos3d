@@ -39,6 +39,7 @@ void asset_manager::loading_thread() {
 bool asset_manager::add(std::string const& name, handle_ptr const& handle, bool override) {
     handles_t::iterator it;
     if (!override || (it = _assets.find(name)) == _assets.end()) {
+        LOG_INFO("add asset:" << name);
         return _assets.emplace(name, handle).second;
     } else {
         it->second = handle;
@@ -49,18 +50,21 @@ bool asset_manager::add(std::string const& name, handle_ptr const& handle, bool 
 std::pair<uint32_t, uint32_t> asset_manager::add_from_bundle(asset_bundle *bundle) {
     assert(bundle != nullptr);
     
+    LOG_INFO("start to add assets from bundle:" << bundle->name());
     auto assets = bundle->all_assets(_context);
     uint32_t replaced = 0;
     for (auto& it : assets) {
         auto existed = _assets.find(it.first);
         if (existed != _assets.end()) {
+            LOG_INFO("replace asset:" << it.first);
             existed->second = std::move(it.second);
             ++ replaced;
         } else {
+            LOG_INFO("add asset:" << it.first);
             _assets.emplace(std::move(it.first), std::move(it.second));
         }
     }
-    
+    LOG_INFO("finish (" << assets.size() << ',' << replaced << ")");
     return {assets.size(), replaced};
 }
 
