@@ -64,8 +64,9 @@ void render_window_mac::create_native(id parent, float backing_ratio) {
         set_size(size * backing_ratio);
     } else if (backing_ratio > 1.f) {
         LOG_INFO("the screen doesn't support ratio: " << backing_ratio << ", ignored");
+    } else {
+        LOG_INFO("the screen uses the scale of " << backing_ratio);
     }
-    
     if ([parent isKindOfClass: [NSWindow class]]) {
         [((NSWindow*) parent) setContentView: _view];
     } else if ([parent isKindOfClass: [NSView class]]) {
