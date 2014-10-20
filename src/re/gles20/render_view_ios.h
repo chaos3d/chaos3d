@@ -31,7 +31,7 @@ protected:
 
     virtual bool bind(render_context*) override;
     virtual bool flush(render_context*) override;
-    void create_native(UIView* parent);
+    void create_native(UIView* parent, float backing_ratio);
     void create_view();
     
 private:

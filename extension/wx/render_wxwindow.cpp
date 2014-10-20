@@ -62,7 +62,7 @@ class native_wx_window : public native_window {
 // FIXME: ratio
 render_wxwindow_egl::render_wxwindow_egl(native_window* parent, EGLDisplay display,
                                          target_size_t const& size, window_pos_t const& pos)
-: render_window_egl(parent, size, pos, 1.f) {
+: render_window_egl(parent, size, pos) {
     _window = new wxGameWindow(this);
     create_surface(display, _window->GetHandle());
 }

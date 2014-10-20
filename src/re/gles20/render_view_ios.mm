@@ -3,10 +3,13 @@
 #include <QuartzCore/QuartzCore.h>
 #include <UIKit/UIKit.h>
 
+#include "common/log.h"
 #include "render_view_ios.h"
 #include "re/gles20/gl_context_ios.h"
 #include "re/native_window.h"
 #include "event/touch_event.h"
+
+INHERIT_LOGGER(gles20::render_view, render_device);
 
 @interface EAGLView : UIView
 
@@ -80,8 +83,8 @@
 namespace gles20 {
 
 render_view::render_view(native_window* parent, target_size_t const& size_, window_pos_t const& pos_, float backing_ratio)
- : render_window(parent, size_, pos_, backing_ratio), _native_view(nil) {
-    create_native((__bridge UIView*)parent->handle());
+ : render_window(parent, size_, pos_), _native_view(nil) {
+    create_native((__bridge UIView*)parent->handle(), backing_ratio);
     create_view();
 }
 
@@ -89,9 +92,9 @@ render_view::~render_view() {
     CFRelease((CFTypeRef)_native_view);
 }
 
-void render_view::create_native(UIView* parent) {
+void render_view::create_native(UIView* parent, float backing_ratio) {
     assert(_native_view == nil);
-    target_size_t size = convert_from_backing(get_size());
+    target_size_t size = get_size();
     _native_view = [[EAGLView alloc] initWithFrame: CGRectMake(_position(0), _position(1),
                                                                size(0), size(1))];
     _native_view.host = this;
@@ -101,9 +104,17 @@ void render_view::create_native(UIView* parent) {
 	_native_view.autoresizingMask = UIViewAutoresizingNone;
     _native_view.backgroundColor = [UIColor yellowColor];
 
-    float scaling = get_backing_ratio();
-    _native_view.contentScaleFactor = scaling;
-    _native_view.scaling = scaling;
+    // TODO: move this up to a function
+    float supported = [UIScreen mainScreen].scale;
+    if (backing_ratio <= supported) {
+        LOG_INFO("the screen supports the requested scaling factor:" << backing_ratio);
+        _backing_ratio = backing_ratio;
+        set_size(size * backing_ratio);
+    } else {
+        LOG_INFO("the screen doesn't support ratio: " << backing_ratio << ", ignored");
+    }
+    _native_view.contentScaleFactor = backing_ratio;
+    _native_view.scaling = backing_ratio;
 }
     
 void render_view::create_view() {
