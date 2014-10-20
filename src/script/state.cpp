@@ -83,7 +83,7 @@ state::state(lua_State* L, bool open_all)
         void *ud(nullptr);
         lua_Alloc alloc_ = lua_getallocf(L, &ud);
 
-        if (ud != nullptr) {
+        if (ud != nullptr && ud != this) {
             LOG_ERROR("the userdata has been set for the given state. "
                       "this may cause misbehaviors since it'll be overriden.");
         }

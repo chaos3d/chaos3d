@@ -130,10 +130,10 @@ private:
 class mac_launcher : public launcher {
 private:
     mac_launcher() {
-        static dispatch_once_t onceToken;
-        dispatch_once(&onceToken, ^{
+        //static dispatch_once_t onceToken;
+        //dispatch_once(&onceToken, ^{
             [c3dApplication initialize: nil];
-        });
+        //});
     }
     
     virtual bool poll_event(bool wait) override {

@@ -19,7 +19,9 @@ namespace gles20 {
         virtual window_pos_t convert_from_backing(window_pos_t const&) const override;
         
     private:
-        void create_native(id);
+        void create_native(id, float);
+        
+        // TODO: change screen/backing ratio/size
         
     private:
         EGLView* _view;
