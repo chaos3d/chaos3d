@@ -39,6 +39,8 @@ static bool initialize_mgr(render_device* dev, render_context* ctx) {
     
     asset_mgr.add_from_bundle(png_asset_bundle::bundle(dev,
                                                        locator::dir_locator::app_dir()).get());
+    asset_mgr.add_from_bundle(png_asset_bundle::bundle(dev,
+                                                       locator::dir_locator::cur_dir()).get());
     return true;
 }
 

@@ -126,6 +126,7 @@ namespace locator {
 
         static ptr home_dir(int priority = 0);
         static ptr app_dir(int priority = 1);
+        static ptr cur_dir(int priority = 2);
     private:
         std::string _base;
     };

@@ -103,6 +103,12 @@ namespace locator {
             dirs.pop();
             closedir(dp);
         }
-        
+    }
+    
+    dir_locator::ptr dir_locator::cur_dir(int priority) {
+        char* cur_dir = getcwd(NULL, 0);
+        dir_locator* dir = new dir_locator(cur_dir, priority);
+        free(cur_dir);
+        return ptr(dir);
     }
 }
