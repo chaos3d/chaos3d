@@ -91,15 +91,15 @@ namespace script {
         ;
         
         class_<render_uniform>::type()
-        .def("set_float", LUA_BIND_S(void (render_uniform::*)(std::string const&, float),
+        .def("set_float", LUA_BIND_S(render_uniform& (render_uniform::*)(std::string const&, float),
                                      &render_uniform::set_vector))
-        .def("set_vec2", LUA_BIND_S(void (render_uniform::*)(std::string const&,
+        .def("set_vec2", LUA_BIND_S(render_uniform& (render_uniform::*)(std::string const&,
                                                              float, float),
                                     &render_uniform::set_vector))
-        .def("set_vec3", LUA_BIND_S(void (render_uniform::*)(std::string const&,
+        .def("set_vec3", LUA_BIND_S(render_uniform& (render_uniform::*)(std::string const&,
                                                              float, float, float),
                                     &render_uniform::set_vector))
-        .def("set_vec4", LUA_BIND_S(void (render_uniform::*)(std::string const&,
+        .def("set_vec4", LUA_BIND_S(render_uniform& (render_uniform::*)(std::string const&,
                                                              float, float, float, float),
                                     &render_uniform::set_vector))
         .def("set_texture", LUA_BIND(&render_uniform::set_texture))
@@ -110,8 +110,8 @@ namespace script {
         ;
         
         class_<gpu_shader>::type()
-        .def("compile", LUA_BIND_S(void (gpu_shader::*)(char const*), &gpu_shader::compile))
-        .def("compile_multi", LUA_BIND_S(void (gpu_shader::*)(std::vector<char const*> const&),
+        .def("compile", LUA_BIND_S(gpu_shader& (gpu_shader::*)(char const*), &gpu_shader::compile))
+        .def("compile_multi", LUA_BIND_S(gpu_shader& (gpu_shader::*)(std::vector<char const*> const&),
                                          &gpu_shader::compile))
         ;
         

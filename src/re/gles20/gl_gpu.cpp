@@ -23,12 +23,12 @@ gl_gpu_shader::~gl_gpu_shader() {
     glDeleteShader(_shader_id);
 }
 
-void gl_gpu_shader::compile(std::vector<char const*> const& ds) {
+gpu_shader& gl_gpu_shader::compile(std::vector<char const*> const& ds) {
     if (ds.size() == 0 || std::find_if(ds.begin(), ds.end(), [&] (char const* b) {
         return b == nullptr;
     }) != ds.end()) {
         LOG_WARN("no sources are given, ignored");
-        return;
+        return *this;
     }
     
     glShaderSource(_shader_id, (GLsizei)ds.size(), ds.data(), NULL); // null-terminated
@@ -48,6 +48,8 @@ void gl_gpu_shader::compile(std::vector<char const*> const& ds) {
         LOG_ERROR("compiling shader errors:\n" << src);
         free(src);
     }
+    
+    return *this;
 }
 
 gl_gpu_program::gl_gpu_program() {
@@ -172,7 +174,7 @@ void gl_gpu_program::load_uniforms() {
     });
 }
 
-void gl_gpu_program::link(std::vector<std::string> layout, std::vector<gpu_shader*> shaders) {
+gpu_program& gl_gpu_program::link(std::vector<std::string> layout, std::vector<gpu_shader*> shaders) {
     uniforms().clear();
     channels().clear();
     detach_all();
@@ -212,6 +214,7 @@ void gl_gpu_program::link(std::vector<std::string> layout, std::vector<gpu_shade
     
     load_attributes();
     load_uniforms();
+    return *this;
 }
 
 void gl_gpu_program::update_uniform(uniform const& g_uniform, render_uniform::uniform const& uniform) const {

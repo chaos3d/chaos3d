@@ -10,7 +10,7 @@ public:
     gl_gpu_shader(int type);
     virtual ~gl_gpu_shader();
     
-    virtual void compile(std::vector<char const*> const&) override;
+    virtual gpu_shader& compile(std::vector<char const*> const&) override;
 
     GLuint shader_id() const { return _shader_id; }
     
@@ -23,7 +23,7 @@ public:
     gl_gpu_program();
     virtual ~gl_gpu_program();
     
-    virtual void link(std::vector<std::string>, std::vector<gpu_shader*>) override;
+    virtual gpu_program& link(std::vector<std::string>, std::vector<gpu_shader*>) override;
     virtual void bind(render_context*, render_uniform const*,
                       std::vector<render_uniform::const_ptr> const&) const override;
     

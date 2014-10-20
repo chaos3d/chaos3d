@@ -10,6 +10,7 @@
 #include "common/referenced_count.h"
 #include "common/singleton.h"
 #include "common/utility.h"
+#include "common/log.h"
 #include "asset/asset_handle.h"
 
 class asset_bundle;
@@ -36,11 +37,18 @@ public:
         static_assert(std::is_same<typename std::remove_cv<T>::type, T>::value,
                       "T should be tye raw type");
         auto it = _assets.find(name);
-        if (it == _assets.end())
+        if (it == _assets.end()) {
+            LOG_WARN("unable to load the asset (" << name
+                     << ") not found");
             return nullptr;
+        }
 
-        if (!it->second->is_loaded())
+        if (!it->second->is_loaded()) {
+            LOG_INFO("start loading asset: " << name);
             load_asset(it->second.get());
+        } else {
+            LOG_INFO("asset is already loaded: " << name);
+        }
         
         return it->second->as<asset_handle_base<T>>().get_asset();
     }

@@ -21,9 +21,10 @@ public:
     }
     
     // bind the current context with the default surface (usually the main window)
-    virtual void set_current() override {
+    virtual render_context& set_current() override {
         eglMakeCurrent(_display, _surface, _surface, _context);
         assert(eglGetError() == EGL_SUCCESS);
+        return *this;
     }
     
 private:

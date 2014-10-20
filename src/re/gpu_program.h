@@ -24,10 +24,10 @@ public:
     
     virtual ~gpu_shader() {};
     
-    virtual void compile(std::vector<char const*> const&) = 0;
+    virtual gpu_shader& compile(std::vector<char const*> const&) = 0;
     
-    void compile(char const* source) {
-        compile(std::vector<char const*>{source});
+    gpu_shader& compile(char const* source) {
+        return compile(std::vector<char const*>{source});
     };
     
 private:
@@ -76,8 +76,8 @@ public:
     uniforms_t const& uniforms() const { return _uniforms; }
 
     // shaders can be safely deleted after linking
-    virtual void link(std::vector<std::string> layout /* vertex attributes layout hints, channel name*/,
-                      std::vector<gpu_shader*> shaders) = 0;
+    virtual gpu_program& link(std::vector<std::string> layout /* vertex attributes layout hints, channel name*/,
+                              std::vector<gpu_shader*> shaders) = 0;
     
     // bind to the hardware
     virtual void bind(render_context*, render_uniform const*,

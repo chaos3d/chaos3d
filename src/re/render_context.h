@@ -24,7 +24,7 @@ public:
         _bound_textures.resize(max_tex);
     }
     
-    virtual void set_current() = 0;
+    virtual render_context& set_current() = 0;
     virtual void apply() = 0;
     virtual bool set_state(render_state const&) = 0;
     virtual bool set_program(gpu_program const&) = 0;

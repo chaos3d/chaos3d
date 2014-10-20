@@ -255,36 +255,36 @@ public:
     // merge/move the right side to itself, with or without the new uniforms
     render_uniform& merge(render_uniform const& rhs, bool = false);
     
-    void set_vector(std::string const& name, float v) {
-        set_vector<uniform_float>(name, v);
+    render_uniform& set_vector(std::string const& name, float v) {
+        return set_vector<uniform_float>(name, v);
     }
     
-    void set_vector(std::string const& name, float u, float v) {
-        set_vector<uniform_vector2>(name, vector2f(u, v));
+    render_uniform& set_vector(std::string const& name, float u, float v) {
+        return set_vector<uniform_vector2>(name, vector2f(u, v));
     }
     
-    void set_vector(std::string const& name, float x, float y, float z) {
-        set_vector<uniform_vector3>(name, vector3f(x, y, z));
+    render_uniform& set_vector(std::string const& name, float x, float y, float z) {
+        return set_vector<uniform_vector3>(name, vector3f(x, y, z));
     }
 
-    void set_vector(std::string const& name, float x, float y, float z, float w) {
-        set_vector<uniform_vector4>(name, vector4f(x, y, z, w));
+    render_uniform& set_vector(std::string const& name, float x, float y, float z, float w) {
+        return set_vector<uniform_vector4>(name, vector4f(x, y, z, w));
     }
 
-    void set_matrix(std::string const& name, matrix2f const& val) {
-        set_vector<uniform_mat2>(name, val);
+    render_uniform& set_matrix(std::string const& name, matrix2f const& val) {
+        return set_vector<uniform_mat2>(name, val);
     }
     
-    void set_matrix(std::string const& name, matrix3f const& val) {
-        set_vector<uniform_mat3>(name, val);
+    render_uniform& set_matrix(std::string const& name, matrix3f const& val) {
+        return set_vector<uniform_mat3>(name, val);
     }
     
-    void set_matrix(std::string const& name, matrix4f const& val) {
-        set_vector<uniform_mat4>(name, val);
+    render_uniform& set_matrix(std::string const& name, matrix4f const& val) {
+        return set_vector<uniform_mat4>(name, val);
     }
     
-    void set_texture(std::string const& name, texture* tex) {
-        set_vector<uniform_texture>(name, tex);
+    render_uniform& set_texture(std::string const& name, texture* tex) {
+        return set_vector<uniform_texture>(name, tex);
     }
     
     template<class Value, size_t _Type = 0,
@@ -323,7 +323,7 @@ protected:
     uniform* find(std::string const&, bool);
     
     template<class U, class... Args>
-    void set_vector(std::string const& name, Args&&... args) {
+    render_uniform& set_vector(std::string const& name, Args&&... args) {
         auto it = find(name);
         if(it == _uniforms.end() || it->get()->name() != name) {
             _uniforms.emplace(it, new U(name, std::forward<Args>(args)...));
@@ -333,6 +333,7 @@ protected:
             uniform_assigner<value_type>()(static_cast<U*>(it->get())->value,
                                            value_type (std::forward<Args>(args)...));
         }
+        return *this;
     }
 
 private:

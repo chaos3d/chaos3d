@@ -11,8 +11,9 @@ public:
     {
     }
     
-    virtual void set_current() override {
+    virtual render_context& set_current() override {
         [EAGLContext setCurrentContext: context()];
+        return *this;
     }
 
     EAGLContext* context() const { return _context; }
