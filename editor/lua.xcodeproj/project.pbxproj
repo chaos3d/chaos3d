@@ -164,7 +164,7 @@
 		F961805D19E0AC5700945A43 /* trace-calls.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "trace-calls.lua"; sourceTree = "<group>"; };
 		F961805E19E0AC5700945A43 /* trace-globals.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "trace-globals.lua"; sourceTree = "<group>"; };
 		F961805F19E0AC5700945A43 /* xd.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = xd.lua; sourceTree = "<group>"; };
-		F961808719E0ACAB00945A43 /* chaos3d.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = chaos3d.xcodeproj; path = ../../build/chaos3d.xcodeproj; sourceTree = "<group>"; };
+		F961808719E0ACAB00945A43 /* chaos3d.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = chaos3d.xcodeproj; path = ../build/chaos3d.xcodeproj; sourceTree = "<group>"; };
 		F961809B19E0AF7B00945A43 /* bootstrap.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bootstrap.lua; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -210,8 +210,7 @@
 				F961801219E0AC5700945A43 /* src */,
 				F961804B19E0AC5700945A43 /* test */,
 			);
-			name = "lua-5.1.5";
-			path = "../lua-5.1.5";
+			path = "lua-5.1.5";
 			sourceTree = "<group>";
 		};
 		F9617FF719E0AC5600945A43 /* doc */ = {
@@ -354,8 +353,7 @@
 			children = (
 				F961809B19E0AF7B00945A43 /* bootstrap.lua */,
 			);
-			name = script;
-			path = ../script;
+			path = script;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -454,7 +452,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "ln -sF `pwd`/../../external/libs/macosx/liblog4cxx.dylib $BUILT_PRODUCTS_DIR/liblog4cxx.dylib\n\nLIBS=\"../../external/libs/macosx/* ../../external/libs/wx/lib*.dylib ../../build/*.dylib ../../external/powervr32/OSX/x86/Lib/*.dylib\"\n: ${LIB_DIR:=\"$PROJECT_DIR/../libs\"}\n\nmkdir -p $LIB_DIR\n\nfor each in $LIBS; do\n    ln -sF $each $LIB_DIR/`basename $each` ||:\ndone";
+			shellScript = "ln -sF `pwd`/../external/libs/macosx/liblog4cxx.dylib $BUILT_PRODUCTS_DIR/liblog4cxx.dylib\n\nLIBS=\"../external/libs/macosx/* ../external/libs/wx/lib*.dylib ../build/*.dylib ../external/powervr32/OSX/x86/Lib/*.dylib\"\n: ${LIB_DIR:=\"$PROJECT_DIR/libs\"}\n\nmkdir -p $LIB_DIR\n\nfor each in $LIBS; do\n    ln -sF $each $LIB_DIR/`basename $each` ||:\ndone";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -517,7 +515,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				LIBRARY_SEARCH_PATHS = ../../external/libs/macosx;
+				LIBRARY_SEARCH_PATHS = ../external/libs/macosx;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -558,7 +556,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				LIBRARY_SEARCH_PATHS = ../../external/libs/macosx;
+				LIBRARY_SEARCH_PATHS = ../external/libs/macosx;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = (
@@ -572,7 +570,9 @@
 		F9617FF319E0AB4400945A43 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				LD_RUNPATH_SEARCH_PATHS = "${PROJECT_DIR}/../libs/";
+				DSTROOT = "${PROJECT_DIR}/";
+				INSTALL_PATH = /;
+				LD_RUNPATH_SEARCH_PATHS = "${PROJECT_DIR}/libs/";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -580,7 +580,9 @@
 		F9617FF419E0AB4400945A43 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				LD_RUNPATH_SEARCH_PATHS = "${PROJECT_DIR}/../libs/";
+				DSTROOT = "${PROJECT_DIR}/";
+				INSTALL_PATH = /;
+				LD_RUNPATH_SEARCH_PATHS = "${PROJECT_DIR}/libs/";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
