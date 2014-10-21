@@ -7,6 +7,7 @@
 
 #include "event/event_listener.h"
 #include "event/touch_event.h"
+#include "re/render_window.h"
 
 #include <vector>
 
@@ -42,8 +43,10 @@ namespace script {
             lua_pushlightuserdata(L, (void*)&typeid(evt));
             bool is_done = true;
             if (lua_pcall(L, 2, 1, 0) != 0) {
-                // TODO: error
-                printf("error: %s", lua_tostring(L, -1));
+                // TODO: error call stack
+                LOG_WARN(event_dispatcher,
+                         "running script listener errors: \n"
+                         << lua_tostring(L, -1));
             } else {
                 is_done = lua_toboolean(L, -1);
             }
@@ -69,7 +72,8 @@ namespace script {
         lua_getallocf(L, (void**)&st);
 
         luaL_argcheck(L, lua_gettop(L) >= 3, 3, "no event specified");
-        event_dispatcher& dispatcher = converter<event_dispatcher&>::from(L, 1, nullptr);
+        event_dispatcher& dispatcher =
+            *dynamic_cast<event_dispatcher*>(converter<referenced_count*>::from(L, 1, nullptr));
         
         if (lua_isfunction(L, 2)) {
             lua_pushvalue(L, 2);
@@ -86,6 +90,8 @@ namespace script {
             auto* type = (std::type_info*) lua_touserdata(L, i);
             luaL_argcheck(L, type != nullptr, i, "not valid event type");
             assert(type != nullptr);
+            LOG_INFO(event_dispatcher,
+                     "add event handler for:" << type->name());
             evts.emplace_back(*type);
         }
         
@@ -116,7 +122,7 @@ namespace script {
         ;
         
         class_<event_dispatcher>::type()
-        .def("register", c3d_lua_register)
+        .def("register", c3d_lua_register) // TODO: unregister
         ;
         
         class_<touch_event>::type()

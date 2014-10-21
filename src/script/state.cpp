@@ -85,10 +85,12 @@ state::state(lua_State* L, bool open_all)
 
         if (ud != nullptr && ud != this) {
             LOG_ERROR("the userdata has been set for the given state. "
-                      "this may cause misbehaviors since it'll be overriden.");
+                      "this may cause misbehaviors.");
+        } else {
+            LOG_DEBUG("state is registered into lua state.");
+            lua_setallocf(L, alloc_, this);
         }
         
-        lua_setallocf(L, alloc_, this);
         _L = L;
     }
     

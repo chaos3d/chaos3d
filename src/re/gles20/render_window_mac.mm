@@ -1,20 +1,52 @@
 #include "re/gles20/render_window_mac.h"
 #include "re/native_window.h"
+#include "event/touch_event.h"
 #include "common/log.h"
 
 using namespace gles20;
 
 INHERIT_LOGGER(render_window_mac, ::render_device);
 
-@interface EGLView : NSView {
-    
-}
-
+@interface EGLView : NSView
+@property (nonatomic, assign) render_window_mac* host;
+@property float scaling;
 @end
 
 @implementation EGLView
 
 //TODO handle events
+- (void) mouseDown: (NSEvent *)theEvent {
+    assert(_host != nullptr);
+    
+    CGPoint pos = [theEvent locationInWindow];
+    pos = [self convertPointToBacking: pos];
+    _host->dispatch(touch_began_event(
+                                      {pos.x, pos.y}, 0.f /*FIXME, time*/,
+                                      1 // no multi touch
+                                      ));
+}
+
+- (void) mouseUp: (NSEvent *)theEvent {
+    assert(_host != nullptr);
+    
+    CGPoint pos = [theEvent locationInWindow];
+    pos = [self convertPointToBacking: pos];
+    _host->dispatch(touch_ended_event(
+                                      {pos.x, pos.y}, 0.f /*FIXME, time*/,
+                                      1 // no multi touch
+                                      ));
+}
+
+- (void) mouseDragged: (NSEvent *)theEvent {
+    assert(_host != nullptr);
+    
+    CGPoint pos = [theEvent locationInWindow];
+    pos = [self convertPointToBacking: pos];
+    _host->dispatch(touch_moved_event(
+                                      {pos.x, pos.y}, 0.f /*FIXME, time*/,
+                                      1 // no multi touch
+                                      ));
+}
 
 @end
 
@@ -53,6 +85,10 @@ void render_window_mac::create_native(id parent, float backing_ratio) {
     
     // Create our view
     _view = [[EGLView alloc] initWithFrame: frame];
+    
+    LOG_DEBUG("create the native window: " << frame.origin.x << ',' << frame.origin.y
+              << ';' << frame.size.width << ',' << frame.size.height);
+    _view.host = this;
 
     // TODO: move this up to a function
     float supported = [NSScreen mainScreen].backingScaleFactor;
@@ -65,8 +101,10 @@ void render_window_mac::create_native(id parent, float backing_ratio) {
     } else if (backing_ratio > 1.f) {
         LOG_INFO("the screen doesn't support ratio: " << backing_ratio << ", ignored");
     } else {
-        LOG_INFO("the screen uses the scale of " << backing_ratio);
+        LOG_INFO("the screen uses the scale of " << _backing_ratio);
     }
+    _view.scaling = _backing_ratio;
+    
     if ([parent isKindOfClass: [NSWindow class]]) {
         [((NSWindow*) parent) setContentView: _view];
     } else if ([parent isKindOfClass: [NSView class]]) {

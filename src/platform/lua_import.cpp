@@ -66,7 +66,7 @@ extern "C" void c3d_lua_import(lua_State *L) {
     asset_mgr.add_from_bundle(png_asset_bundle::bundle(main_device(),
                                                        locator::dir_locator::app_dir()).get());
 #endif
-    auto state = state::create(L);
+    static auto state = state::create(L);
     
     state->import("chaos3d")
     .def("load_atlas", LUA_BIND((&texture_atlas::load_from<ref, asset_manager&>)))

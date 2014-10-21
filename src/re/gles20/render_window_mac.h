@@ -14,6 +14,7 @@ namespace gles20 {
         virtual ~render_window_mac();
         virtual void *native_handle() override { return (__bridge void*)_view; }
 
+        using render_window::dispatch;
     protected:
         virtual window_pos_t convert_to_backing(window_pos_t const&) const override;
         virtual window_pos_t convert_from_backing(window_pos_t const&) const override;
