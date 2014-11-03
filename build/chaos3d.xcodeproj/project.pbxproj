@@ -108,7 +108,6 @@
 		886CC17B18F68205006A3AF5 /* render_device_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 883246AD183237220022EA4A /* render_device_ios.mm */; };
 		8870F3EB1919C5630038B012 /* cAppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8870F3E71919C5630038B012 /* cAppDelegate.mm */; };
 		8870F3EC1919C5640038B012 /* cViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8870F3E91919C5630038B012 /* cViewController.mm */; };
-		8870F3EF1919C56E0038B012 /* cAppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8870F3EE1919C56E0038B012 /* cAppDelegate.mm */; };
 		8870F3F01919DE0F0038B012 /* device.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8812C2B218619E33001C4D0B /* device.mm */; };
 		887711E518CD32CE00BA5508 /* import_scope.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 887711E418CD32CE00BA5508 /* import_scope.cpp */; };
 		8879CE1E18A8146400BCBFA6 /* shape_desc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8879CE1D18A8146400BCBFA6 /* shape_desc.cpp */; };
@@ -705,8 +704,6 @@
 		8870F3E81919C5630038B012 /* cAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cAppDelegate.h; sourceTree = "<group>"; };
 		8870F3E91919C5630038B012 /* cViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = cViewController.mm; sourceTree = "<group>"; };
 		8870F3EA1919C5630038B012 /* cViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cViewController.h; sourceTree = "<group>"; };
-		8870F3ED1919C56E0038B012 /* cAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cAppDelegate.h; sourceTree = "<group>"; };
-		8870F3EE1919C56E0038B012 /* cAppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = cAppDelegate.mm; sourceTree = "<group>"; };
 		887711DE18CB24B700BA5508 /* class_type.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = class_type.h; sourceTree = "<group>"; };
 		887711DF18CB2FA600BA5508 /* import_scope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = import_scope.h; sourceTree = "<group>"; };
 		887711E018CBC5F500BA5508 /* type_info.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = type_info.h; sourceTree = "<group>"; };
@@ -2414,8 +2411,6 @@
 			children = (
 				F962470A19ED054300FBBB0A /* cAppLauncher.h */,
 				F962470B19ED054300FBBB0A /* cAppLauncher.mm */,
-				8870F3ED1919C56E0038B012 /* cAppDelegate.h */,
-				8870F3EE1919C56E0038B012 /* cAppDelegate.mm */,
 			);
 			name = mac;
 			path = platform/mac;
@@ -3408,7 +3403,6 @@
 				886CC15418F662BB006A3AF5 /* asset_locator.mm in Sources */,
 				88C0049618FA380C0012EC1D /* gl_render_window_egl.cpp in Sources */,
 				886CC15518F662BB006A3AF5 /* gl_context.cpp in Sources */,
-				8870F3EF1919C56E0038B012 /* cAppDelegate.mm in Sources */,
 				886CC15618F662BB006A3AF5 /* asset_locator.cpp in Sources */,
 				886CC15718F662BB006A3AF5 /* gl_gpu.cpp in Sources */,
 				886CC15818F662BB006A3AF5 /* render_utility2d.cpp in Sources */,
