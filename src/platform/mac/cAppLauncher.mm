@@ -73,7 +73,7 @@
     return menu;
 }
 
-+ (BOOL) runLoopOnce {
++ (BOOL) runLoopOnce: (timer*) timer_ {
     @autoreleasepool {
         NSApplication* app = [NSApplication sharedApplication];
         for (;;) {
@@ -152,8 +152,9 @@ private:
         });
     }
     
-    virtual bool poll_event(bool wait) override {
-        [c3dApplication runLoopOnce];
+    virtual bool poll_event(bool wait, timer* timer_) override {
+        [c3dApplication runLoopOnce: timer_];
+        launcher::poll_event(wait, timer_);
         return true;
     }
     

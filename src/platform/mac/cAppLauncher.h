@@ -3,13 +3,15 @@
 
 #include <AppKit/AppKit.h>
 
+class timer;
+
 @interface c3dApplication : NSApplication
 
 // helper to start from nib file
 @property (weak) IBOutlet NSWindow *window;
 
 + (NSApplication*) initialize: (Class) delegateClass;
-+ (BOOL) runLoopOnce;
++ (BOOL) runLoopOnce: (timer*) timer_;
 
 @end
 

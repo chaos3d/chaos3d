@@ -155,6 +155,8 @@
 		F962473D19ED221E00FBBB0A /* lua_module.h in Headers */ = {isa = PBXBuildFile; fileRef = F962473A19ED221E00FBBB0A /* lua_module.h */; };
 		F962474219F3271600FBBB0A /* lua_import.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F962474119F3271600FBBB0A /* lua_import.cpp */; };
 		F962474319F3271600FBBB0A /* lua_import.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F962474119F3271600FBBB0A /* lua_import.cpp */; };
+		F96744611A0B7C0200C0B1E3 /* launcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F96744601A0B7C0200C0B1E3 /* launcher.cpp */; };
+		F96744621A0B7C0200C0B1E3 /* launcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F96744601A0B7C0200C0B1E3 /* launcher.cpp */; };
 		F9AF0F8719B5B4950047C431 /* data_stream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F9AF0F8619B5B4950047C431 /* data_stream.cpp */; };
 		F9AF0F8819B5B4950047C431 /* data_stream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F9AF0F8619B5B4950047C431 /* data_stream.cpp */; };
 /* End PBXBuildFile section */
@@ -846,6 +848,7 @@
 		F962473F19F07CD900FBBB0A /* launcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = launcher.h; path = platform/launcher.h; sourceTree = "<group>"; };
 		F962474019F25AF900FBBB0A /* native_window.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = native_window.h; sourceTree = "<group>"; };
 		F962474119F3271600FBBB0A /* lua_import.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = lua_import.cpp; path = platform/lua_import.cpp; sourceTree = "<group>"; };
+		F96744601A0B7C0200C0B1E3 /* launcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = launcher.cpp; path = platform/launcher.cpp; sourceTree = "<group>"; };
 		F98A04A8198AC046000FE65D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		F99064EB19A5D01E003A3323 /* appender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = appender.h; sourceTree = "<group>"; };
 		F99064EC19A5D01E003A3323 /* appenderskeleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = appenderskeleton.h; sourceTree = "<group>"; };
@@ -1213,6 +1216,7 @@
 				8870F3E61919C52A0038B012 /* mac */,
 				8812C2B318619E33001C4D0B /* device.h */,
 				8812C2B218619E33001C4D0B /* device.mm */,
+				F96744601A0B7C0200C0B1E3 /* launcher.cpp */,
 				F962473F19F07CD900FBBB0A /* launcher.h */,
 				F962474119F3271600FBBB0A /* lua_import.cpp */,
 				F962473919ED221E00FBBB0A /* lua_module.cpp */,
@@ -3402,6 +3406,7 @@
 				886CC15318F662BB006A3AF5 /* collider2d.cpp in Sources */,
 				886CC15418F662BB006A3AF5 /* asset_locator.mm in Sources */,
 				88C0049618FA380C0012EC1D /* gl_render_window_egl.cpp in Sources */,
+				F96744621A0B7C0200C0B1E3 /* launcher.cpp in Sources */,
 				886CC15518F662BB006A3AF5 /* gl_context.cpp in Sources */,
 				886CC15618F662BB006A3AF5 /* asset_locator.cpp in Sources */,
 				886CC15718F662BB006A3AF5 /* gl_gpu.cpp in Sources */,
@@ -3477,6 +3482,7 @@
 				8812C2A0185F0992001C4D0B /* asset_locator.mm in Sources */,
 				886CC09818F6584B006A3AF5 /* gl_context.cpp in Sources */,
 				8812C29B185EF887001C4D0B /* asset_locator.cpp in Sources */,
+				F96744611A0B7C0200C0B1E3 /* launcher.cpp in Sources */,
 				882762111870F9E600B1291B /* gl_gpu.cpp in Sources */,
 				8812C2D518683BE0001C4D0B /* render_utility2d.cpp in Sources */,
 				8879CE2A18B1EAB500BCBFA6 /* action.cpp in Sources */,
