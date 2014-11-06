@@ -174,7 +174,9 @@ launcher& launcher::initialize() {
     auto* device = render_device::get_device(render_device::OpenGLES20);
     device->init_context();
     
-    make_global_timer<timer::ticker_realtime>();
+    if (!global_timer_base::has_created()) {
+        make_global_timer<timer::ticker_realtime>();
+    }
     
     locator_mgr::instance().
     add(locator::dir_locator::app_dir())->

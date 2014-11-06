@@ -43,7 +43,7 @@ class singleton
 public:
     singleton()
     {
-        assert( __singleton == NULL && "Singleton has been Created.");
+        assert(__singleton == nullptr && "Singleton has been Created.");
         
         // Singleton will automatically save its location into __msSingleton
         // when it's first initialized.
@@ -51,15 +51,15 @@ public:
         long offset = (long)(T*)(1L)-(long)(singleton<T>*)(T*)(1L);
         __singleton = (T*)((long)this + offset);
 #else
-        __singleton = static_cast< T* >( this );
+        __singleton = static_cast<T*>(this);
 #endif
         
     }
     
     virtual ~singleton()
     {
-        assert(__singleton != NULL && "Singleton has not been Created!");
-        __singleton = NULL;
+        assert(__singleton != nullptr && "Singleton has not been Created!");
+        __singleton = nullptr;
     }
     
     // FIXME: a elegant way?
@@ -76,12 +76,15 @@ public:
         return *__singleton;
     }
     
+    inline static bool has_created() {
+        return __singleton != nullptr;
+    }
 private:
     static T* __singleton;
 };
 
 template<typename T, typename Type>
-    T* singleton<T, Type>::__singleton = NULL;
+    T* singleton<T, Type>::__singleton = nullptr;
 
 _CHAOS_END
 

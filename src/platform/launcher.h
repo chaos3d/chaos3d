@@ -31,7 +31,7 @@ public:
     root_action& action() { return _root_action; };
     
 public:
-    // to initialize the environment
+    // to initialize the environment, this is platform-specific impl
     //  i.e. create NSApp for Mac, set up event loop for Win
     static launcher& initialize();  // platform dependent impl
     
