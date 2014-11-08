@@ -159,6 +159,8 @@
 		F96744621A0B7C0200C0B1E3 /* launcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F96744601A0B7C0200C0B1E3 /* launcher.cpp */; };
 		F96744641A0E067800C0B1E3 /* action.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F96744631A0E067800C0B1E3 /* action.cpp */; };
 		F96744651A0E067800C0B1E3 /* action.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F96744631A0E067800C0B1E3 /* action.cpp */; };
+		F96744681A0ED0DA00C0B1E3 /* action_sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F96744671A0ED0DA00C0B1E3 /* action_sprite.cpp */; };
+		F96744691A0ED0DA00C0B1E3 /* action_sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F96744671A0ED0DA00C0B1E3 /* action_sprite.cpp */; };
 		F9AF0F8719B5B4950047C431 /* data_stream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F9AF0F8619B5B4950047C431 /* data_stream.cpp */; };
 		F9AF0F8819B5B4950047C431 /* data_stream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F9AF0F8619B5B4950047C431 /* data_stream.cpp */; };
 /* End PBXBuildFile section */
@@ -852,6 +854,8 @@
 		F962474119F3271600FBBB0A /* lua_import.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = lua_import.cpp; path = platform/lua_import.cpp; sourceTree = "<group>"; };
 		F96744601A0B7C0200C0B1E3 /* launcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = launcher.cpp; path = platform/launcher.cpp; sourceTree = "<group>"; };
 		F96744631A0E067800C0B1E3 /* action.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = action.cpp; sourceTree = "<group>"; };
+		F96744661A0E9FAE00C0B1E3 /* action_sprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = action_sprite.h; sourceTree = "<group>"; };
+		F96744671A0ED0DA00C0B1E3 /* action_sprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = action_sprite.cpp; sourceTree = "<group>"; };
 		F98A04A8198AC046000FE65D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		F99064EB19A5D01E003A3323 /* appender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = appender.h; sourceTree = "<group>"; };
 		F99064EC19A5D01E003A3323 /* appenderskeleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = appenderskeleton.h; sourceTree = "<group>"; };
@@ -2441,6 +2445,8 @@
 		8879CE3B18B351F400BCBFA6 /* action_support */ = {
 			isa = PBXGroup;
 			children = (
+				F96744671A0ED0DA00C0B1E3 /* action_sprite.cpp */,
+				F96744661A0E9FAE00C0B1E3 /* action_sprite.h */,
 				8879CE3C18B351F400BCBFA6 /* action_transform.h */,
 			);
 			path = action_support;
@@ -2449,10 +2455,10 @@
 		8879CE5018B75EAD00BCBFA6 /* asset_support */ = {
 			isa = PBXGroup;
 			children = (
-				8879CE6818BA067D00BCBFA6 /* texture_asset.h */,
-				8879CE6918BA067D00BCBFA6 /* texture_asset.cpp */,
 				8879CE5D18B9D13300BCBFA6 /* png_loader.cpp */,
 				8879CE5C18B9D13300BCBFA6 /* png_loader.h */,
+				8879CE6918BA067D00BCBFA6 /* texture_asset.cpp */,
+				8879CE6818BA067D00BCBFA6 /* texture_asset.h */,
 			);
 			path = asset_support;
 			sourceTree = "<group>";
@@ -3426,6 +3432,7 @@
 				8869FDCD19186D9C00946FD0 /* gles2.cpp in Sources */,
 				886CC16118F662BB006A3AF5 /* type_info.cpp in Sources */,
 				886CC16218F662BB006A3AF5 /* sprite2d.cpp in Sources */,
+				F96744691A0ED0DA00C0B1E3 /* action_sprite.cpp in Sources */,
 				F96744651A0E067800C0B1E3 /* action.cpp in Sources */,
 				886CC16318F662BB006A3AF5 /* asset.cpp in Sources */,
 				886CC16418F662BB006A3AF5 /* event.cpp in Sources */,
@@ -3503,6 +3510,7 @@
 				8870F3EB1919C5630038B012 /* cAppDelegate.mm in Sources */,
 				880F615118D6EE55003BCE3D /* asset.cpp in Sources */,
 				880F615B18D96468003BCE3D /* event.cpp in Sources */,
+				F96744681A0ED0DA00C0B1E3 /* action_sprite.cpp in Sources */,
 				F96744641A0E067800C0B1E3 /* action.cpp in Sources */,
 				882762141872D50D00B1291B /* vertex_layout.cpp in Sources */,
 				8804F8CE18A75DC50055322F /* world_box2d.cpp in Sources */,
