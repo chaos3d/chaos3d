@@ -99,6 +99,10 @@ namespace script {
         state& operator=(state &&) = delete;
         ~state();
         
+        // load a coroutine from the function on top of the stack
+        coroutine load();
+        
+        // load a coroutine from the given source
         coroutine load(char const*, char const* = nullptr);
         coroutine load(data_stream*, char const* = nullptr);
         

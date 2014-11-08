@@ -152,6 +152,17 @@ coroutine state::fetch() {
     }
 }
 
+coroutine state::load() {
+    coroutine co(fetch());
+    if (!lua_isfunction(_L, -1)) {
+        LOG_ERROR("expected a function on top of stack.");
+        return co;
+    }
+    
+    lua_xmove(_L, co.internal(), 1);
+    return co;
+}
+
 coroutine state::load(char const* s, char const* name) {
     coroutine co(fetch());
     auto* L = co.internal();

@@ -34,8 +34,10 @@ extern "C" int luaopen_chaos3d(lua_State *L) {
     
     c3d_lua_import(L);
     
-    auto state = state::create(L);
-    state->import("chaos3d")
+    state* st = nullptr;
+    lua_getallocf(L, (void**)&st);
+    
+    st->import("chaos3d")
     .def("init", LUA_BIND(&launcher::initialize))
     .def_singleton_getter<launcher>("get_launcher")
     ;

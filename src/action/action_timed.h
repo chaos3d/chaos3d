@@ -6,19 +6,18 @@
 #include "common/timer.h"
 
 // action to wait for a certain amount of time/frame
-template<class T>
-class action_timing : public action {
+class action_timer : public action {
 public:
-    typedef T time_t;
+    typedef timer::time_t time_t;
 
 public:
-    action_timing(time_t duration,
-                  timer const& t = global_timer_base::instance())
+    action_timer(time_t duration,
+                 timer const& t = global_timer_base::instance())
     : _duration(duration), _timer(t)
     {}
 
     static action* wait(time_t duration) {
-        return new action_timing(duration);
+        return new action_timer(duration);
     }
 
 protected:
@@ -37,15 +36,35 @@ private:
     timer const& _timer;
 };
 
-typedef action_timing<timer::time_t> action_timer;
-
-class action_frame : public action_timing<timer::frame_t> {
+class action_frame : public action {
+    typedef timer::frame_t frame_t;
 public:
+    action_frame(frame_t duration,
+                 timer const& t = global_timer_base::instance())
+    : _duration(duration), _timer(t) {
+        
+    }
+
     // yield a certain amount of frames
     // alias to wait, just for readability
-    static action* yield(time_t frame = 0) {
-        return new action_timing<timer::frame_t>(frame);
+    static action* yield(frame_t frame = 0) {
+        return new action_frame(frame);
     }
+    
+protected:
+    virtual void on_start() {
+        action::on_start();
+        _start = _timer.current_frame();
+    };
+    
+    virtual bool done() const {
+        return _timer.current_frame() - _start > _duration && action::done();
+    }
+    
+private:
+    frame_t _start = 0;
+    frame_t _duration = 0;
+    timer const& _timer;
 };
 
 

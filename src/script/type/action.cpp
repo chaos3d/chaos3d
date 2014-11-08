@@ -5,6 +5,8 @@
 
 #include "go/game_object.h"
 #include "action_support/action_transform.h"
+#include "action/action_script.h"
+#include "action/action_timed.h"
 #include <vector>
 #include <array>
 
@@ -12,7 +14,7 @@ template class script::class_<root_action>;
 
 namespace script {
     // TODO: converter from array to key_frame_t
-    action* c3d_go_make_translate_action(game_object* go, float duration,
+    static action* c3d_go_make_translate_action(game_object* go, float duration,
                                          std::vector<std::array<float, 4>> const&keyframe) {
         vec3f_anim_kf_t::key_frames_t key_frames;
         for (auto& it : keyframe) {
@@ -25,18 +27,44 @@ namespace script {
                                           vec3f_anim_kf_t::create(WRAP_CLAMP, key_frames));
     }
     
-    action* c3d_action_add_sequence(action* act, std::vector<action*> const& seq) {
+    static action* c3d_action_add_sequence(action* act, std::vector<action*> const& seq) {
         act->push(action::sequence(seq));
         return act;
     }
     
-    action* c3d_action_add_group(action* act, std::vector<action*> const& grp) {
+    static action* c3d_action_add_group(action* act, std::vector<action*> const& grp) {
         act->push(action::group(grp));
         return act;
     }
 
+    static int c3d_lua_make_script_action(lua_State* L) {
+        luaL_argcheck(L, lua_isfunction(L, -1), 1, "expect only one function");
+        
+        state* st = nullptr;
+        lua_getallocf(L, (void**)&st);
+        converter<action*>::to(L, new action_script(st->load()));
+        return 1;
+    }
+    
+    static int c3d_lua_make_timer_action(lua_State* L) {
+        state* st = nullptr;
+        lua_getallocf(L, (void**)&st);
+        converter<action*>::to(L, action_timer::wait(lua_tonumber(L, 1)));
+        return 1;
+    }
+
+    static int c3d_lua_make_frame_action(lua_State* L) {
+        state* st = nullptr;
+        lua_getallocf(L, (void**)&st);
+        converter<action*>::to(L, action_frame::yield(lua_tonumber(L, 1)));
+        return 1;
+    }
+
     void def_action(state* st, std::string const& scope) {
         st->import((scope + ".action").c_str())
+        .def("from", &c3d_lua_make_script_action)
+        .def("wait_time", &c3d_lua_make_timer_action)
+        .def("wait_frame", &c3d_lua_make_frame_action)
         ;
 
         script::class_<action>::type()
