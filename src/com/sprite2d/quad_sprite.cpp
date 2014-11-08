@@ -11,6 +11,13 @@ quad_sprite::quad_sprite(game_object* go, int type)
     
 }
 
+quad_sprite::quad_sprite(game_object* go, texture_atlas const& atlas,
+                         std::string const& name,
+                         std::string const& mat)
+: quad_sprite(go, 0) {
+    set_from_atlas(atlas, name, mat);
+}
+
 quad_sprite* quad_sprite::clone(game_object* go) const {
     int type = sprite_mgr::instance().buffer_index(_data.buffer);
     quad_sprite* quad = new quad_sprite(go, type);

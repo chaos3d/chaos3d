@@ -24,9 +24,9 @@ vertex_layout::locked_buffer vertex_layout::lock_channels() {
     
     typedef std::tuple<vertex_buffer*, char*> locked_t;
     std::vector<locked_t> locks;
-    for(auto& it : _channels) {
+    for (auto& it : _channels) {
         char* buf = nullptr;
-        if(!it.buffer->is_locked()) {
+        if (!it.buffer->is_locked()) {
             buf = static_cast<char*>(it.buffer->lock());
             locks.emplace_back(it.buffer.get(), buf);
         } else {

@@ -27,6 +27,9 @@ namespace sprite2d {
         
     public:
         quad_sprite(game_object*, int type);
+        quad_sprite(game_object*, texture_atlas const&,
+                    std::string const& name,
+                    std::string const& mat = "basic");
         
         void set_frame_key(animated_frame_key const& key) {
             if (key.mask & animated_frame_key::FRAME)
