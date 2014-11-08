@@ -157,6 +157,8 @@
 		F962474319F3271600FBBB0A /* lua_import.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F962474119F3271600FBBB0A /* lua_import.cpp */; };
 		F96744611A0B7C0200C0B1E3 /* launcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F96744601A0B7C0200C0B1E3 /* launcher.cpp */; };
 		F96744621A0B7C0200C0B1E3 /* launcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F96744601A0B7C0200C0B1E3 /* launcher.cpp */; };
+		F96744641A0E067800C0B1E3 /* action.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F96744631A0E067800C0B1E3 /* action.cpp */; };
+		F96744651A0E067800C0B1E3 /* action.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F96744631A0E067800C0B1E3 /* action.cpp */; };
 		F9AF0F8719B5B4950047C431 /* data_stream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F9AF0F8619B5B4950047C431 /* data_stream.cpp */; };
 		F9AF0F8819B5B4950047C431 /* data_stream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F9AF0F8619B5B4950047C431 /* data_stream.cpp */; };
 /* End PBXBuildFile section */
@@ -849,6 +851,7 @@
 		F962474019F25AF900FBBB0A /* native_window.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = native_window.h; sourceTree = "<group>"; };
 		F962474119F3271600FBBB0A /* lua_import.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = lua_import.cpp; path = platform/lua_import.cpp; sourceTree = "<group>"; };
 		F96744601A0B7C0200C0B1E3 /* launcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = launcher.cpp; path = platform/launcher.cpp; sourceTree = "<group>"; };
+		F96744631A0E067800C0B1E3 /* action.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = action.cpp; sourceTree = "<group>"; };
 		F98A04A8198AC046000FE65D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		F99064EB19A5D01E003A3323 /* appender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = appender.h; sourceTree = "<group>"; };
 		F99064EC19A5D01E003A3323 /* appenderskeleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = appenderskeleton.h; sourceTree = "<group>"; };
@@ -1187,6 +1190,7 @@
 		8811357C18D426FA0069F351 /* type */ = {
 			isa = PBXGroup;
 			children = (
+				F96744631A0E067800C0B1E3 /* action.cpp */,
 				880F615018D6EE55003BCE3D /* asset.cpp */,
 				8811357E18D426FA0069F351 /* def.h */,
 				8811358418D43F910069F351 /* eigen.cpp */,
@@ -3422,6 +3426,7 @@
 				8869FDCD19186D9C00946FD0 /* gles2.cpp in Sources */,
 				886CC16118F662BB006A3AF5 /* type_info.cpp in Sources */,
 				886CC16218F662BB006A3AF5 /* sprite2d.cpp in Sources */,
+				F96744651A0E067800C0B1E3 /* action.cpp in Sources */,
 				886CC16318F662BB006A3AF5 /* asset.cpp in Sources */,
 				886CC16418F662BB006A3AF5 /* event.cpp in Sources */,
 				886CC16518F662BB006A3AF5 /* vertex_layout.cpp in Sources */,
@@ -3498,6 +3503,7 @@
 				8870F3EB1919C5630038B012 /* cAppDelegate.mm in Sources */,
 				880F615118D6EE55003BCE3D /* asset.cpp in Sources */,
 				880F615B18D96468003BCE3D /* event.cpp in Sources */,
+				F96744641A0E067800C0B1E3 /* action.cpp in Sources */,
 				882762141872D50D00B1291B /* vertex_layout.cpp in Sources */,
 				8804F8CE18A75DC50055322F /* world_box2d.cpp in Sources */,
 				8879CE6A18BA067D00BCBFA6 /* texture_asset.cpp in Sources */,

@@ -17,6 +17,7 @@
 
 IMPORT_CLASS_TYPE(render_device);
 IMPORT_CLASS_TYPE(native_window);
+IMPORT_CLASS_TYPE(root_action);
 
 using namespace script;
 
@@ -43,6 +44,7 @@ extern "C" int luaopen_chaos3d(lua_State *L) {
     .def("create_game_window", LUA_BIND(&launcher::create_game_window))
     .def("poll_event", LUA_BIND(&launcher::poll_event))
     .def("get_render_device", LUA_BIND(&launcher::get_render_device))
+    .def("get_action", LUA_BIND(&launcher::action))
     ;
     
     lua_getglobal(L, "chaos3d");

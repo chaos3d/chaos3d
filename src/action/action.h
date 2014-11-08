@@ -52,7 +52,11 @@ public:
     // create a group of actions (executing simultaneously)
     template<typename C = std::initializer_list<action*> >
     static action* group(C const& list) {
-        return (new action())->push(list.begin(), list.end());
+        action* act = new action();
+        for (auto& it : list) {
+            act->push(it);
+        }
+        return act;
     }
 
 protected:

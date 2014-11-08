@@ -20,6 +20,7 @@ enum { WRAP_CLAMP, WRAP_LOOP };
 template<class Key>
 struct key_frame {
     typedef std::vector<key_frame> key_frames_t;
+    typedef Key key_t;
 
     Key key;
     float timestamp;
