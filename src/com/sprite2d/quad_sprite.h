@@ -31,6 +31,18 @@ namespace sprite2d {
             animated_frame_key() = default;
         };
         
+        struct animated_atlas_key {
+            texture_atlas* atlas;   // FIXME: memory/reference_count
+            std::string name;
+            std::string mat = "basic";    // material name
+            
+            animated_atlas_key(texture_atlas* atlas_,
+                               std::string const& name_,
+                               std::string const& mat_ = "basic")
+            : atlas(atlas_), name(name_), mat(mat_)
+            {}
+        };
+        
         typedef box2f animated_bound_key;
         typedef float animated_alpha;
         

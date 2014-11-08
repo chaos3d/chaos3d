@@ -18,10 +18,29 @@ namespace act {
         }
     };
     
+    typedef sprite2d::quad_sprite::animated_atlas_key atlas_key_t;
+    typedef animation_keyframe<atlas_key_t> atlas_anim_kf_t;
+    typedef atlas_anim_kf_t::key_frames_t atlas_keyframes_t;
+    struct quad_atlas_applier_t {
+        sprite2d::quad_sprite* _sprite;
+        void operator() (atlas_anim_kf_t const& keyframes,
+                         timer::time_t offset) const {
+            auto& key = keyframes.interpolate<void>(offset);
+            _sprite->set_from_atlas(*key.atlas, key.name, key.mat);
+            _sprite->mark_dirty();
+        }
+    };
+    
     action_keyframe<sprite_key_t, quad_sprite_applier_t>*
     make_sprite_action(game_object* go, timer::time_t duration,
                        sprite_anim_kf_t::const_ptr const& keyframe,
                        timer const& t = global_timer_base::instance());
+
+    action_keyframe<atlas_key_t, quad_atlas_applier_t>*
+    make_atlas_action(game_object* go, timer::time_t duration,
+                      atlas_anim_kf_t::const_ptr const& keyframe,
+                      timer const& t = global_timer_base::instance());
+
 }
 
 #endif
