@@ -44,7 +44,7 @@ static int c3d_lua_create_wxwindow(lua_State* L) {
     }
     
     render_device& device = converter<render_device&>::from(L, 1, nullptr);
-    wxWindow* parent = (wxWindow*)state.GetUserDataType(2, *p_wxluatype_wxWindow);
+    //wxWindow* parent = (wxWindow*)state.GetUserDataType(2, *p_wxluatype_wxWindow);
     auto dim = converter<std::array<float, 4>>::from(L, 3, nullptr);
 
     gles20::render_wxwindow_egl* window =
@@ -66,8 +66,10 @@ extern "C" int luaopen_chaos3d_wx(lua_State *L) {
     .def("create_wxwindow", c3d_lua_create_wxwindow)
     ;
     
-    auto state = state::create(L);
-    state->import("chaos3d")
+    state* st = nullptr;
+    lua_getallocf(L, (void**)&st);
+
+    st->import("chaos3d")
     .def("init", LUA_BIND(&init_wx))
     ;
 
