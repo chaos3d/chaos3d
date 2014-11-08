@@ -5,6 +5,7 @@
 
 #include "go/game_object.h"
 #include "action_support/action_transform.h"
+#include "action_support/action_sprite.h"
 #include "action/action_script.h"
 #include "action/action_timed.h"
 #include <vector>
@@ -25,6 +26,24 @@ namespace script {
         }
         return act::make_translate_action(go, duration,
                                           vec3f_anim_kf_t::create(WRAP_CLAMP, key_frames));
+    }
+    
+    // TODO: support bound and collider change
+    // TODO: add material
+    static action* c3d_go_make_sprite_action(game_object* go, float duration,
+                                             std::vector<std::array<float, 4>> const&keyframe) {
+        typedef act::sprite_anim_kf_t::key_frame_t key_frame_t;
+        typedef sprite2d::quad_sprite::box2f box2f;
+        
+        act::sprite_anim_kf_t::key_frames_t key_frames;
+        for (auto& it : keyframe) {
+            key_frames.emplace_back(key_frame_t(it[0],
+                                                act::sprite_key_t(box2f(box2f::VectorType(it[1], it[2]),
+                                                                        box2f::VectorType(it[3], it[4])))
+                                                ));
+        }
+        return act::make_sprite_action(go, duration,
+                                       act::sprite_anim_kf_t::create(WRAP_CLAMP, key_frames));
     }
     
     static action* c3d_action_add_sequence(action* act, std::vector<action*> const& seq) {
@@ -78,6 +97,7 @@ namespace script {
         
         script::class_<game_object>::type()
         .def("make_translate_action", LUA_BIND(&c3d_go_make_translate_action))
+        .def("make_sprite_action", LUA_BIND(&c3d_go_make_sprite_action))
         ;
     }
 }

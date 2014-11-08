@@ -17,9 +17,18 @@ namespace sprite2d {
         
         struct animated_frame_key {
             enum { FRAME = 1, BOUND = 2, MAT = 4 };
-            box2f frame, bound;
+            box2f frame;    // texture uv
+            box2f bound;    // upper/lower bound
             sprite_material* mat = nullptr;
             uint8_t mask = 1;
+            
+            animated_frame_key(box2f const& frame_,
+                               sprite_material* mat_ = nullptr)
+            : frame(frame_), mat(mat_),
+            mask(FRAME | (mat_ != nullptr ? MAT : 0))
+            {}
+            
+            animated_frame_key() = default;
         };
         
         typedef box2f animated_bound_key;
@@ -59,7 +68,7 @@ namespace sprite2d {
         virtual void fill_indices(uint16_t) override;
         
         ATTRIBUTE(box2f, frame, box2f()); // texture uv
-        ATTRIBUTE(box2f, bound, box2f()); // position and size
+        ATTRIBUTE(box2f, bound, box2f()); // lower and upper bound
         ATTRIBUTE(float, alpha, 1.f); // alpha
         COMPONENT_FROM_LOADER(quad_sprite, quad);
     };

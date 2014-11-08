@@ -15,8 +15,8 @@
 // TODO: WRAP_FULL_LOOP
 enum { WRAP_CLAMP, WRAP_LOOP };
 
-// The static/constant keyframes data for an animation
-//
+// single key frame
+// the static/constant keyframes data for an animation
 template<class Key>
 struct key_frame {
     typedef std::vector<key_frame> key_frames_t;
@@ -35,6 +35,9 @@ struct key_frame {
     };
 };
 
+// a collection of key frames and generic interpolation
+// action_keyframe uses this to save key frames
+// applier can use this to interpolate values
 template<class Key>
 class animation_keyframe : public std::enable_shared_from_this<animation_keyframe<Key>> {
 public:
@@ -70,7 +73,7 @@ public:
         } else {
             auto pre = std::next(it, -1);
             return i(pre->key, it->key, (offset - pre->timestamp) / (it->timestamp - pre->timestamp),
-                     std::distance(pre, _keyframes.begin()));
+                     (int)std::distance(pre, _keyframes.begin()));
         }
         return Key();
     }
@@ -124,16 +127,19 @@ private:
     CONSTRUCTOR_FOR_SHARED(animation_keyframe);
 };
 
+// often used types of keys in frames
 typedef animation_keyframe<float> scalarf_anim_kf_t;
 typedef animation_keyframe<Eigen::Vector2f> vec2f_anim_kf_t;
 typedef animation_keyframe<Eigen::Vector3f> vec3f_anim_kf_t;
 typedef animation_keyframe<Eigen::Quaternionf> quaternionf_anim_kf_t;
 
+// helper type to extract keyframes type
 typedef typename scalarf_anim_kf_t::key_frames_t scalarf_keyframes_t;
 typedef typename vec2f_anim_kf_t::key_frames_t vec2f_keyframes_t;
 typedef typename vec3f_anim_kf_t::key_frames_t vec3f_keyframes_t;
 typedef typename quaternionf_anim_kf_t::key_frames_t quaternionf_keyframes_t;
 
+// helper type to extract key frame type
 typedef key_frame<float> scalarf_keyframe_t;
 typedef key_frame<Eigen::Vector2f> vec2_keyframe_t;
 typedef key_frame<Eigen::Vector3f> vec3_keyframe_t;
@@ -147,6 +153,12 @@ typename animation_keyframe<Key>::ptr make_animation_keyframe(int wrap,
     return anim_kf_t::create(wrap, keyframes);
 }
 
+// void is for no-interpolation
+// template<class Key>
+// struct interpolator_concrete {};
+
+// linear/slerp interpolator that can be used by animation_keyframe
+// to plug into the generic interpolation
 template<class Key>
 struct interpolator_linear {
     inline Key operator() (Key const& from, Key const& to,
@@ -163,6 +175,8 @@ struct interpolator_slerp {
     }
 };
 
+// the action that applies the key frame
+// the applier usually calls keyframe.interpolate
 template<class Key, class Applier>
 class action_keyframe : public action {
 public:
@@ -205,6 +219,7 @@ private:
     timer const& _timer;
 };
 
+// helper function to create actions
 template<class Key, class Applier>
 action_keyframe<Key, Applier>* make_action_keyframe(Applier const& applier, time_t duration,
                                                     typename action_keyframe<Key, Applier>::keyframe_ptr const& keyframe,

@@ -221,7 +221,7 @@ game_object& game_object::move_bottom() {
     
 	this->retain();
 	remove_self();
-	parent->add_child( this );
+	parent->add_child(this);
 	this->release();
     return *this;
 }

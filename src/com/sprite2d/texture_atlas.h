@@ -15,7 +15,7 @@ public:
     typedef std::unique_ptr<texture_atlas const, release_deleter> const_ptr;
     
     // TODO: frame spacing
-    typedef Eigen::AlignedBox2f box2f;
+    typedef Eigen::AlignedBox2f box2f; // uv coordinate
     typedef std::unordered_map<std::string, box2f> rects_t;
     
     // tags for different format
