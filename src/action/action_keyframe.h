@@ -187,9 +187,11 @@ public:
     template<class... Args>
     action_keyframe(time_t duration, keyframe_ptr const& keyframe,
                     timer const& t, Args&&... args)
-    : _duration(duration), _keyframe(keyframe),
+    : _duration(duration), _keyframe(keyframe), _loop(duration),
     _timer(t), _applier(std::forward<Args>(args)...)
     {}
+    
+    void set_loop(time_t loop) { _loop = loop; }
     
 protected:
     virtual void on_start() override {
@@ -208,14 +210,16 @@ protected:
     virtual void update() override {
         action::update();
         
-        auto normalized = (_timer.current_time() - _start) / _duration;
+        auto normalized = fmod((_timer.current_time() - _start), _loop) / _loop;
         _applier(*_keyframe, normalized > 1.f ? 1.f : normalized < 0.f ? 0.f : normalized);
     }
     
 private:
     Applier _applier;
     keyframe_ptr _keyframe;
-    time_t _duration, _start;
+    time_t _start;      // start time
+    time_t _duration;   // the entire duration
+    time_t _loop;       // the duration for each piece
     timer const& _timer;
 };
 

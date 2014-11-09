@@ -50,7 +50,8 @@ namespace script {
     
     // TODO: converter from struct to lua array so we can add atlas
     static action* c3d_go_make_atlas_action(game_object* go, float duration,
-                                            std::vector<script::ref> const&keyframe) {
+                                            std::vector<script::ref> const&keyframe,
+                                            float loop) {
         typedef act::atlas_anim_kf_t::key_frame_t key_frame_t;
         typedef sprite2d::quad_sprite::box2f box2f;
 
@@ -74,8 +75,12 @@ namespace script {
                                                 ));
             lua_pop(L, 4);
         }
-        return act::make_atlas_action(go, duration,
-                                      act::atlas_anim_kf_t::create(WRAP_CLAMP, key_frames));
+        auto* act = act::make_atlas_action(go, duration,
+                                           act::atlas_anim_kf_t::create(WRAP_CLAMP, key_frames));
+        if (loop > 0.f) {
+            act->set_loop(loop);
+        }
+        return act;
     }
     
     static action* c3d_action_add_sequence(action* act, std::vector<action*> const& seq) {
