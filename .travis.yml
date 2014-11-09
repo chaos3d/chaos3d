@@ -1,8 +1,4 @@
 language: objective-c
-before_script:
-  - curl -L http://clang-analyzer.llvm.org/downloads/checker-276.tar.bz2 > checker.tar.bz2
-  - tar -zxvf checker.tar.bz2
-  - (cd checker-276/ && ln -sfF lib include)
 script:
   - xcodebuild -project build/chaos3d.xcodeproj -target chaos3d_core_mac
   - xcodebuild -project build/chaos3d.xcodeproj -sdk iphonesimulator -target chaos3d_core_ios
@@ -14,6 +10,9 @@ script:
 os:
   - osx
 before_deploy:
+  - curl -L http://clang-analyzer.llvm.org/downloads/checker-276.tar.bz2 > checker.tar.bz2
+  - tar -zxvf checker.tar.bz2
+  - (cd checker-276/ && ln -sfF lib include)
   - ./checker-276/scan-build xcodebuild -project build/chaos3d.xcodeproj -target chaos3d_core_ios analyze
   - ./checker-276/scan-build xcodebuild -project build/chaos3d.xcodeproj -target chaos3d analyze
   - zip release.zip build/libchaos3d_core_ios.a build/libchaos3d.dylib build/libchaos3d_core_mac.dylib
