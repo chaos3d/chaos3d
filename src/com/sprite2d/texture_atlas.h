@@ -5,10 +5,12 @@
 #include <unordered_map>
 #include <Eigen/Geometry>
 #include "common/utility.h"
+#include "common/log.h"
 #include "common/referenced_count.h"
 #include "re/texture.h"
 
 // TODO: move up for general purposes?
+// TODO: use shared_ptr
 class texture_atlas : public referenced_count {
 public:
     typedef std::unique_ptr<texture_atlas, release_deleter> ptr;
@@ -36,6 +38,17 @@ public:
     // the texture size
     texture::vector2i const& size() const {
         return _texture->size();
+    }
+    
+    texture_atlas& add_frame(std::string const& name, box2f const& box) {
+        auto it = _rects.find(name);
+        if (it != _rects.end()) {
+            // TODO: log error
+        } else {
+            _rects.emplace(std::piecewise_construct, std::forward_as_tuple(name),
+                           std::forward_as_tuple(box));
+        }
+        return *this;
     }
     
 private:
