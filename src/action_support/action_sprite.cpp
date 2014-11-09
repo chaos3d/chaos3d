@@ -23,7 +23,7 @@ namespace act {
         if (sprite == nullptr)
             return nullptr;
         
-        return make_action_keyframe<atlas_key_t>(quad_atlas_applier_t{sprite}, duration,
+        return make_action_keyframe<atlas_key_t>(quad_atlas_applier_t(sprite), duration,
                                                  keyframe, t);
     }
 

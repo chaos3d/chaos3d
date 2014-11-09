@@ -204,14 +204,19 @@ protected:
     }
     
     virtual bool done() const override {
-        return _timer.current_time() - _start >= _duration && action::done();
+        return _duration > 0.f // infinite loop if duration is negative or 0
+            && (_timer.current_time() - _start >= _duration && action::done());
     }
     
     virtual void update() override {
         action::update();
         
-        auto normalized = fmod((_timer.current_time() - _start), _loop) / _loop;
-        _applier(*_keyframe, normalized > 1.f ? 1.f : normalized < 0.f ? 0.f : normalized);
+        auto elapsed = _timer.current_time() - _start;
+        auto normalized = fmod(elapsed, _loop) / _loop;
+        _applier(*_keyframe,
+                 (_duration > 0.f && elapsed >= _duration) ? 1.f
+                 : normalized < 0.f ? 0.f
+                 : normalized);
     }
     
 private:
