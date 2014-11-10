@@ -16,6 +16,25 @@
 template class script::class_<root_action>;
 
 namespace script {
+    typedef act::atlas_anim_kf_t::key_frame_t atlas_keyframe_t;
+    template<>
+    struct convert_from_lua<atlas_keyframe_t> {
+        typedef sprite2d::quad_sprite::animated_atlas_key key_t;
+        typedef std::true_type convertable;
+        
+        static atlas_keyframe_t convert(lua_State* L, int idx) {
+            luaL_argcheck(L, lua_istable(L, idx), idx, "expect a table");
+            lua_rawgeti(L, idx, 1);
+            lua_rawgeti(L, idx, 2);
+            lua_rawgeti(L, idx, 3);
+            return atlas_keyframe_t(converter<float>::from(L, -3, nullptr),
+                                    act::atlas_key_t(converter<texture_atlas*>::from(L, -2,nullptr),
+                                                     converter<char const*>::from(L, -1, nullptr)
+                                                     )
+                                    );
+        }
+    };
+    
     // TODO: converter from array to key_frame_t
     static action* c3d_go_make_translate_action(game_object* go, float duration,
                                          std::vector<std::array<float, 4>> const&keyframe) {
@@ -47,36 +66,19 @@ namespace script {
         return act::make_sprite_action(go, duration,
                                        act::sprite_anim_kf_t::create(WRAP_CLAMP, key_frames));
     }
-    
+
     // TODO: converter from struct to lua array so we can add atlas
     static action* c3d_go_make_atlas_action(game_object* go, float duration,
-                                            std::vector<script::ref> const&keyframe,
+                                            std::vector<atlas_keyframe_t> const& keyframes,
                                             float loop) {
         typedef act::atlas_anim_kf_t::key_frame_t key_frame_t;
         typedef sprite2d::quad_sprite::box2f box2f;
 
-        if (keyframe.empty())
+        if (keyframes.empty())
             return nullptr;
         
-        act::atlas_anim_kf_t::key_frames_t key_frames;
-        auto& st = keyframe.front().parent();
-        lua_State* L = st->internal();
-        for (auto& it : keyframe) {
-            // FIXME: use generic converter
-            it.push(st->internal());
-            lua_rawgeti(L, -1, 1);
-            lua_rawgeti(L, -2, 2);
-            lua_rawgeti(L, -3, 3);
-            key_frames.emplace_back(key_frame_t(converter<float>::from(L, -3, nullptr),
-                                                act::atlas_key_t(converter<texture_atlas*>::from(L, -2,
-                                                                                                       nullptr),
-                                                                 converter<char const*>::from(L, -1, nullptr)
-                                                                 )
-                                                ));
-            lua_pop(L, 4);
-        }
         auto* act = act::make_atlas_action(go, duration,
-                                           act::atlas_anim_kf_t::create(WRAP_CLAMP, key_frames));
+                                           act::atlas_anim_kf_t::create(WRAP_CLAMP, keyframes));
         if (loop > 0.f) {
             act->set_loop(loop);
         }

@@ -1,4 +1,3 @@
-#include "script/type/def.h"
 #include "go/game_object.h"
 #include "sg/transform.h"
 #include "script/state.h"

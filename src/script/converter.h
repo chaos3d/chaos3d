@@ -14,6 +14,12 @@
 
 namespace script {
     template<class T>
+    struct convert_from_lua {
+        typedef std::false_type convertable;
+        
+    };
+    
+    template<class T>
     struct converter {
         template<class C>
         using T0 = typename std::remove_reference<C>::type;
@@ -71,7 +77,7 @@ namespace script {
                     break;
                 }
                 // E will never be a reference
-                result.emplace_back(converter<E>::from(L, -1, nullptr));
+                result.emplace_back(converter<E>::from(L, lua_gettop(L), nullptr));
                 lua_pop(L, 1);
             }
             return result;
@@ -87,6 +93,7 @@ namespace script {
         
         template<typename U = T,
         typename std::enable_if<is_userdata<T2<U>>::value && !std::is_pointer<T1<U>>::value
+            && !convert_from_lua<T2<U>>::convertable::value
             >::type* = nullptr>
         static U from(lua_State* L, int idx, char* storage) {
             object_wrapper* obj = (object_wrapper*)lua_touserdata(L, idx);
@@ -100,6 +107,27 @@ namespace script {
                           "object type is not matched");
 #endif
             return *(T2<U>*)(obj->object);
+        };
+
+        template<typename U = T,
+        typename std::enable_if<is_userdata<T2<U>>::value && !std::is_pointer<T1<U>>::value
+            && convert_from_lua<T2<U>>::convertable::value
+            >::type* = nullptr>
+        static U from(lua_State* L, int idx, char* storage) {
+            object_wrapper* obj = (object_wrapper*)lua_touserdata(L, idx);
+            if (obj != nullptr && obj->object != nullptr) {
+#ifdef DEBUG
+                luaL_argcheck(L, obj->type == &class_<T2<U>>::type() ||
+                              obj->type->is_derived(&class_<T2<U>>::type()), idx,
+                              "object type is not matched");
+#endif
+                return *(T2<U>*)(obj->object);
+            } else {
+                int n = lua_gettop(L);
+                auto ret = convert_from_lua<T2<U>>::convert(L, idx);
+                lua_settop(L, n);
+                return std::move(ret);
+            }
         };
 
         template<typename U = T,
