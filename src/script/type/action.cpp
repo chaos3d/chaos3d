@@ -1,8 +1,8 @@
-#include "script/type/def.h"
 #include "script/class_type.h"
 #include "script/lua_bind.h"
 #include "script/state.h"
 #include "script/lua_ref.h"
+#include "script/type/convert.h"
 
 #include "go/game_object.h"
 #include "action_support/action_transform.h"

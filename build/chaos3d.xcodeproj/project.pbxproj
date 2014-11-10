@@ -161,6 +161,8 @@
 		F96744651A0E067800C0B1E3 /* action.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F96744631A0E067800C0B1E3 /* action.cpp */; };
 		F96744681A0ED0DA00C0B1E3 /* action_sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F96744671A0ED0DA00C0B1E3 /* action_sprite.cpp */; };
 		F96744691A0ED0DA00C0B1E3 /* action_sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F96744671A0ED0DA00C0B1E3 /* action_sprite.cpp */; };
+		F967446D1A10B92100C0B1E3 /* convert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F967446B1A10B92100C0B1E3 /* convert.cpp */; };
+		F967446E1A10B92100C0B1E3 /* convert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F967446B1A10B92100C0B1E3 /* convert.cpp */; };
 		F9AF0F8719B5B4950047C431 /* data_stream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F9AF0F8619B5B4950047C431 /* data_stream.cpp */; };
 		F9AF0F8819B5B4950047C431 /* data_stream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F9AF0F8619B5B4950047C431 /* data_stream.cpp */; };
 /* End PBXBuildFile section */
@@ -856,6 +858,8 @@
 		F96744631A0E067800C0B1E3 /* action.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = action.cpp; sourceTree = "<group>"; };
 		F96744661A0E9FAE00C0B1E3 /* action_sprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = action_sprite.h; sourceTree = "<group>"; };
 		F96744671A0ED0DA00C0B1E3 /* action_sprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = action_sprite.cpp; sourceTree = "<group>"; };
+		F967446B1A10B92100C0B1E3 /* convert.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = convert.cpp; sourceTree = "<group>"; };
+		F967446C1A10B92100C0B1E3 /* convert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = convert.h; sourceTree = "<group>"; };
 		F98A04A8198AC046000FE65D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		F99064EB19A5D01E003A3323 /* appender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = appender.h; sourceTree = "<group>"; };
 		F99064EC19A5D01E003A3323 /* appenderskeleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = appenderskeleton.h; sourceTree = "<group>"; };
@@ -1196,6 +1200,8 @@
 			children = (
 				F96744631A0E067800C0B1E3 /* action.cpp */,
 				880F615018D6EE55003BCE3D /* asset.cpp */,
+				F967446B1A10B92100C0B1E3 /* convert.cpp */,
+				F967446C1A10B92100C0B1E3 /* convert.h */,
 				8811357E18D426FA0069F351 /* def.h */,
 				8811358418D43F910069F351 /* eigen.cpp */,
 				880F615A18D96468003BCE3D /* event.cpp */,
@@ -3392,6 +3398,7 @@
 				886CC13A18F662BB006A3AF5 /* timer.cpp in Sources */,
 				886CC13B18F662BB006A3AF5 /* sprite.cpp in Sources */,
 				886CC13C18F662BB006A3AF5 /* import_scope.cpp in Sources */,
+				F967446E1A10B92100C0B1E3 /* convert.cpp in Sources */,
 				886CC13D18F662BB006A3AF5 /* event_dispatcher.cpp in Sources */,
 				886CC13E18F662BB006A3AF5 /* action_script.cpp in Sources */,
 				886CC13F18F662BB006A3AF5 /* game_object.cpp in Sources */,
@@ -3470,6 +3477,7 @@
 				F9AF0F8719B5B4950047C431 /* data_stream.cpp in Sources */,
 				8870F3EC1919C5640038B012 /* cViewController.mm in Sources */,
 				887711E518CD32CE00BA5508 /* import_scope.cpp in Sources */,
+				F967446D1A10B92100C0B1E3 /* convert.cpp in Sources */,
 				8882E4A518A382A20044CFE4 /* event_dispatcher.cpp in Sources */,
 				8869FDCE19186D9E00946FD0 /* gles2.cpp in Sources */,
 				8879CE2B18B1EAB500BCBFA6 /* action_script.cpp in Sources */,
