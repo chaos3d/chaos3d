@@ -31,6 +31,7 @@ namespace script {
         .def("set_translate", LUA_BIND((&com::transform::set_translate<float, float, float>)))
         .def("set_rotate", LUA_BIND((&com::transform::set_rotate_by_axis)))
         .def("set_scale", LUA_BIND((&com::transform::set_scale<float, float, float>)))
+        .def("set_skew", LUA_BIND_S(com::transform& (com::transform::*)(float, float), &com::transform::set_skew))
         .def("mark", LUA_BIND(&com::transform::mark_dirty))
         ;
     }

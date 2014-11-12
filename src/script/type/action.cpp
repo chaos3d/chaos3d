@@ -67,7 +67,6 @@ namespace script {
                                        act::sprite_anim_kf_t::create(WRAP_CLAMP, key_frames));
     }
 
-    // TODO: converter from struct to lua array so we can add atlas
     static action* c3d_go_make_atlas_action(game_object* go, float duration,
                                             std::vector<atlas_keyframe_t> const& keyframes,
                                             float loop) {
