@@ -94,14 +94,15 @@ transform& transform::force_update() {
 
 void transform::update_global(affine3f const* parent) {
     _global_affine = parent ? *parent : affine3f::Identity();
+    _global_affine.translate(_translate).scale(_scale).rotate(_rotate);
     if (_skew.x() != 0.f || _skew.y() != 0.f) {
-        matrix3f skew;
-        skew << 1, _skew.x(), 0,
-        _skew.y(), 1 + _skew.z(), 0,
-        0, 0, 1;
+        matrix4f skew;
+        skew << 1, _skew.x(), 0, 0,
+        _skew.y(), 1 + _skew.z(), 0, 0,
+        0, 0, 1, 0,
+        0, 0, 0, 1;
         _global_affine = _global_affine * skew;
     }
-    _global_affine.translate(_translate).scale(_scale).rotate(_rotate);
     _global_inverse = _global_affine.inverse();
 }
 
