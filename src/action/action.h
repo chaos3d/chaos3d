@@ -66,16 +66,26 @@ public:
     }
 
     virtual ~action();
+    
+    /// update the internal state
+    virtual void update();
+    
+    /// check if the action is finished
+    virtual bool done() const { return empty(); }
 
+    /// start the action
+    /// life cycle:
+    ///     action.start();
+    ///     action.update();
+    ///     if (action.done()) { delete action; }
+    void start();
+    
 protected:
     bool started() const { return _started; }
     
     virtual void on_start();
     virtual void on_end();
     virtual void on_stop(bool skip);
-    virtual bool done() const { return empty(); }
-    
-    virtual void update();
     
     action();
     

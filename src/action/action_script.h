@@ -36,8 +36,10 @@ protected:
     //virtual void on_skip(bool skip) override;
     
 private:
+    void yield_to(ptr&&);
+    
     script::coroutine _coroutine;
-    yieldable::ptr _yielded;
+    ptr _yielded;
 };
 
 #endif

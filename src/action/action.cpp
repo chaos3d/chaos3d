@@ -17,9 +17,18 @@ action& action::push(ptr&& act) {
     
     // pushing an action to a started one
     // should start it now
-    if (started() && !_child_head->started()) // child_head == act
-        _child_head->on_start();
+    if (started()) {
+        _child_head->start(); // child_head == act
+    }
     return *this;
+}
+
+void action::start() {
+    if (started()) {
+        return;
+    }
+    
+    on_start();
 }
 
 bool action::cancellable() const{

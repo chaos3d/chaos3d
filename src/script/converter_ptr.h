@@ -19,10 +19,11 @@ namespace script {
         static  std::unique_ptr<P, D>
         from(lua_State* L, int idx, char* storage) {
             object_wrapper* obj = (object_wrapper*)lua_touserdata(L, idx);
-            T* raw_obj = static_cast<T*>(obj->object);
-            if (raw_obj == nullptr) {
+            if (obj == nullptr || obj->object == nullptr) {
                 return nullptr;
             }
+
+            T* raw_obj = static_cast<T*>(obj->object);
             
             // remove the obj reference
             lua_getfield(L, LUA_REGISTRYINDEX, "__objlink");
