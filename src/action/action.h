@@ -11,6 +11,9 @@ public:
     typedef std::unique_ptr<action> ptr;
     
 public:
+    action();
+    virtual ~action();
+    
     // add an action to its children
     // if this action is active, the added one will be
     // excuted immediately, or it will wait until the
@@ -65,8 +68,6 @@ public:
         return ptr(act);
     }
 
-    virtual ~action();
-    
     /// update the internal state
     virtual void update();
     
@@ -86,8 +87,6 @@ protected:
     virtual void on_start();
     virtual void on_end();
     virtual void on_stop(bool skip);
-    
-    action();
     
 private:
     void reverse();

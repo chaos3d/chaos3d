@@ -77,7 +77,7 @@ private:
 
 #define SIMPLE_CLONE(type) \
     protected: virtual type* clone(game_object* go) const override {\
-        type* com = new type(go); \
+        auto* com = new type(go); \
         *com = *this; \
         return com; \
     }

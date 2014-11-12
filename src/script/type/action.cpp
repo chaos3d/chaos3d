@@ -9,6 +9,7 @@
 #include "action_support/action_sprite.h"
 #include "action/action_script.h"
 #include "action/action_timed.h"
+#include "com/action/action.h"
 #include "com/sprite2d/texture_atlas.h"
 #include <vector>
 #include <array>
@@ -156,11 +157,17 @@ namespace script {
         .def("add_group", LUA_BIND(&c3d_action_add_group))
         ;
 
+        script::class_<com::action>::type()
+        .def("add_sequence", LUA_BIND(&com::action::add_sequence))
+        .def("add_group", LUA_BIND(&com::action::add_group))
+        ;
+        
         script::class_<root_action>::type()
         .derive<action>()
         ;
         
         script::class_<game_object>::type()
+        .def("add_action", LUA_BIND(&game_object::add_component<com::action>))
         .def("make_translate_action", LUA_BIND(&c3d_go_make_translate_action))
         .def("make_rotate_action", LUA_BIND(&c3d_go_make_rotate_action))
         .def("make_skew_action", LUA_BIND(&c3d_go_make_skew_action))

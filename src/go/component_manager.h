@@ -227,7 +227,7 @@ protected:
     empty_component_mgr(): component_manager_base<empty_component_mgr<Tag, Sealed>>(false)
     {}
     
-    void update(goes_t const&) {};
+    virtual void update(goes_t const&) override {};
 };
 
 #endif

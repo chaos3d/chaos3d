@@ -163,6 +163,8 @@
 		F96744691A0ED0DA00C0B1E3 /* action_sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F96744671A0ED0DA00C0B1E3 /* action_sprite.cpp */; };
 		F967446D1A10B92100C0B1E3 /* convert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F967446B1A10B92100C0B1E3 /* convert.cpp */; };
 		F967446E1A10B92100C0B1E3 /* convert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F967446B1A10B92100C0B1E3 /* convert.cpp */; };
+		F96744721A1353FC00C0B1E3 /* action.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F96744701A1353FC00C0B1E3 /* action.cpp */; };
+		F96744731A1353FC00C0B1E3 /* action.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F96744701A1353FC00C0B1E3 /* action.cpp */; };
 		F9AF0F8719B5B4950047C431 /* data_stream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F9AF0F8619B5B4950047C431 /* data_stream.cpp */; };
 		F9AF0F8819B5B4950047C431 /* data_stream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F9AF0F8619B5B4950047C431 /* data_stream.cpp */; };
 /* End PBXBuildFile section */
@@ -860,6 +862,8 @@
 		F96744671A0ED0DA00C0B1E3 /* action_sprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = action_sprite.cpp; sourceTree = "<group>"; };
 		F967446B1A10B92100C0B1E3 /* convert.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = convert.cpp; sourceTree = "<group>"; };
 		F967446C1A10B92100C0B1E3 /* convert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = convert.h; sourceTree = "<group>"; };
+		F96744701A1353FC00C0B1E3 /* action.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = action.cpp; sourceTree = "<group>"; };
+		F96744711A1353FC00C0B1E3 /* action.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = action.h; sourceTree = "<group>"; };
 		F98A04A8198AC046000FE65D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		F99064EB19A5D01E003A3323 /* appender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = appender.h; sourceTree = "<group>"; };
 		F99064EC19A5D01E003A3323 /* appenderskeleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = appenderskeleton.h; sourceTree = "<group>"; };
@@ -1266,6 +1270,7 @@
 		8827623418912A4800B1291B /* com */ = {
 			isa = PBXGroup;
 			children = (
+				F967446F1A1353FC00C0B1E3 /* action */,
 				8804F8CB18A75DC50055322F /* scene2d */,
 				880BA328189654A6002542E2 /* sprite2d */,
 				880BA31E189505FC002542E2 /* render */,
@@ -2835,6 +2840,15 @@
 			path = wx;
 			sourceTree = "<group>";
 		};
+		F967446F1A1353FC00C0B1E3 /* action */ = {
+			isa = PBXGroup;
+			children = (
+				F96744701A1353FC00C0B1E3 /* action.cpp */,
+				F96744711A1353FC00C0B1E3 /* action.h */,
+			);
+			path = action;
+			sourceTree = "<group>";
+		};
 		F99064EA19A5D01E003A3323 /* log4cxx */ = {
 			isa = PBXGroup;
 			children = (
@@ -3436,6 +3450,7 @@
 				886CC15E18F662BB006A3AF5 /* shape_desc.cpp in Sources */,
 				886CC15F18F662BB006A3AF5 /* ui_control.cpp in Sources */,
 				886CC16018F662BB006A3AF5 /* camera2d.cpp in Sources */,
+				F96744731A1353FC00C0B1E3 /* action.cpp in Sources */,
 				8869FDCD19186D9C00946FD0 /* gles2.cpp in Sources */,
 				886CC16118F662BB006A3AF5 /* type_info.cpp in Sources */,
 				886CC16218F662BB006A3AF5 /* sprite2d.cpp in Sources */,
@@ -3515,6 +3530,7 @@
 				880BA32D189654A6002542E2 /* camera2d.cpp in Sources */,
 				8814E1C118D04279006C9120 /* type_info.cpp in Sources */,
 				8879CE9118BABCDE00BCBFA6 /* sprite2d.cpp in Sources */,
+				F96744721A1353FC00C0B1E3 /* action.cpp in Sources */,
 				8870F3EB1919C5630038B012 /* cAppDelegate.mm in Sources */,
 				880F615118D6EE55003BCE3D /* asset.cpp in Sources */,
 				880F615B18D96468003BCE3D /* event.cpp in Sources */,
