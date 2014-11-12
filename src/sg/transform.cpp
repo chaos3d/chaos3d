@@ -1,5 +1,6 @@
 #include "transform.h"
 #include "go/game_object.h"
+#include <cmath>
 
 using namespace com;
 
@@ -34,6 +35,12 @@ transform& transform::set_rotate_by_axis(float x, float y, float z) {
                           * Eigen::AngleAxisf(y*M_PI,  vector3f::UnitY())
                           * Eigen::AngleAxisf(z*M_PI, vector3f::UnitZ())
                           );
+    return *this;
+}
+
+transform& transform::set_skew(float angle_x, float angle_y) {
+    _skew = vector3f(std::tan(angle_x*M_PI/180.f), std::tan(angle_y*M_PI/180.f),
+                     std::tan(angle_x*M_PI/180.f) * std::tan(angle_y*M_PI/180.f));
     return *this;
 }
 
@@ -87,6 +94,13 @@ transform& transform::force_update() {
 
 void transform::update_global(affine3f const* parent) {
     _global_affine = parent ? *parent : affine3f::Identity();
+    if (_skew.x() != 0.f || _skew.y() != 0.f) {
+        matrix3f skew;
+        skew << 1, _skew.x(), 0,
+        _skew.y(), 1 + _skew.z(), 0,
+        0, 0, 1;
+        _global_affine = _global_affine * skew;
+    }
     _global_affine.translate(_translate).scale(_scale).rotate(_rotate);
     _global_inverse = _global_affine.inverse();
 }
@@ -98,6 +112,7 @@ void transform::update_local(affine3f const* inverse) {
     _scale = scaleMatrix.diagonal();
     _rotate = quaternionf(rotMatrix);
     _translate = local.translation();
+    _skew = vector3f::Zero(); // reset the skew/shear value
 }
 
 #pragma mark - the manager

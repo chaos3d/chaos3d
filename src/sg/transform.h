@@ -9,6 +9,7 @@
 typedef Eigen::Vector2f vector2f;
 typedef Eigen::Vector3f vector3f;
 typedef Eigen::Affine3f affine3f;
+typedef Eigen::Matrix3f matrix3f;
 typedef Eigen::Translation3f translation3f;
 typedef Eigen::Quaternionf quaternionf;
 
@@ -70,6 +71,9 @@ namespace com {
         // helper function to set rotation
         transform& set_rotate_by_axis(float x, float y, float z);
         
+        /// set the skew angel in degrees for x-axis and y-axis
+        transform& set_skew(float angle_x, float angle_y);
+        
     private:
         affine3f _global_inverse;
         
@@ -77,6 +81,11 @@ namespace com {
         ATTRIBUTE(quaternionf, rotate, quaternionf(1.f, 0.f, 0.f, 0.f));
         ATTRIBUTE(vector3f, translate, vector3f(0.f, 0.f, 0.f));
         ATTRIBUTE(vector3f, scale, vector3f(1.f, 1.f, 1.f));
+        
+        /// the skew (tangent) for x-axis (first) and y-axis on xy-plane
+        /// this is 'hard' to retrieve from the matrix so they will be
+        /// ditched for the given matrix
+        ATTRIBUTE(vector3f, skew, vector3f(0.f, 0.f, 0.f));
     };
     
     class transform_manager : public component_manager_base<transform_manager> {
