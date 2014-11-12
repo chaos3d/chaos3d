@@ -84,31 +84,21 @@ void action::on_end() {
 }
 
 void action::on_stop(bool skip) {
-    assert(false); // FIXME
-#if 0
-    action* child = _child_head;
-    _child_head = null_action;
+    ptr child(_child_head.release());
     
-    for (action* next = child->_next_sibling;
-        child != null_action;
-        next = (child = next)->_next_sibling) {
-        child->_next_sibling = nullptr;
+    for (ptr next; child; ) {
+        next.reset(child->_next_sibling.release());
+
         child->on_stop(skip); // stop itself and all its children
         
         // stop the sequence
-        for (action* link = child->_next; link;){
-            action *del = link;
-            link = link->_next;
-            
-            del->on_stop(skip);
-            del->_next = nullptr;
-            delete del;
+        for (ptr link(child->_next.release()); link;
+             link.reset(link->_next.release())){
+            link->on_stop(skip);
         }
-        child->_next = nullptr;
-        delete child;
+
+        child.reset(next.release());
     }
-    assert(_child_head == null_action); // shouldn't add any on stop
-#endif
 }
 
 void action::update() {
