@@ -5,6 +5,17 @@
 #include "sg/transform.h"
 
 namespace act {
+    template<class I = interpolator_linear<vector2f>>
+    struct transform_skew_applier_t {
+        com::transform* _transform;
+        void operator() (vec2f_anim_kf_t const& keyframe,
+                         timer::time_t offset) const {
+            auto&& key = keyframe.interpolate<I>(offset);
+            _transform->set_skew(key.x(), key.y());
+            _transform->mark_dirty();
+        }
+    };
+    
     template<class I = interpolator_linear<vector3f>>
     struct transform_translate_applier_t {
         com::transform* _transform;
@@ -35,6 +46,19 @@ namespace act {
         }
     };
 
+    template<class I = interpolator_linear<vector2f>>
+    action_keyframe<vector2f, transform_skew_applier_t<I>>*
+    make_skew_action(game_object* go, timer::time_t duration,
+                     vec2f_anim_kf_t::const_ptr const& keyframe,
+                     timer const& t = global_timer_base::instance()) {
+        auto* trans = go->get_component<com::transform>();
+        if (trans == nullptr)
+            return nullptr;
+        
+        return make_action_keyframe<vector2f>(transform_skew_applier_t<I>{trans}, duration,
+                                              keyframe, t);
+    }
+    
     template<class I = interpolator_linear<vector3f>>
     action_keyframe<vector3f, transform_translate_applier_t<I>>*
     make_translate_action(game_object* go, timer::time_t duration,

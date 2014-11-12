@@ -31,9 +31,9 @@ transform* transform::clone(game_object* go) const {
 
 transform& transform::set_rotate_by_axis(float x, float y, float z) {
     _rotate = quaternionf(
-                          Eigen::AngleAxisf(x*M_PI, vector3f::UnitX())
-                          * Eigen::AngleAxisf(y*M_PI,  vector3f::UnitY())
-                          * Eigen::AngleAxisf(z*M_PI, vector3f::UnitZ())
+                          Eigen::AngleAxisf(x*M_PI/180.f, vector3f::UnitX())
+                          * Eigen::AngleAxisf(y*M_PI/180.f,  vector3f::UnitY())
+                          * Eigen::AngleAxisf(z*M_PI/180.f, vector3f::UnitZ())
                           );
     return *this;
 }

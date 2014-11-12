@@ -37,7 +37,7 @@ namespace script {
     
     // TODO: converter from array to key_frame_t
     static action* c3d_go_make_translate_action(game_object* go, float duration,
-                                         std::vector<std::array<float, 4>> const&keyframe) {
+                                                std::vector<std::array<float, 4>> const&keyframe) {
         vec3f_anim_kf_t::key_frames_t key_frames;
         for (auto& it : keyframe) {
             key_frames.emplace_back(vec3f_anim_kf_t::key_frame_t(it[0],
@@ -47,6 +47,33 @@ namespace script {
         }
         return act::make_translate_action(go, duration,
                                           vec3f_anim_kf_t::create(WRAP_CLAMP, key_frames));
+    }
+    
+    static action* c3d_go_make_rotate_action(game_object* go, float duration,
+                                             std::vector<std::array<float, 4>> const&keyframe) {
+        typedef quaternionf_anim_kf_t::key_frame_t::key_t key_t;
+        quaternionf_anim_kf_t::key_frames_t key_frames;
+        for (auto& it : keyframe) {
+            key_frames.emplace_back(it[0],
+                                    key_t(angle_axisf(it[1]*M_PI/180.f, vector3f::UnitX())
+                                          * angle_axisf(it[2]*M_PI/180.f,  vector3f::UnitY())
+                                          * angle_axisf(it[3]*M_PI/180.f, vector3f::UnitZ())
+                                          ));
+        }
+        return act::make_rotate_action(go, duration,
+                                       quaternionf_anim_kf_t::create(WRAP_CLAMP, key_frames));
+    }
+    
+    static action* c3d_go_make_skew_action(game_object* go, float duration,
+                                           std::vector<std::array<float, 3>> const&keyframe) {
+        vec2f_anim_kf_t::key_frames_t key_frames;
+        for (auto& it : keyframe) {
+            key_frames.emplace_back(vec2f_anim_kf_t::key_frame_t(it[0],
+                                                                 vec2f_anim_kf_t::key_frame_t::key_t(it[1],
+                                                                                                     it[2])));
+        }
+        return act::make_skew_action(go, duration,
+                                     vec2f_anim_kf_t::create(WRAP_CLAMP, key_frames));
     }
     
     // TODO: support bound and collider change
@@ -135,6 +162,8 @@ namespace script {
         
         script::class_<game_object>::type()
         .def("make_translate_action", LUA_BIND(&c3d_go_make_translate_action))
+        .def("make_rotate_action", LUA_BIND(&c3d_go_make_rotate_action))
+        .def("make_skew_action", LUA_BIND(&c3d_go_make_skew_action))
         .def("make_sprite_action", LUA_BIND(&c3d_go_make_sprite_action))
         .def("make_atlas_action", LUA_BIND(&c3d_go_make_atlas_action))
         ;

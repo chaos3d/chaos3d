@@ -12,6 +12,7 @@ typedef Eigen::Affine3f affine3f;
 typedef Eigen::Matrix3f matrix3f;
 typedef Eigen::Translation3f translation3f;
 typedef Eigen::Quaternionf quaternionf;
+typedef Eigen::AngleAxisf angle_axisf;
 
 namespace com {
     class transform_manager;
