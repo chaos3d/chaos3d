@@ -4,17 +4,21 @@
 #include <functional>
 #include <initializer_list>
 #include <cassert>
+#include <memory>
 
 class action {
+public:
+    typedef std::unique_ptr<action> ptr;
+    
 public:
     // add an action to its children
     // if this action is active, the added one will be
     // excuted immediately, or it will wait until the
     // parent gets triggered (action tree)
-    action* push(action*);
+    action& push(ptr&&);
     
     // whether it has any child
-    bool empty() const { return _child_head == null_action; }
+    bool empty() const { return !_child_head; }
     
     // skip this action (go to end)
     void skip();
@@ -28,36 +32,40 @@ public:
     // create a sequence of actions with a parent action
     // so that it could be added to another sequence
     template<typename C = std::initializer_list<action*> >
-    static action* wrap_sequence(C const& list, bool reversed = false) {
-        return (new action())->push(sequence(list, reversed));
+    static ptr wrap_sequence(C const& list, bool reversed = false) {
+        return ptr(& (new action())->push(sequence(list, reversed)));
     }
     
     // create a sequence of actions (executing sequencially)
-    template<typename C = std::initializer_list<action*> >
-    static action* sequence(C const& list, bool reversed = false) {
+    template<typename C = std::initializer_list<ptr> >
+    static ptr sequence(C && list, bool reversed = false) {
         if (list.size() == 0)
             return nullptr;
         
-        action* act = *list.begin();
-        for (auto it = list.begin();++it != list.end(); ) {
-            if(*it != nullptr)
-                act->append(*it);
+        ptr act(list.begin()->release());
+        for (auto it = list.begin() + 1;
+             it != list.end();
+             ++it) {
+            act->append(std::move(*it));
         }
         
+        // FIXME: link head is changed too?
         if (!reversed)
             act->reverse();
         return act;
     }
     
     // create a group of actions (executing simultaneously)
-    template<typename C = std::initializer_list<action*> >
-    static action* group(C const& list) {
+    template<typename C = std::initializer_list<ptr> >
+    static ptr group(C && list) {
         action* act = new action();
         for (auto& it : list) {
-            act->push(it);
+            act->push(std::move(it));
         }
-        return act;
+        return ptr(act);
     }
+
+    virtual ~action();
 
 protected:
     bool started() const { return _started; }
@@ -70,18 +78,15 @@ protected:
     virtual void update();
     
     action();
-    virtual ~action();
     
 private:
     void reverse();
-    void append(action*);
+    void append(ptr&&);
     
-    action* _child_head;
-    action* _next_sibling;
-    action* _next;
+    ptr _child_head;
+    ptr _next_sibling;
+    ptr _next;
     bool _started;
-        
-    static action* null_action;
 };
 
 class root_action : public action{
@@ -119,9 +124,9 @@ public:
     : _func(f), _cancel(cancel)
     {}
     
-    static action_functor* from(functor_t const&f,
+    static ptr from(functor_t const&f,
                                 canceller_t const& c = nullptr) {
-        return new action_functor(f,c);
+        return ptr(new action_functor(f,c));
     }
 
 protected:

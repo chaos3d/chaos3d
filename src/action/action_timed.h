@@ -72,21 +72,23 @@ private:
 class action_timed : public action {
 public:
     typedef timer::time_t time_t;
-    typedef std::pair<time_t, action*> timed_action;
+    typedef std::pair<time_t, ptr> timed_action;
     typedef std::forward_list<timed_action> actions_t;
     
 public:
-    action_timed(std::initializer_list<timed_action> actions)
-    : _actions(actions)
+    action_timed(actions_t&& actions)
+    : _actions(std::move(actions))
     {}
     
-    action_timed* add(time_t t, action* a) {
-        _actions.emplace_front(t, a);
+    action_timed* add(time_t t, ptr&& a) {
+        _actions.emplace_front(std::piecewise_construct,
+                               std::forward_as_tuple(t),
+                               std::forward_as_tuple(a.release()));
         return this;
     };
     
-    static action_timed* timed(std::initializer_list<timed_action> actions) {
-        return new action_timed(actions);
+    static ptr timed(actions_t&& actions) {
+        return ptr(new action_timed(std::move(actions)));
     }
 protected:
     virtual void on_start() override;

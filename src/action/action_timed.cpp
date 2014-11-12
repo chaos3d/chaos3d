@@ -4,7 +4,7 @@ void action_timed::update() {
     time_t off = _timer.current_time() - _start;
     auto it = _actions.begin();
     while (!_actions.empty() && it->first <= off){
-        push(it->second);
+        push(std::move(it->second));
         _actions.pop_front();
         it = _actions.begin();
     }

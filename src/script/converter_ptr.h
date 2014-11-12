@@ -14,11 +14,25 @@ namespace script {
         template<class T>
         using R = std::is_base_of<referenced_count, T>;
         
-        // we won't be able to convert back to unique_ptr since
-        // we can't explicitly give up the ownership due to GC
+        // transfer the ownership across the language boundary
         template<class U = P, typename std::enable_if<!R<U>::value>::type* = nullptr>
-        static void from(lua_State* L, int idx, char* storage) {
-            static_assert(!R<U>::value, "we don't transfer back ownership");
+        static  std::unique_ptr<P, D>
+        from(lua_State* L, int idx, char* storage) {
+            object_wrapper* obj = (object_wrapper*)lua_touserdata(L, idx);
+            T* raw_obj = static_cast<T*>(obj->object);
+            if (raw_obj == nullptr) {
+                return nullptr;
+            }
+            
+            // remove the obj reference
+            lua_getfield(L, LUA_REGISTRYINDEX, "__objlink");
+            lua_pushlightuserdata(L, obj->object);
+            lua_pushnil(L);
+            lua_rawset(L, -3);
+            lua_pop(L, 1);
+            obj->object = nullptr;
+            
+            return std::unique_ptr<P, D>(raw_obj);
         };
 
         // referenced count can "generate" unique_ptr

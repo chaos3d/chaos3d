@@ -111,12 +111,12 @@ namespace script {
         return act;
     }
     
-    static action* c3d_action_add_sequence(action* act, std::vector<action*> const& seq) {
+    static action* c3d_action_add_sequence(action* act, std::vector<action::ptr>&& seq) {
         act->push(action::sequence(seq));
         return act;
     }
     
-    static action* c3d_action_add_group(action* act, std::vector<action*> const& grp) {
+    static action* c3d_action_add_group(action* act, std::vector<action::ptr>&& grp) {
         act->push(action::group(grp));
         return act;
     }
