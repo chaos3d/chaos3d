@@ -22,6 +22,8 @@ c:add_camera2d(rwin)
  :set_perspective(math.rad(60), rwin:aspect_ratio(), .1, 1000.0)
  :move_for_perfect_pixel(960)
 
+local action = c:add_action()
+
 print("width:", rwin:aspect_ratio()*960)
 
 local build_v = function(vsh)
@@ -37,29 +39,64 @@ sprite_mgr:add_material("basic", rd:new_program():link(sprite_mgr:vertex_layout(
 }), rd:new_state(), 
 rd:new_uniform():set_texture("c_tex1", asset:load_texture("turtle")))
 
+local go1 = c3d.go.new(c3d.go.root)
+go1:add_transform():set_translate(0,180)
+--local logo = c3d.go.new(go1)
 local logo = c3d.go.new(c3d.go.root)
-logo:add_transform():set_translate(100,180)--:mark(true)
+logo:add_transform():set_translate(0,0):set_skew(30,0):set_rotate(0,0,0)--:mark(true)
 logo:add_quad_sprite(atlas1, "action01.png", "basic")
-launcher:get_action():add_sequence({
+action:add_sequence({
+--launcher:get_action():add_group({
     c3d.action.from(function()
         print "abc"
+        coroutine.yield(logo:make_skew_action(2, {
+            {0, 0, 0, 0},
+            {0.25, 30, 0, 0},
+            {0.5, 0, 0, 0},
+            {0.75, 30, 0, 0},
+            {1, 0, 0, 0},
+        }))
     end),
+    ---[[
+    logo:make_skew_action(5, {
+        {0, 0, 0, 0},
+        {0.25, 30, 0, 0},
+        {0.5, 0, 0, 0},
+        {0.75, 30, 0, 0},
+        {1, 0, 0, 0},
+    }),
+    c3d.action.from(function()
+        print "here now"
+    end),
+    --]]
+    ---[[
+    logo:make_rotate_action(5, {
+        {0, 0, 0, 0},
+        {0.5, 0, 0, 30},
+        {1, 0, 0, 0},
+    }),
+    --]]
     logo:make_atlas_action(5, {
         {0, atlas1, "action01.png"},
         {0.25, atlas1, "action02.png"},
         {0.5, atlas1, "action01.png"},
         {0.75, atlas1, "action02.png"},
-    }, 0.4),
-    c3d.action.wait_time(1),
+    }, 0.4, {{1,2,3}}),
+    --c3d.action.wait_time(1),
+    --[[
     logo:make_translate_action(5, {
         {0, 0, 0, 0},
         {1, 100, 180, 0},
     }),
+    --]]
     c3d.action.wait_frame(10),
+    ---[[
     logo:make_translate_action(5, {
-        {0, 100, 180, 0},
-        {1, -100, -180, 0},
+        {0, 0, 0, 0},
+        {0.5, 0, 1, 0},
+        {1, 0, 0, 0},
     }),
+    --]]
 });
 --local c1 = turtle:add_collider2d():from_quad_sprite(true, collider.shape())
 --turtle:set_tag('turtle')

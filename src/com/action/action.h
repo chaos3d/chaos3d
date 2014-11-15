@@ -39,15 +39,17 @@ namespace com {
         typedef std::unique_ptr<action> action_ptr;
         typedef std::forward_list<action_ptr> actions_t;
         
-    public:
-        action_mgr& add_action(action*);
-
     protected:
+        /// to add the action to the managed list
+        action_mgr& add_action(action*);
+        
         virtual void pre_update(goes_t const&) override;
         virtual void update(goes_t const&) override {};
 
     private:
         actions_t _actions;
+        
+        friend class action;
     };
 
 }
