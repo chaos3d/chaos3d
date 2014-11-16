@@ -82,7 +82,6 @@ namespace script {
     static action* c3d_go_make_sprite_action(game_object* go, float duration,
                                              std::vector<std::array<float, 4>> const&keyframe) {
         typedef act::sprite_anim_kf_t::key_frame_t key_frame_t;
-        typedef sprite2d::quad_sprite::box2f box2f;
         
         act::sprite_anim_kf_t::key_frames_t key_frames;
         for (auto& it : keyframe) {
@@ -99,7 +98,6 @@ namespace script {
                                             std::vector<atlas_keyframe_t> const& keyframes,
                                             float loop) {
         typedef act::atlas_anim_kf_t::key_frame_t key_frame_t;
-        typedef sprite2d::quad_sprite::box2f box2f;
 
         if (keyframes.empty())
             return nullptr;

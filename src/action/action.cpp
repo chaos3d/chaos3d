@@ -12,8 +12,8 @@ action& action::push(ptr&& act) {
     
     // already pushed to some action tree?
     assert(!act->_next_sibling);
-    act->_next_sibling.reset(_child_head.release());
-    _child_head.reset(act.release());
+    act->_next_sibling = std::move(_child_head);
+    _child_head = std::move(act);
     
     // pushing an action to a started one
     // should start it now
@@ -57,21 +57,21 @@ void action::append(ptr&& nt){
         return;
     
     assert(nt->_next.get() == nullptr);
-    nt->_next.reset(_next.release());
-    _next.reset(nt.release());
+    nt->_next = std::move(_next);
+    _next = std::move(nt);
 }
 
 void action::reverse() {
     if (_next.get() != nullptr && _next->_next.get() != nullptr) {
-        ptr pre(_next.release());
-        ptr nt(pre->_next.release());
+        ptr pre(std::move(_next));
+        ptr nt(std::move(pre->_next));
         while (nt.get() != nullptr) {
-            ptr next(nt->_next.release());
-            nt->_next.reset(pre.release());
-            pre.reset(nt.release());
-            nt.reset(next.release());
+            ptr next(std::move(nt->_next));
+            nt->_next = std::move(pre);
+            pre = std::move(nt);
+            nt = std::move(next);
         }
-        _next.reset(pre.release());
+        _next = std::move(pre);
     }
 }
 
@@ -85,36 +85,36 @@ void action::on_start() {
 }
 
 void action::on_end() {
-    for (ptr child(_child_head.release());
-         child; child.reset(child->_next_sibling.release())) {
+    for (ptr child(std::move(_child_head));
+         child; child = std::move(child->_next_sibling)) {
         child->on_end();
     }
     _started = false;
 }
 
 void action::on_stop(bool skip) {
-    ptr child(_child_head.release());
+    ptr child(std::move(_child_head));
     
     for (ptr next; child; ) {
-        next.reset(child->_next_sibling.release());
+        next = std::move(child->_next_sibling);
 
         child->on_stop(skip); // stop itself and all its children
         
         // stop the sequence
         for (ptr link(child->_next.release()); link;
-             link.reset(link->_next.release())){
+             link = std::move(link->_next)){
             link->on_stop(skip);
         }
 
-        child.reset(next.release());
+        child = std::move(next);
     }
 }
 
 void action::update() {
-    ptr current(_child_head.release());
+    ptr current(std::move(_child_head));
     
     for (ptr next; current; ) {
-        next.reset(current->_next_sibling.release());
+        next = std::move(current->_next_sibling);
 
         current->update();
         if (current->done()) {
@@ -124,7 +124,7 @@ void action::update() {
             push(std::move(current));
         }
         
-        current.reset(next.release());
+        current = std::move(next);
     }
 }
 

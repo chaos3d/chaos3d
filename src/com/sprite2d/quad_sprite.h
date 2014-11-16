@@ -5,16 +5,14 @@
 #include <Eigen/Geometry>
 
 class texture_atlas;
+typedef Eigen::AlignedBox2f box2f;
+typedef Eigen::Vector2f vector2f;
+typedef Eigen::Vector4f vector4f;
 
-namespace sprite2d {
-    
+namespace sprite2d {    
     // the quad sprite
     class quad_sprite : public sprite {
     public:
-        typedef Eigen::AlignedBox2f box2f;
-        typedef Eigen::Vector2f vector2f;
-        typedef Eigen::Vector4f vector4f;
-        
         struct animated_frame_key {
             enum { FRAME = 1, BOUND = 2, MAT = 4 };
             box2f frame;    // texture uv
