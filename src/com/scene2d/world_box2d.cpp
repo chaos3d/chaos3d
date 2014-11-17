@@ -137,6 +137,7 @@ void collider2d::apply_to_transform(com::transform &transform, float ratio) cons
         return;
     }
     
+    // TODO: optimize?
     transform.set_global_affine(Eigen::Translation3f(current.x / ratio, current.y / ratio,
                                                      transform.global_affine().translation().z()) *
                                 Eigen::AngleAxisf(angle, vector3f::UnitZ()));

@@ -2,12 +2,9 @@
 #define _SPRITE2D_QUAD_SPRITE_H
 
 #include "com/sprite2d/sprite.h"
-#include <Eigen/Geometry>
+#include "common/base_types.h"
 
 class texture_atlas;
-typedef Eigen::AlignedBox2f box2f;
-typedef Eigen::Vector2f vector2f;
-typedef Eigen::Vector4f vector4f;
 
 namespace sprite2d {    
     // the quad sprite
