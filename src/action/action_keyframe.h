@@ -18,6 +18,7 @@ enum { WRAP_CLAMP, WRAP_LOOP };
 // a collection of key frames and generic interpolation
 // action_keyframe uses this to save key frames
 // applier can use this to interpolate values
+// TODO: move this to a different file
 template<class Key>
 class animation_keyframe : public std::enable_shared_from_this<animation_keyframe<Key>> {
 public:
