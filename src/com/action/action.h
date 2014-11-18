@@ -10,6 +10,7 @@ namespace com {
     class action_mgr;
     
     class action : public component {
+    public:
         typedef ::action::ptr ptr;
         
     public:

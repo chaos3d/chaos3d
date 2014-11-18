@@ -5,8 +5,25 @@
 #include <log4cxx/logger.h>
 #include <log4cxx/helpers/objectptr.h>
 
-template <typename> log4cxx::Logger* get_logger();
+/// customizable logger by explicitly specializing the template
+/// the default logger is "common"
+/// How-to:
+///     1. in header: IMPORT_LOGGER(class_name),
+///             this may not be needed if linker can resolve
+///     2. in source: DEFINE_LOGGER(class_name, logger_name)
+///     3. LOG_XXX or LOG_XXX(void, ...)
+template <typename C>
+log4cxx::Logger* get_logger() {
+    static log4cxx::LoggerPtr _logger = log4cxx::Logger::getLogger("common");
+    return _logger;
+}
+
+/// helper trait to re-use the logger
+///     INHERIT_LOGGER(clz, parent)
 template <typename T> struct logger_trait { typedef T logger_t; };
+
+#define IMPORT_LOGGER(clz) \
+    extern template log4cxx::Logger* get_logger<clz>();
 
 #define DEFINE_LOGGER(clz, logger_name) \
     template<> log4cxx::Logger* get_logger<clz>() { \

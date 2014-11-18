@@ -19,7 +19,7 @@ namespace com {
     public:
         // TODO: additive channels
         // TODO: other channels: i.e. events/uniform/skin/texture/particles
-        typedef std::unordered_map<std::string, skeleton_animation_clip> clips_t;
+        typedef std::unordered_map<std::string, skeleton_animation_clip::ptr> clips_t;
         typedef std::unordered_map<std::string, uint32_t> names_t;
         typedef std::vector<transform*> transforms_t;
     public:
@@ -28,13 +28,17 @@ namespace com {
         /// create the action from the given clip name
         /// this is version 1 that each animation is separate and
         /// handled outside the controller
-        action::ptr make_animation(std::string const& clip_name) const;
+        ::action::ptr make_action(std::string const& clip_name) const;
         
         /// apply the skin to the object structure
         bool apply_skin(std::string const&);
         
+        /// get all the bounding children
+        transforms_t const& transforms() const { return _transforms; }
+        
     private:
         transforms_t _transforms; // all children for the skeleton
+        clips_t _clips;
         
         SIMPLE_CLONE(animation);
     };

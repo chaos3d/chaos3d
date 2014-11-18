@@ -3,6 +3,7 @@
 
 #include "action/action.h"
 #include "common/timer.h"
+#include "com/anim/animation.h"
 #include <memory>
 
 namespace act {
@@ -13,7 +14,9 @@ namespace act {
         typedef timer::time_t time_t;
         
     public:
-        action_animation(timer const&);
+        action_animation(com::skeleton_animation_clip::ptr const&,
+                         com::animation const*, // FIXME: memory manager
+                         timer const& = global_timer_base::instance());
         
         virtual bool done() const override;
         
@@ -22,12 +25,12 @@ namespace act {
         virtual void on_start() override;
         
     private:
-        struct internal;
         timer const& _timer;
         time_t _start;      // start time
         time_t _duration;   // the entire duration
         time_t _loop;       // the duration for each piece
-        std::unique_ptr<internal> _internal;
+        com::skeleton_animation_clip::ptr _clip;    // only one animation for now
+        com::animation const* _animation;                 // FIXME: temp solution
     };
 }
 #endif
