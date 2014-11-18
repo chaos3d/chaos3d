@@ -6,6 +6,16 @@
 #include <cassert>
 #include <memory>
 
+/// the action, constant-updating backend
+/// it has two layors of children:
+/// 1. the linked list that each one is executed sequencially
+/// 2. the children that gets updated at the same time
+///
+/// the subclass would override: (and would call super too)
+/// update: get called every frame
+/// on_start, on_end, on_stop: state hooks
+/// done: whether the action is done and removed
+/// cancellable: whether the action can get cancelled
 class action {
 public:
     typedef std::unique_ptr<action> ptr;
@@ -84,6 +94,7 @@ public:
 protected:
     bool started() const { return _started; }
     
+    /// subclass would override those hooks
     virtual void on_start();
     virtual void on_end();
     virtual void on_stop(bool skip);

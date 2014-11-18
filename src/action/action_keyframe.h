@@ -15,36 +15,31 @@
 // TODO: WRAP_FULL_LOOP
 enum { WRAP_CLAMP, WRAP_LOOP };
 
-// single key frame
-// the static/constant keyframes data for an animation
-template<class Key>
-struct key_frame {
-    typedef std::vector<key_frame> key_frames_t;
-    typedef Key key_t;
-
-    Key key;
-    float timestamp;
-    
-    template<class... Args>
-    key_frame(float ts, Args&&... args)
-    : key(std::forward<Args>(args)...), timestamp(ts)
-    {}
-    
-    bool operator<(key_frame const& rhs) const {
-        return timestamp < rhs.timestamp;
-    };
-};
-
 // a collection of key frames and generic interpolation
 // action_keyframe uses this to save key frames
 // applier can use this to interpolate values
 template<class Key>
 class animation_keyframe : public std::enable_shared_from_this<animation_keyframe<Key>> {
 public:
-    typedef key_frame<Key> key_frame_t;
+    typedef timer::time_t time_t;   // time type
+    typedef Key key_t;              // key type
+    
+    typedef std::vector<time_t> times_t;
+    typedef std::vector<key_t> key_frames_t;
     typedef std::shared_ptr<animation_keyframe> ptr;
     typedef std::shared_ptr<animation_keyframe const> const_ptr;
-    typedef std::vector<key_frame_t> key_frames_t;
+    
+    // helper struct for initialize the data, TODO: remove this
+    struct key_frame_t {
+        typedef Key key_t;
+        time_t timestamp;
+        key_t key;
+    
+        template<class... Args>
+        key_frame_t(time_t ts, Args&&... args)
+        : key(std::forward<Args>(args)...), timestamp(ts)
+        {}
+    };
     
 public:
     key_frames_t const& keyframes() const {
@@ -52,45 +47,46 @@ public:
     }
 
     // lower bound of the given time
-    typename key_frames_t::const_iterator keyframe(float offset) const {
-        return std::lower_bound(_keyframes.begin(), _keyframes.end(), offset,
-                                [] (key_frame_t const& key, float offset) {
-                                    return key.timestamp < offset;
+    typename times_t::const_iterator keyframe(time_t offset) const {
+        return std::lower_bound(_times.begin(), _times.end(), offset,
+                                [] (time_t const& key, time_t offset) {
+                                    return key < offset;
                                 });
     }
     
     // regular interpolation
     template<class I, typename std::enable_if<!std::is_same<I, void>::value>::type* = nullptr>
-    Key interpolate(float offset, I const& i = I()) const {
+    key_t interpolate(float offset, I const& i = I()) const {
         assert(offset >= 0.f && offset <= 1.f);
         assert(_keyframes.size() > 0);
-        auto it = keyframe(offset);
+        auto timestamp = keyframe(offset);
+        auto it = _keyframes.begin() + std::distance(_times.begin(), timestamp);
         if (it == _keyframes.end()) {
-            return _wrap == WRAP_CLAMP ? _keyframes.back().key : _keyframes.front().key;
-        } else if (it->timestamp - offset <= FLT_EPSILON ||
+            return _wrap == WRAP_CLAMP ? _keyframes.back() : _keyframes.front();
+        } else if (*timestamp - offset <= FLT_EPSILON ||
                    it == _keyframes.begin()) {
-            return it->key;
+            return *it;
         } else {
             auto pre = std::next(it, -1);
-            return i(pre->key, it->key, (offset - pre->timestamp) / (it->timestamp - pre->timestamp),
+            auto pre_ts = std::next(timestamp, -1);
+            return i(*pre, *it, (offset - *pre_ts) / (*timestamp - *pre_ts),
                      (int)std::distance(pre, _keyframes.begin()));
         }
-        return Key();
     }
     
     // concrete/no interpolation
     template<class I, typename std::enable_if<std::is_same<I, void>::value>::type* = nullptr>
-    Key const& interpolate(float offset) const {
+    key_t const& interpolate(float offset) const {
         assert(offset >= 0.f && offset <= 1.f);
         assert(_keyframes.size() > 0);
-        auto it = keyframe(offset);
+        auto timestamp = keyframe(offset);
+        auto it = _keyframes.begin() + std::distance(_times.begin(), timestamp);
         if (it == _keyframes.end()) {
-            return _wrap == WRAP_CLAMP ? _keyframes.back().key : _keyframes.front().key;
-        } else if (it->timestamp - offset <= FLT_EPSILON ||
-                   it == _keyframes.begin()) {
-            return it->key;
+            return _wrap == WRAP_CLAMP ? _keyframes.back() : _keyframes.front();
+        } else if (it == _keyframes.begin()) {
+            return *it;
         } else {
-            return std::next(it, -1)->key;
+            return *std::next(it, -1);
         }
     }
 
@@ -98,29 +94,66 @@ protected:
     template<class Loader>
     animation_keyframe(Loader const&);
 
-    animation_keyframe(int wrap, key_frames_t const& frames)
-    : _wrap(wrap), _keyframes(frames) {
+    // helper constructor for existing Lua binding. TODO: remove this
+    animation_keyframe(int wrap, std::vector<key_frame_t> const& keyframes)
+    : _wrap(wrap) {
+        _times.reserve(keyframes.size());
+        _keyframes.reserve(keyframes.size());
+        
+        for (auto& it : keyframes) {
+            _times.push_back(it.timestamp);
+            _keyframes.push_back(it.key);
+        }
+        normalize();
+    }
+    
+    animation_keyframe(int wrap, times_t const& times, key_frames_t const& frames)
+    : _wrap(wrap), _keyframes(frames), _times(times) {
         normalize();
     }
     
     animation_keyframe() = default;
     
+    // sort the time bounds and scale it to [0,1]
     void normalize() {
         if (_keyframes.size() == 0)
             return;
         
-        std::stable_sort(_keyframes.begin(), _keyframes.end());
-        auto last = _keyframes.back().timestamp;
+        struct time_index {
+            size_t idx;
+            time_t time;
+        };
+        time_index indices[_times.size()];
+        auto it = _times.begin();
+        std::generate_n(indices, _times.size(), [&] {
+            size_t idx = std::distance(_times.begin(), it);
+            return time_index{ idx, *it ++ };
+        });
+        std::stable_sort(indices, indices + _times.size(),
+                         [] (time_index const& lhs, time_index const& rhs) {
+                             return lhs.time < rhs.time;
+                         });
+
+        for (size_t i = 0; i < _times.size(); ++i) {
+            while (indices[i].idx != i) {
+                std::swap(_times[i], _times[indices[i].idx]);
+                std::swap(_keyframes[i], _keyframes[indices[i].idx]);
+                std::swap(indices[i], indices[indices[i].idx]);
+            }
+        }
         
+        auto last = _times.back();
         if (last < FLT_EPSILON)
             return;
         
-        for (auto& it : _keyframes) {
-            it.timestamp /= last;
+        for (auto& it : _times) {
+            it /= last;
         }
     }
     
 private:
+    /// key frames and times bound (separated)
+    times_t _times;
     key_frames_t _keyframes; // key frames are constant
     int _wrap = WRAP_CLAMP;
     
@@ -139,18 +172,18 @@ typedef typename vec2f_anim_kf_t::key_frames_t vec2f_keyframes_t;
 typedef typename vec3f_anim_kf_t::key_frames_t vec3f_keyframes_t;
 typedef typename quaternionf_anim_kf_t::key_frames_t quaternionf_keyframes_t;
 
-// helper type to extract key frame type
-typedef key_frame<float> scalarf_keyframe_t;
-typedef key_frame<Eigen::Vector2f> vec2_keyframe_t;
-typedef key_frame<Eigen::Vector3f> vec3_keyframe_t;
-typedef key_frame<Eigen::Quaternionf> quaternionf_keyframe_t;
-
 // helper function to create keyframes derived from the given key
 template<class Key>
+using anim_kf_times_t = typename animation_keyframe<Key>::times_t;
+
+template<class Key>
+using anim_kf_keyframes_t = typename animation_keyframe<Key>::key_frames_t;
+
+template<class Key>
 typename animation_keyframe<Key>::ptr make_animation_keyframe(int wrap,
-                                                              std::vector<key_frame<Key>> const& keyframes) {
-    typedef animation_keyframe<Key> anim_kf_t;
-    return anim_kf_t::create(wrap, keyframes);
+                                                              anim_kf_times_t<Key> const& times,
+                                                              anim_kf_keyframes_t<Key> const& keyframes) {
+    return animation_keyframe<Key>::create(wrap, times, keyframes);
 }
 
 // void is for no-interpolation
@@ -230,8 +263,11 @@ private:
 
 // helper function to create actions
 template<class Key, class Applier>
+using action_kf_keyframe_ptr = typename action_keyframe<Key, Applier>::keyframe_ptr;
+
+template<class Key, class Applier>
 action_keyframe<Key, Applier>* make_action_keyframe(Applier const& applier, time_t duration,
-                                                    typename action_keyframe<Key, Applier>::keyframe_ptr const& keyframe,
+                                                    action_kf_keyframe_ptr<Key, Applier> const& keyframe,
                                                     timer const& t = global_timer_base::instance()) {
     return new action_keyframe<Key, Applier>(duration, keyframe, t, applier);
 }

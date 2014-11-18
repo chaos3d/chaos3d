@@ -39,7 +39,7 @@ namespace script {
     // TODO: converter from array to key_frame_t
     static action* c3d_go_make_translate_action(game_object* go, float duration,
                                                 std::vector<std::array<float, 4>> const&keyframe) {
-        vec3f_anim_kf_t::key_frames_t key_frames;
+        std::vector<vec3f_anim_kf_t::key_frame_t> key_frames;
         for (auto& it : keyframe) {
             key_frames.emplace_back(vec3f_anim_kf_t::key_frame_t(it[0],
                                                                  vec3f_anim_kf_t::key_frame_t::key_t(it[1],
@@ -53,7 +53,8 @@ namespace script {
     static action* c3d_go_make_rotate_action(game_object* go, float duration,
                                              std::vector<std::array<float, 4>> const&keyframe) {
         typedef quaternionf_anim_kf_t::key_frame_t::key_t key_t;
-        quaternionf_anim_kf_t::key_frames_t key_frames;
+        std::vector<quaternionf_anim_kf_t::key_frame_t> key_frames;
+        
         for (auto& it : keyframe) {
             key_frames.emplace_back(it[0],
                                     key_t(angle_axisf(it[1]*M_PI/180.f, vector3f::UnitX())
@@ -67,7 +68,7 @@ namespace script {
     
     static action* c3d_go_make_skew_action(game_object* go, float duration,
                                            std::vector<std::array<float, 3>> const&keyframe) {
-        vec2f_anim_kf_t::key_frames_t key_frames;
+        std::vector<vec2f_anim_kf_t::key_frame_t> key_frames;
         for (auto& it : keyframe) {
             key_frames.emplace_back(vec2f_anim_kf_t::key_frame_t(it[0],
                                                                  vec2f_anim_kf_t::key_frame_t::key_t(it[1],
@@ -82,8 +83,8 @@ namespace script {
     static action* c3d_go_make_sprite_action(game_object* go, float duration,
                                              std::vector<std::array<float, 4>> const&keyframe) {
         typedef act::sprite_anim_kf_t::key_frame_t key_frame_t;
-        
-        act::sprite_anim_kf_t::key_frames_t key_frames;
+        std::vector<key_frame_t> key_frames;
+
         for (auto& it : keyframe) {
             key_frames.emplace_back(key_frame_t(it[0],
                                                 act::sprite_key_t(box2f(box2f::VectorType(it[1], it[2]),
@@ -97,8 +98,6 @@ namespace script {
     static action* c3d_go_make_atlas_action(game_object* go, float duration,
                                             std::vector<atlas_keyframe_t> const& keyframes,
                                             float loop) {
-        typedef act::atlas_anim_kf_t::key_frame_t key_frame_t;
-
         if (keyframes.empty())
             return nullptr;
         
