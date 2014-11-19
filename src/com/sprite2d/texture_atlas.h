@@ -35,6 +35,11 @@ public:
         return it != _rects.end() ? it->second : _empty;
     }
     
+    /// whether this atlas has the named sprite
+    bool has_frame(std::string const& name) const {
+        return _rects.find(name) != _rects.end();
+    }
+    
     // the texture size
     texture::vector2i const& size() const {
         return _texture->size();

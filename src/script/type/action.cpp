@@ -176,7 +176,9 @@ namespace script {
         .def("make_sprite_action", LUA_BIND(&c3d_go_make_sprite_action))
         .def("make_atlas_action", LUA_BIND(&c3d_go_make_atlas_action))
         
-        .def("add_animation", LUA_BIND((&game_object::add_component<com::animation, data_stream*>)))
+        .def("add_animation",
+             LUA_BIND((&game_object::add_component<com::animation,
+                       data_stream*, std::vector<texture_atlas*> const&>)))
         ;
     }
 }

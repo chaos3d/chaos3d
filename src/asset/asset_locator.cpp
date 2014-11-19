@@ -31,8 +31,8 @@ data_stream::ptr locator_mgr::from(std::string const& name) const {
     
     LOG_TRACE("loading stream: " << name);
     for (auto& it : _locators) {
-        auto stream = it->from(name);
         LOG_TRACE("searching in:" << it->name());
+        auto stream = it->from(name);
         if (stream.get() != nullptr) {
             LOG_TRACE("found");
             return stream;
