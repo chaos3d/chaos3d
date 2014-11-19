@@ -3,6 +3,7 @@
 
 #include "go/component.h"
 #include "action/action.h"
+#include "io/data_stream.h"
 #include "com/anim/skeleton_transform.h"
 #include <unordered_map>
 
@@ -22,8 +23,10 @@ namespace com {
         typedef std::unordered_map<std::string, skeleton_animation_clip::ptr> clips_t;
         typedef std::unordered_map<std::string, uint32_t> names_t;
         typedef std::vector<transform*> transforms_t;
+    
     public:
-        animation(game_object*);
+        /// load animation/skeleton data from the json stream
+        animation(game_object*, data_stream* = nullptr);
         
         /// create the action from the given clip name
         /// this is version 1 that each animation is separate and
@@ -35,10 +38,17 @@ namespace com {
         
         /// get all the bounding children
         transforms_t const& transforms() const { return _transforms; }
-        
+
+        /// load the animation/skeleton data from the json stream
+        bool load_from(data_stream*);
+
     private:
-        transforms_t _transforms; // all children for the skeleton
-        clips_t _clips;
+        /// remove all data, destroy all children/game objects
+        void clear();
+        
+        transforms_t _transforms;   // all children for the skeleton
+        names_t _names;             // names => index lookup
+        clips_t _clips;             // animation clips
         
         SIMPLE_CLONE(animation);
     };

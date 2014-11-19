@@ -14,11 +14,15 @@ namespace com {
     class transform;
     
     // TODO: use metal for gpu computing?
+    // keyframe/transform both do matrix/vector computations
+    // should collect them all into metal
     
     /// skeleton data for one animation clip
     /// the animation clip consists of several channels, each of
     /// which represents one bone/joint's keyframe-based animation
     /// data. each joint represents its local matrix.
+    /// this calculates local matrix, where the transform component
+    /// handles the parent hierarchy.
     class skeleton_animation_clip : public std::enable_shared_from_this<skeleton_animation_clip> {
     public:
         typedef std::shared_ptr<skeleton_animation_clip> ptr;
@@ -34,7 +38,6 @@ namespace com {
         
         typedef animation_keyframe<joint_pose> joint_channel;
         
-        typedef std::vector<uint32_t> parents_t;
         typedef std::vector<joint_pose> joint_poses_t;
         typedef std::vector<transform*> transforms_t;
         
@@ -45,7 +48,6 @@ namespace com {
         void apply(time_t offset, transforms_t const&);
         
     private:
-        parents_t _parents; // joint hierarchy
         joint_channels_t _channels;
     };
     

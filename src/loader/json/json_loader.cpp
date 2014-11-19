@@ -1,5 +1,6 @@
 #include "loader/json/json_loader.h"
-#include "data_stream.h"
+#include "common/log.h"
+#include "io/data_stream.h"
 #include <rapidjson/document.h>
 
 using namespace rapidjson;
@@ -34,7 +35,7 @@ json_document::json_document(char const* str)
 : json_loader(new Document()) {
     Document& root = internal<Document>();
     if (root.Parse<0>(str).HasParseError()) {
-        // TODO: throw exception?
+        LOG_ERROR("error loading json: " << root.GetParseError());
     }
 }
 
@@ -43,7 +44,7 @@ json_document::json_document(data_stream* stream)
     Document& root = internal<Document>();
     auto wrapper = json_ds_wrapper(stream);
     if (root.ParseStream<0>(wrapper).HasParseError()) {
-        // TODO: throw exception?
+        LOG_ERROR("error loading json: " << root.GetParseError());
     }
 }
 

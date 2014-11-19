@@ -20,6 +20,7 @@ log4cxx::Logger* get_logger() {
 
 /// helper trait to re-use the logger
 ///     INHERIT_LOGGER(clz, parent)
+/// TODO: default to void to avoid template explosion
 template <typename T> struct logger_trait { typedef T logger_t; };
 
 #define IMPORT_LOGGER(clz) \

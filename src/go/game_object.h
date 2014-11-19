@@ -40,8 +40,8 @@ public:
     struct loader_constructor;
     
 public:
-    game_object(game_object* parent = &root())
-    : _first_child(null), _parent(nullptr),
+    game_object(game_object* parent = &root(), char const* tag = nullptr)
+    : _first_child(null), _parent(nullptr), _tag(tag ? tag : ""),
     _next_sibling(null), _pre_sibling(null), _child_size(0),
     _flag(-1U){
         ++ _number_of_objects;
