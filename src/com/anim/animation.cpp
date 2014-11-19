@@ -147,6 +147,7 @@ bool animation::load_from(data_stream *ds, std::vector<texture_atlas*> const& at
                            std::forward_as_tuple(jit->second));
             
             game_object* go = new game_object(_transforms[jit->second]->parent());
+            go->add_component<com::transform>();
             
             auto& attachement = (*it)["attachment"];
             
