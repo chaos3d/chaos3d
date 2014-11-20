@@ -24,7 +24,7 @@ namespace act {
     
     struct quad_atlas_applier_t {
         sprite2d::quad_sprite* _sprite;
-        mutable atlas_anim_kf_t::key_frame_t::key_t const* current = nullptr;
+        atlas_anim_kf_t::key_frame_t::key_t const* current = nullptr;
         
         quad_atlas_applier_t(sprite2d::quad_sprite* sprite)
         : _sprite(sprite) {}
@@ -41,12 +41,12 @@ namespace act {
         }
     };
     
-    action_keyframe<sprite_key_t, quad_sprite_applier_t>*
+    action_keyframe<sprite_key_t>*
     make_sprite_action(game_object* go, timer::time_t duration,
                        sprite_anim_kf_t::const_ptr const& keyframe,
                        timer const& t = global_timer_base::instance());
 
-    action_keyframe<atlas_key_t, quad_atlas_applier_t>*
+    action_keyframe<atlas_key_t>*
     make_atlas_action(game_object* go, timer::time_t duration,
                       atlas_anim_kf_t::const_ptr const& keyframe,
                       timer const& t = global_timer_base::instance());

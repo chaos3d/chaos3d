@@ -71,7 +71,7 @@ public:
             auto pre = std::next(it, -1);
             auto pre_ts = std::next(timestamp, -1);
             return i(*pre, *it, (offset - *pre_ts) / (*timestamp - *pre_ts),
-                     (int)std::distance(pre, _keyframes.begin()));
+                     (int)std::distance(_keyframes.begin(), pre));
         }
     }
     
@@ -211,11 +211,12 @@ struct interpolator_slerp {
 
 // the action that applies the key frame
 // the applier usually calls keyframe.interpolate
-template<class Key, class Applier>
+template<class Key>
 class action_keyframe : public action {
 public:
     typedef typename animation_keyframe<Key>::const_ptr keyframe_ptr;
     typedef typename timer::time_t time_t;
+    typedef std::function<void (animation_keyframe<Key> const&, time_t)> applier_t;
     
 public:
     template<class... Args>
@@ -254,7 +255,7 @@ protected:
     }
     
 private:
-    Applier _applier;
+    applier_t _applier;
     keyframe_ptr _keyframe;
     time_t _start;      // start time
     time_t _duration;   // the entire duration
@@ -263,14 +264,14 @@ private:
 };
 
 // helper function to create actions
-template<class Key, class Applier>
-using action_kf_keyframe_ptr = typename action_keyframe<Key, Applier>::keyframe_ptr;
+template<class Key>
+using action_kf_keyframe_ptr = typename action_keyframe<Key>::keyframe_ptr;
 
 template<class Key, class Applier>
-action_keyframe<Key, Applier>* make_action_keyframe(Applier const& applier, time_t duration,
-                                                    action_kf_keyframe_ptr<Key, Applier> const& keyframe,
-                                                    timer const& t = global_timer_base::instance()) {
-    return new action_keyframe<Key, Applier>(duration, keyframe, t, applier);
+action_keyframe<Key>* make_action_keyframe(Applier const& applier, time_t duration,
+                                           action_kf_keyframe_ptr<Key> const& keyframe,
+                                           timer const& t = global_timer_base::instance()) {
+    return new action_keyframe<Key>(duration, keyframe, t, applier);
 }
 
 #endif
