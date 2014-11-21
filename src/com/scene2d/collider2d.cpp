@@ -10,7 +10,7 @@ collider2d& collider2d::reset_from<quad_sprite>(bool collidable, scene2d::shape 
     auto* quad = parent()->get_component<quad_sprite>();
     if (!quad)
         return *this;
-    box box_shape(quad->bound());
+    box box_shape(quad->get_bounding_box());
     static_cast<shape&>(box_shape) = def;
     box_shape.is_collidable() = collidable;
     reset_shapes({std::move(box_shape)});

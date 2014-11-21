@@ -38,8 +38,26 @@ void quad_sprite::fill_indices(uint16_t start_idx) {
     };
 }
 
+box2f quad_sprite::get_bounding_box() const {
+    box2f bb;
+    for (auto& v : bound()) {
+        bb.extend(v);
+    }
+    return bb;
+}
+
+void quad_sprite::set_bound_from_box(box2f const& box) {
+    set_bound({{
+        box.corner(box2f::BottomLeft),
+        box.corner(box2f::TopLeft),
+        box.corner(box2f::BottomRight),
+        box.corner(box2f::TopRight),
+    }});
+}
+
 quad_sprite& quad_sprite::set_from_material(sprite_material* mat,
-                                            box2f const& frame, vector2f const& pivot) {
+                                            sprite_v_t const& frame,
+                                            vector2f const& pivot) {
     if (mat)
         set_material(mat);
     
@@ -49,12 +67,22 @@ quad_sprite& quad_sprite::set_from_material(sprite_material* mat,
         return *this;
     
     auto& size = (*tex)->size();
-    vector2f rt_min{frame.min().x() * size.x(), frame.min().y() * size.y()};
-    vector2f bound{frame.max().x() * size.x(), frame.max().y() * size.y()};
-    bound -= rt_min;
+    vector2f bd(vector2f((frame[0].x()-frame[2].x()) * size.x(), (frame[0].y()-frame[2].y()) * size.y()).norm(),
+                vector2f((frame[0].x()-frame[1].x()) * size.x(), (frame[0].y()-frame[1].y()) * size.y()).norm());
+                
+    set_bound({{
+        vector2f(-bd.x()/2.f, -bd.y()/2.f) + pivot,
+        vector2f(-bd.x()/2.f, bd.y()/2.f) + pivot,
+        vector2f(bd.x()/2.f, -bd.y()/2.f) + pivot,
+        vector2f(bd.x()/2.f, bd.y()/2.f) + pivot
+    }});
+    set_frame(frame);
+#if 0
+    vector2f bound{std::abs(frame.z() * size.x()), std::abs(frame.w() * size.y())};
     set_frame(frame);
     set_bound(vector2f{pivot.x() - bound.x()/2.f, pivot.y() - bound.y()/2.f},
               vector2f{pivot.x() + bound.x()/2.f, pivot.y() + bound.y()/2.f});
+#endif
     return *this;
 }
 
@@ -68,31 +96,32 @@ void quad_sprite::fill_buffer(vertex_layout::locked_buffer const& buffer,
                               com::transform const& trans) const {
     auto& indices = _data.buffer->channel_indices;
     
+    // TODO: optimize? metal? simd?
     if (indices[layout_buffer::POSITION] >= 0) {
         char* raw = buffer.buffer(indices[layout_buffer::POSITION]);
         assert(buffer.type(indices[layout_buffer::POSITION]) == vertex_layout::Float); // no conversion
         size_t data_size = std::min(buffer.unit(indices[layout_buffer::POSITION]), 4) * sizeof(float);
         size_t stride = buffer.stride(indices[layout_buffer::POSITION]);
         
-        auto pos = trans.to_global(bound().corner(box2f::BottomLeft));
+        auto pos = trans.to_global(bound()[0]);
         memcpy(raw, (vector4f(pos.x(), pos.y(), pos.z(), _alpha)).data(), data_size);
-        pos = std::move(trans.to_global(bound().corner(box2f::TopLeft)));
+        pos = std::move(trans.to_global(bound()[1]));
         memcpy(raw+=stride, (vector4f(pos.x(), pos.y(), pos.z(), _alpha)).data(), data_size);
-        pos = std::move(trans.to_global(bound().corner(box2f::BottomRight)));
+        pos = std::move(trans.to_global(bound()[2]));
         memcpy(raw+=stride, (vector4f(pos.x(), pos.y(), pos.z(), _alpha)).data(), data_size);
-        pos = std::move(trans.to_global(bound().corner(box2f::TopRight)));
+        pos = std::move(trans.to_global(bound()[3]));
         memcpy(raw+ stride, (vector4f(pos.x(), pos.y(), pos.z(), _alpha)).data(), data_size);
     }
 
     if (indices[layout_buffer::UV] >= 0) {
-        box2f const& uv = frame();
+        auto& uv = frame();
         char* raw = buffer.buffer(indices[layout_buffer::UV]);
         assert(buffer.type(indices[layout_buffer::UV]) == vertex_layout::Float); // no conversion
         size_t data_size = std::min(buffer.unit(indices[layout_buffer::UV]), 2) * sizeof(float);
         size_t stride = buffer.stride(indices[layout_buffer::UV]);
-        memcpy(raw, uv.corner(box2f::TopLeft).data(), data_size);
-        memcpy(raw+=stride, uv.corner(box2f::BottomLeft).data(), data_size);
-        memcpy(raw+=stride, uv.corner(box2f::TopRight).data(), data_size);
-        memcpy(raw+ stride, uv.corner(box2f::BottomRight).data(), data_size);
+        memcpy(raw, uv[0].data(), data_size);
+        memcpy(raw+=stride, uv[1].data(), data_size);
+        memcpy(raw+=stride, uv[2].data(), data_size);
+        memcpy(raw+ stride, uv[3].data(), data_size);
     }
 }

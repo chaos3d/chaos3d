@@ -86,12 +86,16 @@ namespace script {
         typedef act::sprite_anim_kf_t::key_frame_t key_frame_t;
         std::vector<key_frame_t> key_frames;
 
+#if 0
         for (auto& it : keyframe) {
             key_frames.emplace_back(key_frame_t(it[0],
-                                                act::sprite_key_t(box2f(box2f::VectorType(it[1], it[2]),
-                                                                        box2f::VectorType(it[3], it[4])))
+                                                act::sprite_key_t(vector4f(it[1], it[2],
+                                                                           it[3], it[4])
+                                                                  )
                                                 ));
         }
+#endif
+        assert(0); // later
         return act::make_sprite_action(go, duration,
                                        act::sprite_anim_kf_t::create(WRAP_CLAMP, key_frames));
     }

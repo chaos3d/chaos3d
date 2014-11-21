@@ -29,6 +29,8 @@ namespace com {
         // FIXME: better skin struct
         struct skin_piece {
             texture_atlas*  atlas;
+            box2f           bound;      // sprite bound
+            vector3f        translate;  // translate
             double          rotation;
         };
         typedef std::unordered_map<std::string, skin_piece> skin_t;

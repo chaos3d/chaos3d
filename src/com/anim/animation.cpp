@@ -11,6 +11,8 @@
 using namespace com;
 using namespace rapidjson; // TODO: move this out of this scope
 
+#define QUATERNION_Z(r) quaternionf(Eigen::AngleAxisf(r*M_PI/180.f, vector3f::UnitZ()))
+
 animation::animation(game_object* go, data_stream* ds, std::vector<texture_atlas*> const& atlas)
 : component(go) {
     if (ds != nullptr) {
@@ -78,10 +80,9 @@ bool animation::load_from(data_stream *ds, std::vector<texture_atlas*> const& at
                     }
                 }
             }
-            _transforms.emplace_back(&go->add_component<com::transform>
-                                     (vector3f(x, y, 0.f),
-                                      quaternionf(Eigen::AngleAxisf(rotate*M_PI/180.f, vector3f::UnitZ())),
-                                      vector3f(scaleX, scaleY, 1.f)));
+            _transforms.emplace_back(&go->add_component<com::transform>(vector3f(x, y, 0.f),
+                                                                        QUATERNION_Z(rotate),
+                                                                        vector3f(scaleX, scaleY, 1.f)));
             if (parent_idx != SIZE_T_MAX) {
                 _transforms[parent_idx]->parent()->add_child(_transforms.back()->parent());
             }
@@ -105,22 +106,33 @@ bool animation::load_from(data_stream *ds, std::vector<texture_atlas*> const& at
                 
                 for (auto sprite_it = itr->value.MemberBegin();
                      sprite_it != itr->value.MemberEnd(); ++sprite_it) {
-                    // FIXME: more parsing
                     auto* name = sprite_it->name.GetString();
-                    auto& name_it = sprite_it->value["name"];
-                    if (name_it.IsString()) {
-                        name = name_it.GetString();
-                    }
+                    double rotation = 0.f;
+                    box2f bound;
+                    vector3f translate;
                     
-                    float rotation = 0.f;
-                    auto& rotate_it = sprite_it->value["rotation"];
-                    if (rotate_it.IsNumber()) {
-                        rotation = rotate_it.GetDouble();
+                    for (auto attr = sprite_it->value.MemberBegin();
+                         attr != sprite_it->value.MemberEnd(); ++attr) {
+                        if (strcmp(attr->name.GetString(), "name") == 0) {
+                            name = attr->value.GetString();
+                        } else if (strcmp(attr->name.GetString(), "x") == 0) {
+                            translate.x() = attr->value.GetDouble();
+                        } else if (strcmp(attr->name.GetString(), "y") == 0) {
+                            translate.y() = attr->value.GetDouble();
+                        } else if (strcmp(attr->name.GetString(), "width") == 0) {
+                            bound.min().x() = -attr->value.GetDouble() / 2.0;
+                            bound.max().x() = attr->value.GetDouble() / 2.0;
+                        } else if (strcmp(attr->name.GetString(), "height") == 0) {
+                            bound.min().y() = -attr->value.GetDouble() / 2.0;
+                            bound.max().y() = attr->value.GetDouble() / 2.0;
+                        } else if (strcmp(attr->name.GetString(), "rotation") == 0) {
+                            rotation = attr->value.GetDouble();
+                        }
                     }
-                    
+
                     skin.emplace(std::piecewise_construct,
                                  std::forward_as_tuple(name),
-                                 std::forward_as_tuple(skin_piece{nullptr, rotation}));
+                                 std::forward_as_tuple(skin_piece{nullptr, bound, translate, rotation}));
                 }
                 
             }
@@ -154,13 +166,65 @@ bool animation::load_from(data_stream *ds, std::vector<texture_atlas*> const& at
             if (attachement.IsString()) {
                 auto piece = default_skin.find(attachement.GetString());
                 if (piece != default_skin.end() && piece->second.atlas) {
-                    go->add_component<sprite2d::quad_sprite>(*piece->second.atlas,
-                                                             piece->first);
+                    auto* tf = go->get_component<com::transform>();
+                    auto& sp = go->add_component<sprite2d::quad_sprite>(*piece->second.atlas,
+                                                                        piece->first);
+
+                    // FIXME: default bound if omitted
+                    sp.set_bound_from_box(piece->second.bound);
+                    tf->set_rotate(QUATERNION_Z(piece->second.rotation));
+                    tf->set_translate(piece->second.translate);
+                    
                 }
             }
         }
     }
 
+    auto& animations = json["animations"];
+    if (animations.IsObject()) {
+        for (auto anim = animations.MemberBegin();
+             anim != animations.MemberEnd(); ++anim) {
+            skeleton_animation_clip* clip = new skeleton_animation_clip;
+            _clips.emplace(std::piecewise_construct,
+                           std::forward_as_tuple(anim->name.GetString()),
+                           std::forward_as_tuple(clip));
+            
+            // TODO: support slots anim
+            auto& bones = anim->value["bones"];
+            if (bones.IsObject()) {
+                for (auto bone = bones.MemberBegin(); bone != bones.MemberEnd(); ++bone) {
+                    auto name = _names.find(bone->name.GetString());
+                    if (name == _names.end()) {
+                        LOG_WARN("the animated joint is not found: " << bone->name.GetString());
+                        continue;
+                    }
+                    
+                    auto channel = clip->add_channel(name->second);
+                    double x = DBL_MAX, y = DBL_MAX, angle = DBL_MAX;
+                    time_t ts = 0;
+                    for (auto anim = bone->value.MemberBegin();
+                         anim != bone->value.MemberEnd(); ++anim) {
+                        for (auto each = anim->value.Begin();
+                             each != anim->value.End(); ++each) {
+                            for (auto attr = each->MemberBegin();
+                                 attr != each->MemberEnd(); ++attr) {
+                                if (strcmp(attr->name.GetString(), "time") == 0) {
+                                    ts = attr->value.GetDouble();
+                                } else if (strcmp(attr->name.GetString(), "x") == 0) {
+                                    x = attr->value.GetDouble();
+                                } else if (strcmp(attr->name.GetString(), "y") == 0) {
+                                    y = attr->value.GetDouble();
+                                } else if (strcmp(attr->name.GetString(), "angle") == 0) {
+                                    angle = attr->value.GetDouble();
+                                }
+                            }
+                            
+                        }
+                    }
+                }
+            }
+        }
+    }
     return true;
 }
 

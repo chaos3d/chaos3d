@@ -10,14 +10,15 @@ namespace sprite2d {
     // the quad sprite
     class quad_sprite : public sprite {
     public:
+        typedef std::array<vector2f, 4> sprite_v_t;
         struct animated_frame_key {
             enum { FRAME = 1, BOUND = 2, MAT = 4 };
-            box2f frame;    // texture uv
-            box2f bound;    // upper/lower bound
+            sprite_v_t frame;    // texture uv
+            sprite_v_t bound;    // upper/lower bound
             sprite_material* mat = nullptr;
             uint8_t mask = 1;
             
-            animated_frame_key(box2f const& frame_,
+            animated_frame_key(sprite_v_t const& frame_,
                                sprite_material* mat_ = nullptr)
             : frame(frame_), mat(mat_),
             mask(FRAME | (mat_ != nullptr ? MAT : 0))
@@ -60,12 +61,17 @@ namespace sprite2d {
         // the bound is calculated based on the size of texture
         // and the pivot
         quad_sprite& set_from_material(sprite_material* mat,
-                                       box2f const& frame,
+                                       sprite_v_t const& frame,
                                        vector2f const& pivot = {0.f, 0.f});
         
         quad_sprite& set_from_atlas(texture_atlas const&,
                                     std::string const& name,
                                     std::string const& mat = "basic");
+        
+        /// get the bounding box
+        box2f get_bounding_box() const;
+        void set_bound_from_box(box2f const&);
+        
     protected:
         virtual quad_sprite* clone(game_object*) const override;
         
@@ -74,8 +80,8 @@ namespace sprite2d {
                                  com::transform const&) const override;
         virtual void fill_indices(uint16_t) override;
         
-        ATTRIBUTE(box2f, frame, box2f()); // texture uv
-        ATTRIBUTE(box2f, bound, box2f()); // lower and upper bound
+        ATTRIBUTE(sprite_v_t, frame, sprite_v_t()); // texture uv (x, y, w, h)
+        ATTRIBUTE(sprite_v_t, bound, sprite_v_t()); // lower and upper bound
         ATTRIBUTE(float, alpha, 1.f); // alpha
         COMPONENT_FROM_LOADER(quad_sprite, quad);
     };

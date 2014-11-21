@@ -28,6 +28,10 @@ namespace com {
         typedef std::shared_ptr<skeleton_animation_clip> ptr;
         typedef timer::time_t time_t;
         
+        typedef animation_keyframe<vector3f> translate_channel;
+        typedef animation_keyframe<vector3f> scale_channel;
+        typedef animation_keyframe<quaternionf> rotate_channel;
+        
         struct joint_pose {
             // TODO: interpolation
             vector3f translate;
@@ -42,10 +46,11 @@ namespace com {
         typedef std::vector<transform*> transforms_t;
         
         // joint index, and its channel data
-        typedef std::forward_list<std::tuple<uint32_t, joint_channel>> joint_channels_t;
+        typedef std::forward_list<std::tuple<uint32_t, joint_channel::ptr>> joint_channels_t;
         
     public:
         void apply(time_t offset, transforms_t const&);
+        joint_channel::ptr add_channel(uint32_t idx);
         
     private:
         joint_channels_t _channels;

@@ -30,18 +30,26 @@ texture_atlas::ptr texture_atlas::load_from(json_loader const& json,
     auto& frames = root["frames"];
     auto& rects = atlas->_rects;
     for (auto it = frames.Begin(); it != frames.End(); ++it) {
-        // TODO: source size/rotate/trim
+        // TODO: source size/trim
         auto& frame = (*it)["frame"];
-        float x = (float)frame["x"].GetInt() / size.x();
-        float y = (float)frame["y"].GetInt() / size.y();
-        rects.emplace(std::piecewise_construct, std::forward_as_tuple((*it)["filename"].GetString()),
-                      std::forward_as_tuple(
-                                            Eigen::Vector2f{x, y},
-                                            Eigen::Vector2f{
-                                                (float)frame["w"].GetInt() / size.x() + x,
-                                                (float)frame["h"].GetInt() / size.y() + y}
-                                            )
-                      );
+        bool rotated = (*it)["rotated"].GetBool();
+        float x = (float)frame["x"].GetInt();
+        float y = (float)frame["y"].GetInt();
+        float w = (float)frame["w"].GetInt();
+        float h = (float)frame["h"].GetInt();
+        if (rotated) {
+            rects.emplace(std::piecewise_construct, std::forward_as_tuple((*it)["filename"].GetString()),
+                          std::forward_as_tuple(sprite_v_t{{
+                vector2f((x + h)/size.x(), (y + w)/size.y()), vector2f(x/size.x(), (y + w)/size.y()),
+                vector2f((x + h)/size.x(), y/size.y()), vector2f(x/size.x(), y/size.y())
+            }}));
+        } else {
+            rects.emplace(std::piecewise_construct, std::forward_as_tuple((*it)["filename"].GetString()),
+                          std::forward_as_tuple(sprite_v_t{{
+                vector2f(x/size.x(), (y + h)/size.y()), vector2f(x/size.x(), y/size.y()),
+                vector2f((x + w)/size.x(), (y + h)/size.y()), vector2f((x + w)/size.x(), y/size.y())
+            }}));
+        }
     }
     
     return ptr(atlas);
