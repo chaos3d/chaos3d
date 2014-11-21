@@ -62,7 +62,7 @@ namespace sprite2d {
         // and the pivot
         quad_sprite& set_from_material(sprite_material* mat,
                                        sprite_v_t const& frame,
-                                       vector2f const& pivot = {0.f, 0.f});
+                                       vector2f const& pivot = {0.f, 0.f}); //TODO: bound into atlas
         
         quad_sprite& set_from_atlas(texture_atlas const&,
                                     std::string const& name,

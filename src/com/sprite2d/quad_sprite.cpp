@@ -67,22 +67,22 @@ quad_sprite& quad_sprite::set_from_material(sprite_material* mat,
         return *this;
     
     auto& size = (*tex)->size();
-    vector2f bd(vector2f((frame[0].x()-frame[2].x()) * size.x(), (frame[0].y()-frame[2].y()) * size.y()).norm(),
-                vector2f((frame[0].x()-frame[1].x()) * size.x(), (frame[0].y()-frame[1].y()) * size.y()).norm());
-                
+    vector2f xaxis(frame[2] - frame[0]);
+    vector2f yaxis(frame[1] - frame[0]);
+    // assume only axis-aligned
+    assert(std::abs(yaxis.x() - FLT_EPSILON) <= FLT_EPSILON || std::abs(yaxis.y() - FLT_EPSILON) <= FLT_EPSILON);
+    assert(std::abs(xaxis.x() - FLT_EPSILON) <= FLT_EPSILON || std::abs(xaxis.y() - FLT_EPSILON) <= FLT_EPSILON);
+    vector2f bd(std::abs(xaxis.x()) > FLT_EPSILON ?
+                std::abs(xaxis.x()) * size.x() : std::abs(xaxis.y()) * size.y(),
+                std::abs(yaxis.x()) > FLT_EPSILON ?
+                std::abs(yaxis.x()) * size.x() : std::abs(yaxis.y()) * size.y());
     set_bound({{
-        vector2f(-bd.x()/2.f, -bd.y()/2.f) + pivot,
-        vector2f(-bd.x()/2.f, bd.y()/2.f) + pivot,
-        vector2f(bd.x()/2.f, -bd.y()/2.f) + pivot,
-        vector2f(bd.x()/2.f, bd.y()/2.f) + pivot
+        vector2f(-bd.x()/2.f, -bd.y()/2.f) - pivot,
+        vector2f(-bd.x()/2.f, bd.y()/2.f) - pivot,
+        vector2f(bd.x()/2.f, -bd.y()/2.f) - pivot,
+        vector2f(bd.x()/2.f, bd.y()/2.f) - pivot
     }});
     set_frame(frame);
-#if 0
-    vector2f bound{std::abs(frame.z() * size.x()), std::abs(frame.w() * size.y())};
-    set_frame(frame);
-    set_bound(vector2f{pivot.x() - bound.x()/2.f, pivot.y() - bound.y()/2.f},
-              vector2f{pivot.x() + bound.x()/2.f, pivot.y() + bound.y()/2.f});
-#endif
     return *this;
 }
 
