@@ -34,7 +34,7 @@ namespace script {
             } else if (strcmp(key, "src_alpha") == 0) {
                 uint8_t src = converter<uint8_t>::from(L, -1, nullptr);
                 VALIDATE(src, render_state::BlendNone, render_state::BlendMax, "src_alpha");
-                state.set_dst_alpha_blend(src);
+                state.set_src_alpha_blend(src);
             } else if (strcmp(key, "dst_alpha") == 0) {
                 uint8_t dst = converter<uint8_t>::from(L, -1, nullptr);
                 VALIDATE(dst, render_state::BlendNone, render_state::BlendMax, "dst_alpha");
