@@ -22,7 +22,7 @@ public:
     struct channel {
         vertex_buffer::ptr buffer;
         int type;   // unsigned/float
-        int unit;   // count
+        int unit;   // number of elements
         size_t offset;
         size_t stride;
         
