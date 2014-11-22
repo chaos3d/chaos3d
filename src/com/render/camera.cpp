@@ -8,7 +8,7 @@ using namespace com;
 camera::camera(game_object* go, render_target* target_, int priority)
 : component(go), _priority(priority), _disabled(false),
 _viewport(Eigen::Vector2i{0, 0}, Eigen::Vector2i{256, 256}),
-_clear_color(.1f, .1f, .1f, 0.f),
+_clear_color(.1f, .1f, .5f, 0.f),
 _proj_view_inverse(matrix4f::Identity()),
 _proj_mat(matrix4f::Identity()),
 _proj_inverse(matrix4f::Identity()),

@@ -146,6 +146,7 @@ bool animation::load_from(data_stream *ds, std::vector<texture_atlas*> const& at
     auto& slots = json["slots"];
     if (slots.IsArray()) {
         auto& default_skin = _skins["default"];
+        int32_t index = 0;
         for (auto it = slots.Begin(); it != slots.End(); ++it) {
             auto* name = (*it)["name"].GetString();
             auto* joint = (*it)["bone"].GetString();
@@ -169,6 +170,7 @@ bool animation::load_from(data_stream *ds, std::vector<texture_atlas*> const& at
                     auto* tf = go->get_component<com::transform>();
                     auto& sp = go->add_component<sprite2d::quad_sprite>(*piece->second.atlas,
                                                                         piece->first);
+                    sp.set_index(++index);
 
                     // FIXME: default bound if omitted
                     sp.set_bound_from_box(piece->second.bound);

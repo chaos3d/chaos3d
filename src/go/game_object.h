@@ -221,7 +221,10 @@ public:
         return _root;
     }
     
-    // being set during transversal
+    /// being set during transversal
+    /// this is used to check if the game object is in the active list
+    /// if the reference is kept somewhere else. the root object is
+    /// always active. @see world2d_mgr
     uint32_t mark() const { return _mark; }
 
 private:

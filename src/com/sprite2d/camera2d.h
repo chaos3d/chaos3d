@@ -2,8 +2,11 @@
 #define _SPRITE2D_CAMERA2D_H
 
 #include "com/render/camera.h"
+#include <vector>
 
 namespace sprite2d {
+    class sprite;
+    
     // 2D atlas batched sprite renderer
     class camera2d : public com::camera {
     public:
@@ -16,6 +19,10 @@ namespace sprite2d {
         // instead of using collider2d
         virtual void collect(std::vector<game_object*> const&) override;
         virtual void do_render(com::camera_mgr const&) override;
+        
+    private:
+        // local cache for sorting sprites, not persistent
+        std::vector<sprite*> _sorted_sprites;
         
         SIMPLE_CLONE(camera2d);
         COMPONENT_FROM_LOADER(camera2d, camera2d);

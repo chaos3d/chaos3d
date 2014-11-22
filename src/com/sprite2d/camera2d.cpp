@@ -27,9 +27,30 @@ void camera2d::collect(const std::vector<game_object *> &goes) {
         }
         return spt;
     };
+#define SORT_INDEX
+#ifdef SORT_INDEX
+    _sorted_sprites.reserve(goes.size());
+    _sorted_sprites.clear();
+    {
+        // sort the sprites using the indices
+        for (auto* next = next_sprite(); next != nullptr; next = next_sprite()) {
+            _sorted_sprites.push_back(next);
+            auto current = _sorted_sprites.end() - 1;
+            std::rotate(std::upper_bound(_sorted_sprites.begin(), current, next,
+                                         [] (sprite* lhs, sprite* rhs) {
+                                             return lhs->index() < rhs->index();
+                                         }), current, _sorted_sprites.end());
+        }
+    }
+    if (_sorted_sprites.empty())
+        return;
+    
+    auto* spt = _sorted_sprites.front();
+#else
     auto* spt = next_sprite();
     if (spt == nullptr)
         return;
+#endif
     
     auto buffer = spt->index_buffer();
     char* buffer_raw = reinterpret_cast<char*>(buffer->lock());
@@ -44,7 +65,11 @@ void camera2d::collect(const std::vector<game_object *> &goes) {
     size_t offset = raw_size;
     size_t start = 0;
 
+#ifdef SORT_INDEX
+    for (auto& next : _sorted_sprites) {
+#else
     for (sprite* next = next_sprite(); next != nullptr; next = next_sprite()) {
+#endif
         if (!next->batchable(*spt)) {
             spt->generate_batch(target().get(), start, (offset - start) / sizeof(uint16_t));
             

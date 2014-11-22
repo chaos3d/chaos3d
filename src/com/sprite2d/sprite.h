@@ -210,6 +210,9 @@ namespace sprite2d {
         // uniform: texture, params, etc
         // raw vertices buffer
         
+        /// z-index for rendering order
+        ATTRIBUTE(int32_t, index, 0);
+        
         friend class sprite_mgr;    // fill_buffer
         friend class camera2d;      // generate_batch
     };
