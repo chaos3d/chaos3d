@@ -39,7 +39,8 @@ namespace com {
     public:
         /// load animation/skeleton data from the json stream
         animation(game_object*,
-                  data_stream* = nullptr, std::vector<texture_atlas*> const& = {});
+                  data_stream* = nullptr, std::vector<texture_atlas*> const& = {},
+                  int32_t idx = 0);
         
         /// create the action from the given clip name
         /// this is version 1 that each animation is separate and
@@ -67,6 +68,7 @@ namespace com {
         skins_t _skins;             // skins sets
         clips_t _clips;             // animation clips
         
+        ATTRIBUTE(int32_t, start_index, 0); /// the starting index for the child sprites
         SIMPLE_CLONE(animation);
     };
 }

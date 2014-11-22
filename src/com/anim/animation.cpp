@@ -13,8 +13,9 @@ using namespace rapidjson; // TODO: move this out of this scope
 
 #define QUATERNION_Z(r) quaternionf(Eigen::AngleAxisf(r*M_PI/180.f, vector3f::UnitZ()))
 
-animation::animation(game_object* go, data_stream* ds, std::vector<texture_atlas*> const& atlas)
-: component(go) {
+animation::animation(game_object* go, data_stream* ds,
+                     std::vector<texture_atlas*> const& atlas, int32_t idx)
+: component(go), _start_index(idx) {
     if (ds != nullptr) {
         load_from(ds, atlas);
     }
@@ -146,7 +147,7 @@ bool animation::load_from(data_stream *ds, std::vector<texture_atlas*> const& at
     auto& slots = json["slots"];
     if (slots.IsArray()) {
         auto& default_skin = _skins["default"];
-        int32_t index = 0;
+        int32_t index = start_index();
         for (auto it = slots.Begin(); it != slots.End(); ++it) {
             auto* name = (*it)["name"].GetString();
             auto* joint = (*it)["bone"].GetString();

@@ -170,6 +170,8 @@ namespace script {
         
         script::class_<com::animation>::type()
         .def("make_action", LUA_BIND(&com::animation::make_action))
+        .def("set_index", LUA_BIND_S(com::animation& (com::animation::*)(int32_t const&),
+                                     &com::animation::set_start_index))
         ;
         
         script::class_<game_object>::type()
@@ -182,7 +184,7 @@ namespace script {
         
         .def("add_animation",
              LUA_BIND((&game_object::add_component<com::animation,
-                       data_stream*, std::vector<texture_atlas*> const&>)))
+                       data_stream*, std::vector<texture_atlas*> const&, int32_t>)))
         ;
     }
 }
