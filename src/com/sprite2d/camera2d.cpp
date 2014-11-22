@@ -19,21 +19,22 @@ camera2d& camera2d::operator=(camera2d const& rhs) {
 
 void camera2d::collect(const std::vector<game_object *> &goes) {
     const int idx = sprite_mgr::component_idx();
-    auto it = goes.begin();
-    auto next_sprite = [&] () {
-        sprite* spt = nullptr;
-        for (;it != goes.end() && (spt == nullptr || !spt->is_renderable()); ++it) {
-            spt = (*it)->get_component<sprite>(idx);
-        }
-        return spt;
-    };
 #define SORT_INDEX
 #ifdef SORT_INDEX
     _sorted_sprites.reserve(goes.size());
     _sorted_sprites.clear();
     {
         // sort the sprites using the indices
-        for (auto* next = next_sprite(); next != nullptr; next = next_sprite()) {
+        auto it = goes.begin();
+        for (;;) {
+            sprite* next = nullptr;
+            for (;it != goes.end() && (next == nullptr || !next->is_renderable()); ++it) {
+                next = (*it)->get_component<sprite>(idx);
+            }
+            
+            if (next == nullptr)
+                break;
+            
             _sorted_sprites.push_back(next);
             auto current = _sorted_sprites.end() - 1;
             std::rotate(std::upper_bound(_sorted_sprites.begin(), current, next,
@@ -47,6 +48,14 @@ void camera2d::collect(const std::vector<game_object *> &goes) {
     
     auto* spt = _sorted_sprites.front();
 #else
+    auto it = goes.begin();
+    auto next_sprite = [&] () {
+        sprite* spt = nullptr;
+        for (;it != goes.end() && (spt == nullptr || !spt->is_renderable()); ++it) {
+            spt = (*it)->get_component<sprite>(idx);
+        }
+        return spt;
+    };
     auto* spt = next_sprite();
     if (spt == nullptr)
         return;
