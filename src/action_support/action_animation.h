@@ -9,6 +9,8 @@
 namespace act {
     
     /// action for animation component
+    /// it is similar to the animation controller, to manage the internal
+    /// state, calculate/blend animations and apply to the scene node
     class action_animation : public action {
     public:
         typedef timer::time_t time_t;

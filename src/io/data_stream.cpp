@@ -30,3 +30,8 @@ namespace script {
         ;
     }
 }
+
+bool data_stream::reset() {
+    // it is equal to set pointer to the start unless there is a special handler
+    return seek(0, SeekSet);
+};

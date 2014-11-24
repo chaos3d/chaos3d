@@ -10,8 +10,9 @@
 #include <vector>
 #include <unordered_map>
 
+class data_stream;
+
 namespace com {
-    class transform;
     
     // TODO: use metal for gpu computing?
     // keyframe/transform both do matrix/vector computations
@@ -28,31 +29,42 @@ namespace com {
         typedef std::shared_ptr<skeleton_animation_clip> ptr;
         typedef timer::time_t time_t;
         
-        typedef animation_keyframe<vector3f> translate_channel;
-        typedef animation_keyframe<vector3f> scale_channel;
-        typedef animation_keyframe<quaternionf> rotate_channel;
+        // animation data channel
+        typedef animation_keyframe<vector3f> translate_channel_t;
+        typedef animation_keyframe<vector3f> scale_channel_t;
+        typedef animation_keyframe<quaternionf> rotate_channel_t;
         
-        struct joint_pose {
-            // TODO: interpolation
-            vector3f translate;
-            vector3f scale;
-            vector2f skew;
-            quaternionf rotation;
+        struct joint_channel {
+            // this shall belong to the clip, no external reference
+            // is necessary
+            typedef std::unique_ptr<joint_channel> ptr;
+            
+            translate_channel_t::ptr    translate;
+            scale_channel_t::ptr        scale;
+            rotate_channel_t::ptr       rotate;
+            // TODO: slots/texture/event channels
         };
         
-        typedef animation_keyframe<joint_pose> joint_channel;
-        
-        typedef std::vector<joint_pose> joint_poses_t;
-        typedef std::vector<transform*> transforms_t;
-        
-        // joint index, and its channel data
-        typedef std::forward_list<std::tuple<uint32_t, joint_channel::ptr>> joint_channels_t;
+        typedef std::vector<joint_channel*> channels_t;
+        typedef std::unordered_map<std::string, uint32_t> names_t;
+        typedef std::vector<joint_channel::ptr> joint_channels_t;
         
     public:
-        void apply(time_t offset, transforms_t const&);
-        joint_channel::ptr add_channel(uint32_t idx);
+        /// initialize data from a data stream (JSON)
+        skeleton_animation_clip(data_stream*);
+        
+        /// giving the names, replace the channel data based on the corresponding
+        /// channel indices.
+        /// @return number of channels is added
+        uint32_t get_channels(names_t const&, channels_t&) const;
         
     private:
+        void load_from(data_stream*); // load and initialize data
+        
+        /// the channel/joint name to index mapping
+        names_t _names;
+        
+        /// channel data for each joint
         joint_channels_t _channels;
     };
     

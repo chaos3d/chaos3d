@@ -73,7 +73,7 @@ bool animation::load_from(data_stream *ds, std::vector<texture_atlas*> const& at
                 } else if (strcmp(itr->name.GetString(), "rotation") == 0) {
                     rotate = itr->value.GetDouble();
                 } else if (strcmp(itr->name.GetString(), "parent") == 0) {
-                    auto pid = _names.find(itr->value.GetString());
+                    auto pid = _names.find(std::string(itr->value.GetString()));
                     if (pid != _names.end()) {
                         parent_idx = pid->second;
                     } else {
@@ -150,7 +150,7 @@ bool animation::load_from(data_stream *ds, std::vector<texture_atlas*> const& at
         int32_t index = start_index();
         for (auto it = slots.Begin(); it != slots.End(); ++it) {
             auto* name = (*it)["name"].GetString();
-            auto* joint = (*it)["bone"].GetString();
+            std::string joint = (*it)["bone"].GetString();
             auto jit = _names.find(joint);
             if (jit == _names.end()) {
                 LOG_WARN("the joint is not defined, ignored: " << joint);
@@ -183,51 +183,12 @@ bool animation::load_from(data_stream *ds, std::vector<texture_atlas*> const& at
         }
     }
 
-    auto& animations = json["animations"];
-    if (animations.IsObject()) {
-        for (auto anim = animations.MemberBegin();
-             anim != animations.MemberEnd(); ++anim) {
-            skeleton_animation_clip* clip = new skeleton_animation_clip;
-            _clips.emplace(std::piecewise_construct,
-                           std::forward_as_tuple(anim->name.GetString()),
-                           std::forward_as_tuple(clip));
-            
-            // TODO: support slots anim
-            auto& bones = anim->value["bones"];
-            if (bones.IsObject()) {
-                for (auto bone = bones.MemberBegin(); bone != bones.MemberEnd(); ++bone) {
-                    auto name = _names.find(bone->name.GetString());
-                    if (name == _names.end()) {
-                        LOG_WARN("the animated joint is not found: " << bone->name.GetString());
-                        continue;
-                    }
-                    
-                    auto channel = clip->add_channel(name->second);
-                    double x = DBL_MAX, y = DBL_MAX, angle = DBL_MAX;
-                    time_t ts = 0;
-                    for (auto anim = bone->value.MemberBegin();
-                         anim != bone->value.MemberEnd(); ++anim) {
-                        for (auto each = anim->value.Begin();
-                             each != anim->value.End(); ++each) {
-                            for (auto attr = each->MemberBegin();
-                                 attr != each->MemberEnd(); ++attr) {
-                                if (strcmp(attr->name.GetString(), "time") == 0) {
-                                    ts = attr->value.GetDouble();
-                                } else if (strcmp(attr->name.GetString(), "x") == 0) {
-                                    x = attr->value.GetDouble();
-                                } else if (strcmp(attr->name.GetString(), "y") == 0) {
-                                    y = attr->value.GetDouble();
-                                } else if (strcmp(attr->name.GetString(), "angle") == 0) {
-                                    angle = attr->value.GetDouble();
-                                }
-                            }
-                            
-                        }
-                    }
-                }
-            }
-        }
-    }
+    _names.find("doesn't exist");
+    //FIXME
+    //ds->reset();
+    //_clips.emplace(std::piecewise_construct,
+    //               std::forward_as_tuple("test"),
+    //               std::forward_as_tuple(new skeleton_animation_clip(ds)));
     return true;
 }
 

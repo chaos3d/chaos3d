@@ -14,10 +14,12 @@ void action_animation::update() {
 
     auto elapsed = _timer.current_time() - _start;
     auto normalized = fmod(elapsed, _loop) / _loop;
+#if 0
     _clip->apply((_duration > 0.f && elapsed >= _duration) ? 1.f
                  : normalized < 0.f ? 0.f
                  : normalized,
                  _animation->transforms());
+#endif
 }
 
 bool action_animation::done() const {
