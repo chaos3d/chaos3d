@@ -59,7 +59,7 @@ logo:add_quad_sprite(spineboy, "torso", "basic")
 
 local sb = c3d.go.new(c3d.go.root)
 sb:add_transform():set_translate(0,-200);
-sb:add_animation(locator:from "spineboy.json", {spineboy}, 20)
+local sbanim = sb:add_animation(locator:from "spineboy.json", {spineboy}, 20)
 
 action:add_sequence({
 --launcher:get_action():add_group({
@@ -111,13 +111,14 @@ action:add_sequence({
     }),
     --]]
     c3d.action.wait_frame(10),
-    ---[[
+    --[[
     logo:make_translate_action(5, {
         {0, 0, 0, 0},
         {0.5, 0, 1, 0},
         {1, 0, -400, 0},
     }),
     --]]
+    sbanim:make_action("test"),
 });
 --local c1 = turtle:add_collider2d():from_quad_sprite(true, collider.shape())
 --turtle:set_tag('turtle')
