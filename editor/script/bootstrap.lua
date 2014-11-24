@@ -14,6 +14,7 @@ local sprite_mgr = c3d.get_sprite_mgr();
 local locator = c3d.get_locator();
 
 local atlas1 = c3d.load_atlas(locator:from "turtle.json", asset)
+local spineboy = c3d.load_atlas(locator:from "spineboy_atlas.json", asset)
 
 local c = c3d.go.new(c3d.go.root)
 c:set_tag"camera"
@@ -36,17 +37,33 @@ end
 
 sprite_mgr:add_material("basic", rd:new_program():link(sprite_mgr:vertex_layout(0), {
     build_v"test.vsh", build_f"test.fsh"
-}), rd:new_state(), 
+}), rd:new_state()
+---[[
+:set {
+    src_blend = c3d.blend.BlendOne,
+    src_alpha = c3d.blend.BlendOne,
+    dst_blend = c3d.blend.BlendOneMinusSrcAlpha,
+    dst_alpha = c3d.blend.BlendOneMinusSrcAlpha
+}
+--]]
+, 
 rd:new_uniform():set_texture("c_tex1", asset:load_texture("turtle")))
 
 local go1 = c3d.go.new(c3d.go.root)
 go1:add_transform():set_translate(0,180)
 --local logo = c3d.go.new(go1)
 local logo = c3d.go.new(c3d.go.root)
-logo:add_transform():set_translate(0,0):set_skew(30,0):set_rotate(0,0,0)--:mark(true)
-logo:add_quad_sprite(atlas1, "action01.png", "basic")
+logo:add_transform():set_translate(0,0):set_skew(0,0):set_rotate(0,0,0)--:mark(true)
+--logo:add_quad_sprite(atlas1, "action01.png", "basic")
+logo:add_quad_sprite(spineboy, "torso", "basic")
+
+local sb = c3d.go.new(c3d.go.root)
+sb:add_transform():set_translate(0,-200);
+sb:add_animation(locator:from "spineboy.json", {spineboy}, 20)
+
 action:add_sequence({
 --launcher:get_action():add_group({
+    --[[
     c3d.action.from(function()
         print "abc"
         coroutine.yield(logo:make_skew_action(2, {
@@ -57,7 +74,8 @@ action:add_sequence({
             {1, 0, 0, 0},
         }))
     end),
-    ---[[
+    --]]
+    --[[
     logo:make_skew_action(5, {
         {0, 0, 0, 0},
         {0.25, 30, 0, 0},
@@ -69,19 +87,22 @@ action:add_sequence({
         print "here now"
     end),
     --]]
-    ---[[
+    --[[
     logo:make_rotate_action(5, {
         {0, 0, 0, 0},
         {0.5, 0, 0, 30},
         {1, 0, 0, 0},
     }),
     --]]
-    logo:make_atlas_action(5, {
+    --[[
+    logo:make_atlas_action(-1, {
         {0, atlas1, "action01.png"},
         {0.25, atlas1, "action02.png"},
         {0.5, atlas1, "action01.png"},
         {0.75, atlas1, "action02.png"},
-    }, 0.4, {{1,2,3}}),
+        {1, atlas1, "action01.png"},
+    }, 0.4),
+    --]]
     --c3d.action.wait_time(1),
     --[[
     logo:make_translate_action(5, {
@@ -94,7 +115,7 @@ action:add_sequence({
     logo:make_translate_action(5, {
         {0, 0, 0, 0},
         {0.5, 0, 1, 0},
-        {1, 0, 0, 0},
+        {1, 0, -400, 0},
     }),
     --]]
 });
