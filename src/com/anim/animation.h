@@ -36,6 +36,13 @@ namespace com {
         typedef std::unordered_map<std::string, skin_piece> skin_t;
         typedef std::map<std::string, skin_t> skins_t;
         
+        struct joint_pose {
+            vector3f translate;
+            vector3f scale;
+            float rotate; // only z-axis
+        };
+        typedef std::vector<joint_pose> joint_poses_t;
+        
     public:
         /// load animation/skeleton data from the json stream
         animation(game_object*,
@@ -57,12 +64,18 @@ namespace com {
         /// load the animation/skeleton data from the json stream
         bool load_from(data_stream*, std::vector<texture_atlas*> const& = {});
         
-
+        /// get the name to index mapping
+        names_t const& names() const { return _names; }
+        
+        /// the initial setup poses for children
+        joint_poses_t const& setup_poses() const { return _setup_poses; }
+        
     private:
         /// remove all data, destroy all children/game objects
         void clear();
         
         transforms_t _transforms;   // all children for the skeleton
+        joint_poses_t _setup_poses; // setup poses
         names_t _names;             // joint names => joint index lookup
         names_t _slots;             // skin names => joint index lookup
         skins_t _skins;             // skins sets

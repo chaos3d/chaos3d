@@ -63,7 +63,7 @@ void skeleton_animation_clip::load_from(data_stream *ds) {
                         int type = 0; // 0, translate, 1, scale, 2, rotate
                         std::vector<time_t> times;
                         std::vector<vector3f> v3f_kf;
-                        std::vector<quaternionf> qf_kf;
+                        std::vector<float> qf_kf;
                         
                         if (strcmp(anim->name.GetString(), "translate") == 0) {
                             type = 0;
@@ -98,8 +98,9 @@ void skeleton_animation_clip::load_from(data_stream *ds) {
                                 v3f_kf.emplace_back(x == DBL_MAX ? 1.f : x,
                                                     y == DBL_MAX ? 1.f : y, 1.f);
                             } else if (type == 2) {
-                                qf_kf.emplace_back(Eigen::AngleAxisf(angle*M_PI/180.f,
-                                                                     vector3f::UnitZ()));
+                                //qf_kf.emplace_back(Eigen::AngleAxisf(angle*M_PI/180.f,
+                                //                                     vector3f::UnitZ()));
+                                qf_kf.emplace_back(angle*M_PI/180.f);
                             }
                         }
                         

@@ -84,6 +84,12 @@ bool animation::load_from(data_stream *ds, std::vector<texture_atlas*> const& at
             _transforms.emplace_back(&go->add_component<com::transform>(vector3f(x, y, 0.f),
                                                                         QUATERNION_Z(rotate),
                                                                         vector3f(scaleX, scaleY, 1.f)));
+            _setup_poses.emplace_back(joint_pose{
+                vector3f(x, y, 0.f),
+                vector3f(scaleX, scaleY, 1.f),
+                //QUATERNION_Z(rotate)
+                float(rotate*M_PI/180.f)
+            });
             if (parent_idx != SIZE_T_MAX) {
                 _transforms[parent_idx]->parent()->add_child(_transforms.back()->parent());
             }
@@ -183,12 +189,16 @@ bool animation::load_from(data_stream *ds, std::vector<texture_atlas*> const& at
         }
     }
 
+#ifdef DEBUG
+    // seem to be a bug, need more investigations
     _names.find("doesn't exist");
+#endif
+    
     //FIXME
-    //ds->reset();
-    //_clips.emplace(std::piecewise_construct,
-    //               std::forward_as_tuple("test"),
-    //               std::forward_as_tuple(new skeleton_animation_clip(ds)));
+    ds->reset();
+    _clips.emplace(std::piecewise_construct,
+                   std::forward_as_tuple("test"),
+                   std::forward_as_tuple(new skeleton_animation_clip(ds)));
     return true;
 }
 
