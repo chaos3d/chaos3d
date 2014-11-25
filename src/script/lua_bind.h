@@ -71,8 +71,9 @@ namespace script {
     struct function_wrapper{
         template<class R, class... Policy>
         static int push_results(lua_State* L, R&& result) {
+            int n = lua_gettop(L);
             converter<R>::to(L, std::forward<R>(result));
-            return 1 + policy_helper().apply<Policy...>(L);
+            return lua_gettop(L) - n;
         }
         
 #if 0

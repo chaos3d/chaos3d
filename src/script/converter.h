@@ -16,7 +16,11 @@ namespace script {
     template<class T>
     struct convert_from_lua {
         typedef std::false_type convertable;
-        
+    };
+    
+    template<class T>
+    struct convert_to_lua {
+        typedef std::false_type convertable;
     };
     
     template<class T>
@@ -32,6 +36,12 @@ namespace script {
         
         template<class C>
         using is_string = typename std::is_same<T1<T0<C>>, std::string>;
+        
+        template<class C>
+        struct is_userdata : public std::conditional<
+        script::is_userdata<C>::value && !convert_to_lua<C>::convertable::value,
+        std::true_type, std::false_type>::type {
+        };
         
         template<typename U = T,
         typename std::enable_if<is_number<T1<U>>::value>::type* = nullptr>
@@ -131,6 +141,12 @@ namespace script {
         };
 
         template<typename U = T,
+        typename std::enable_if<convert_to_lua<T1<U>>::convertable::value>::type* = nullptr>
+        static void to(lua_State* L, T&& value) {
+            convert_to_lua<T1<U>>::convert(L, std::forward<T>(value));
+        }
+        
+        template<typename U = T,
         typename std::enable_if<is_number<T1<U>>::value>::type* = nullptr>
         static void to(lua_State* L, T value) {
             lua_pushnumber(L, value);
@@ -167,7 +183,9 @@ namespace script {
             lua_newtable(L);
             int i = 0;
             for (auto& it : value) {
+                int n = lua_gettop(L);
                 converter<E>::to(L, std::move(it));
+                lua_settop(L, n + 1);
                 lua_rawseti(L, -2, ++i);
             }
         }
@@ -292,7 +310,9 @@ namespace script {
             lua_newtable(L);
             int i = 0;
             for (auto& it : value) {
+                int n = lua_gettop(L);
                 converter<E>::to(L, std::move(it));
+                lua_settop(L, n + 1);
                 lua_rawseti(L, -2, ++i);
             }
         }

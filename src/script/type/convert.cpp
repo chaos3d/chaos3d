@@ -9,6 +9,11 @@ vector2f convert_from_lua<vector2f>::convert(lua_State* L, int idx) {
     return vector2f(lua_tonumber(L, -2), lua_tonumber(L, -1));
 }
 
+void convert_to_lua<vector2f>::convert(lua_State* L, vector2f const& v) {
+    lua_pushnumber(L, v.x());
+    lua_pushnumber(L, v.y());
+}
+
 vector3f convert_from_lua<vector3f>::convert(lua_State* L, int idx) {
     luaL_argcheck(L, lua_istable(L, idx), idx, "expect a table");
     lua_rawgeti(L, idx, 1);

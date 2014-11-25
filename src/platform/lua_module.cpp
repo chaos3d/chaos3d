@@ -2,11 +2,12 @@
 
 #include "re/render_device.h"
 
-#include "script/type/def.h"
-#include "script/class_type.h"
-#include "script/lua_bind.h"
 #include "script/state.h"
 #include "script/lua_ref.h"
+#include "script/lua_bind.h"
+#include "script/type/def.h"
+#include "script/class_type.h"
+#include "script/type/convert.h"
 #include "script/import_scope.h"
 #include "script/converter_ptr.h"
 
@@ -47,6 +48,8 @@ extern "C" int luaopen_chaos3d(lua_State *L) {
     .def("poll_event", LUA_BIND(&launcher::poll_event))
     .def("get_render_device", LUA_BIND(&launcher::get_render_device))
     .def("get_action", LUA_BIND(&launcher::action))
+    .def("size", LUA_BIND(&launcher::get_screen))
+    .def("host", LUA_BIND(&launcher::get_host))
     ;
     
     lua_getglobal(L, "chaos3d");

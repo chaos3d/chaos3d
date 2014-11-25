@@ -168,6 +168,15 @@ private:
     friend launcher& launcher::initialize();
 };
 
+vector2f launcher::get_screen() const {
+    return vector2f{1024.f, 768.f}; // FIXME/TODO: get the actual screen size
+}
+
+char const* launcher::get_host() const {
+    return "mac"; // FIXME: retina? model? cpu?
+}
+
+
 launcher& launcher::initialize() {
     static mac_launcher mac;
     // TODO: move this up to common codebase
