@@ -7,10 +7,37 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F92C9CA21A2441F90082DFF7 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = F92C9CA11A2441F90082DFF7 /* main.mm */; };
+		F92C9CA51A2441F90082DFF7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F92C9CA41A2441F90082DFF7 /* AppDelegate.m */; };
+		F92C9CA81A2441F90082DFF7 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F92C9CA71A2441F90082DFF7 /* ViewController.m */; };
+		F92C9CAB1A2441F90082DFF7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F92C9CA91A2441F90082DFF7 /* Main.storyboard */; };
+		F92C9CAD1A2441F90082DFF7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F92C9CAC1A2441F90082DFF7 /* Images.xcassets */; };
+		F92C9CB01A2441F90082DFF7 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = F92C9CAE1A2441F90082DFF7 /* LaunchScreen.xib */; };
+		F92C9CCB1A2581770082DFF7 /* libchaos3d_core_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F961808E19E0ACAB00945A43 /* libchaos3d_core_ios.a */; };
+		F92C9CD01A2581770082DFF7 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F92C9CCC1A2581770082DFF7 /* CoreGraphics.framework */; };
+		F92C9CD11A2581770082DFF7 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F92C9CCD1A2581770082DFF7 /* OpenGLES.framework */; };
+		F92C9CD21A2581770082DFF7 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F92C9CCE1A2581770082DFF7 /* QuartzCore.framework */; };
+		F92C9CD31A2581770082DFF7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F92C9CCF1A2581770082DFF7 /* UIKit.framework */; };
+		F92C9CD71A2582B60082DFF7 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F92C9CD61A2582B60082DFF7 /* libz.dylib */; };
+		F92C9CD91A2582C70082DFF7 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F92C9CD81A2582C70082DFF7 /* libiconv.dylib */; };
 		F961808619E0AC8600945A43 /* lua.c in Sources */ = {isa = PBXBuildFile; fileRef = F961803E19E0AC5700945A43 /* lua.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		F92C9CC71A2481C00082DFF7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F961808719E0ACAB00945A43 /* chaos3d.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 88A84ACB1830652F009F7ECD;
+			remoteInfo = chaos3d_core_ios;
+		};
+		F92C9CC91A2481C00082DFF7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F961808719E0ACAB00945A43 /* chaos3d.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = F9589EB419D00C8E004BDB1D;
+			remoteInfo = chaos3d;
+		};
 		F961808D19E0ACAB00945A43 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F961808719E0ACAB00945A43 /* chaos3d.xcodeproj */;
@@ -61,6 +88,22 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		F92C9C9D1A2441F90082DFF7 /* ios-launcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ios-launcher.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F92C9CA01A2441F90082DFF7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F92C9CA11A2441F90082DFF7 /* main.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
+		F92C9CA31A2441F90082DFF7 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		F92C9CA41A2441F90082DFF7 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		F92C9CA61A2441F90082DFF7 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		F92C9CA71A2441F90082DFF7 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		F92C9CAA1A2441F90082DFF7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		F92C9CAC1A2441F90082DFF7 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		F92C9CAF1A2441F90082DFF7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		F92C9CCC1A2581770082DFF7 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.1.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
+		F92C9CCD1A2581770082DFF7 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.1.sdk/System/Library/Frameworks/OpenGLES.framework; sourceTree = DEVELOPER_DIR; };
+		F92C9CCE1A2581770082DFF7 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.1.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
+		F92C9CCF1A2581770082DFF7 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.1.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		F92C9CD61A2582B60082DFF7 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.1.sdk/usr/lib/libz.dylib; sourceTree = DEVELOPER_DIR; };
+		F92C9CD81A2582C70082DFF7 /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.1.sdk/usr/lib/libiconv.dylib; sourceTree = DEVELOPER_DIR; };
 		F9617FEB19E0AB4400945A43 /* lua */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = lua; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9617FF619E0AC5600945A43 /* COPYRIGHT */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = COPYRIGHT; sourceTree = "<group>"; };
 		F9617FF819E0AC5600945A43 /* contents.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = contents.html; sourceTree = "<group>"; };
@@ -169,6 +212,20 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		F92C9C9A1A2441F90082DFF7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F92C9CD91A2582C70082DFF7 /* libiconv.dylib in Frameworks */,
+				F92C9CD71A2582B60082DFF7 /* libz.dylib in Frameworks */,
+				F92C9CD01A2581770082DFF7 /* CoreGraphics.framework in Frameworks */,
+				F92C9CD11A2581770082DFF7 /* OpenGLES.framework in Frameworks */,
+				F92C9CD21A2581770082DFF7 /* QuartzCore.framework in Frameworks */,
+				F92C9CD31A2581770082DFF7 /* UIKit.framework in Frameworks */,
+				F92C9CCB1A2581770082DFF7 /* libchaos3d_core_ios.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F9617FE819E0AB4400945A43 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -179,12 +236,59 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F92C9C9E1A2441F90082DFF7 /* ios-launcher */ = {
+			isa = PBXGroup;
+			children = (
+				F92C9CA31A2441F90082DFF7 /* AppDelegate.h */,
+				F92C9CA41A2441F90082DFF7 /* AppDelegate.m */,
+				F92C9CA61A2441F90082DFF7 /* ViewController.h */,
+				F92C9CA71A2441F90082DFF7 /* ViewController.m */,
+				F92C9CA91A2441F90082DFF7 /* Main.storyboard */,
+				F92C9CAC1A2441F90082DFF7 /* Images.xcassets */,
+				F92C9CAE1A2441F90082DFF7 /* LaunchScreen.xib */,
+				F92C9C9F1A2441F90082DFF7 /* Supporting Files */,
+			);
+			path = "ios-launcher";
+			sourceTree = "<group>";
+		};
+		F92C9C9F1A2441F90082DFF7 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				F92C9CA01A2441F90082DFF7 /* Info.plist */,
+				F92C9CA11A2441F90082DFF7 /* main.mm */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		F92C9CD41A25822C0082DFF7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F92C9CD51A25823D0082DFF7 /* iOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F92C9CD51A25823D0082DFF7 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				F92C9CD81A2582C70082DFF7 /* libiconv.dylib */,
+				F92C9CD61A2582B60082DFF7 /* libz.dylib */,
+				F92C9CCC1A2581770082DFF7 /* CoreGraphics.framework */,
+				F92C9CCD1A2581770082DFF7 /* OpenGLES.framework */,
+				F92C9CCE1A2581770082DFF7 /* QuartzCore.framework */,
+				F92C9CCF1A2581770082DFF7 /* UIKit.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
 		F9617FE219E0AB4400945A43 = {
 			isa = PBXGroup;
 			children = (
 				F961808719E0ACAB00945A43 /* chaos3d.xcodeproj */,
-				F9617FF519E0AC5600945A43 /* lua-5.1.5 */,
+				F92C9CD41A25822C0082DFF7 /* Frameworks */,
 				F961809A19E0AF7B00945A43 /* script */,
+				F92C9C9E1A2441F90082DFF7 /* ios-launcher */,
+				F9617FF519E0AC5600945A43 /* lua-5.1.5 */,
 				F9617FEC19E0AB4400945A43 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -193,6 +297,7 @@
 			isa = PBXGroup;
 			children = (
 				F9617FEB19E0AB4400945A43 /* lua */,
+				F92C9C9D1A2441F90082DFF7 /* ios-launcher.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -359,6 +464,26 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		F92C9C9C1A2441F90082DFF7 /* ios-launcher */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F92C9CC21A2441F90082DFF7 /* Build configuration list for PBXNativeTarget "ios-launcher" */;
+			buildPhases = (
+				F92C9C991A2441F90082DFF7 /* Sources */,
+				F92C9C9A1A2441F90082DFF7 /* Frameworks */,
+				F92C9C9B1A2441F90082DFF7 /* Resources */,
+				F983F0211A25CF4F00B1484D /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F92C9CC81A2481C00082DFF7 /* PBXTargetDependency */,
+				F92C9CCA1A2481C00082DFF7 /* PBXTargetDependency */,
+			);
+			name = "ios-launcher";
+			productName = launcher;
+			productReference = F92C9C9D1A2441F90082DFF7 /* ios-launcher.app */;
+			productType = "com.apple.product-type.application";
+		};
 		F9617FEA19E0AB4400945A43 /* lua */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = F9617FF219E0AB4400945A43 /* Build configuration list for PBXNativeTarget "lua" */;
@@ -388,6 +513,9 @@
 				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = chaos3d;
 				TargetAttributes = {
+					F92C9C9C1A2441F90082DFF7 = {
+						CreatedOnToolsVersion = 6.1;
+					};
 					F9617FEA19E0AB4400945A43 = {
 						CreatedOnToolsVersion = 6.1;
 					};
@@ -399,6 +527,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = F9617FE219E0AB4400945A43;
 			productRefGroup = F9617FEC19E0AB4400945A43 /* Products */;
@@ -412,6 +541,7 @@
 			projectRoot = "";
 			targets = (
 				F9617FEA19E0AB4400945A43 /* lua */,
+				F92C9C9C1A2441F90082DFF7 /* ios-launcher */,
 			);
 		};
 /* End PBXProject section */
@@ -440,6 +570,19 @@
 		};
 /* End PBXReferenceProxy section */
 
+/* Begin PBXResourcesBuildPhase section */
+		F92C9C9B1A2441F90082DFF7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F92C9CAB1A2441F90082DFF7 /* Main.storyboard in Resources */,
+				F92C9CB01A2441F90082DFF7 /* LaunchScreen.xib in Resources */,
+				F92C9CAD1A2441F90082DFF7 /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
 /* Begin PBXShellScriptBuildPhase section */
 		F961809819E0AE0B00945A43 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -454,9 +597,32 @@
 			shellPath = /bin/sh;
 			shellScript = "ln -sF `pwd`/../external/libs/macosx/liblog4cxx.dylib $BUILT_PRODUCTS_DIR/liblog4cxx.dylib\nln -sF libs/liblog4cxx.dylib liblog4cxx.dylib\n\nLIBS=\"../../external/libs/macosx/* ../../external/libs/wx/lib*.dylib ../../build/*.dylib ../../external/powervr32/OSX/x86/Lib/*.dylib\"\n: ${LIB_DIR:=\"$PROJECT_DIR/libs\"}\n\nmkdir -p $LIB_DIR\ncd $LIB_DIR\n\nfor each in $LIBS; do\n    ln -sF $each $LIB_DIR/`basename $each` ||:\ndone\n";
 		};
+		F983F0211A25CF4F00B1484D /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cp -rv $PROJECT_DIR/res $CODESIGNING_FOLDER_PATH/.\ncp -rv $PROJECT_DIR/script/. $CODESIGNING_FOLDER_PATH/.";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		F92C9C991A2441F90082DFF7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F92C9CA81A2441F90082DFF7 /* ViewController.m in Sources */,
+				F92C9CA51A2441F90082DFF7 /* AppDelegate.m in Sources */,
+				F92C9CA21A2441F90082DFF7 /* main.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F9617FE719E0AB4400945A43 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -468,6 +634,16 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		F92C9CC81A2481C00082DFF7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = chaos3d_core_ios;
+			targetProxy = F92C9CC71A2481C00082DFF7 /* PBXContainerItemProxy */;
+		};
+		F92C9CCA1A2481C00082DFF7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = chaos3d;
+			targetProxy = F92C9CC91A2481C00082DFF7 /* PBXContainerItemProxy */;
+		};
 		F961809F19E0B34800945A43 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = wxchaos3d;
@@ -480,7 +656,87 @@
 		};
 /* End PBXTargetDependency section */
 
+/* Begin PBXVariantGroup section */
+		F92C9CA91A2441F90082DFF7 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F92C9CAA1A2441F90082DFF7 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		F92C9CAE1A2441F90082DFF7 /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F92C9CAF1A2441F90082DFF7 /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin XCBuildConfiguration section */
+		F92C9CBD1A2441F90082DFF7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					../src,
+				);
+				INFOPLIST_FILE = "ios-launcher/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = ../external/libs/ios;
+				OTHER_LDFLAGS = (
+					"-lapr-1",
+					"-laprutil-1",
+					"-lexpat",
+					"-llog4cxx",
+					"-lpng17",
+					"-llua",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F92C9CBE1A2441F90082DFF7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					../src,
+				);
+				INFOPLIST_FILE = "ios-launcher/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = ../external/libs/ios;
+				OTHER_LDFLAGS = (
+					"-lapr-1",
+					"-laprutil-1",
+					"-lexpat",
+					"-llog4cxx",
+					"-lpng17",
+					"-llua",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 		F9617FF019E0AB4400945A43 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -519,10 +775,6 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_LDFLAGS = (
-					"-llua",
-					"-lreadline",
-				);
 				SDKROOT = macosx;
 			};
 			name = Debug;
@@ -559,10 +811,6 @@
 				LIBRARY_SEARCH_PATHS = ../external/libs/macosx;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = (
-					"-llua",
-					"-lreadline",
-				);
 				SDKROOT = macosx;
 			};
 			name = Release;
@@ -574,6 +822,10 @@
 				DSTROOT = "${PROJECT_DIR}/";
 				INSTALL_PATH = /;
 				LD_RUNPATH_SEARCH_PATHS = "${PROJECT_DIR}/libs/";
+				OTHER_LDFLAGS = (
+					"-llua",
+					"-lreadline",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -585,6 +837,10 @@
 				DSTROOT = "${PROJECT_DIR}/";
 				INSTALL_PATH = /;
 				LD_RUNPATH_SEARCH_PATHS = "${PROJECT_DIR}/libs/";
+				OTHER_LDFLAGS = (
+					"-llua",
+					"-lreadline",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -592,6 +848,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		F92C9CC21A2441F90082DFF7 /* Build configuration list for PBXNativeTarget "ios-launcher" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F92C9CBD1A2441F90082DFF7 /* Debug */,
+				F92C9CBE1A2441F90082DFF7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		F9617FE619E0AB4400945A43 /* Build configuration list for PBXProject "lua" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

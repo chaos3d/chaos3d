@@ -3,15 +3,16 @@ local c3d = require "chaos3d"
 --c3d.create_fixed_timer(30);
 
 local launcher = c3d.init();
-local main_window = launcher:create_game_window("chaos3d", {0,0,1024,768});
+local main_window = launcher:create_game_window("chaos3d", {0,0,launcher:size()});
 local rd = launcher:get_render_device(2);
 
-local rwin = rd:new_window(main_window, {0,0,1024,768}, 2);
+local w,h = launcher:size()
+local rwin = rd:new_window(main_window, {0,0,w,h}, 2);
 c3d.init_mgr(rd, rd:new_context(rwin):set_current());
 
 local asset = c3d.get_asset_mgr();
 local sprite_mgr = c3d.get_sprite_mgr();
-local locator = c3d.get_locator();
+local locator = c3d.get_locator():add_locator(0, "@app", "/res");
 
 local atlas1 = c3d.load_atlas(locator:from "turtle.json", asset)
 local spineboy = c3d.load_atlas(locator:from "spineboy_atlas.json", asset)
