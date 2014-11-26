@@ -27,7 +27,13 @@ namespace script {
     public:
         // TODO: wrapper a type struct to do sanity check
         type_info& def(char const* name, lua_function_t func) {
-            _meta.emplace(name, func);
+            // if it already exists, override it
+#ifdef DEBUG
+            if (_meta.find(name) != _meta.end()) {
+                LOG_INFO("overriding function: " << name);
+            }
+#endif
+            _meta[name] = func;
             return *this;
         }
         

@@ -167,6 +167,9 @@ namespace script {
         // push the named scope(table) or the global table
         void push_scope(lua_State*, char const* scope);
         
+        /// delegate the lua_State
+        /// @param the delegated state or create a new one
+        /// @param whether to load libs
         state(lua_State* L = nullptr, bool = true);
         
         // make sure the table to link all the objects are reference as 1

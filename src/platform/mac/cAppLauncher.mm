@@ -176,7 +176,6 @@ char const* launcher::get_host() const {
     return "mac"; // FIXME: retina? model? cpu?
 }
 
-
 launcher& launcher::initialize() {
     static mac_launcher mac;
     // TODO: move this up to common codebase

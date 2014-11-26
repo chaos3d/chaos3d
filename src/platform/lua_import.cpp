@@ -43,8 +43,8 @@ static bool initialize_mgr(render_device* dev, render_context* ctx) {
     
     asset_mgr.add_from_bundle(png_asset_bundle::bundle(dev,
                                                        locator::dir_locator::app_dir()).get());
-    asset_mgr.add_from_bundle(png_asset_bundle::bundle(dev,
-                                                       locator::dir_locator::cur_dir()).get());
+    //asset_mgr.add_from_bundle(png_asset_bundle::bundle(dev,
+    //                                                   locator::dir_locator::cur_dir()).get());
     return true;
 }
 
@@ -57,11 +57,18 @@ extern "C" void c3d_lua_import(lua_State *L) {
     
     static auto state = state::create(L);
 
+    luaL_Reg funcs[] = {
+        {"load_atlas", LUA_BIND((&texture_atlas::load_from<ref, asset_manager&>))},
+        {"init_mgr", LUA_BIND(&initialize_mgr)},
+        {"create_realtime_timer", LUA_BIND(&make_global_timer<timer::ticker_realtime>)},
+        {"create_fixed_timer", LUA_BIND((&make_global_timer<timer::ticker_fixed, timer::frame_t>))},
+        {NULL, NULL}
+    };
+
+    // to load the lib
+    luaL_register(L, "chaos3d", funcs);
+    
     state->import("chaos3d")
-    .def("load_atlas", LUA_BIND((&texture_atlas::load_from<ref, asset_manager&>)))
-    .def("init_mgr", LUA_BIND(&initialize_mgr))
-    .def("create_realtime_timer", LUA_BIND(&make_global_timer<timer::ticker_realtime>))
-    .def("create_fixed_timer", LUA_BIND((&make_global_timer<timer::ticker_fixed, timer::frame_t>)))
     .def_singleton_getter<sprite2d::sprite_mgr>("get_sprite_mgr")
     .def_singleton_getter<scene2d::world2d_mgr>("get_world2d_mgr")
     .def_singleton_getter<global_asset_mgr, asset_manager>("get_asset_mgr")

@@ -89,6 +89,7 @@ render_view::render_view(native_window* parent, target_size_t const& size_, wind
 }
 
 render_view::~render_view() {
+    [_native_view removeFromSuperview];
     CFRelease((CFTypeRef)_native_view);
 }
 
@@ -115,6 +116,8 @@ void render_view::create_native(UIView* parent, float backing_ratio) {
     }
     _native_view.contentScaleFactor = backing_ratio;
     _native_view.scaling = backing_ratio;
+    
+    [parent addSubview: _native_view];
 }
     
 void render_view::create_view() {

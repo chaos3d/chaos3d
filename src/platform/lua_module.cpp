@@ -30,6 +30,7 @@ extern "C" int luaopen_chaos3d(lua_State *L) {
         return 0;
     }
     
+    // FIXME: log4cxx config load
     log4cxx::BasicConfigurator::configure();
     log4cxx::Logger::getRootLogger()->setLevel(log4cxx::Level::getAll());
     

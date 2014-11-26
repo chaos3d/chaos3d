@@ -6,41 +6,64 @@
 //  Copyright (c) 2013 cHaos3D. All rights reserved.
 //
 
-#import "app/screen.h"
-#import "app/application.h"
-#import "asset/asset_locator.h"
+#import "common/log.h"
 #import "common/timer.h"
-#import "go/component_manager.h"
 #import "go/game_object.h"
+#import "go/component_manager.h"
+
+#import "platform/lua_module.h"
 #import "platform/ios/cAppDelegate.h"
 #import "platform/ios/cViewController.h"
-#import "re/render_device.h"
-#import "re/render_target.h"
 
-#import <OpenGLES/ES2/gl.h>
-#import <OpenGLES/ES2/glext.h>
+#import "script/state.h"
+#include <liblua/lua/lua.hpp>
+
+#if 0
+// traceback from lua
+static int traceback (lua_State *L) {
+    if (!lua_isstring(L, 1))  /* 'message' not a string? */
+        return 1;  /* keep it intact */
+    lua_getfield(L, LUA_GLOBALSINDEX, "debug");
+    if (!lua_istable(L, -1)) {
+        lua_pop(L, 1);
+        return 1;
+    }
+    lua_getfield(L, -1, "traceback");
+    if (!lua_isfunction(L, -1)) {
+        lua_pop(L, 2);
+        return 1;
+    }
+    lua_pushvalue(L, 1);  /* pass error message */
+    lua_pushinteger(L, 2);  /* skip this function and traceback */
+    lua_call(L, 2, 1);  /* call debug.traceback */
+    return 1;
+}
+#endif
+
+static std::unique_ptr<script::coroutine> _main_coroutine(nullptr);
 
 @implementation cAppDelegate
 
 @synthesize window, controller, displayLink;
-@synthesize mainWindow = _main_window, defaultDevice = _default_device;
-@synthesize mainContext = _main_context;
 
-- (void)dealloc
-{
+- (void)dealloc {
+    lua_close(_L);
+    
     self.controller = nil;
     self.window = nil;
 }
 
-- (void) frameLoop: (CADisplayLink*) _{
-    component_manager::managers().update(&game_object::root());
+- (void)frameLoop:(CADisplayLink*) _{
+    if (_main_coroutine && _main_coroutine->is_yielded()) {
+        _main_coroutine->resume(); // FIXME: bool and timer*
+    }
     
-    application::instance().get_screen().loop();
+    component_manager::managers().update(&game_object::root());
     
     global_timer_base::instance().update();
 }
 
-- (void) startLoop {
+- (void)startLoop {
     if (self.displayLink != nil){
         [displayLink invalidate];
     }
@@ -54,46 +77,24 @@
     [displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
 }
 
-- (void) stopLoop {
+- (void)stopLoop {
     [displayLink invalidate];
     self.displayLink = nil;
 }
 
-- (int) renderType {
-    return render_device::OpenGLES20;
-}
-
-- (void) initLocators {
-}
-
-- (BOOL)application:(UIApplication *)application_ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    application& app = application::instance();
-    app.on_initialize();
+- (void)start:(data_stream*) ds {
+    _L = luaL_newstate();
     
-    CGRect rt = [[UIScreen mainScreen] bounds];
-    self.window = [[UIWindow alloc] initWithFrame:rt];
+    luaL_openlibs(_L);
+    lua_cpcall(_L, luaopen_chaos3d, NULL);
     
-    // Override point for customization after application launch.
-    self.window.backgroundColor = [UIColor blackColor];
-    self.controller = [[cViewController alloc] init];
-    [self.controller.view addSubview: (__bridge UIView*)app.main_window()->native_handle()];
-
-    self.window.rootViewController = controller;
-    [self.window makeKeyAndVisible];
+    auto s = script::state::create(_L);
+    _main_coroutine.reset(new script::coroutine(s->load(ds)));
+    _main_coroutine->resume();  // returns bool and timer*
     
-    // TODO: move this to application
-    application::instance().get_screen().on_start();
-    
-    app.on_launch();
-    
-    assert(app.main_context() != nullptr);
-    assert(app.main_device() != nullptr);
-    assert(app.main_window() != nullptr);
-
     [self startLoop];
-    
-    return YES;
 }
+
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {

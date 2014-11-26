@@ -9,10 +9,8 @@
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
 
-class screen;
-class render_window;
-class render_device;
-class render_context;
+struct lua_State;
+class data_stream;
 @class cViewController;
 
 /**
@@ -22,22 +20,20 @@ class render_context;
  * set up the app
  */
 @interface cAppDelegate : UIResponder <UIApplicationDelegate> {
-    render_window* _main_window;
-    render_device* _default_device;
-    render_context* _main_context;
+    lua_State* _L;
 }
 
-@property (nonatomic, retain) UIWindow* window;
+@property (nonatomic, retain) IBOutlet UIWindow* window;
 @property (nonatomic, retain) cViewController* controller;
 @property (retain) CADisplayLink* displayLink;
 
-@property (nonatomic, readonly, assign) render_window* mainWindow;
-@property (nonatomic, readonly, assign) render_device* defaultDevice;
-@property (nonatomic, readonly, assign) render_context* mainContext;
+/// start the script vm from the given source
+- (void)start:(data_stream*) ds;
 
-- (void) startLoop;
-- (void) stopLoop;
+/// start the timer loop
+- (void)startLoop;
 
-- (int) renderType; // render_device::OpenGLES20
-- (void) initLocators;
+/// stop the timer
+- (void)stopLoop;
+
 @end
