@@ -16,7 +16,8 @@ namespace script {
         ;
         
         class_<locator_mgr>::type()
-        .def("from", LUA_BIND(&locator_mgr::from));
+        .def("from", LUA_BIND(&locator_mgr::from))
+        .def("add_locator", LUA_BIND(&locator_mgr::add_locator))
         ;
     }
 }

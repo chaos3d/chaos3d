@@ -75,6 +75,11 @@ public:
         }
     }
 
+    /// add a locator, it will concatenate the two strings
+    /// @param base, @home or @app, the predefined path, or absolute path
+    /// @param sub, the subfolder path
+    locator_mgr& add_locator(int level, char const* base, char const* sub = "");
+    
     // get a stream by looking up the locators by priority
     data_stream::ptr from(std::string const&) const;
     

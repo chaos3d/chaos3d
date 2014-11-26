@@ -93,8 +93,7 @@ static std::unique_ptr<script::coroutine> _main_coroutine(nullptr);
     // add default locators, this way, locator_mgr can be used
     // without calling initiliazation
     locator_mgr::instance()
-    .add(locator::dir_locator::app_dir(0, "/res"))
-    ->add(locator::dir_locator::app_dir())
+    .add(locator::dir_locator::app_dir())
     ->add(locator::dir_locator::home_dir())
     ;
 

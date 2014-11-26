@@ -42,6 +42,20 @@ data_stream::ptr locator_mgr::from(std::string const& name) const {
     return nullptr;
 }
 
+locator_mgr& locator_mgr::add_locator(int level, char const* base, char const* sub) {
+    using namespace locator;
+    if (base[0] == '@') {
+        if (strcmp(base, "@home") == 0) {
+            add(locator::dir_locator::home_dir(level, sub));
+        } else if (strcmp(base, "@app") == 0) {
+            add(locator::dir_locator::app_dir(level, sub));
+        }
+    } else {
+        add(dir_locator::ptr(new dir_locator(std::string(base) + sub, level)));
+    }
+    return *this;
+}
+
 namespace locator {
     dir_locator::dir_locator(std::string const& base, int priority)
     : _base(base + '/'), asset_locator(priority) {
