@@ -16,6 +16,7 @@
 #import "platform/ios/cViewController.h"
 
 #import "script/state.h"
+#import "asset/asset_locator.h"
 #include <liblua/lua/lua.hpp>
 
 #if 0
@@ -41,6 +42,12 @@ static int traceback (lua_State *L) {
 #endif
 
 static std::unique_ptr<script::coroutine> _main_coroutine(nullptr);
+
+@interface cAppDelegate() {
+    lua_State* _L;
+}
+
+@end
 
 @implementation cAppDelegate
 
@@ -82,17 +89,19 @@ static std::unique_ptr<script::coroutine> _main_coroutine(nullptr);
     self.displayLink = nil;
 }
 
-- (void)start:(data_stream*) ds {
+- (void)start:(NSString*) filePath {
     _L = luaL_newstate();
     
     luaL_openlibs(_L);
-    lua_cpcall(_L, luaopen_chaos3d, NULL);
+    lua_cpcall(_L, luaopen_chaos3d, NULL); // load the lib
     
-    auto s = script::state::create(_L);
-    _main_coroutine.reset(new script::coroutine(s->load(ds)));
+    script::state* st = nullptr;
+    lua_getallocf(_L, (void**)&st); // state is being saved by opening the lib
+
+    _main_coroutine.reset(new script::coroutine(st->load(locator_mgr::instance()
+                                                         .from([filePath UTF8String]).get())
+                                                ));
     _main_coroutine->resume();  // returns bool and timer*
-    
-    [self startLoop];
 }
 
 
