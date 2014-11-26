@@ -39,7 +39,7 @@ namespace com {
         struct joint_pose {
             vector3f translate;
             vector3f scale;
-            float rotate; // only z-axis
+            quaternionf rotate;
         };
         typedef std::vector<joint_pose> joint_poses_t;
         

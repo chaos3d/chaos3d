@@ -7,25 +7,6 @@
 
 using namespace com;
 
-#if 0
-void skeleton_animation_clip::apply(time_t offset, transforms_t const& transforms) {
-    for (auto& it : _channels) {
-        auto&& key = std::get<1>(it)->interpolate<void>(offset);
-        auto& t = transforms[std::get<0>(it)];
-        t->set_translate(key.translate);
-        t->set_rotate(key.rotation);
-        t->set_scale(key.scale);
-        t->set_skew(key.skew.x(), key.skew.y());
-        t->mark_dirty();
-    }
-}
-
-skeleton_animation_clip::joint_channel::ptr skeleton_animation_clip::add_channel(uint32_t idx) {
-    _channels.emplace_front(idx, joint_channel::create());
-    return std::get<1>(_channels.front());
-}
-#endif
-
 skeleton_animation_clip::skeleton_animation_clip(data_stream* ds) {
     load_from(ds);
 }
@@ -63,7 +44,7 @@ void skeleton_animation_clip::load_from(data_stream *ds) {
                         int type = 0; // 0, translate, 1, scale, 2, rotate
                         std::vector<time_t> times;
                         std::vector<vector3f> v3f_kf;
-                        std::vector<float> qf_kf;
+                        std::vector<quaternionf> qf_kf;
                         
                         if (strcmp(anim->name.GetString(), "translate") == 0) {
                             type = 0;
@@ -98,9 +79,8 @@ void skeleton_animation_clip::load_from(data_stream *ds) {
                                 v3f_kf.emplace_back(x == DBL_MAX ? 1.f : x,
                                                     y == DBL_MAX ? 1.f : y, 1.f);
                             } else if (type == 2) {
-                                //qf_kf.emplace_back(Eigen::AngleAxisf(angle*M_PI/180.f,
-                                //                                     vector3f::UnitZ()));
-                                qf_kf.emplace_back(angle*M_PI/180.f);
+                                qf_kf.emplace_back(Eigen::AngleAxisf(angle*M_PI/180.f,
+                                                                     vector3f::UnitZ()));
                             }
                         }
                         

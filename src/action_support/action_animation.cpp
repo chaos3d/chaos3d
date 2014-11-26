@@ -28,15 +28,15 @@ void action_animation::update() {
             continue;
         
         if ((*channel_it)->rotate) {
-            auto r = setup_it->rotate + (*channel_it)->rotate->interpolate<linearf_t>(normalized);
-            (*go_it)->set_rotate(quaternionf(Eigen::AngleAxisf(r,
-                                                               vector3f::UnitZ())));
+            (*go_it)->set_rotate(setup_it->rotate
+                                 * (*channel_it)->rotate->interpolate<slerp_t>(normalized));
         }
         if ((*channel_it)->translate) {
             (*go_it)->set_translate(setup_it->translate +
                                     (*channel_it)->translate->interpolate<linear_t>(normalized));
         }
         if ((*channel_it)->scale) {
+            // TODO/FIXME
             //(*go_it)->set_scale(//setup_it->scale +
             //                    (*channel_it)->scale->interpolate<linear_t>(normalized));
         }

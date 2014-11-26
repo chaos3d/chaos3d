@@ -49,6 +49,8 @@ locator_mgr& locator_mgr::add_locator(int level, char const* base, char const* s
             add(locator::dir_locator::home_dir(level, sub));
         } else if (strcmp(base, "@app") == 0) {
             add(locator::dir_locator::app_dir(level, sub));
+        } else if (strcmp(base, "@current") == 0) {
+            add(locator::dir_locator::cur_dir(level, sub));
         }
     } else {
         add(dir_locator::ptr(new dir_locator(std::string(base) + sub, level)));

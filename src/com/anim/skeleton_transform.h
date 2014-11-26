@@ -32,7 +32,7 @@ namespace com {
         // animation data channel
         typedef animation_keyframe<vector3f> translate_channel_t;
         typedef animation_keyframe<vector3f> scale_channel_t;
-        typedef animation_keyframe<float> rotate_channel_t; // only z-axis rotation
+        typedef animation_keyframe<quaternionf> rotate_channel_t;
         
         struct joint_channel {
             // this shall belong to the clip, no external reference

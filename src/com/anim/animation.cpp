@@ -87,8 +87,7 @@ bool animation::load_from(data_stream *ds, std::vector<texture_atlas*> const& at
             _setup_poses.emplace_back(joint_pose{
                 vector3f(x, y, 0.f),
                 vector3f(scaleX, scaleY, 1.f),
-                //QUATERNION_Z(rotate)
-                float(rotate*M_PI/180.f)
+                QUATERNION_Z(rotate)
             });
             if (parent_idx != SIZE_T_MAX) {
                 _transforms[parent_idx]->parent()->add_child(_transforms.back()->parent());
