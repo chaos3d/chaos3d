@@ -187,6 +187,7 @@ launcher& launcher::initialize() {
     }
     
     locator_mgr::instance().
+    add(locator::dir_locator::cur_dir(0, "/res"))->
     add(locator::dir_locator::app_dir())->
     add(locator::dir_locator::home_dir())->
     add(locator::dir_locator::cur_dir());

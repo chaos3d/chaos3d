@@ -132,9 +132,9 @@ namespace locator {
         virtual void traverse(visitor_t const&) const override;
         virtual std::string name() const override { return _base; }
 
-        static ptr home_dir(int priority = 0);
-        static ptr app_dir(int priority = 1);
-        static ptr cur_dir(int priority = 2);
+        static ptr home_dir(int priority = 0, char const* sub = "");
+        static ptr app_dir(int priority = 1, char const* sub = "");
+        static ptr cur_dir(int priority = 2, char const* sub = "");
     private:
         std::string _base;
     };

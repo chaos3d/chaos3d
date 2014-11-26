@@ -43,8 +43,8 @@ static bool initialize_mgr(render_device* dev, render_context* ctx) {
     auto& asset_mgr = global_asset_mgr::create({.scale = 2.f});
     
     for (auto& it : {
-        locator::dir_locator::app_dir(),
-        locator::dir_locator::cur_dir(),
+        locator::dir_locator::app_dir(0, "/res"),
+        locator::dir_locator::cur_dir(1, "/res"),
     }) {
         if (!it)
             continue;

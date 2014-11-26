@@ -48,8 +48,9 @@ namespace locator {
         struct stat st;
         
         if(stat(base.c_str(), &st) != 0 ||
-           !S_ISDIR(st.st_mode))
-            throw std::exception(); // TODO log error or throw exception?
+           !S_ISDIR(st.st_mode)) {
+            LOG_ERROR("directory doesn't exist: " << base);
+        }
     }
 
     bool dir_locator::contains(std::string const& name) const {
@@ -105,10 +106,12 @@ namespace locator {
         }
     }
     
-    dir_locator::ptr dir_locator::cur_dir(int priority) {
+    dir_locator::ptr dir_locator::cur_dir(int priority, char const* sub) {
         char* cur_dir = getcwd(NULL, 0);
         // ignore root dir, this happens to iOS
-        dir_locator* dir = strcmp(cur_dir, "/") == 0 ? nullptr : new dir_locator(cur_dir, priority);
+        dir_locator* dir = strcmp(cur_dir, "/") == 0
+            ? nullptr
+            : new dir_locator(std::string(cur_dir) + sub, priority);
         free(cur_dir);
         return ptr(dir);
     }
