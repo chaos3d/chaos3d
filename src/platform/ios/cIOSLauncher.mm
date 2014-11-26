@@ -97,11 +97,6 @@ launcher& launcher::initialize() {
         make_global_timer<timer::ticker_realtime>();
     }
    
-    locator_mgr::instance().
-    add(locator::dir_locator::app_dir())
-    //->add(locator::dir_locator::home_dir())
-    ;
-    
     class_<launcher>::type()
     .def("poll_event", ::poll_event); // override this because we need to yield
 

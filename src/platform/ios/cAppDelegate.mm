@@ -90,6 +90,13 @@ static std::unique_ptr<script::coroutine> _main_coroutine(nullptr);
 }
 
 - (void)start:(NSString*) filePath {
+    // add default locators, this way, locator_mgr can be used
+    // without calling initiliazation
+    locator_mgr::instance()
+    .add(locator::dir_locator::app_dir())
+    ->add(locator::dir_locator::home_dir())
+    ;
+
     _L = luaL_newstate();
     
     luaL_openlibs(_L);

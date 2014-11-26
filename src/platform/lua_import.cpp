@@ -39,12 +39,17 @@ static bool initialize_mgr(render_device* dev, render_context* ctx) {
                                    make_manager<com::action_mgr>()
                                    );
 
+    // FIXME: contextual scaling and bundle config
     auto& asset_mgr = global_asset_mgr::create({.scale = 2.f});
     
-    asset_mgr.add_from_bundle(png_asset_bundle::bundle(dev,
-                                                       locator::dir_locator::app_dir()).get());
-    //asset_mgr.add_from_bundle(png_asset_bundle::bundle(dev,
-    //                                                   locator::dir_locator::cur_dir()).get());
+    for (auto& it : {
+        locator::dir_locator::app_dir(),
+        locator::dir_locator::cur_dir(),
+    }) {
+        if (!it)
+            continue;
+        asset_mgr.add_from_bundle(png_asset_bundle::bundle(dev, it).get());
+    }
     return true;
 }
 
@@ -57,6 +62,7 @@ extern "C" void c3d_lua_import(lua_State *L) {
     
     static auto state = state::create(L);
 
+    // to load the lib
     luaL_Reg funcs[] = {
         {"load_atlas", LUA_BIND((&texture_atlas::load_from<ref, asset_manager&>))},
         {"init_mgr", LUA_BIND(&initialize_mgr)},
@@ -64,8 +70,6 @@ extern "C" void c3d_lua_import(lua_State *L) {
         {"create_fixed_timer", LUA_BIND((&make_global_timer<timer::ticker_fixed, timer::frame_t>))},
         {NULL, NULL}
     };
-
-    // to load the lib
     luaL_register(L, "chaos3d", funcs);
     
     state->import("chaos3d")
@@ -73,8 +77,6 @@ extern "C" void c3d_lua_import(lua_State *L) {
     .def_singleton_getter<scene2d::world2d_mgr>("get_world2d_mgr")
     .def_singleton_getter<global_asset_mgr, asset_manager>("get_asset_mgr")
     .def_singleton_getter<locator_mgr>("get_locator")
-    //.import("render", main_device())
-    //.import<render_window*>("window", main_window())
     ;
     
     script::class_<native_window>::type()

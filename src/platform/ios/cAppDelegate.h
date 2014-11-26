@@ -26,7 +26,8 @@
 @property (nonatomic, retain) cViewController* controller;
 @property (retain) CADisplayLink* displayLink;
 
-/// start the script vm from the given source
+/// initialize the internal state and start the script vm
+/// from the given source
 - (void)start:(NSString*) filePath;
 
 /// start the timer loop

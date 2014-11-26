@@ -107,7 +107,8 @@ namespace locator {
     
     dir_locator::ptr dir_locator::cur_dir(int priority) {
         char* cur_dir = getcwd(NULL, 0);
-        dir_locator* dir = new dir_locator(cur_dir, priority);
+        // ignore root dir, this happens to iOS
+        dir_locator* dir = strcmp(cur_dir, "/") == 0 ? nullptr : new dir_locator(cur_dir, priority);
         free(cur_dir);
         return ptr(dir);
     }

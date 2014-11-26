@@ -12,6 +12,7 @@
 #include "script/converter_ptr.h"
 
 #include "platform/launcher.h"
+#include "asset/asset_locator.h"
 
 #include <log4cxx/basicconfigurator.h>
 #include <array>
@@ -35,7 +36,7 @@ extern "C" int luaopen_chaos3d(lua_State *L) {
     log4cxx::Logger::getRootLogger()->setLevel(log4cxx::Level::getAll());
     
     c3d_lua_import(L);
-    
+
     state* st = nullptr;
     lua_getallocf(L, (void**)&st);
     

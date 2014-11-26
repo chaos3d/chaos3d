@@ -57,6 +57,10 @@ public:
     template<class... Args>
     sort_helper add(Args&&... args) {
         _locators.emplace_back(std::forward<Args>(args)...);
+        // remove the null locator
+        if (!_locators.back()) {
+            _locators.pop_back();
+        }
         return sort_helper(this);
     }
     
@@ -65,6 +69,10 @@ public:
     template<class... Args>
     void add_no_sort(Args&&... args) {
         _locators.emplace_back(std::forward<Args>(args)...);
+
+        if (!_locators.back()) {
+            _locators.pop_back();
+        }
     }
 
     // get a stream by looking up the locators by priority
