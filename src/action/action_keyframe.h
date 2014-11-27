@@ -14,6 +14,11 @@
 // TODO0: better namespace
 // TODO: WRAP_FULL_LOOP
 enum { WRAP_CLAMP, WRAP_LOOP };
+enum { STEP, LINEAR};
+struct keyframe_info {
+    timer::time_t offset;  // time frame
+    uint8_t type;   // interpolation type
+};
 
 // a collection of key frames and generic interpolation
 // action_keyframe uses this to save key frames
@@ -22,10 +27,11 @@ enum { WRAP_CLAMP, WRAP_LOOP };
 template<class Key>
 class animation_keyframe : public std::enable_shared_from_this<animation_keyframe<Key>> {
 public:
-    typedef timer::time_t time_t;   // time type
+    typedef timer::time_t time_t;
     typedef Key key_t;              // key type
+    typedef keyframe_info frame_info;
     
-    typedef std::vector<time_t> times_t;
+    typedef std::vector<frame_info> frame_infos_t;
     typedef std::vector<key_t> key_frames_t;
     typedef std::shared_ptr<animation_keyframe> ptr;
     typedef std::shared_ptr<animation_keyframe const> const_ptr;
@@ -48,10 +54,10 @@ public:
     }
 
     // lower bound of the given time
-    typename times_t::const_iterator keyframe(time_t offset) const {
-        return std::lower_bound(_times.begin(), _times.end(), offset,
-                                [] (time_t const& key, time_t offset) {
-                                    return key < offset;
+    typename frame_infos_t::const_iterator keyframe(time_t offset) const {
+        return std::lower_bound(_frame_infos.begin(), _frame_infos.end(), offset,
+                                [] (frame_info const& key, time_t const& offset) {
+                                    return key.offset < offset;
                                 });
     }
     
@@ -61,16 +67,16 @@ public:
         assert(offset >= 0.f && offset <= 1.f);
         assert(_keyframes.size() > 0);
         auto timestamp = keyframe(offset);
-        auto it = _keyframes.begin() + std::distance(_times.begin(), timestamp);
+        auto it = _keyframes.begin() + std::distance(_frame_infos.begin(), timestamp);
         if (it == _keyframes.end()) {
             return _wrap == WRAP_CLAMP ? _keyframes.back() : _keyframes.front();
-        } else if (*timestamp - offset <= FLT_EPSILON ||
+        } else if (timestamp->offset - offset <= FLT_EPSILON ||
                    it == _keyframes.begin()) {
             return *it;
         } else {
             auto pre = std::next(it, -1);
             auto pre_ts = std::next(timestamp, -1);
-            return i(*pre, *it, (offset - *pre_ts) / (*timestamp - *pre_ts),
+            return i(*pre, *it, (offset - pre_ts->offset) / (timestamp->offset - pre_ts->offset),
                      (int)std::distance(_keyframes.begin(), pre));
         }
     }
@@ -81,7 +87,7 @@ public:
         assert(offset >= 0.f && offset <= 1.f);
         assert(_keyframes.size() > 0);
         auto timestamp = keyframe(offset);
-        auto it = _keyframes.begin() + std::distance(_times.begin(), timestamp);
+        auto it = _keyframes.begin() + std::distance(_frame_infos.begin(), timestamp);
         if (it == _keyframes.end()) {
             return _wrap == WRAP_CLAMP ? _keyframes.back() : _keyframes.front();
         } else if (it == _keyframes.begin()) {
@@ -98,18 +104,18 @@ protected:
     // helper constructor for existing Lua binding. TODO: remove this
     animation_keyframe(int wrap, std::vector<key_frame_t> const& keyframes)
     : _wrap(wrap) {
-        _times.reserve(keyframes.size());
+        _frame_infos.reserve(keyframes.size());
         _keyframes.reserve(keyframes.size());
         
         for (auto& it : keyframes) {
-            _times.push_back(it.timestamp);
+            _frame_infos.push_back({it.timestamp});
             _keyframes.push_back(it.key);
         }
         normalize();
     }
     
-    animation_keyframe(int wrap, times_t const& times, key_frames_t const& frames)
-    : _wrap(wrap), _keyframes(frames), _times(times) {
+    animation_keyframe(int wrap, frame_infos_t const& infos, key_frames_t const& frames)
+    : _wrap(wrap), _keyframes(frames), _frame_infos(infos) {
         normalize();
     }
     
@@ -124,37 +130,37 @@ protected:
             size_t idx;
             time_t time;
         };
-        time_index indices[_times.size()];
-        auto it = _times.begin();
-        std::generate_n(indices, _times.size(), [&] {
-            size_t idx = std::distance(_times.begin(), it);
-            return time_index{ idx, *it ++ };
+        time_index indices[_frame_infos.size()];
+        auto it = _frame_infos.begin();
+        std::generate_n(indices, _frame_infos.size(), [&] {
+            size_t idx = std::distance(_frame_infos.begin(), it);
+            return time_index{ idx, (it ++)->offset };
         });
-        std::stable_sort(indices, indices + _times.size(),
+        std::stable_sort(indices, indices + _frame_infos.size(),
                          [] (time_index const& lhs, time_index const& rhs) {
                              return lhs.time < rhs.time;
                          });
 
-        for (size_t i = 0; i < _times.size(); ++i) {
+        for (size_t i = 0; i < _frame_infos.size(); ++i) {
             while (indices[i].idx != i) {
-                std::swap(_times[i], _times[indices[i].idx]);
+                std::swap(_frame_infos[i], _frame_infos[indices[i].idx]);
                 std::swap(_keyframes[i], _keyframes[indices[i].idx]);
                 std::swap(indices[i], indices[indices[i].idx]);
             }
         }
         
-        auto last = _times.back();
+        auto last = _frame_infos.back().offset;
         if (last < FLT_EPSILON)
             return;
         
-        for (auto& it : _times) {
-            it /= last;
+        for (auto& it : _frame_infos) {
+            it.offset /= last;
         }
     }
     
 private:
     /// key frames and times bound (separated)
-    times_t _times;
+    frame_infos_t _frame_infos;
     key_frames_t _keyframes; // key frames are constant
     int _wrap = WRAP_CLAMP;
     

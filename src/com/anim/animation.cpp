@@ -212,9 +212,9 @@ bool animation::apply_skin(std::string const& name) {
     // remove all existing skins
     for (auto& t : _transforms) {
         t->parent()->remove_if([] (game_object const&go) {
+            // FIXME: other component check?
             return go.get_component<sprite2d::quad_sprite>() != nullptr;
         });
-        //t->parent()->remove_all();
     }
     
     for (auto& slot : _slots) {

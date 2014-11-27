@@ -23,7 +23,7 @@ class component_meta;
 class game_object : public referenced_count{
 public:
     enum {Parent = 0, Order = 1, Offset = 2 };
-    enum {ComponentSize = 16 }; // before we figure out a better way...
+    enum {ComponentSize = 16 }; // until we figure out a better way...
 
     typedef std::unique_ptr<game_object, referenced_count::release_deleter> ptr;
     typedef std::unique_ptr<game_object const, referenced_count::release_deleter> const_ptr;
