@@ -36,6 +36,52 @@ void animation::clear() {
     // TODO:
 }
 
+template<typename C>
+void animation::load_skin(const std::string &name, C const& value) {
+    auto skin_ret = _skins.emplace(name, skin_t());
+    if (!skin_ret.second) {
+        LOG_WARN("the skin is dup, skipped: " << name);
+        return;
+    }
+    
+    auto& skin = skin_ret.first->second;
+    for (auto itr = value.MemberBegin(); itr != value.MemberEnd(); ++itr) {
+        // slot name is ignored. TODO: preprocessor to reorg the data
+        
+        for (auto sprite_it = itr->value.MemberBegin();
+             sprite_it != itr->value.MemberEnd(); ++sprite_it) {
+            auto* name = sprite_it->name.GetString();
+            double rotation = 0.f;
+            box2f bound;
+            vector3f translate;
+            
+            for (auto attr = sprite_it->value.MemberBegin();
+                 attr != sprite_it->value.MemberEnd(); ++attr) {
+                if (strcmp(attr->name.GetString(), "name") == 0) {
+                    name = attr->value.GetString();
+                } else if (strcmp(attr->name.GetString(), "x") == 0) {
+                    translate.x() = attr->value.GetDouble();
+                } else if (strcmp(attr->name.GetString(), "y") == 0) {
+                    translate.y() = attr->value.GetDouble();
+                } else if (strcmp(attr->name.GetString(), "width") == 0) {
+                    bound.min().x() = -attr->value.GetDouble() / 2.0;
+                    bound.max().x() = attr->value.GetDouble() / 2.0;
+                } else if (strcmp(attr->name.GetString(), "height") == 0) {
+                    bound.min().y() = -attr->value.GetDouble() / 2.0;
+                    bound.max().y() = attr->value.GetDouble() / 2.0;
+                } else if (strcmp(attr->name.GetString(), "rotation") == 0) {
+                    rotation = attr->value.GetDouble();
+                }
+            }
+            
+            skin.emplace(std::piecewise_construct,
+                         std::forward_as_tuple(name),
+                         std::forward_as_tuple(skin_piece{nullptr, bound, translate, rotation}));
+        }
+        
+    }
+}
+
 bool animation::load_from(data_stream *ds, std::vector<texture_atlas*> const& atlases) {
     if (ds == nullptr || !ds->valid()) {
         LOG_WARN("the stream is not ready, ignore loading");
@@ -96,52 +142,14 @@ bool animation::load_from(data_stream *ds, std::vector<texture_atlas*> const& at
     }
     
     auto& skins = json["skins"];
+    std::string default_skin;
     if (skins.IsObject()) {
         for (auto it = skins.MemberBegin(); it != skins.MemberEnd(); ++it) {
-            auto skin_ret = _skins.emplace(std::piecewise_construct,
-                                           std::forward_as_tuple(it->name.GetString()),
-                                           std::forward_as_tuple());
-            if (!skin_ret.second) {
-                LOG_WARN("the skin is dup, skipped: " << it->name.GetString());
-                continue;
-            }
-            
-            auto& skin = skin_ret.first->second;
-            for (auto itr = it->value.MemberBegin(); itr != it->value.MemberEnd(); ++itr) {
-                // slot name is ignored. TODO: preprocessor to reorg the data
-                
-                for (auto sprite_it = itr->value.MemberBegin();
-                     sprite_it != itr->value.MemberEnd(); ++sprite_it) {
-                    auto* name = sprite_it->name.GetString();
-                    double rotation = 0.f;
-                    box2f bound;
-                    vector3f translate;
-                    
-                    for (auto attr = sprite_it->value.MemberBegin();
-                         attr != sprite_it->value.MemberEnd(); ++attr) {
-                        if (strcmp(attr->name.GetString(), "name") == 0) {
-                            name = attr->value.GetString();
-                        } else if (strcmp(attr->name.GetString(), "x") == 0) {
-                            translate.x() = attr->value.GetDouble();
-                        } else if (strcmp(attr->name.GetString(), "y") == 0) {
-                            translate.y() = attr->value.GetDouble();
-                        } else if (strcmp(attr->name.GetString(), "width") == 0) {
-                            bound.min().x() = -attr->value.GetDouble() / 2.0;
-                            bound.max().x() = attr->value.GetDouble() / 2.0;
-                        } else if (strcmp(attr->name.GetString(), "height") == 0) {
-                            bound.min().y() = -attr->value.GetDouble() / 2.0;
-                            bound.max().y() = attr->value.GetDouble() / 2.0;
-                        } else if (strcmp(attr->name.GetString(), "rotation") == 0) {
-                            rotation = attr->value.GetDouble();
-                        }
-                    }
-
-                    skin.emplace(std::piecewise_construct,
-                                 std::forward_as_tuple(name),
-                                 std::forward_as_tuple(skin_piece{nullptr, bound, translate, rotation}));
-                }
-                
-            }
+            load_skin(it->name.GetString(), it->value);
+        }
+        // if loaded any skin, set the first one to be default and load afterwards
+        if (!_skins.empty()) {
+            default_skin = skins.MemberBegin()->name.GetString();
         }
     }
     
@@ -151,7 +159,6 @@ bool animation::load_from(data_stream *ds, std::vector<texture_atlas*> const& at
     
     auto& slots = json["slots"];
     if (slots.IsArray()) {
-        auto& default_skin = _skins["default"];
         int32_t index = start_index();
         for (auto it = slots.Begin(); it != slots.End(); ++it) {
             auto* name = (*it)["name"].GetString();
@@ -161,43 +168,70 @@ bool animation::load_from(data_stream *ds, std::vector<texture_atlas*> const& at
                 LOG_WARN("the joint is not defined, ignored: " << joint);
                 continue;
             }
-            _slots.emplace(std::piecewise_construct,
-                           std::forward_as_tuple(name),
-                           std::forward_as_tuple(jit->second));
-            
-            game_object* go = new game_object(_transforms[jit->second]->parent());
-            go->add_component<com::transform>();
-            
             auto& attachement = (*it)["attachment"];
+            char const* piece_name = "";
             
             if (attachement.IsString()) {
-                auto piece = default_skin.find(attachement.GetString());
-                if (piece != default_skin.end() && piece->second.atlas) {
-                    auto* tf = go->get_component<com::transform>();
-                    auto& sp = go->add_component<sprite2d::quad_sprite>(*piece->second.atlas,
-                                                                        piece->first);
-                    sp.set_index(++index);
-
-                    // FIXME: default bound if omitted
-                    sp.set_bound_from_box(piece->second.bound);
-                    tf->set_rotate(QUATERNION_Z(piece->second.rotation));
-                    tf->set_translate(piece->second.translate);
-                    
-                }
+                piece_name = attachement.GetString();
             }
+
+            _slots.emplace(std::piecewise_construct,
+                           std::forward_as_tuple(name),
+                           std::forward_as_tuple(jit->second, ++index, piece_name));
         }
     }
 
-#ifdef DEBUG
-    // seem to be a bug, need more investigations
-    _names.find("doesn't exist");
-#endif
+    if (!default_skin.empty()) {
+        apply_skin(default_skin);
+    }
     
     //FIXME
     ds->reset();
     _clips.emplace(std::piecewise_construct,
                    std::forward_as_tuple("test"),
                    std::forward_as_tuple(new skeleton_animation_clip(ds)));
+    return true;
+}
+
+bool animation::apply_skin(std::string const& name) {
+    auto skin = _skins.find(name);
+    if (skin == _skins.end()) {
+        LOG_WARN("the skin name is not found: " << name);
+        return false;
+    }
+
+    // remove all existing skins
+    for (auto& t : _transforms) {
+        t->parent()->remove_if([] (game_object const&go) {
+            return go.get_component<sprite2d::quad_sprite>() != nullptr;
+        });
+        //t->parent()->remove_all();
+    }
+    
+    for (auto& slot : _slots) {
+        auto* joint = _transforms[slot.second.joint_index]->parent();
+        
+        game_object* go = new game_object(joint);
+        go->add_component<com::transform>();
+    
+        if (slot.second.piece_name.empty())
+            continue;
+        
+        auto piece = skin->second.find(slot.second.piece_name);
+        if (piece != skin->second.end() && piece->second.atlas) {
+            auto* tf = go->get_component<com::transform>();
+            auto& sp = go->add_component<sprite2d::quad_sprite>(*piece->second.atlas,
+                                                                piece->first);
+            sp.set_index(slot.second.sprite_index);
+            
+            // FIXME: default bound if omitted
+            sp.set_bound_from_box(piece->second.bound);
+            tf->set_rotate(QUATERNION_Z(piece->second.rotation));
+            tf->set_translate(piece->second.translate);
+        } else {
+            LOG_WARN("couldn't find the piece " << slot.second.piece_name << " for the skin:" << name);
+        }
+    }
     return true;
 }
 

@@ -29,6 +29,7 @@ public:
     typedef std::unique_ptr<game_object const, referenced_count::release_deleter> const_ptr;
     typedef std::unique_ptr<component, component::component_deleter> component_ptr;
     typedef std::function<void (game_object const&)> iterator_t;
+    typedef std::function<bool (game_object const&)> predicate_t;
     typedef std::array<component_ptr, ComponentSize> components_t;
     
     template<typename C>
@@ -75,6 +76,7 @@ public:
 	game_object& move_top();
 	game_object& move_bottom();
 	game_object& remove_all();
+    game_object& remove_if(predicate_t const&);
 	void remove_self();
 
     game_object* last_child() const;
@@ -86,6 +88,7 @@ public:
     bool has_parent() const { return _parent != nullptr; }
     
     // transversal
+    void for_each_child(iterator_t const&) const;
     void pre_order(uint32_t mark, iterator_t const&) const;
     void post_order(iterator_t const&) const;
 

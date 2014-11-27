@@ -43,6 +43,17 @@ namespace com {
         };
         typedef std::vector<joint_pose> joint_poses_t;
         
+        struct slot {
+            uint32_t    joint_index;    // joint index in joint pose array
+            int32_t     sprite_index;   // sprite drawing index
+            std::string piece_name;     // skin piece name
+            
+            slot(uint32_t idx, int32_t sid, char const* name)
+            : joint_index(idx), sprite_index(sid), piece_name(name)
+            {}
+        };
+        typedef std::unordered_map<std::string, slot> slots_t;
+        
     public:
         /// load animation/skeleton data from the json stream
         animation(game_object*,
@@ -71,13 +82,17 @@ namespace com {
         joint_poses_t const& setup_poses() const { return _setup_poses; }
         
     private:
+        /// load skin, template to remove dependencies
+        template<typename C>
+        void load_skin(std::string const&, C const&);
+        
         /// remove all data, destroy all children/game objects
         void clear();
         
         transforms_t _transforms;   // all children for the skeleton
         joint_poses_t _setup_poses; // setup poses
         names_t _names;             // joint names => joint index lookup
-        names_t _slots;             // skin names => joint index lookup
+        slots_t _slots;             // skin names => slot config
         skins_t _skins;             // skins sets
         clips_t _clips;             // animation clips
         

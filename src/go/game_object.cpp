@@ -47,6 +47,30 @@ game_object* game_object::child_at(int idx) const {
     return child;
 }
 
+game_object& game_object::remove_if(const predicate_t &pred) {
+    for (auto* child = first_child(); child != null;) {
+        auto* del = child;
+        child = child->next_sibling();
+        if (pred(*del)) {
+            if (del == first_child()) {
+                _first_child = del->next_sibling();
+            }
+            
+            del->_parent = nullptr;
+            del->_next_sibling = del->_pre_sibling = null;
+            del->release();
+        }
+    }
+    return *this;
+}
+
+void game_object::for_each_child(iterator_t const& iter) const {
+    for (auto* child = first_child(); child != nullptr;
+         child = child->next_sibling()) {
+        iter(*child);
+    }
+}
+
 void game_object::pre_order(uint32_t mark, iterator_t const& iter) const{
     std::stack<game_object const*> nodes;
 #if 0
