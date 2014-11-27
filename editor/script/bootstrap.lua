@@ -12,7 +12,7 @@ c3d.init_mgr(rd, rd:new_context(rwin):set_current());
 
 local asset = c3d.get_asset_mgr();
 local sprite_mgr = c3d.get_sprite_mgr();
-local locator = c3d.get_locator():add_locator(0, "@app", "/res");
+local locator = c3d.get_locator():add_locator(0, "@app", "/res"):add_locator(0, "@current", "/res");
 
 local atlas1 = c3d.load_atlas(locator:from "turtle.json", asset)
 local spineboy = c3d.load_atlas(locator:from "spineboy_atlas.json", asset)
@@ -119,7 +119,7 @@ action:add_sequence({
         {1, 0, -400, 0},
     }),
     --]]
-    sbanim:make_action("test"),
+    sbanim:make_action("run"),
 });
 --local c1 = turtle:add_collider2d():from_quad_sprite(true, collider.shape())
 --turtle:set_tag('turtle')
