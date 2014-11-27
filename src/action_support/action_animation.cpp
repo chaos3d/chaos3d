@@ -29,11 +29,11 @@ void action_animation::update() {
         
         if ((*channel_it)->rotate) {
             (*go_it)->set_rotate(setup_it->rotate
-                                 * (*channel_it)->rotate->interpolate<slerp_t>(normalized));
+                                 * (*channel_it)->rotate->interpolate_in_frame<slerp_t, void>(normalized));
         }
         if ((*channel_it)->translate) {
             (*go_it)->set_translate(setup_it->translate +
-                                    (*channel_it)->translate->interpolate<linear_t>(normalized));
+                                    (*channel_it)->translate->interpolate_in_frame<linear_t, void>(normalized));
         }
         if ((*channel_it)->scale) {
             // TODO/FIXME

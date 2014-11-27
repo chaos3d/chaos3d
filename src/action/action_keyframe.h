@@ -14,10 +14,33 @@
 // TODO0: better namespace
 // TODO: WRAP_FULL_LOOP
 enum { WRAP_CLAMP, WRAP_LOOP };
-enum { STEP, LINEAR};
+enum { STEP, LINEAR, MAX_TYPE };
+
 struct keyframe_info {
     timer::time_t offset;  // time frame
     uint8_t type;   // interpolation type
+};
+
+// void is for no-interpolation
+// template<class Key>
+// struct interpolator_concrete {};
+
+// linear/slerp interpolator that can be used by animation_keyframe
+// to plug into the generic interpolation
+template<class Key>
+struct interpolator_linear {
+    inline Key operator() (Key const& from, Key const& to,
+                           float p, int) const {
+        return from * (1.f - p) + to * p;
+    }
+};
+
+template<class Key>
+struct interpolator_slerp {
+    inline Key operator() (Key const& from, Key const& to,
+                           float p, int) const {
+        return from.slerp(p, to);
+    }
 };
 
 // a collection of key frames and generic interpolation
@@ -64,9 +87,14 @@ public:
     // regular interpolation
     template<class I, typename std::enable_if<!std::is_same<I, void>::value>::type* = nullptr>
     key_t interpolate(float offset, I const& i = I()) const {
+        return interpolate<I>(keyframe(offset), offset, i);
+    }
+    
+    template<class I, typename std::enable_if<!std::is_same<I, void>::value>::type* = nullptr>
+    key_t interpolate(frame_infos_t::const_iterator const& fit, float offset, I const& i = I()) const {
         assert(offset >= 0.f && offset <= 1.f);
         assert(_keyframes.size() > 0);
-        auto timestamp = keyframe(offset);
+        auto& timestamp = fit;
         auto it = _keyframes.begin() + std::distance(_frame_infos.begin(), timestamp);
         if (it == _keyframes.end()) {
             return _wrap == WRAP_CLAMP ? _keyframes.back() : _keyframes.front();
@@ -84,9 +112,14 @@ public:
     // concrete/no interpolation
     template<class I, typename std::enable_if<std::is_same<I, void>::value>::type* = nullptr>
     key_t const& interpolate(float offset) const {
+        return interpolate<void>(keyframe(offset), offset);
+    }
+    
+    template<class I, typename std::enable_if<std::is_same<I, void>::value>::type* = nullptr>
+    key_t const& interpolate(frame_infos_t::const_iterator const& fit, float offset) const {
         assert(offset >= 0.f && offset <= 1.f);
         assert(_keyframes.size() > 0);
-        auto timestamp = keyframe(offset);
+        auto& timestamp = fit;
         auto it = _keyframes.begin() + std::distance(_frame_infos.begin(), timestamp);
         if (it == _keyframes.end()) {
             return _wrap == WRAP_CLAMP ? _keyframes.back() : _keyframes.front();
@@ -95,6 +128,31 @@ public:
         } else {
             return *std::next(it, -1);
         }
+    }
+
+    template<class I, class... Is>
+    key_t interpolate_in_frame_helper(frame_infos_t::const_iterator const& fit,
+                                      float offset, int idx) const {
+        if (sizeof...(Is) == idx) {
+            return interpolate<I>(fit, offset);
+        } else {
+            return interpolate_in_frame_helper<Is...>(fit, offset, idx);
+        }
+    }
+
+    template<class... Is, typename std::enable_if<sizeof...(Is) == 0>::type* = nullptr>
+    key_t interpolate_in_frame_helper(frame_infos_t::const_iterator const& fit,
+                                      float offset, int idx) const {
+        return key_t();
+    }
+    
+    template<class... Is>
+    key_t interpolate_in_frame(float offset) const {
+        assert(offset >= 0.f && offset <= 1.f);
+        assert(_keyframes.size() > 0);
+        auto fit = keyframe(offset);
+        assert(fit->type < sizeof...(Is));
+        return interpolate_in_frame_helper<Is...>(fit, offset, fit->type);
     }
 
 protected:
@@ -192,28 +250,6 @@ typename animation_keyframe<Key>::ptr make_animation_keyframe(int wrap,
                                                               anim_kf_keyframes_t<Key> const& keyframes) {
     return animation_keyframe<Key>::create(wrap, times, keyframes);
 }
-
-// void is for no-interpolation
-// template<class Key>
-// struct interpolator_concrete {};
-
-// linear/slerp interpolator that can be used by animation_keyframe
-// to plug into the generic interpolation
-template<class Key>
-struct interpolator_linear {
-    inline Key operator() (Key const& from, Key const& to,
-                           float p, int) const {
-        return from * (1.f - p) + to * p;
-    }
-};
-
-template<class Key>
-struct interpolator_slerp {
-    inline Key operator() (Key const& from, Key const& to,
-                           float p, int) const {
-        return from.slerp(p, to);
-    }
-};
 
 // the action that applies the key frame
 // the applier usually calls keyframe.interpolate
