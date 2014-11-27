@@ -10,6 +10,7 @@
 
 using namespace com;
 using namespace rapidjson; // TODO: move this out of this scope
+typedef rapidjson::GenericValue<rapidjson::UTF8<char>> json_value_t;
 
 #define QUATERNION_Z(r) quaternionf(Eigen::AngleAxisf(r*M_PI/180.f, vector3f::UnitZ()))
 
@@ -38,6 +39,7 @@ void animation::clear() {
 
 template<typename C>
 void animation::load_skin(const std::string &name, C const& value) {
+    LOG_INFO("skin : " << typeid(C).name());
     auto skin_ret = _skins.emplace(name, skin_t());
     if (!skin_ret.second) {
         LOG_WARN("the skin is dup, skipped: " << name);
@@ -181,15 +183,22 @@ bool animation::load_from(data_stream *ds, std::vector<texture_atlas*> const& at
         }
     }
 
+    auto& animations = json["animations"];
+    if (animations.IsObject()) {
+        for (auto anim = animations.MemberBegin();
+             anim != animations.MemberEnd(); ++anim) {
+            
+            _clips.emplace(std::piecewise_construct,
+                           std::forward_as_tuple(anim->name.GetString()),
+                           std::forward_as_tuple(skeleton_animation_clip::load_from(anim->value)));
+        }
+    }
+    
+    // apply the default skin if any
     if (!default_skin.empty()) {
         apply_skin(default_skin);
     }
-    
-    //FIXME
-    ds->reset();
-    _clips.emplace(std::piecewise_construct,
-                   std::forward_as_tuple("test"),
-                   std::forward_as_tuple(new skeleton_animation_clip(ds)));
+
     return true;
 }
 

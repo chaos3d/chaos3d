@@ -50,6 +50,14 @@ namespace com {
         typedef std::vector<joint_channel::ptr> joint_channels_t;
         
     public:
+        /// generic loader without any references
+        template<typename ...Args> skeleton_animation_clip(Args const&...);
+
+        template<typename ...Args>
+        static skeleton_animation_clip::ptr load_from(Args&&... args) {
+            return skeleton_animation_clip::ptr(new skeleton_animation_clip(std::forward<Args>(args)...));
+        }
+        
         /// initialize data from a data stream (JSON)
         skeleton_animation_clip(data_stream*);
         
