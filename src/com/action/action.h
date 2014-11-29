@@ -11,6 +11,7 @@ namespace com {
     
     class action : public component {
     public:
+        typedef action_mgr manager_t;
         typedef ::action::ptr ptr;
         
     public:
