@@ -45,12 +45,6 @@ void action_animation::update() {
         
         // TODO: more channels and more types of interpolation
     }
-#if 0
-    _clip->apply((_duration > 0.f && elapsed >= _duration) ? 1.f
-                 : normalized < 0.f ? 0.f
-                 : normalized,
-                 _animation->transforms());
-#endif
 }
 
 bool action_animation::done() const {

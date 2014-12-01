@@ -16,6 +16,14 @@ namespace com {
 namespace scene2d {
     class world2d_mgr;
     
+    /// the collider2d component contains both the mass info and
+    /// the collider info, but either of them can be null
+    /// shape functions similar to collider2d in Unity, where it
+    /// contains the colliding info. the physics engine (box2d)
+    /// will perform on plane (z=0) by projecting all verticies
+    /// into that plane (same as Unity), this is done by removing
+    /// z-value, and any rotation will apply to z-axis
+
     // the 2d collider that interacts with phiysics world
     // it will remove non-z-axie rotation
     // and reset scaling to 1.0

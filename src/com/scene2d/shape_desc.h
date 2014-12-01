@@ -19,6 +19,8 @@ namespace scene2d {
         float weight = 0.f;
     };
 
+    /// collider info
+    // TODO: collision can be managed by layers for simplicity
     // measures in pixels
     struct shape {
         typedef Eigen::AlignedBox2f box2f;
