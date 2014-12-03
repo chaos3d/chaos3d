@@ -143,6 +143,8 @@
 		88C0049618FA380C0012EC1D /* gl_render_window_egl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 886CC17618F67D4D006A3AF5 /* gl_render_window_egl.cpp */; };
 		88C0049718FA380C0012EC1D /* render_device_mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 88C0045718F7E1BF0012EC1D /* render_device_mac.mm */; };
 		88C0049818FA380C0012EC1D /* render_window_mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 886CC17C18F68E79006A3AF5 /* render_window_mac.mm */; };
+		F91C1CE31A2C1FA4001A18C3 /* collider3d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F91C1CE11A2C1FA4001A18C3 /* collider3d.cpp */; };
+		F91C1CE41A2C1FA4001A18C3 /* collider3d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F91C1CE11A2C1FA4001A18C3 /* collider3d.cpp */; };
 		F92C9CC61A247DD30082DFF7 /* cIOSLauncher.mm in Sources */ = {isa = PBXBuildFile; fileRef = F92C9CC51A247DD30082DFF7 /* cIOSLauncher.mm */; };
 		F9589EBE19D00D74004BDB1D /* libchaos3d_core_mac.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 886CC17518F662BB006A3AF5 /* libchaos3d_core_mac.dylib */; settings = {ATTRIBUTES = (Weak, ); }; };
 		F9589EBF19D00DBB004BDB1D /* render_wxwindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F9589EAB19D00C35004BDB1D /* render_wxwindow.cpp */; };
@@ -1210,6 +1212,8 @@
 		F91C1CDD1A2C0112001A18C3 /* btTransform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = btTransform.h; sourceTree = "<group>"; };
 		F91C1CDE1A2C0112001A18C3 /* btTransformUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = btTransformUtil.h; sourceTree = "<group>"; };
 		F91C1CDF1A2C0112001A18C3 /* btVector3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = btVector3.h; sourceTree = "<group>"; };
+		F91C1CE11A2C1FA4001A18C3 /* collider3d.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = collider3d.cpp; sourceTree = "<group>"; };
+		F91C1CE21A2C1FA4001A18C3 /* collider3d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = collider3d.h; sourceTree = "<group>"; };
 		F92C9CC41A247DD30082DFF7 /* cIOSLauncher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cIOSLauncher.h; sourceTree = "<group>"; };
 		F92C9CC51A247DD30082DFF7 /* cIOSLauncher.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = cIOSLauncher.mm; sourceTree = "<group>"; };
 		F9589EAB19D00C35004BDB1D /* render_wxwindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = render_wxwindow.cpp; sourceTree = "<group>"; };
@@ -1650,6 +1654,7 @@
 				F96744781A19C7D100C0B1E3 /* anim */,
 				F967446F1A1353FC00C0B1E3 /* action */,
 				8804F8CB18A75DC50055322F /* scene2d */,
+				F91C1CE01A2C1FA4001A18C3 /* scene3d */,
 				880BA328189654A6002542E2 /* sprite2d */,
 				880BA31E189505FC002542E2 /* render */,
 			);
@@ -3906,6 +3911,15 @@
 			path = LinearMath;
 			sourceTree = "<group>";
 		};
+		F91C1CE01A2C1FA4001A18C3 /* scene3d */ = {
+			isa = PBXGroup;
+			children = (
+				F91C1CE11A2C1FA4001A18C3 /* collider3d.cpp */,
+				F91C1CE21A2C1FA4001A18C3 /* collider3d.h */,
+			);
+			path = scene3d;
+			sourceTree = "<group>";
+		};
 		F9589EA919D00BF8004BDB1D /* extension */ = {
 			isa = PBXGroup;
 			children = (
@@ -4550,6 +4564,7 @@
 				886CC15D18F662BB006A3AF5 /* vertex_buffer.cpp in Sources */,
 				886CC15E18F662BB006A3AF5 /* shape_desc.cpp in Sources */,
 				886CC15F18F662BB006A3AF5 /* ui_control.cpp in Sources */,
+				F91C1CE41A2C1FA4001A18C3 /* collider3d.cpp in Sources */,
 				886CC16018F662BB006A3AF5 /* camera2d.cpp in Sources */,
 				F96744731A1353FC00C0B1E3 /* action.cpp in Sources */,
 				8869FDCD19186D9C00946FD0 /* gles2.cpp in Sources */,
@@ -4590,6 +4605,7 @@
 				8812C28F185DB7F8001C4D0B /* file_stream.cpp in Sources */,
 				880BA32E189654A6002542E2 /* sprite.cpp in Sources */,
 				8879CE3318B2E0C900BCBFA6 /* timer.cpp in Sources */,
+				F91C1CE31A2C1FA4001A18C3 /* collider3d.cpp in Sources */,
 				8811358118D426FA0069F351 /* sprite.cpp in Sources */,
 				F9AF0F8719B5B4950047C431 /* data_stream.cpp in Sources */,
 				8870F3EC1919C5640038B012 /* cViewController.mm in Sources */,
@@ -4777,6 +4793,7 @@
 					../external/box2d/include,
 					../external/powervr32/Include,
 					../external/libpng,
+					../external/bullet2.83,
 				);
 				INSTALL_GROUP = "";
 				INSTALL_PATH = /;
@@ -4835,6 +4852,7 @@
 					../external/box2d/include,
 					../external/powervr32/Include,
 					../external/libpng,
+					../external/bullet2.83,
 				);
 				INSTALL_GROUP = "";
 				INSTALL_PATH = /;

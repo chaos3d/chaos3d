@@ -15,6 +15,7 @@
 #include "com/sprite2d/sprite.h"
 #include "com/sprite2d/texture_atlas.h"
 #include "com/scene2d/world_box2d.h"
+#include "com/scene3d/collider3d.h"
 #include "com/render/camera_mgr.h"
 #include "com/action/action.h"
 
@@ -33,6 +34,7 @@ template class script::class_<render_device>;
 static bool initialize_mgr(render_device* dev, render_context* ctx) {
     component_manager::initializer(
                                    make_manager<com::transform_manager>(),
+                                   make_manager<scene3d::world3d_mgr>(),
                                    make_manager<scene2d::world2d_mgr>(0.02f, Eigen::Vector2f{0.f,0.f}),
                                    make_manager<sprite2d::sprite_mgr>(dev),
                                    make_manager<com::camera_mgr>(dev, ctx),
