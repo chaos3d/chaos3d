@@ -37,11 +37,13 @@ namespace script {
         template<class C>
         using is_string = typename std::is_same<T1<T0<C>>, std::string>;
         
+#if 0
         template<class C>
         struct is_userdata : public std::conditional<
         script::is_userdata<C>::value && !convert_to_lua<C>::convertable::value,
         std::true_type, std::false_type>::type {
         };
+#endif
         
         template<typename U = T,
         typename std::enable_if<is_number<T1<U>>::value>::type* = nullptr>
@@ -192,6 +194,7 @@ namespace script {
         
         template<typename U = T,
         typename std::enable_if<is_userdata<T1<U>>::value &&
+        !convert_to_lua<T1<U>>::convertable::value &&
         !std::is_pointer<T1<U>>::value && std::is_reference<U>::value>::type* = nullptr>
         static void to(lua_State* L, T&& value) {
             typedef T2<U> R;
@@ -223,6 +226,7 @@ namespace script {
         
         template<typename U = T,
         typename std::enable_if<is_userdata<T1<U>>::value &&
+        !convert_to_lua<T1<U>>::convertable::value &&
         !std::is_pointer<T1<U>>::value && !std::is_reference<U>::value>::type* = nullptr>
         static void to(lua_State* L, T&& value) {
             typedef typename std::remove_cv<U>::type R;

@@ -1,5 +1,6 @@
 #include "com/scene2d/world_box2d.h"
 #include "sg/transform.h"
+#include "common/log.h"
 #include <Box2D/Box2D.h>
 
 using namespace scene2d;
@@ -151,6 +152,8 @@ void* collider2d::internal_data() const {
 }
 
 collider2d& collider2d::operator=(collider2d const& rhs){
+    LOG_ERROR("no support for cloning collider2d");
+    assert(0);
     return *this;
 }
 

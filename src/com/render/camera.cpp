@@ -50,8 +50,8 @@ camera::vector3f camera::unproject(vector3f const& pos) const {
 }
 
 camera::ray camera::cast_from_screen(vector2f const& pos) const {
-    vector3f p(target()->normalize_position({pos[0], pos[1], 0.f}, viewport()));
-	vector3f d(target()->normalize_position({pos[0], pos[1], 1.f}, viewport()));
+    vector3f p(_target->normalize_position({pos[0], pos[1], 0.f}, viewport()));
+	vector3f d(_target->normalize_position({pos[0], pos[1], 1.f}, viewport()));
     
 	ray ret = {
         unproject(p), // p

@@ -6,13 +6,14 @@
 #include "script/converter.h"
 #include "action/action_keyframe.h"
 
+typedef Eigen::Vector2f vector2f;
+typedef Eigen::Vector3f vector3f;
+typedef Eigen::Vector4f vector4f;
+typedef Eigen::AlignedBox2f box2f;
+typedef Eigen::Quaternionf quaternionf;
+typedef Eigen::Matrix4f matrix4f;
+
 namespace script {
-    typedef Eigen::Vector2f vector2f;
-    typedef Eigen::Vector3f vector3f;
-    typedef Eigen::Vector4f vector4f;
-    typedef Eigen::AlignedBox2f box2f;
-    typedef Eigen::Quaternionf quaternionf;
-    typedef Eigen::Matrix4f matrix4f;
     
     template<> struct convert_from_lua<vector2f> {
         typedef std::true_type convertable;

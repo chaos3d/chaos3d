@@ -90,6 +90,9 @@ namespace com {
         // NB: if transform doesn't exist, one will be created
         camera& move_for_perfect_pixel(float height = 0.f);
         
+        /// get the target
+        render_target* get_target() const { return _target.get(); }
+        
     protected:
         camera& operator=(camera const&);
         virtual ~camera();

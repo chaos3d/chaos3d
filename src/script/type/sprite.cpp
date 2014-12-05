@@ -2,6 +2,7 @@
 #include "script/class_type.h"
 #include "script/lua_bind.h"
 #include "script/state.h"
+#include "script/type/convert.h"
 
 #include "go/game_object.h"
 #include "com/sprite2d/sprite.h"
@@ -12,11 +13,14 @@
 #include "com/scene2d/world_box2d.h"
 #include "com/scene2d/shape_desc.h"
 
+#include "com/scene3d/collider3d.h"
+
 #include "asset/asset_manager.h"
 #include "loader/json/json_loader.h"
 
 using namespace sprite2d;
 using namespace scene2d;
+using namespace scene3d;
 
 namespace script {
     static int c3d_lua_add_layout(lua_State* L) {
@@ -75,11 +79,11 @@ namespace script {
         auto& camera = converter<camera2d&>::from(L, 1, nullptr);
         
         auto ray = camera.cast_from_screen({lua_tonumber(L, 2), lua_tonumber(L, 3)});
-        float t = -ray.p.z() / ray.d.z();
+        float t = -ray.p.z() / ray.d.z(); // p.z == 0
         auto cross = ray.p + ray.d * t;
         lua_pushnumber(L, cross[0]);
         lua_pushnumber(L, cross[1]);
-        return 2;
+        return 2; // x,y at plane z=0
     }
     
     static int c3d_lua_atlas_load(lua_State* L) {
@@ -189,6 +193,7 @@ namespace script {
                                           std::string const&>)))
         .def("add_camera2d", LUA_BIND((&game_object::add_component<camera2d, render_target*, int>)))
         .def("add_collider2d", LUA_BIND((&game_object::add_component<collider2d, int, int>)))
+        .def("add_collider3d", LUA_BIND(&game_object::add_component<collider3d>))
         .def("get_camera2d", LUA_BIND((&game_object::get_component<camera2d>)))
         ;
         
@@ -231,6 +236,15 @@ namespace script {
         .def("set_gravity", c3d_lua_set_gravity)
         .def("query", c3d_lua_world_query)
         .def("set_step", LUA_BIND_S(world2d_mgr& (world2d_mgr::*)(float&&), &world2d_mgr::set_step))
+        ;
+        
+        class_<world3d_mgr>::type()
+        .derive<event_dispatcher>()
+        .def("query", LUA_BIND(&world3d_mgr::query))
+        ;
+        
+        class_<collider3d>::type()
+        .def("from_sprite", LUA_BIND(&collider3d::reset_from<quad_sprite>))
         ;
         
         class_<global_asset_mgr>::type()

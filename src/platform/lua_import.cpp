@@ -77,6 +77,7 @@ extern "C" void c3d_lua_import(lua_State *L) {
     state->import("chaos3d")
     .def_singleton_getter<sprite2d::sprite_mgr>("get_sprite_mgr")
     .def_singleton_getter<scene2d::world2d_mgr>("get_world2d_mgr")
+    .def_singleton_getter<scene3d::world3d_mgr>("get_world3d")
     .def_singleton_getter<global_asset_mgr, asset_manager>("get_asset_mgr")
     .def_singleton_getter<locator_mgr>("get_locator")
     ;
