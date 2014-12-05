@@ -112,8 +112,8 @@ world3d_mgr::world3d_mgr()
 }
 
 void world3d_mgr::query(com::camera const& cam, vector2f const& pos) {
-    vector3f from(cam.get_target()->normalize_position({pos[0], pos[1], 0.f}, cam.viewport()));
-    vector3f to(cam.get_target()->normalize_position({pos[0], pos[1], 1.f}, cam.viewport()));
+    vector3f from(cam.unproject(cam.get_target()->normalize_position({pos[0], pos[1], 0.f}, cam.viewport())));
+    vector3f to(cam.unproject(cam.get_target()->normalize_position({pos[0], pos[1], 1.f}, cam.viewport())));
     
     btVector3 btFrom(from.x(), from.y(), from.z()), btTo(to.x(), to.y(), to.z());
     btCollisionWorld::ClosestRayResultCallback closestResults(btFrom, btTo);
