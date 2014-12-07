@@ -17,6 +17,7 @@
 
 #include "asset/asset_manager.h"
 #include "loader/json/json_loader.h"
+#include "common/log.h"
 
 using namespace sprite2d;
 using namespace scene2d;
@@ -53,7 +54,7 @@ namespace script {
         return 1;
     }
     
-    static int c3d_lua_world_query(lua_State* L) {
+    static int c3d_lua_world2d_query(lua_State* L) {
         world2d_mgr& mgr = converter<world2d_mgr&>::from(L, 1, nullptr);
         luaL_argcheck(L, lua_isfunction(L, 4), 4, "expect a function");
         float x = lua_tonumber(L, 2);
@@ -71,6 +72,29 @@ namespace script {
                 return !is_done;
             }
         }, vector2f(x, y));
+        lua_settop(L, 1);
+        return 1;
+    }
+    
+    static int c3d_lua_world3d_query(lua_State* L) {
+        world3d_mgr& mgr = converter<world3d_mgr&>::from(L, 1, nullptr);
+        com::camera& cam = converter<com::camera&>::from(L, 2, nullptr);
+        vector2f pos = converter<vector2f>::from(L, 3, nullptr);
+        
+        luaL_argcheck(L, lua_isfunction(L, 4), 4, "expect a function");
+        mgr.query(cam, pos, [=] (collider3d *c) {
+            lua_pushvalue(L, 4);
+            converter<collider3d*>::to(L, c);
+            if (lua_pcall(L, 1, 1, 0) != 0) {
+                // TODO: error
+                LOG_ERROR(world3d_mgr, "lua error: " << lua_tostring(L, -1));
+                return false; // stop querying
+            } else {
+                bool is_done = lua_toboolean(L, -1);
+                lua_pop(L, 1);
+                return !is_done;
+            }
+        });
         lua_settop(L, 1);
         return 1;
     }
@@ -234,13 +258,13 @@ namespace script {
         class_<world2d_mgr>::type()
         .derive<event_dispatcher>()
         .def("set_gravity", c3d_lua_set_gravity)
-        .def("query", c3d_lua_world_query)
+        .def("query", c3d_lua_world2d_query)
         .def("set_step", LUA_BIND_S(world2d_mgr& (world2d_mgr::*)(float&&), &world2d_mgr::set_step))
         ;
         
         class_<world3d_mgr>::type()
         .derive<event_dispatcher>()
-        .def("query", LUA_BIND(&world3d_mgr::query))
+        .def("query", &c3d_lua_world3d_query)
         ;
         
         class_<collider3d>::type()

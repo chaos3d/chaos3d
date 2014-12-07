@@ -62,7 +62,7 @@ template <typename T> struct logger_trait { typedef T logger_t; };
 #define LOG_TRACE(...)          GET_LOG_DEF(__VA_ARGS__, LOG_TRACE2, LOG_TRACE1) (__VA_ARGS__)
 #define LOG_INFO(...)           GET_LOG_DEF(__VA_ARGS__, LOG_INFO2, LOG_INFO1) (__VA_ARGS__)
 #define LOG_WARN(...)           GET_LOG_DEF(__VA_ARGS__, LOG_WARN2, LOG_WARN1) (__VA_ARGS__)
-#define LOG_ERROR(...)          GET_LOG_DEF(__VA_ARGS__, LOG_EROR2, LOG_ERROR1) (__VA_ARGS__)
+#define LOG_ERROR(...)          GET_LOG_DEF(__VA_ARGS__, LOG_ERROR2, LOG_ERROR1) (__VA_ARGS__)
 #define LOG_FATAL(...)          GET_LOG_DEF(__VA_ARGS__, LOG_FATAL2, LOG_FATAL1) (__VA_ARGS__)
 
 #endif

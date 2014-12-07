@@ -46,12 +46,15 @@ namespace scene3d {
         typedef std::false_type component_fixed_t;
         static constexpr float default_pixel_meter_ratio = 0.02f;
 
+        /// query callback, returns false to terminate
+        typedef std::function<bool (collider3d*)> query_callback_t;
+        
     public:
         world3d_mgr();
 
-        /// find the collision objects from the view point
-        /// in the camera
-        void query(com::camera const&, vector2f const& center);
+        /// find the collision objects from the view point in the camera
+        void query(com::camera const&, vector2f const& center,
+                   query_callback_t const&);
         
     protected:
         virtual void pre_update(goes_t const&) override;

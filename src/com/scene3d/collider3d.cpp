@@ -111,19 +111,53 @@ world3d_mgr::world3d_mgr()
                                                 _internal->configuration.get()));
 }
 
-void world3d_mgr::query(com::camera const& cam, vector2f const& pos) {
+void world3d_mgr::query(com::camera const& cam, vector2f const& pos,
+                        query_callback_t const& cb) {
     vector3f from(cam.unproject(cam.get_target()->normalize_position({pos[0], pos[1], 0.f}, cam.viewport())));
     vector3f to(cam.unproject(cam.get_target()->normalize_position({pos[0], pos[1], 1.f}, cam.viewport())));
     
     btVector3 btFrom(from.x(), from.y(), from.z()), btTo(to.x(), to.y(), to.z());
-    btCollisionWorld::ClosestRayResultCallback closestResults(btFrom, btTo);
-    closestResults.m_flags |= btTriangleRaycastCallback::kF_FilterBackfaces;
 
-    _internal->world->rayTest(btFrom, btTo, closestResults);
-    if (closestResults.hasHit()) {
-        collider3d* c = (collider3d*)closestResults.m_collisionObject->getUserPointer();
-        LOG_DEBUG("hit : " << c->parent()->tag());
-    }
+    // TODO: copied from ClosestResult, need to re-work
+    // use callbacks to check, no other info is given
+    struct rayresult_callback : public btCollisionWorld::RayResultCallback
+    {
+        query_callback_t const& _cb;
+        
+        rayresult_callback(const btVector3& rayFromWorld, const btVector3& rayToWorld,
+                           query_callback_t const& cb)
+        : m_rayFromWorld(rayFromWorld), m_rayToWorld(rayToWorld), _cb(cb) {
+            m_flags |= btTriangleRaycastCallback::kF_FilterBackfaces;
+        }
+        
+        btVector3	m_rayFromWorld;//used to calculate hitPointWorld from hitFraction
+        btVector3	m_rayToWorld;
+        
+        btVector3	m_hitNormalWorld;
+        btVector3	m_hitPointWorld;
+        
+        virtual btScalar addSingleResult(btCollisionWorld::LocalRayResult& rayResult,
+                                            bool normalInWorldSpace) override {
+            //caller already does the filter on the m_closestHitFraction
+            btAssert(rayResult.m_hitFraction <= m_closestHitFraction);
+            
+            if (normalInWorldSpace) {
+                m_hitNormalWorld = rayResult.m_hitNormalLocal;
+            } else {
+                ///need to transform normal into worldspace
+                m_hitNormalWorld = m_collisionObject->getWorldTransform().getBasis()*rayResult.m_hitNormalLocal;
+            }
+            
+            // m_closestHitFraction = rayResult.m_hitFraction;
+            // m_hitPointWorld.setInterpolate3(m_rayFromWorld,m_rayToWorld,rayResult.m_hitFraction);
+            // return rayResult.m_hitFraction;
+            m_closestHitFraction = _cb((collider3d*)rayResult.m_collisionObject->getUserPointer()) ? 1.f : 0.f;
+            m_collisionObject = rayResult.m_collisionObject;
+            return m_closestHitFraction;
+        }
+    } result(btFrom, btTo, cb);
+
+    _internal->world->rayTest(btFrom, btTo, result);
 }
 
 void world3d_mgr::update(goes_t const& goes) {
