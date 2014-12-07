@@ -30,6 +30,11 @@ namespace script {
         static vector3f convert(lua_State* L, int idx);
     };
 
+    template<> struct convert_to_lua<vector3f> {
+        typedef std::true_type convertable;
+        static void convert(lua_State* L, vector3f const& idx);
+    };
+    
     template<> struct convert_from_lua<vector4f> {
         typedef std::true_type convertable;
         static vector4f convert(lua_State* L, int idx);

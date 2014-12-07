@@ -1,8 +1,9 @@
 #include "go/game_object.h"
 #include "sg/transform.h"
 #include "script/state.h"
-#include "script/class_type.h"
 #include "script/lua_bind.h"
+#include "script/class_type.h"
+#include "script/type/convert.h"
 
 namespace script {
     void def_game_object(state* st, std::string const& scope) {
@@ -33,6 +34,8 @@ namespace script {
         .def("set_rotate", LUA_BIND((&com::transform::set_rotate_by_axis)))
         .def("set_scale", LUA_BIND((&com::transform::set_scale<float, float, float>)))
         .def("set_skew", LUA_BIND_S(com::transform& (com::transform::*)(float, float), &com::transform::set_skew))
+        .def("translate", LUA_BIND_S(vector3f const& (com::transform::*)() const, &com::transform::translate))
+        .def("scale", LUA_BIND_S(vector3f const& (com::transform::*)() const, &com::transform::scale))
         .def("mark", LUA_BIND(&com::transform::mark_dirty))
         ;
     }

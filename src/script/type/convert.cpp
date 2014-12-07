@@ -22,6 +22,12 @@ vector3f convert_from_lua<vector3f>::convert(lua_State* L, int idx) {
     return vector3f(lua_tonumber(L, -3), lua_tonumber(L, -2), lua_tonumber(L, -1));
 }
 
+void convert_to_lua<vector3f>::convert(lua_State* L, vector3f const& v) {
+    lua_pushnumber(L, v.x());
+    lua_pushnumber(L, v.y());
+    lua_pushnumber(L, v.z());
+}
+
 vector4f convert_from_lua<vector4f>::convert(lua_State* L, int idx) {
     luaL_argcheck(L, lua_istable(L, idx), idx, "expect a table");
     lua_rawgeti(L, idx, 1);
