@@ -52,6 +52,12 @@ namespace script {
         };
         
         template<typename U = T,
+        typename std::enable_if<is_bool<T1<U>>::value>::type* = nullptr>
+        static bool from(lua_State* L, int idx, char* storage) {
+            return lua_toboolean(L, idx) == 1;
+        };
+        
+        template<typename U = T,
         typename std::enable_if<std::is_same<T1<U>, ref>::value>::type* = nullptr>
         static ref from(lua_State* L, int idx, char* storage) {
             lua_pushvalue(L, idx);
@@ -154,6 +160,12 @@ namespace script {
             lua_pushnumber(L, value);
         }
 
+        template<typename U = T,
+        typename std::enable_if<is_bool<T1<U>>::value>::type* = nullptr>
+        static void to(lua_State* L, bool value) {
+            lua_pushboolean(L, value ? 1 : 0);
+        }
+        
         template<typename U = T,
         typename std::enable_if<std::is_same<T1<U>, char const*>::value>::type* = nullptr>
         static void to(lua_State* L, char const* str) {

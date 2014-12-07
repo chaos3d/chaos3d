@@ -25,6 +25,7 @@ namespace script {
         .def("move_down", LUA_BIND(&game_object::move_downward))
         .def("move_bottom", LUA_BIND(&game_object::move_bottom))
         .def("add_transform", LUA_BIND(&game_object::add_component<com::transform>))
+        .def("get_transform", LUA_BIND(&game_object::get_component<com::transform>))
         ;
         
         script::class_<com::transform>::type()

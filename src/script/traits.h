@@ -9,12 +9,19 @@
 
 namespace script {
     template<class C>
-    using is_number = std::is_arithmetic<C>;
-
+    using is_bool = std::is_same<C, bool>;
+    
+    template<class C>
+    struct is_number
+    : public std::conditional<std::is_arithmetic<C>::value && !is_bool<C>::value, std::true_type, std::false_type>::type {};
+    
     template<class C>
     struct is_userdata
     : public std::conditional<is_number<C>::value, std::false_type, std::true_type>::type {};
 
+    template<>
+    struct is_userdata<bool> : public std::false_type {};
+    
     template<>
     struct is_userdata<char const*> : public std::false_type {};
 
