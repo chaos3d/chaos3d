@@ -41,15 +41,13 @@ namespace act {
         }
     };
     
-    action_keyframe<sprite_key_t>*
-    make_sprite_action(game_object* go, timer::time_t duration,
-                       sprite_anim_kf_t::const_ptr const& keyframe,
-                       timer const& t = global_timer_base::instance());
+    action::ptr make_sprite_action(game_object* go, timer::time_t duration,
+                                   sprite_anim_kf_t::const_ptr const& keyframe,
+                                   timer const& t = global_timer_base::instance());
 
-    action_keyframe<atlas_key_t>*
-    make_atlas_action(game_object* go, timer::time_t duration,
-                      atlas_anim_kf_t::const_ptr const& keyframe,
-                      timer const& t = global_timer_base::instance());
+    action::ptr make_atlas_action(game_object* go, timer::time_t duration,
+                                  atlas_anim_kf_t::const_ptr const& keyframe,
+                                  timer const& t = global_timer_base::instance());
 
 }
 
