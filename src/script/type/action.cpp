@@ -38,8 +38,8 @@ namespace script {
     };
     
     // TODO: converter from array to key_frame_t
-    static action* c3d_go_make_translate_action(game_object* go, float duration,
-                                                std::vector<std::array<float, 4>> const&keyframe) {
+    static action::ptr c3d_go_make_translate_action(game_object* go, float duration,
+                                                    std::vector<std::array<float, 4>> const&keyframe) {
         std::vector<vec3f_anim_kf_t::key_frame_t> key_frames;
         for (auto& it : keyframe) {
             key_frames.emplace_back(vec3f_anim_kf_t::key_frame_t(it[0],
@@ -51,8 +51,8 @@ namespace script {
                                           vec3f_anim_kf_t::create(WRAP_CLAMP, key_frames));
     }
     
-    static action* c3d_go_make_rotate_action(game_object* go, float duration,
-                                             std::vector<std::array<float, 4>> const&keyframe) {
+    static action::ptr c3d_go_make_rotate_action(game_object* go, float duration,
+                                                 std::vector<std::array<float, 4>> const&keyframe) {
         typedef quaternionf_anim_kf_t::key_frame_t::key_t key_t;
         std::vector<quaternionf_anim_kf_t::key_frame_t> key_frames;
         
@@ -67,8 +67,8 @@ namespace script {
                                        quaternionf_anim_kf_t::create(WRAP_CLAMP, key_frames));
     }
     
-    static action* c3d_go_make_skew_action(game_object* go, float duration,
-                                           std::vector<std::array<float, 3>> const&keyframe) {
+    static action::ptr c3d_go_make_skew_action(game_object* go, float duration,
+                                               std::vector<std::array<float, 3>> const&keyframe) {
         std::vector<vec2f_anim_kf_t::key_frame_t> key_frames;
         for (auto& it : keyframe) {
             key_frames.emplace_back(vec2f_anim_kf_t::key_frame_t(it[0],
@@ -100,7 +100,7 @@ namespace script {
                                        act::sprite_anim_kf_t::create(WRAP_CLAMP, key_frames));
     }
 
-    static action* c3d_go_make_atlas_action(game_object* go, float duration,
+    static action::ptr c3d_go_make_atlas_action(game_object* go, float duration,
                                             std::vector<atlas_keyframe_t> const& keyframes,
                                             float loop) {
         if (keyframes.empty())
@@ -111,17 +111,17 @@ namespace script {
         if (loop > 0.f) {
             act->set_loop(loop);
         }
-        return act;
+        return action::ptr(act);
     }
     
-    static action* c3d_action_add_sequence(action* act, std::vector<action::ptr>&& seq) {
+    static action::ptr c3d_action_add_sequence(action* act, std::vector<action::ptr>&& seq) {
         act->push(action::sequence(seq));
-        return act;
+        return action::ptr(act);
     }
     
-    static action* c3d_action_add_group(action* act, std::vector<action::ptr>&& grp) {
+    static action::ptr c3d_action_add_group(action* act, std::vector<action::ptr>&& grp) {
         act->push(action::group(grp));
-        return act;
+        return action::ptr(act);
     }
 
     static int c3d_lua_make_script_action(lua_State* L) {
@@ -129,21 +129,21 @@ namespace script {
         
         state* st = nullptr;
         lua_getallocf(L, (void**)&st);
-        converter<action*>::to(L, new action_script(st->load()));
+        converter<action::ptr>::to(L, action::ptr(new action_script(st->load())));
         return 1;
     }
     
     static int c3d_lua_make_timer_action(lua_State* L) {
         state* st = nullptr;
         lua_getallocf(L, (void**)&st);
-        converter<action*>::to(L, action_timer::wait(lua_tonumber(L, 1)));
+        converter<action::ptr>::to(L, action_timer::wait(lua_tonumber(L, 1)));
         return 1;
     }
 
     static int c3d_lua_make_frame_action(lua_State* L) {
         state* st = nullptr;
         lua_getallocf(L, (void**)&st);
-        converter<action*>::to(L, action_frame::yield(lua_tonumber(L, 1)));
+        converter<action::ptr>::to(L, action_frame::yield(lua_tonumber(L, 1)));
         return 1;
     }
 

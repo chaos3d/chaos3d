@@ -16,9 +16,9 @@
 /// on_start, on_end, on_stop: state hooks
 /// done: whether the action is done and removed
 /// cancellable: whether the action can get cancelled
-class action {
+class action : public std::enable_shared_from_this<action>{
 public:
-    typedef std::unique_ptr<action> ptr;
+    typedef std::shared_ptr<action> ptr;
     
 public:
     action();
@@ -54,11 +54,10 @@ public:
     static ptr sequence(C && list, bool reversed = false) {
         if (list.size() == 0)
             return nullptr;
-        
-        ptr act(list.begin()->release());
-        for (auto it = list.begin() + 1;
-             it != list.end();
-             ++it) {
+
+        auto it = list.begin();
+        ptr act(std::move(*it++));
+        for (; it != list.end(); ++it) {
             act->append(std::move(*it));
         }
         

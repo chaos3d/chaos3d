@@ -16,8 +16,8 @@ public:
     : _duration(duration), _timer(t)
     {}
 
-    static action* wait(time_t duration) {
-        return new action_timer(duration);
+    static action::ptr wait(time_t duration) {
+        return action::ptr(new action_timer(duration));
     }
 
 protected:
@@ -47,8 +47,8 @@ public:
 
     // yield a certain amount of frames
     // alias to wait, just for readability
-    static action* yield(frame_t frame = 0) {
-        return new action_frame(frame);
+    static action::ptr yield(frame_t frame = 0) {
+        return action::ptr(new action_frame(frame));
     }
     
 protected:
@@ -83,7 +83,7 @@ public:
     action_timed* add(time_t t, ptr&& a) {
         _actions.emplace_front(std::piecewise_construct,
                                std::forward_as_tuple(t),
-                               std::forward_as_tuple(a.release()));
+                               std::forward_as_tuple(std::move(a)));
         return this;
     };
     

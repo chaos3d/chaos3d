@@ -47,10 +47,9 @@ namespace act {
     };
 
     template<class I = interpolator_linear<vector2f>>
-    action_keyframe<vector2f>*
-    make_skew_action(game_object* go, timer::time_t duration,
-                     vec2f_anim_kf_t::const_ptr const& keyframe,
-                     timer const& t = global_timer_base::instance()) {
+    action::ptr make_skew_action(game_object* go, timer::time_t duration,
+                                 vec2f_anim_kf_t::const_ptr const& keyframe,
+                                 timer const& t = global_timer_base::instance()) {
         auto* trans = go->get_component<com::transform>();
         if (trans == nullptr)
             return nullptr;
@@ -60,10 +59,9 @@ namespace act {
     }
     
     template<class I = interpolator_linear<vector3f>>
-    action_keyframe<vector3f>*
-    make_translate_action(game_object* go, timer::time_t duration,
-                          vec3f_anim_kf_t::const_ptr const& keyframe,
-                          timer const& t = global_timer_base::instance()) {
+    action::ptr make_translate_action(game_object* go, timer::time_t duration,
+                                      vec3f_anim_kf_t::const_ptr const& keyframe,
+                                      timer const& t = global_timer_base::instance()) {
         auto* trans = go->get_component<com::transform>();
         if (trans == nullptr)
             return nullptr;
@@ -73,10 +71,9 @@ namespace act {
     }
 
     template<class I = interpolator_linear<vector3f>>
-    action_keyframe<vector3f>*
-    make_scale_action(game_object* go, timer::time_t duration,
-                      vec3f_anim_kf_t::const_ptr const& keyframe,
-                      timer const& t = global_timer_base::instance()) {
+    action::ptr make_scale_action(game_object* go, timer::time_t duration,
+                                  vec3f_anim_kf_t::const_ptr const& keyframe,
+                                  timer const& t = global_timer_base::instance()) {
         auto* trans = go->get_component<com::transform>();
         if (trans == nullptr)
             return nullptr;
@@ -86,10 +83,9 @@ namespace act {
     }
 
     template<class I = interpolator_slerp<quaternionf>>
-    action_keyframe<quaternionf>*
-    make_rotate_action(game_object* go, timer::time_t duration,
-                       quaternionf_anim_kf_t::const_ptr const& keyframe,
-                       timer const& t = global_timer_base::instance()) {
+    action::ptr make_rotate_action(game_object* go, timer::time_t duration,
+                                   quaternionf_anim_kf_t::const_ptr const& keyframe,
+                                   timer const& t = global_timer_base::instance()) {
         auto* trans = go->get_component<com::transform>();
         if (trans == nullptr)
             return nullptr;

@@ -7,7 +7,7 @@ bool action_script::done() const {
 }
 
 void action_script::yield_to(ptr&& act) {
-    _yielded.reset(act.release());
+    _yielded = std::move(act);
     if (_yielded) {
         _yielded->start();
     }

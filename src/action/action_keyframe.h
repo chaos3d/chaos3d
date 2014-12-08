@@ -310,10 +310,10 @@ template<class Key>
 using action_kf_keyframe_ptr = typename action_keyframe<Key>::keyframe_ptr;
 
 template<class Key, class Applier>
-action_keyframe<Key>* make_action_keyframe(Applier const& applier, time_t duration,
-                                           action_kf_keyframe_ptr<Key> const& keyframe,
-                                           timer const& t = global_timer_base::instance()) {
-    return new action_keyframe<Key>(duration, keyframe, t, applier);
+action::ptr make_action_keyframe(Applier const& applier, time_t duration,
+                                 action_kf_keyframe_ptr<Key> const& keyframe,
+                                 timer const& t = global_timer_base::instance()) {
+    return action::ptr(new action_keyframe<Key>(duration, keyframe, t, applier));
 }
 
 #endif

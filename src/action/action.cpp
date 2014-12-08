@@ -101,7 +101,7 @@ void action::on_stop(bool skip) {
         child->on_stop(skip); // stop itself and all its children
         
         // stop the sequence
-        for (ptr link(child->_next.release()); link;
+        for (ptr link(std::move(child->_next)); link;
              link = std::move(link->_next)){
             link->on_stop(skip);
         }
