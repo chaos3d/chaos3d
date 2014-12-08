@@ -81,7 +81,7 @@ namespace script {
     
     // TODO: support bound and collider change
     // TODO: add material
-    static action* c3d_go_make_sprite_action(game_object* go, float duration,
+    static action::ptr c3d_go_make_sprite_action(game_object* go, float duration,
                                              std::vector<std::array<float, 4>> const&keyframe) {
         typedef act::sprite_anim_kf_t::key_frame_t key_frame_t;
         std::vector<key_frame_t> key_frames;
@@ -106,10 +106,10 @@ namespace script {
         if (keyframes.empty())
             return nullptr;
         
-        auto* act = act::make_atlas_action(go, duration,
-                                           act::atlas_anim_kf_t::create(WRAP_CLAMP, keyframes));
+        auto act = act::make_atlas_action(go, duration,
+                                          act::atlas_anim_kf_t::create(WRAP_CLAMP, keyframes));
         if (loop > 0.f) {
-            act->set_loop(loop);
+            ((action_keyframe<atlas_keyframe_t>*)act.get())->set_loop(loop);
         }
         return action::ptr(act);
     }
