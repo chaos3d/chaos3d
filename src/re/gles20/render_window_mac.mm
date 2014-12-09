@@ -19,6 +19,7 @@ INHERIT_LOGGER(render_window_mac, ::render_device);
     assert(_host != nullptr);
     
     CGPoint pos = [theEvent locationInWindow];
+    pos.y = self.bounds.size.height - pos.y;
     pos = [self convertPointToBacking: pos];
     _host->dispatch(touch_began_event(
                                       {pos.x, pos.y}, 0.f /*FIXME, time*/,
@@ -30,6 +31,7 @@ INHERIT_LOGGER(render_window_mac, ::render_device);
     assert(_host != nullptr);
     
     CGPoint pos = [theEvent locationInWindow];
+    pos.y = self.bounds.size.height - pos.y;
     pos = [self convertPointToBacking: pos];
     _host->dispatch(touch_ended_event(
                                       {pos.x, pos.y}, 0.f /*FIXME, time*/,
@@ -41,6 +43,7 @@ INHERIT_LOGGER(render_window_mac, ::render_device);
     assert(_host != nullptr);
     
     CGPoint pos = [theEvent locationInWindow];
+    pos.y = self.bounds.size.height - pos.y;
     pos = [self convertPointToBacking: pos];
     _host->dispatch(touch_moved_event(
                                       {pos.x, pos.y}, 0.f /*FIXME, time*/,
@@ -99,7 +102,8 @@ void render_window_mac::create_native(id parent, float backing_ratio) {
         _backing_ratio = backing_ratio;
         set_size(size * backing_ratio);
     } else if (backing_ratio > 1.f) {
-        LOG_INFO("the screen doesn't support ratio: " << backing_ratio << ", ignored");
+        LOG_INFO("the screen doesn't support ratio: " << backing_ratio << ", adjusted to " << supported);
+        backing_ratio = supported;
     } else {
         LOG_INFO("the screen uses the scale of " << _backing_ratio);
     }
