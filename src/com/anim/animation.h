@@ -63,7 +63,11 @@ namespace com {
                   data_stream* = nullptr, std::vector<texture_atlas*> const& = {},
                   int32_t idx = 0);
 
+        /// play the named animation
         void play(std::string const& name);
+
+        //TODO: stop/pause, using the timer
+        //void stop();
 
         /// create the action from the given clip name
         /// this is version 1 that each animation is separate and

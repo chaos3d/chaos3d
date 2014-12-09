@@ -208,8 +208,12 @@ protected:
         }
         
         auto last = _frame_infos.back().offset;
-        if (last < FLT_EPSILON)
+        if (last < FLT_EPSILON && _frame_infos.size() == 1) {
+            _frame_infos.push_back(_frame_infos.back());
+            _frame_infos.back().offset = 1;
+            _keyframes.push_back(_keyframes.back());
             return;
+        }
         
         for (auto& it : _frame_infos) {
             it.offset /= last;

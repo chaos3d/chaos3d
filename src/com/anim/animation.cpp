@@ -42,7 +42,9 @@ animation& animation::operator=(animation const& rhs) {
 
 void animation::play(const std::string &name) {
     _action = std::move(make_action(name));
-    _action->start();
+    if (_action) {
+        _action->start();
+    }
 }
 
 void animation::clear() {
