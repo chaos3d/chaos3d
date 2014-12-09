@@ -107,12 +107,15 @@ void render_view::create_native(UIView* parent, float backing_ratio) {
 
     // TODO: move this up to a function
     float supported = [UIScreen mainScreen].scale;
+    LOG_INFO("the screen support ratio: " << supported);
+    LOG_INFO("create the native view: " << size(0) << ',' << size(1));
     if (backing_ratio <= supported) {
         LOG_INFO("the screen supports the requested scaling factor:" << backing_ratio);
         _backing_ratio = backing_ratio;
         set_size(size * backing_ratio);
     } else {
-        LOG_INFO("the screen doesn't support ratio: " << backing_ratio << ", ignored");
+        LOG_INFO("the screen doesn't support ratio: " << backing_ratio << ", adjusted to " << supported);
+        backing_ratio = supported;
     }
     _native_view.contentScaleFactor = backing_ratio;
     _native_view.scaling = backing_ratio;
