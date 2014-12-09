@@ -31,13 +31,6 @@
 			remoteGlobalIDString = 88A84ACB1830652F009F7ECD;
 			remoteInfo = chaos3d_core_ios;
 		};
-		F92C9CC91A2481C00082DFF7 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F961808719E0ACAB00945A43 /* chaos3d.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = F9589EB419D00C8E004BDB1D;
-			remoteInfo = chaos3d;
-		};
 		F961808D19E0ACAB00945A43 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F961808719E0ACAB00945A43 /* chaos3d.xcodeproj */;
@@ -477,7 +470,6 @@
 			);
 			dependencies = (
 				F92C9CC81A2481C00082DFF7 /* PBXTargetDependency */,
-				F92C9CCA1A2481C00082DFF7 /* PBXTargetDependency */,
 			);
 			name = "ios-launcher";
 			productName = launcher;
@@ -638,11 +630,6 @@
 			isa = PBXTargetDependency;
 			name = chaos3d_core_ios;
 			targetProxy = F92C9CC71A2481C00082DFF7 /* PBXContainerItemProxy */;
-		};
-		F92C9CCA1A2481C00082DFF7 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = chaos3d;
-			targetProxy = F92C9CC91A2481C00082DFF7 /* PBXContainerItemProxy */;
 		};
 		F961809F19E0B34800945A43 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
