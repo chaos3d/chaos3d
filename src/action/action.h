@@ -16,9 +16,9 @@
 /// on_start, on_end, on_stop: state hooks
 /// done: whether the action is done and removed
 /// cancellable: whether the action can get cancelled
-class action : public std::enable_shared_from_this<action>{
+class action {
 public:
-    typedef std::shared_ptr<action> ptr;
+    typedef std::unique_ptr<action> ptr;
     
 public:
     action();

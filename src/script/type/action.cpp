@@ -111,7 +111,7 @@ namespace script {
         if (loop > 0.f) {
             ((action_keyframe<atlas_keyframe_t>*)act.get())->set_loop(loop);
         }
-        return action::ptr(act);
+        return act;
     }
     
     static action::ptr c3d_action_add_sequence(action* act, std::vector<action::ptr>&& seq) {
@@ -169,6 +169,7 @@ namespace script {
         ;
         
         script::class_<com::animation>::type()
+        .def("play", LUA_BIND(&com::animation::play))
         .def("make_action", LUA_BIND(&com::animation::make_action))
         .def("set_index", LUA_BIND_S(com::animation& (com::animation::*)(int32_t const&),
                                      &com::animation::set_start_index))

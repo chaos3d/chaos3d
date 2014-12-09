@@ -129,6 +129,9 @@ void action::update() {
 }
 
 action::~action() {
+    if (_started) {
+        on_end();
+    }
 }
 
 root_action::root_action() {

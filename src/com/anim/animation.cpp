@@ -20,6 +20,13 @@ animation::animation(game_object* go, data_stream* ds,
     if (ds != nullptr) {
         load_from(ds, atlas);
     }
+    
+    animation_mgr::instance().add_animation(this);
+}
+
+animation& animation::operator=(animation const& rhs) {
+    // TODO
+    return *this;
 }
 
 ::action::ptr animation::make_action(const std::string &clip_name) const {
@@ -31,6 +38,11 @@ animation::animation(game_object* go, data_stream* ds,
     
     auto* anim = new act::action_animation(it->second, this);
     return ::action::ptr(anim);
+}
+
+void animation::play(const std::string &name) {
+    _action = std::move(make_action(name));
+    _action->start();
 }
 
 void animation::clear() {
@@ -251,5 +263,27 @@ void animation::add_atlas(texture_atlas* atlas) {
                 piece.second.atlas = atlas;
             }
         }
+    }
+}
+
+void animation::destroy() {
+    assert(_mark_for_remove == false);
+    _mark_for_remove = true;
+}
+
+#pragma mark - animation mgr
+
+void animation_mgr::add_animation(animation* anim) {
+    _animations.emplace_front(anim);
+}
+
+void animation_mgr::pre_update(const goes_t &) {
+    _animations.remove_if([] (animation_ptr const& anim) {
+        return anim->_mark_for_remove;
+    });
+    
+    // FIXME: don't update deactivated game objects
+    for (auto& it : _animations) {
+        it->_action->update();
     }
 }

@@ -18,6 +18,7 @@
 #include "com/scene3d/collider3d.h"
 #include "com/render/camera_mgr.h"
 #include "com/action/action.h"
+#include "com/anim/animation.h"
 
 #include "asset/asset_manager.h"
 #include "asset/asset_locator.h"
@@ -38,6 +39,7 @@ static bool initialize_mgr(render_device* dev, render_context* ctx) {
                                    make_manager<scene2d::world2d_mgr>(0.02f, Eigen::Vector2f{0.f,0.f}),
                                    make_manager<sprite2d::sprite_mgr>(dev),
                                    make_manager<com::camera_mgr>(dev, ctx),
+                                   make_manager<com::animation_mgr>(),
                                    make_manager<com::action_mgr>()
                                    );
 

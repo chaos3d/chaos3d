@@ -11,6 +11,7 @@
 
 namespace com {
     class transform;
+    class animation_mgr;
     
     /// the animation component that functions as a controller
     /// the animation is updated by the action system, the controller
@@ -20,6 +21,8 @@ namespace com {
     /// the transform and sprite
     class animation : public component {
     public:
+        typedef animation_mgr manager_t;
+        
         // TODO: additive channels
         // TODO: other channels: i.e. events/uniform/skin/texture/particles
         typedef std::unordered_map<std::string, skeleton_animation_clip::ptr> clips_t;
@@ -59,7 +62,9 @@ namespace com {
         animation(game_object*,
                   data_stream* = nullptr, std::vector<texture_atlas*> const& = {},
                   int32_t idx = 0);
-        
+
+        void play(std::string const& name);
+
         /// create the action from the given clip name
         /// this is version 1 that each animation is separate and
         /// handled outside the controller
@@ -89,6 +94,9 @@ namespace com {
         /// remove all data, destroy all children/game objects
         void clear();
         
+        virtual void destroy() override;
+        animation& operator=(animation const& rhs);
+        
         transforms_t _transforms;   // all children for the skeleton
         joint_poses_t _setup_poses; // setup poses
         names_t _names;             // joint names => joint index lookup
@@ -96,8 +104,37 @@ namespace com {
         skins_t _skins;             // skins sets
         clips_t _clips;             // animation clips
         
-        ATTRIBUTE(int32_t, start_index, 0); /// the starting index for the child sprites
+        // flag for the manager to defer removing until the update
+        bool _mark_for_remove = false;
+
+        // action root
+        action::ptr _action;
+        
+        /// the starting index for the child sprites
+        ATTRIBUTE(int32_t, start_index, 0);
         SIMPLE_CLONE(animation);
+
+        friend class animation_mgr;
+    };
+
+    /// manage animations and update them
+    class animation_mgr : public component_manager_base<animation_mgr> {
+    public:
+        typedef std::false_type component_fixed_t;
+        typedef std::unique_ptr<animation> animation_ptr;
+        typedef std::forward_list<animation_ptr> animations_t;
+        
+    protected:
+        // add the animation to be managed
+        void add_animation(animation*);
+        
+        virtual void pre_update(goes_t const&) override;
+        virtual void update(goes_t const&) override {};
+
+    private:
+        animations_t _animations;
+
+        friend class animation;
     };
 }
 #endif
