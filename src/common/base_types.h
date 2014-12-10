@@ -10,6 +10,7 @@ typedef Eigen::Vector2f vector2f;
 typedef Eigen::Vector3f vector3f;
 typedef Eigen::Vector4f vector4f;
 typedef Eigen::Affine3f affine3f;
+typedef Eigen::Matrix2f matrix2f;
 typedef Eigen::Matrix3f matrix3f;
 typedef Eigen::Matrix4f matrix4f;
 typedef Eigen::Translation3f translation3f;

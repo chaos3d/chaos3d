@@ -129,13 +129,15 @@ void gl_gpu_program::load_attributes() {
     GLint size;
     GLsizei name_len;
     
+    LOG_TRACE("start loading attributes/channels...");
     for(int idx = 0; idx < num; ++idx) {
         glGetActiveAttrib(_program_id, idx, max_len, &name_len, &size, &type, name);
         
         // ignore built-in variables
         if(memcmp(name, "gl_", 3) == 0)
             continue;
-        
+
+        LOG_TRACE("found attribute: " << name);
         add_attribute(name, type, size);
     }
     
@@ -158,14 +160,16 @@ void gl_gpu_program::load_uniforms() {
     GLenum type;
     GLint size;
     GLsizei name_len;
-    
+
+    LOG_TRACE("start loading uniforms...");
     for(int idx = 0; idx < num; ++idx) {
         glGetActiveUniform(_program_id, idx, max_len, &name_len, &size, &type, name);
         
         // ignore built-in variables
         if(memcmp(name, "gl_", 3) == 0)
             continue;
-        
+
+        LOG_TRACE("found uniform: " << name);
         add_uniform(name, type, size);
     }
 
@@ -198,7 +202,7 @@ gpu_program& gl_gpu_program::link(std::vector<std::string> layout, std::vector<g
     glGetProgramiv(_program_id, GL_LINK_STATUS, &status);
     
     if(status != GL_TRUE) {
-    
+        LOG_ERROR("fail to link gpu programs");
     }
     
     GLint log_len = 0;
@@ -207,7 +211,7 @@ gpu_program& gl_gpu_program::link(std::vector<std::string> layout, std::vector<g
     if(log_len > 0) {
         char* log = new char [log_len];
         glGetProgramInfoLog(_program_id, log_len, &log_len, log);
-        printf("%s\n", log);
+        LOG_WARN("gpu linker log:" << log);
         delete [] log;
     }
 #endif
@@ -218,6 +222,7 @@ gpu_program& gl_gpu_program::link(std::vector<std::string> layout, std::vector<g
 }
 
 void gl_gpu_program::update_uniform(uniform const& g_uniform, render_uniform::uniform const& uniform) const {
+    // TODO: profile, lookup table for assigner functions
     if(typeid(uniform) == typeid(render_uniform::uniform_vector4)) {
         glUniform4fv(g_uniform.location, 1, static_cast<render_uniform::uniform_vector4 const&>(uniform).value.data());
     } else if(typeid(uniform) == typeid(render_uniform::uniform_mat4)) {
@@ -238,11 +243,13 @@ void gl_gpu_program::update_uniform(uniform const& g_uniform, render_uniform::un
     }
 }
 
-void gl_gpu_program::assign_uniforms(render_context* context, render_uniform::uniforms_t const& rd_uniforms) const {
+void gl_gpu_program::assign_uniforms(render_context* context,
+                                     render_uniform::uniforms_t const& rd_uniforms) const {
     auto rd_begin = rd_uniforms.begin(), rd_end = rd_uniforms.end();
     auto gpu_begin = uniforms().begin(), gpu_end = uniforms().end();
     int unit = 0;
-    
+
+    // TODO: profile, only update the changed values
     while (rd_begin != rd_end && gpu_begin != gpu_end) {
         int ret = rd_begin->get()->name().compare(gpu_begin->name);
         if (ret < 0) {

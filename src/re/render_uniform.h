@@ -6,19 +6,17 @@
 #include <memory>
 #include <Eigen/Dense>
 #include "re/texture.h"
+#include "common/base_types.h"
 
 class gpu_program;
 
-// a.k.a render_parameter/render_environment
-//  uniform values that gpu uses
+/// the parameters that gpu programs will use when it gets fired, the name follows
+/// GL convernsions.
+/// the parameters are sorted by name for fast fetching.
+// TODO: use union with typeid to collapse all the uniforms
+// consider immutable pattern, and use unique_ptr
 class render_uniform : public std::enable_shared_from_this<render_uniform> {
 public:
-    typedef Eigen::Matrix2f matrix2f;
-    typedef Eigen::Matrix3f matrix3f;
-    typedef Eigen::Matrix4f matrix4f;
-    typedef Eigen::Vector2f vector2f;
-    typedef Eigen::Vector3f vector3f;
-    typedef Eigen::Vector4f vector4f;
     typedef std::shared_ptr<render_uniform> ptr;
     typedef std::shared_ptr<render_uniform const> const_ptr;
     
