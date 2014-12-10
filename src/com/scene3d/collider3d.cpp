@@ -80,16 +80,19 @@ void collider3d::update_from_transform(com::transform const& tran) {
     affine3f::LinearMatrixType rotMatrix, scaleMatrix;
     affine.computeRotationScaling(&rotMatrix, &scaleMatrix);
     auto translation = affine.translation();
-    
-    _internal->collision_object->setWorldTransform(btTransform(btMatrix3x3(rotMatrix.row(0).x(),
-                                                                           rotMatrix.row(0).y(),
-                                                                           rotMatrix.row(0).z(),
-                                                                           rotMatrix.row(1).x(),
-                                                                           rotMatrix.row(1).y(),
-                                                                           rotMatrix.row(1).z(),
-                                                                           rotMatrix.row(2).x(),
-                                                                           rotMatrix.row(2).y(),
-                                                                           rotMatrix.row(2).z()),
+
+    _internal->collision_object->getCollisionShape()->setLocalScaling(btVector3(scaleMatrix(0,0),
+                                                                                scaleMatrix(1,1),
+                                                                                scaleMatrix(2,2)));
+    _internal->collision_object->setWorldTransform(btTransform(btMatrix3x3(rotMatrix(0,0),
+                                                                           rotMatrix(0,1),
+                                                                           rotMatrix(0,2),
+                                                                           rotMatrix(1,0),
+                                                                           rotMatrix(1,1),
+                                                                           rotMatrix(1,2),
+                                                                           rotMatrix(2,0),
+                                                                           rotMatrix(2,1),
+                                                                           rotMatrix(2,2)),
                                                                btVector3(translation.x(),
                                                                          translation.y(),
                                                                          translation.z()))
