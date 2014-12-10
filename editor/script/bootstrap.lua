@@ -19,8 +19,8 @@ local spineboy = c3d.load_atlas(locator:from "spineboy_atlas.json", asset)
 
 local c = c3d.go.new(c3d.go.root)
 c:set_tag"camera"
-c:add_camera2d(rwin)
- :set_viewport_from_target()
+local cam = c:add_camera2d(rwin)
+cam:set_viewport_from_target()
  :set_perspective(math.rad(60), rwin:aspect_ratio(), .1, 1000.0)
  :move_for_perfect_pixel(960)
 
@@ -54,14 +54,19 @@ local go1 = c3d.go.new(c3d.go.root)
 go1:add_transform():set_translate(0,180)
 --local logo = c3d.go.new(go1)
 local logo = c3d.go.new(c3d.go.root)
+logo:set_tag "logo"
 logo:add_transform():set_translate(0,0):set_skew(0,0):set_rotate(0,0,0)--:mark(true)
 --logo:add_quad_sprite(atlas1, "action01.png", "basic")
 logo:add_quad_sprite(spineboy, "torso", "basic")
+logo:add_collider3d():from_sprite();
 
+---[[
 local sb = c3d.go.new(c3d.go.root)
 sb:add_transform():set_translate(0,-200);
 local sbanim = sb:add_animation(locator:from "spineboy.json", {spineboy}, 20)
+--]]
 
+sbanim:play "run"
 action:add_sequence({
 --launcher:get_action():add_group({
     --[[
@@ -104,14 +109,17 @@ action:add_sequence({
         {1, atlas1, "action01.png"},
     }, 0.4),
     --]]
-    --c3d.action.wait_time(1),
+    c3d.action.wait_time(5),
+    c3d.action.from(function()
+        sbanim:play "jump"
+    end),
     --[[
     logo:make_translate_action(5, {
         {0, 0, 0, 0},
         {1, 100, 180, 0},
     }),
     --]]
-    c3d.action.wait_frame(10),
+    --c3d.action.wait_frame(10),
     --[[
     logo:make_translate_action(5, {
         {0, 0, 0, 0},
@@ -119,7 +127,7 @@ action:add_sequence({
         {1, 0, -400, 0},
     }),
     --]]
-    sbanim:make_action("run"),
+    --sbanim:make_action("run"),
 });
 --local c1 = turtle:add_collider2d():from_quad_sprite(true, collider.shape())
 --turtle:set_tag('turtle')
@@ -128,6 +136,13 @@ local h = rwin:register(function(evt, t)
     --print(evt:which(), "heelo", evt:where());
     if t == c3d.evt.touch_moved then print("moved")
     elseif t == c3d.evt.touch_began then print "began" end;
+    print(evt:where())
+    c3d.get_world3d():query(cam, {evt:where()}, function(obj)
+        print(obj)
+        local x, y, z = logo:get_transform():translate()
+        logo:get_transform():set_translate(x + 10, y +10):mark(true);
+        return false
+    end);
 end, c3d.evt.touch_began, c3d.evt.touch_moved, c3d.evt.touch_ended);
 
 --collectgarbage();
