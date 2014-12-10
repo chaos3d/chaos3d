@@ -286,6 +286,7 @@ void animation_mgr::pre_update(const goes_t &) {
     
     // FIXME: don't update deactivated game objects
     for (auto& it : _animations) {
-        it->_action->update();
+        if (it->_action)
+            it->_action->update();
     }
 }
