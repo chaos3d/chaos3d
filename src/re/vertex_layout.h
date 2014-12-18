@@ -82,8 +82,11 @@ public:
     private:
         std::vector<char*> _buffer; // buffer address
         vertex_layout::ptr _layout;
-        
+
+        /// the start offset of each "instance"
+        /// note this is different from offset for each channel
         ATTRIBUTE(size_t, offset, size_t());
+        
         friend class vertex_layout;
     };
     

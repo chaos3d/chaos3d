@@ -2,6 +2,7 @@
 #define _TOUCH_EVENT_H
 
 #include <Eigen/Dense>
+#include "common/utility.h"
 #include "event/event_dispatcher.h"
 
 class touch_event : public event {
