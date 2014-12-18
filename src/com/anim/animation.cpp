@@ -244,7 +244,7 @@ bool animation::apply_skin(std::string const& name) {
         if (piece != skin->second.end() && piece->second.atlas) {
             auto* tf = go->get_component<com::transform>();
             auto& sp = go->add_component<sprite2d::quad_sprite>(*piece->second.atlas,
-                                                                piece->first);
+                                                                piece->first); // TODO: use default material
             sp.set_index(slot.second.sprite_index);
             
             // FIXME: default bound if omitted
