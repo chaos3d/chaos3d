@@ -146,6 +146,8 @@
 		F91C1CE31A2C1FA4001A18C3 /* collider3d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F91C1CE11A2C1FA4001A18C3 /* collider3d.cpp */; };
 		F91C1CE41A2C1FA4001A18C3 /* collider3d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F91C1CE11A2C1FA4001A18C3 /* collider3d.cpp */; };
 		F92C9CC61A247DD30082DFF7 /* cIOSLauncher.mm in Sources */ = {isa = PBXBuildFile; fileRef = F92C9CC51A247DD30082DFF7 /* cIOSLauncher.mm */; };
+		F95759141A3CF6F800BF39B7 /* material.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F95759121A3CF6F800BF39B7 /* material.cpp */; };
+		F95759151A3CF6F800BF39B7 /* material.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F95759121A3CF6F800BF39B7 /* material.cpp */; };
 		F9589EBE19D00D74004BDB1D /* libchaos3d_core_mac.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 886CC17518F662BB006A3AF5 /* libchaos3d_core_mac.dylib */; settings = {ATTRIBUTES = (Weak, ); }; };
 		F9589EBF19D00DBB004BDB1D /* render_wxwindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F9589EAB19D00C35004BDB1D /* render_wxwindow.cpp */; };
 		F9589EC219D01628004BDB1D /* luachaos3d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F9589EC019D01628004BDB1D /* luachaos3d.cpp */; };
@@ -1216,6 +1218,8 @@
 		F91C1CE21A2C1FA4001A18C3 /* collider3d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = collider3d.h; sourceTree = "<group>"; };
 		F92C9CC41A247DD30082DFF7 /* cIOSLauncher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cIOSLauncher.h; sourceTree = "<group>"; };
 		F92C9CC51A247DD30082DFF7 /* cIOSLauncher.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = cIOSLauncher.mm; sourceTree = "<group>"; };
+		F95759121A3CF6F800BF39B7 /* material.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = material.cpp; sourceTree = "<group>"; };
+		F95759131A3CF6F800BF39B7 /* material.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = material.h; sourceTree = "<group>"; };
 		F9589EAB19D00C35004BDB1D /* render_wxwindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = render_wxwindow.cpp; sourceTree = "<group>"; };
 		F9589EAC19D00C35004BDB1D /* render_wxwindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = render_wxwindow.h; sourceTree = "<group>"; };
 		F9589EAD19D00C35004BDB1D /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -2311,6 +2315,8 @@
 			children = (
 				883246AB183237220022EA4A /* gles20 */,
 				883246B1183237220022EA4A /* gpu_program.h */,
+				F95759121A3CF6F800BF39B7 /* material.cpp */,
+				F95759131A3CF6F800BF39B7 /* material.h */,
 				F962474019F25AF900FBBB0A /* native_window.h */,
 				883246B4183237220022EA4A /* render_batch.h */,
 				882762171873806A00B1291B /* render_context.cpp */,
@@ -4562,6 +4568,7 @@
 				886CC15B18F662BB006A3AF5 /* asset_manager.cpp in Sources */,
 				886CC15C18F662BB006A3AF5 /* quad_sprite.cpp in Sources */,
 				886CC15D18F662BB006A3AF5 /* vertex_buffer.cpp in Sources */,
+				F95759151A3CF6F800BF39B7 /* material.cpp in Sources */,
 				886CC15E18F662BB006A3AF5 /* shape_desc.cpp in Sources */,
 				886CC15F18F662BB006A3AF5 /* ui_control.cpp in Sources */,
 				F91C1CE41A2C1FA4001A18C3 /* collider3d.cpp in Sources */,
@@ -4653,6 +4660,7 @@
 				8870F3EB1919C5630038B012 /* cAppDelegate.mm in Sources */,
 				F92C9CC61A247DD30082DFF7 /* cIOSLauncher.mm in Sources */,
 				880F615118D6EE55003BCE3D /* asset.cpp in Sources */,
+				F95759141A3CF6F800BF39B7 /* material.cpp in Sources */,
 				880F615B18D96468003BCE3D /* event.cpp in Sources */,
 				F96744681A0ED0DA00C0B1E3 /* action_sprite.cpp in Sources */,
 				F96744641A0E067800C0B1E3 /* action.cpp in Sources */,
