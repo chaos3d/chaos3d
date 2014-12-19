@@ -82,7 +82,7 @@ uint32_t asset_manager::remove_from_bundle(asset_bundle *bundle) {
 void asset_manager::load_asset(asset_handle* handle) {
     assert(handle != nullptr);
 
-    handle->load();
+    handle->load(*this);
 }
 
 void asset_manager::purge() {

@@ -16,7 +16,7 @@ asset_bundle::handle_ptr png_asset_bundle::get(std::string const& name,
         return nullptr;
 
     std::shared_ptr<png_asset_bundle const> thiz(shared_from_this(), this);
-    return handle_ptr(new texture_handle([=] (texture::ptr& tex) {
+    return handle_ptr(new texture_handle([=] (texture::ptr& tex, asset_manager&) {
         // TODO: auto detect the image type and load (A8/RGB565/RGBA8888)
         png_loader png(thiz->locator()->from(asset_name).get(), image_desc::RGBA8888);
         tex = thiz->_device->create_texture(png.image().size,{

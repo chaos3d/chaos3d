@@ -23,21 +23,28 @@ public:
     typename std::remove_cv<T>::type& as() {
         return static_cast<typename std::remove_cv<T>::type&>(*this);
     }
-    
+
     // TODO: thread-safe for async loading
     virtual bool is_loaded() const = 0;
     
-    // whether the loaded asset is the only reference,
-    // so it would be safe to unload
+    /// check if there is no other references to the actuall asset,
+    /// the asset manager uses this to determine if it is safe to purge
     virtual bool unique() const = 0;
-    
+
+    /// sub-class to define this function to return the asset pointer
+    /// it can be a raw pointer, shared_ptr or ref_ptr or anything the
+    /// asset dictates
+    /// asset_ptr get_asset() const
+
     virtual ~asset_handle() {};
 
 protected:
     asset_handle() = default;
     
-    // load/unload the heavy data from the disk
-    virtual void load() = 0;
+    /// load the resource from the source giving the assets mgr to load references
+    virtual void load(asset_manager&) = 0;
+
+    /// unload the resource but the meta data is kept to reload later
     virtual void unload() = 0;
 
     friend class asset_manager;
@@ -49,7 +56,7 @@ template<class T>
 class functor_asset_handle : public asset_handle {
 public:
     typedef typename T::ptr ptr_t;
-    typedef std::function<void (ptr_t&)> loader_t;
+    typedef std::function<void (ptr_t&, asset_manager&)> loader_t;
     
 public:
     functor_asset_handle(loader_t const& loader)
@@ -60,22 +67,34 @@ public:
         return _asset_ptr.get() != nullptr;
     }
     
-    typename std::enable_if<std::is_base_of<referenced_count, T>::value, ptr_t>::type
-    get_asset() const {
+    template<class U = T,
+    typename std::enable_if<std::is_base_of<referenced_count, U>::value>::type* = nullptr>
+    ptr_t get_asset() const {
         assert(_asset_ptr.get() != nullptr); // TODO: throw?
         return _asset_ptr->template retain<T>();
     }
     
-    virtual typename std::enable_if<std::is_base_of<referenced_count, T>::value, bool>::type
-    unique() const override {
-        return _asset_ptr->ref_count() == 1;
+    virtual bool unique() const override {
+        return unique_t();
     }
     
 protected:
-    virtual void load() override {
+    template<class U = T,
+    typename std::enable_if<std::is_base_of<referenced_count, U>::value>::type* = nullptr>
+    bool unique_t() const {
+        return _asset_ptr->ref_count() == 1;
+    }
+
+    template<class U = T,
+    typename std::enable_if<!std::is_base_of<referenced_count, U>::value>::type* = nullptr>
+    bool unique_t() const {
+        return true;// _asset_ptr.unique();
+    }
+
+    virtual void load(asset_manager& am) override {
         if (is_loaded())
             return;
-        _loader(_asset_ptr);
+        _loader(_asset_ptr, am);
     }
     
     virtual void unload() override {
