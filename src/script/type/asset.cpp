@@ -10,9 +10,13 @@
 
 namespace script {
     void def_asset() {
+        class_<asset_collection>::type()
+        .def("load_texture", LUA_BIND(&asset_collection::load<texture>))
+        .def("contains", LUA_BIND(&asset_collection::contains))
+        ;
+
         class_<asset_manager>::type()
-        .def("load_texture", LUA_BIND(&asset_manager::load<texture>))
-        .def("contains", LUA_BIND(&asset_manager::contains))
+        .derive<asset_collection>()
         ;
         
         class_<locator_mgr>::type()

@@ -7,8 +7,7 @@
 #include <vector>
 #include "common/utility.h"
 #include "asset/asset_manager.h"
-
-class asset_handle;
+#include "asset/asset_handle.h"
 
 // The assets container.
 // It 'contains' the asset mete info (asset handle) in physical
@@ -20,7 +19,7 @@ public:
     typedef std::shared_ptr<asset_bundle> ptr;
     typedef std::shared_ptr<asset_bundle> const_ptr;
 
-    typedef std::shared_ptr<asset_handle> handle_ptr;
+    typedef asset_handle::ptr handle_ptr;
     typedef std::vector<std::pair<std::string, handle_ptr>> handles_t;
     typedef std::vector<std::string> names_t;
     

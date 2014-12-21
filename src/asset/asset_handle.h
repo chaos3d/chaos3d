@@ -5,7 +5,7 @@
 #include <type_traits>
 
 class referenced_count;
-class asset_manager;
+class asset_collection;
 
 // The internal handle in the asset manager so the asset it manages
 // can be loaded/unloaded per se. The end user should not deal with
@@ -42,12 +42,16 @@ protected:
     asset_handle() = default;
     
     /// load the resource from the source giving the assets mgr to load references
-    virtual void load(asset_manager&) = 0;
+    virtual void load(asset_collection&) = 0;
 
     /// unload the resource but the meta data is kept to reload later
     virtual void unload() = 0;
 
-    friend class asset_manager;
+    // TODO: asynch load, signal, future etc.
+    // maintain internal state per handle, thread may be queued in managers
+
+    friend class asset_manager; // TODO: remove this
+    friend class asset_collection;
 };
 
 // Helper class for asset handle that manages the resource
@@ -56,7 +60,7 @@ template<class T>
 class functor_asset_handle : public asset_handle {
 public:
     typedef typename T::ptr ptr_t;
-    typedef std::function<void (ptr_t&, asset_manager&)> loader_t;
+    typedef std::function<void (ptr_t&, asset_collection&)> loader_t;
     
 public:
     functor_asset_handle(loader_t const& loader)
@@ -91,7 +95,7 @@ protected:
         return true;// _asset_ptr.unique();
     }
 
-    virtual void load(asset_manager& am) override {
+    virtual void load(asset_collection& am) override {
         if (is_loaded())
             return;
         _loader(_asset_ptr, am);
