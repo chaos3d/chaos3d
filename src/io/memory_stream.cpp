@@ -34,18 +34,11 @@ memory_stream::memory_stream(const char* address, size_t size)
 {
 }
 
-memory_stream::memory_stream(char* address, size_t size, bool copy)
+memory_stream::memory_stream(char* address, size_t size, bool owned)
 : _address(address), _end(address + size), _current(address),
-_owned(copy)
+_owned(owned)
 {
-    if (copy) {
-        _address = new char [size];
-        if (!_address) {
-            LOG_ERROR("Unable to allocate enough memory");
-            return;
-        }
-        LOG_DEBUG("Allocate for memory stream, " << size << " at 0x" << std::hex << this);
-        memcpy(_address, address, size);
+    if (owned) {
         LOG_DEBUG("Initiazlie data from another memory, " << std::hex << address);
     } else {
         LOG_DEBUG("Inialize memory stream with unmanaged memory at 0x" << std::hex << this

@@ -1,40 +1,42 @@
 #include "asset_support/png_loader.h"
 #include "io/memory_stream.h"
+#include "common/log.h"
 #include <png.h>
 
-png_loader::png_loader(data_stream* source, int format)
-: _buf_size(0), _buffer(nullptr), _desc{{0, 0}, format}{
-    if(source == nullptr || !source->valid())
-        throw std::exception(); // TODO: fix throw
-    
-    assert(format == image_desc::A8 ||
-           format == image_desc::RGB565 ||
-           format == image_desc::RGBA8888);
-    
-    load(*source);
+png_loader::png_loader() {
 }
 
 png_loader::~png_loader() {
-    if(_buffer)
-        delete [] _buffer;
-    
-    _buffer = nullptr;
 }
 
-class buffer_wrapper_stream : public memory_stream {
-public:
-    buffer_wrapper_stream(png_loader::const_ptr && loader)
-    : _loader(std::move(loader)),
-    memory_stream(loader->buffer(), loader->buf_size()){
-        
-    };
-    
-private:
-    png_loader::const_ptr _loader;
-};
+std::unique_ptr<memory_stream> png_loader::image_data::data() {
+    return std::unique_ptr<memory_stream>(new memory_stream(buffer.release(), buf_size, true));
+}
 
-std::unique_ptr<memory_stream> png_loader::data() const {
-    return std::unique_ptr<memory_stream>(new buffer_wrapper_stream(retain<png_loader>()));
+bool png_loader::can_load(data_stream *ds) const {
+    png_byte buffer[8];
+
+    auto cur = ds->tell();
+    bool can = ds->read(buffer, 8) == 8 && png_sig_cmp(buffer, 0, 8) == 0;
+
+    ds->seek(cur, data_stream::SeekSet);
+    return can;
+}
+
+png_loader::image_data png_loader::do_load(data_stream* source, int format) const {
+    if(source == nullptr || !source->valid()) {
+        LOG_ERROR("faile to load from invalid source");
+        return image_data();
+    }
+
+    assert(format == image_desc::A8 ||
+           format == image_desc::RGB565 ||
+           format == image_desc::RGBA8888);
+
+    image_data data;
+    load(*source, data);
+
+    return data;
 }
 
 static void PNGAPI user_read_data_fcn(png_structp png_ptr, png_bytep data, png_size_t length){
@@ -47,24 +49,16 @@ static void PNGAPI user_read_data_fcn(png_structp png_ptr, png_bytep data, png_s
         png_error(png_ptr, "Read Error");
 }
 
-void png_loader::load(data_stream& ds) {
+void png_loader::load(data_stream& ds, image_data& img_data) const {
     //TODO: fix error loading
     
-	png_byte buffer[8];
 	png_bytep *row_pointers = 0;
 	png_bytep data = 0;
-	
-	// Read the first few bytes of the PNG file
-	if (ds.read(buffer, 8) != 8) {
-		//LOG_STAT(ERROR,"Unable to read a PNG." );
-		return;
-	}
-    
-	// Check if it really is a PNG file
-	if (png_sig_cmp(buffer, 0, 8)) {
-		//LOG_STAT(ERROR,"PNG checked error");
-		return;
-	}
+
+    {
+        png_byte buffer[8];
+        assert((ds.read(buffer, 8) == 8) && png_sig_cmp(buffer, 0, 8) == 0);
+    }
     
 	png_structp png_ptr = png_create_read_struct(
                                                  PNG_LIBPNG_VER_STRING,
@@ -134,7 +128,7 @@ void png_loader::load(data_stream& ds) {
 	if (bitDepth == 16)
 		png_set_strip_16(png_ptr);
     
-    if (_desc.format == image_desc::A8 && channels != 1) {
+    if (img_data.desc.format == image_desc::A8 && channels != 1) {
         // convert to grey scale and use it as an alpha mask
         // and strip the alpha channel
         png_set_strip_alpha(png_ptr);
@@ -148,13 +142,14 @@ void png_loader::load(data_stream& ds) {
                  &bitDepth, &colorType, NULL, NULL, NULL);
 	channels = png_get_channels(png_ptr, info_ptr);
     
-    _desc.size = {width, height};
+    img_data.desc.size = {width, height};
     
 	// Create array of pointers to rows in image data
 	row_pointers = new png_bytep[height];
-    _buf_size = sizeof(png_byte) * width * height * channels;
-	_buffer = new char [_buf_size];
-    data = (png_bytep)_buffer;
+    img_data.buf_size = sizeof(png_byte) * width * height * channels;
+
+    char* buffer = new char [img_data.buf_size];
+    data = (png_bytep)buffer;
     
 	if (!row_pointers || !data) {
 		//LOG_STAT(ERROR,"Unable to allocate enough memory.");
@@ -170,9 +165,9 @@ void png_loader::load(data_stream& ds) {
 	// Read data using the library function that handles all transformations including interlacing
 	png_read_image(png_ptr, row_pointers);
     
-    if (_desc.format == image_desc::A8 && channels != 1) {
+    if (img_data.desc.format == image_desc::A8 && channels != 1) {
         assert(0); // shouldn't happen?
-    } else if (_desc.format == image_desc::RGB565) {
+    } else if (img_data.desc.format == image_desc::RGB565) {
 		unsigned char* tempData = new unsigned char[width * height * 2];
 		unsigned char* in = data;
 		unsigned short* out = (unsigned short*)tempData;
@@ -189,4 +184,6 @@ void png_loader::load(data_stream& ds) {
 	delete [] row_pointers;
 
 	png_destroy_read_struct(&png_ptr,&info_ptr, 0); // Clean up memory
+
+    img_data.buffer.reset(buffer);
 }

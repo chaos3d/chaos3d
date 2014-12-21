@@ -22,17 +22,17 @@ public:
     typedef std::unique_ptr<memory_stream> ptr;
     
 public:
-    // read the data into the memory
+    /// read the data into the memory
     memory_stream(data_stream*);
     
-    // create an empty memory stream/buffer
+    /// create an empty memory stream/buffer
     memory_stream(size_t size);
     
-    // create/copy from the memory
+    /// create/copy from the memory
     memory_stream(const char* address, size_t size);
     
-    // transfer the memory to be managed as a stream
-    memory_stream(char* address, size_t size, bool copy = false);
+    /// transfer the memory, choose to be managed or not
+    memory_stream(char* address, size_t size, bool owned = false);
     
     virtual ~memory_stream();
 
@@ -51,7 +51,7 @@ private:
     char* _address;
     char* _end;
     char* _current;
-    bool _owned;
+    bool _owned;    // whether the memory is owned by this, and hence delete
 };
 
 #endif

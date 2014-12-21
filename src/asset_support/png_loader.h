@@ -2,9 +2,9 @@
 #define _ASSET_PNG_LOADER_H
 
 #include "common/referenced_count.h"
+#include "asset/asset_loader.h"
 #include <memory>
 
-class data_stream;
 class memory_stream;
 
 // TODO: move this up
@@ -18,36 +18,39 @@ struct image_desc {
 
 // decode the png data and load the image
 // into the memory buffer
-class png_loader : public referenced_count{
+class png_loader : public asset_loader {
 public:
-    typedef std::unique_ptr<png_loader, referenced_count::release_deleter> ptr;
-    typedef std::unique_ptr<png_loader const, referenced_count::release_deleter> const_ptr;
-    
+    // TODO: this may apply to all texture data
+    struct image_data {
+        image_desc desc;
+        size_t buf_size;
+        std::unique_ptr<char []> buffer;
+
+        /// release the data as a data stream
+        std::unique_ptr<memory_stream> data();
+
+    private:
+        // created by png loader
+        image_data() = default;
+
+        friend class png_loader;
+    };
+
 public:
-    // it will load the data right away
-    //  may change this later...
-    png_loader(data_stream* source, int format = image_desc::RGB565);
+    png_loader();
     
     ~png_loader();
-    
-    // create a stream wrapper
-    //  the stream's ownership is transfered, but its
-    //  data will only be valid if the loader is valid
-    std::unique_ptr<memory_stream> data() const;
-    
-    image_desc const& image() const { return _desc; }
-    size_t buf_size() const { return _buf_size; }
-    const char* buffer() const { return _buffer; }
+
+    virtual bool can_load(data_stream*) const override;
+
+    image_data do_load(data_stream* source, int format = image_desc::RGB565) const;
     
     // TODO:
     // 1. the original image info
     // 2. load image in a separate step for more controls
+
 private:
-    void load(data_stream&);
-    
-    image_desc _desc;
-    char* _buffer;
-    size_t _buf_size;
+    void load(data_stream&, image_data&) const;
 };
 
 #endif
