@@ -4,6 +4,7 @@
 
 DEFINE_LOGGER(asset_manager, "asset");
 
+#if 0
 #pragma mark - asset bundle
 
 asset_bundle::handles_t asset_bundle::all_assets(asset_manager::context const&ctx) const{
@@ -17,6 +18,8 @@ asset_bundle::handles_t asset_bundle::all_assets(asset_manager::context const&ct
     return handles;
 }
 
+#endif
+
 #pragma mark - asset manager
 
 asset_manager::asset_manager(context const& ctx)
@@ -28,7 +31,7 @@ std::pair<uint32_t, uint32_t> asset_manager::add_from_bundle(asset_bundle *bundl
     assert(bundle != nullptr);
     
     LOG_INFO("start to add assets from bundle:" << bundle->name());
-    auto assets = bundle->all_assets(_context);
+    auto assets = bundle->assets();
     uint32_t replaced = 0;
     for (auto& it : assets) {
         auto existed = _assets.find(it.first);
@@ -37,7 +40,7 @@ std::pair<uint32_t, uint32_t> asset_manager::add_from_bundle(asset_bundle *bundl
             existed->second = std::move(it.second);
             ++ replaced;
         } else {
-            LOG_INFO("add asset:" << it.first);
+            LOG_INFO("add asset: " << it.first);
             _assets.emplace(std::move(it.first), std::move(it.second));
         }
     }
@@ -48,10 +51,10 @@ std::pair<uint32_t, uint32_t> asset_manager::add_from_bundle(asset_bundle *bundl
 uint32_t asset_manager::remove_from_bundle(asset_bundle *bundle) {
     assert(bundle != nullptr);
     
-    auto names = bundle->all_names(_context);
+    auto assets = bundle->assets();
     uint32_t num = 0;
-    for (auto& it : names) {
-        num += _assets.erase(it);
+    for (auto& it : assets) {
+        num += _assets.erase(it.first);
     }
     return num;
 }

@@ -26,7 +26,7 @@ void asset_collection::do_load(asset_handle* handle) {
 bool asset_collection::add(std::string const& name, handle_ptr const& handle, bool override) {
     handles_t::iterator it;
     if (!override || (it = _assets.find(name)) == _assets.end()) {
-        LOG_INFO("add asset:" << name);
+        LOG_INFO("add asset: " << name);
         return _assets.emplace(name, handle).second;
     } else {
         it->second = handle;

@@ -6,6 +6,7 @@
 #include <memory>
 
 class memory_stream;
+class render_device;
 
 // TODO: move this up
 struct image_desc {
@@ -16,11 +17,10 @@ struct image_desc {
     int format;
 };
 
-// decode the png data and load the image
-// into the memory buffer
+/// png loader that decodes the png data and load the texture asset
+// TODO: should rename to png_texture_loader
 class png_loader : public asset_loader {
 public:
-    // TODO: this may apply to all texture data
     struct image_data {
         image_desc desc;
         size_t buf_size;
@@ -37,20 +37,23 @@ public:
     };
 
 public:
-    png_loader();
+    static ptr loader(render_device* rd) {
+        return ptr(new png_loader(rd));
+    }
+    png_loader(render_device*);
     
     ~png_loader();
 
     virtual bool can_load(data_stream*) const override;
 
-    image_data do_load(data_stream* source, int format = image_desc::RGB565) const;
-    
+    virtual asset_handle::ptr load(data_stream::ptr&&) const override;
+
     // TODO:
     // 1. the original image info
     // 2. load image in a separate step for more controls
 
 private:
-    void load(data_stream&, image_data&) const;
+    render_device* _device = nullptr; // device to create textures
 };
 
 #endif

@@ -96,7 +96,7 @@ class asset_locator : public std::enable_shared_from_this<asset_locator> {
 public:
     typedef std::shared_ptr<asset_locator const> const_ptr;
     typedef std::shared_ptr<asset_locator> ptr;
-    typedef std::function<void(std::string const&)> visitor_t;
+    typedef std::function<void(std::string const&, data_stream::ptr&&)> visitor_t;
     
 public:
     virtual ~asset_locator() {};

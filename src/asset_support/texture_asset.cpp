@@ -2,6 +2,7 @@
 #include "asset_support/png_loader.h"
 #include "io/memory_stream.h"
 
+#if 0
 png_asset_bundle::png_asset_bundle(render_device* device,
                                    asset_locator::ptr const& locator,
                                    std::string const& extension)
@@ -38,3 +39,4 @@ asset_bundle::ptr png_asset_bundle::bundle(render_device* device, asset_locator:
                                            std::string const& ext) {
     return ptr(new png_asset_bundle(device, locator, ext));
 }
+#endif

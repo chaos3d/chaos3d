@@ -6,44 +6,37 @@
 #include <type_traits>
 #include <vector>
 #include "common/utility.h"
-#include "asset/asset_manager.h"
-#include "asset/asset_handle.h"
+#include "asset/asset_collection.h"
+#include "asset/asset_loader.h"
 
-// The assets container.
+// The assets container: data stream -- asset loader -> asset_handle/asset
 // It 'contains' the asset mete info (asset handle) in physical
 // form (zip bundle) or virtually (a list of files). It won't
 // load or manage the actual asset but create the handle so the
 // asset can be lazily loaded by the asset manager
-class asset_bundle : public std::enable_shared_from_this<asset_bundle> {
+class asset_bundle : public asset_collection, public std::enable_shared_from_this<asset_bundle> {
 public:
     typedef std::shared_ptr<asset_bundle> ptr;
     typedef std::shared_ptr<asset_bundle> const_ptr;
 
-    typedef asset_handle::ptr handle_ptr;
-    typedef std::vector<std::pair<std::string, handle_ptr>> handles_t;
-    typedef std::vector<std::string> names_t;
-    
-public:
-    virtual ~asset_bundle() {};
-    
-    // get a new meta from the given name, the asset shouldn't
-    // be loaded (asset_handle == nullptr)
-    // this will also produce a new asset since
-    // the meta will be different
-    virtual handle_ptr get(std::string const&, asset_manager::context const&) const = 0;
-    
-    // find all the assets names
-    virtual names_t all_names(asset_manager::context const&) const = 0;
+    typedef asset_loader::ptr loader_ptr;
+    typedef std::forward_list<loader_ptr> loaders_t;
 
-    // get all the assets meta in this bundle
-    virtual handles_t all_assets(asset_manager::context const&) const;
-    
+public:
+    asset_bundle(loaders_t&& loaders, context const& ctx)
+    : _loaders(std::move(loaders)), asset_collection(ctx)
+    {};
+
+    virtual ~asset_bundle() {};
+
     // get bundle name
     virtual std::string name() const { return "(null)"; }
-    
-protected:
-    asset_bundle() = default;
-    
+
+    /// get all the loader
+    loaders_t const& loaders() const { return _loaders; }
+
+private:
+    loaders_t const _loaders;
 };
 
 #endif

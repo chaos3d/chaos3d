@@ -111,9 +111,11 @@ namespace locator {
                 } else if (entry->d_type == DT_DIR) {
                     dirs.emplace(cur + entry->d_name + '/');
                 } else if (cur.length() == _base.length()) {
-                    visitor(entry->d_name);
+                    visitor(std::string(entry->d_name),
+                            data_stream::ptr(new file_stream((cur + entry->d_name).c_str())));
                 } else {
-                    visitor(base + entry->d_name);
+                    visitor(base + entry->d_name,
+                            data_stream::ptr(new file_stream((cur + entry->d_name).c_str())));
                 }
             }
             

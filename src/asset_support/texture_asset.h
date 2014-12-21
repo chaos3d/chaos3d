@@ -30,6 +30,7 @@ typedef asset_handle_base<texture> texture_handle;
 // 1. @2x based on device capacity etc..
 // 2. mipmap
 // 3. multiple extensions/pvr/png all together?
+#if 0
 class png_asset_bundle : public locator_asset_bundle {
 public:
     virtual handle_ptr get(std::string const&, asset_manager::context const&) const override;
@@ -46,6 +47,8 @@ private:
     render_device *_device;
     texture::attribute_t _attribute; // ubiquitous attribute
 };
+
+#endif
 
 // TODO
 class pvr_asset_bundle : public locator_asset_bundle {

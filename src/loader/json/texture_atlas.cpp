@@ -18,7 +18,7 @@ texture_atlas::ptr texture_atlas::load_from(json_loader const& json,
     std::string file_name(root["meta"]["image"].GetString());
     
     if (!mgr.contains(file_name)) {
-        LOG_WARN(asset_manager, "expected asset not loaded:" << file_name);
+        LOG_WARN(asset_manager, "expected asset not found: " << file_name);
         // FIXME: manual add meta, and load
         return nullptr;
     }

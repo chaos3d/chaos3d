@@ -22,7 +22,11 @@
 
 #include "asset/asset_manager.h"
 #include "asset/asset_locator.h"
-#include "asset_support/texture_asset.h"
+#include "asset/locator_asset_bundle.h"
+
+#include "asset_support/png_loader.h"
+
+//#include "asset_support/texture_asset.h"
 
 #include "common/timer.h"
 #include <array>
@@ -44,15 +48,24 @@ static bool initialize_mgr(render_device* dev, render_context* ctx) {
                                    );
 
     // FIXME: contextual scaling and bundle config
+    asset_collection::context ast_ctx = {.scale = 2.f};
     auto& asset_mgr = global_asset_mgr::create({.scale = 2.f});
-    
+
     for (auto& it : {
         locator::dir_locator::app_dir(0, "/res"),
         locator::dir_locator::cur_dir(1, "/res"),
     }) {
         if (!it)
             continue;
-        asset_mgr.add_from_bundle(png_asset_bundle::bundle(dev, it).get());
+
+        asset_bundle::loaders_t loaders;
+        loaders.emplace_front(new png_loader(dev));
+        
+        asset_bundle::ptr bundle = asset_bundle::ptr(new locator_asset_bundle(it,
+                                                                              std::move(loaders),
+                                                                              ast_ctx));
+
+        asset_mgr.add_from_bundle(bundle.get());
     }
     return true;
 }
