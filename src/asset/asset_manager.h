@@ -23,7 +23,6 @@ public:
     // returns the number of item being added and replaced
     std::pair<uint32_t, uint32_t> add_from_bundle(asset_bundle*);
     uint32_t remove_from_bundle(asset_bundle*);
-
 };
 
 // convenient asset manager singleton

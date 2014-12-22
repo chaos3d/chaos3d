@@ -29,6 +29,9 @@ public:
 
     ~asset_collection();
 
+    /// load the asset by handle
+    asset_handle::ptr load(std::string const& name);
+    
     /// load the asset by the given name (usually filename without ext)
     /// return null if the meta doens't exist
     /// NB: the asset support header also needs to be included
@@ -36,21 +39,11 @@ public:
     typename T::ptr load(std::string const& name) {
         static_assert(std::is_same<typename std::remove_cv<T>::type, T>::value,
                       "T should be tye raw type");
-        auto it = _assets.find(name);
-        if (it == _assets.end()) {
-            LOG_WARN("unable to load the asset (" << name
-                     << ") not found");
+        auto handle = load(name);
+        if (!handle)
             return nullptr;
-        }
-
-        if (!it->second->is_loaded()) {
-            LOG_INFO("start loading asset: " << name);
-            do_load(it->second.get());
-        } else {
-            LOG_INFO("asset is already loaded: " << name);
-        }
-
-        return it->second->as<asset_handle_base<T>>().get_asset();
+        else
+            return handle->as<asset_handle_base<T>>().get_asset();
     }
 
     /// check if the given name is contained in this collection

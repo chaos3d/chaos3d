@@ -3,9 +3,7 @@
 
 #include "re/render_device.h"
 #include "re/material.h"
-#include "asset/asset_bundle.h"
-#include "asset/locator_asset_bundle.h"
-#include "asset/asset_manager.h"
+#include "asset/asset_handle.h"
 
 // texture asset handle
 template<>

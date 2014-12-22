@@ -17,6 +17,24 @@ void asset_collection::purge() {
     }
 }
 
+asset_handle::ptr asset_collection::load(std::string const& name) {
+    auto it = _assets.find(name);
+    if (it == _assets.end()) {
+        LOG_WARN("unable to load the asset (" << name
+                 << ") not found");
+        return nullptr;
+    }
+
+    if (!it->second->is_loaded()) {
+        LOG_INFO("start loading asset: " << name);
+        do_load(it->second.get());
+    } else {
+        LOG_INFO("asset is already loaded: " << name);
+    }
+
+    return it->second;
+}
+
 void asset_collection::do_load(asset_handle* handle) {
     assert(handle != nullptr);
 

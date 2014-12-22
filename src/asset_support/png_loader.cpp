@@ -200,4 +200,3 @@ asset_handle::ptr png_loader::load(data_stream::ptr &&stream) const {
     }));
 
 }
-

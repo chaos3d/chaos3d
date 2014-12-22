@@ -40,6 +40,7 @@ public:
     static ptr loader(render_device* rd) {
         return ptr(new png_loader(rd));
     }
+    
     png_loader(render_device*);
     
     ~png_loader();
