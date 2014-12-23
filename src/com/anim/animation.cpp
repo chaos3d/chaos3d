@@ -204,7 +204,7 @@ bool animation::load_from(data_stream *ds, std::vector<texture_atlas*> const& at
             
             _clips.emplace(std::piecewise_construct,
                            std::forward_as_tuple(anim->name.GetString()),
-                           std::forward_as_tuple(skeleton_animation_clip::load_from(anim->value)));
+                           std::forward_as_tuple(animation_clip::load_from(anim->value)));
         }
     }
     

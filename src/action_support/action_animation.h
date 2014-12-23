@@ -13,12 +13,12 @@ namespace act {
     /// state, calculate/blend animations and apply to the scene node
     class action_animation : public action {
     public:
-        typedef com::skeleton_animation_clip::joint_channel joint_channel;
+        typedef com::animation_clip::joint_channel joint_channel;
         typedef std::vector<joint_channel*> channels_t;
         typedef timer::time_t time_t;
         
     public:
-        action_animation(com::skeleton_animation_clip::ptr const&,
+        action_animation(com::animation_clip::ptr const&,
                          com::animation const*, // FIXME: memory manager
                          timer const& = global_timer_base::instance());
         
@@ -33,7 +33,7 @@ namespace act {
         time_t _start;          // start time
         time_t _duration;       // the entire duration
         time_t _loop = 1.f;     // the duration for each piece
-        com::skeleton_animation_clip::ptr _clip;    // only one animation for now
+        com::animation_clip::ptr _clip;    // only one animation for now
         com::animation const* _animation;                 // FIXME: temp solution
         channels_t _channels;
     };

@@ -7,14 +7,14 @@
 
 using namespace com;
 
-skeleton_animation_clip::skeleton_animation_clip(data_stream* ds) {
+animation_clip::animation_clip(data_stream* ds) {
     load_from(ds);
 }
 
 typedef rapidjson::GenericValue<rapidjson::UTF8<char>> json_value_t;
 
 template<>
-skeleton_animation_clip::skeleton_animation_clip(json_value_t const& anim) {
+animation_clip::animation_clip(json_value_t const& anim) {
     if (!anim.IsObject()) {
         LOG_WARN("animation is not a JSON object, loading ignored");
         return;
@@ -98,14 +98,14 @@ skeleton_animation_clip::skeleton_animation_clip(json_value_t const& anim) {
     }
 }
 
-void skeleton_animation_clip::load_from(data_stream *ds) {
+void animation_clip::load_from(data_stream *ds) {
     if (ds == nullptr || !ds->valid()) {
         LOG_WARN("the stream is not ready, ignore loading");
         return;
     }
 }
 
-uint32_t skeleton_animation_clip::get_channels(names_t const& names,
+uint32_t animation_clip::get_channels(names_t const& names,
                                                channels_t& channels) const {
     uint16_t count = 0;
     for (auto& name : names) {

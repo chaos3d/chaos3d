@@ -3,7 +3,7 @@
 
 using namespace act;
 
-action_animation::action_animation(com::skeleton_animation_clip::ptr const& clip,
+action_animation::action_animation(com::animation_clip::ptr const& clip,
                                    com::animation const* anim,
                                    timer const& timer_)
 : _clip(clip), _animation(anim), _timer(timer_) {

@@ -12,24 +12,26 @@
 namespace com {
     class transform;
     class animation_mgr;
-    
-    /// the animation component that functions as a controller
-    /// the animation is updated by the action system, the controller
-    /// will manage the internal state and the transition etc.
+
+    /// the animation component, managing relationship between the animations
+    /// and the game object.
     ///
-    /// this will create and manage the children game objects, i.e.
-    /// the transform and sprite
+    /// create and manage the children game objects, so the skeleton animation
+    /// can apply to the same structure (targeting)
+    /// ?? handle the state machine to fire off the animation action, which will
+    /// do the blending and updating
     class animation : public component {
     public:
         typedef animation_mgr manager_t;
         
         // TODO: additive channels
         // TODO: other channels: i.e. events/uniform/skin/texture/particles
-        typedef std::unordered_map<std::string, skeleton_animation_clip::ptr> clips_t;
+        typedef std::unordered_map<std::string, animation_clip::ptr> clips_t;
         typedef std::unordered_map<std::string, uint32_t> names_t;
         typedef std::vector<transform*> transforms_t;
 
         // FIXME: better skin struct
+        // TODO: move this struct to a different class
         struct skin_piece {
             texture_atlas*  atlas;
             box2f           bound;      // sprite bound

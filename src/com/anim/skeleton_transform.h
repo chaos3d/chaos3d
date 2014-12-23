@@ -24,9 +24,9 @@ namespace com {
     /// data. each joint represents its local matrix.
     /// this calculates local matrix, where the transform component
     /// handles the parent hierarchy.
-    class skeleton_animation_clip : public std::enable_shared_from_this<skeleton_animation_clip> {
+    class animation_clip : public std::enable_shared_from_this<animation_clip> {
     public:
-        typedef std::shared_ptr<skeleton_animation_clip> ptr;
+        typedef std::shared_ptr<animation_clip> ptr;
         typedef timer::time_t time_t;
         
         // animation data channel
@@ -51,15 +51,15 @@ namespace com {
         
     public:
         /// generic loader without any references
-        template<typename ...Args> skeleton_animation_clip(Args const&...);
+        template<typename ...Args> animation_clip(Args const&...);
 
         template<typename ...Args>
-        static skeleton_animation_clip::ptr load_from(Args&&... args) {
-            return skeleton_animation_clip::ptr(new skeleton_animation_clip(std::forward<Args>(args)...));
+        static animation_clip::ptr load_from(Args&&... args) {
+            return animation_clip::ptr(new animation_clip(std::forward<Args>(args)...));
         }
         
         /// initialize data from a data stream (JSON)
-        skeleton_animation_clip(data_stream*);
+        animation_clip(data_stream*);
         
         /// giving the names, replace the channel data based on the corresponding
         /// channel indices.
