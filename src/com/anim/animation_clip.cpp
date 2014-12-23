@@ -28,7 +28,7 @@ animation_clip::animation_clip(json_value_t const& anim) {
             _names.emplace(bone->name.GetString(), _channels.size());
             
             // new channel
-            _channels.emplace_back(new joint_channel());
+            _channels.emplace_back(new clip_channel());
             auto *channel = _channels.back().get();
             
             for (auto anim = bone->value.MemberBegin();

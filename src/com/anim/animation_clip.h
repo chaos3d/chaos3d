@@ -2,9 +2,12 @@
 #define _CHAOS3D_COM_ANIM_SKELETON_TRANSFORM_H
 
 #include "sg/transform.h"
-#include "action/action_keyframe.h"
 #include "common/base_types.h"
 #include "common/timer.h"
+
+#include "com/sprite2d/quad_sprite.h"
+#include "action/action_keyframe.h"
+
 #include <memory>
 #include <string>
 #include <vector>
@@ -19,11 +22,16 @@ namespace com {
     // should collect them all into metal
     
     /// skeleton data for one animation clip
+    ///
     /// the animation clip consists of several channels, each of
     /// which represents one bone/joint's keyframe-based animation
     /// data. each joint represents its local matrix.
     /// this calculates local matrix, where the transform component
     /// handles the parent hierarchy.
+    /// Note, those channels can be separate actions, here to combine
+    /// them together for easy management and more types of blending
+    /// etc. and because they are all together, there can be more types
+    /// of animation effects
     class animation_clip : public std::enable_shared_from_this<animation_clip> {
     public:
         typedef std::shared_ptr<animation_clip> ptr;
@@ -34,20 +42,25 @@ namespace com {
         typedef animation_keyframe<vector3f> scale_channel_t;
         typedef animation_keyframe<quaternionf> rotate_channel_t;
         
-        struct joint_channel {
+        typedef sprite2d::quad_sprite::animated_frame_key sprite_key_t;
+        typedef animation_keyframe<sprite_key_t> sprite2d_channel_t;
+
+        struct clip_channel {
             // this shall belong to the clip, no external reference
             // is necessary
-            typedef std::unique_ptr<joint_channel> ptr;
+            typedef std::unique_ptr<clip_channel> ptr;
             
             translate_channel_t::ptr    translate;
             scale_channel_t::ptr        scale;
             rotate_channel_t::ptr       rotate;
+            sprite2d_channel_t::ptr     sprite2d_c;
+
             // TODO: slots/texture/event channels
         };
         
-        typedef std::vector<joint_channel*> channels_t;
+        typedef std::vector<clip_channel*> channels_t;
         typedef std::unordered_map<std::string, uint32_t> names_t;
-        typedef std::vector<joint_channel::ptr> joint_channels_t;
+        typedef std::vector<clip_channel::ptr> clip_channels_t;
         
     public:
         /// generic loader without any references
@@ -73,7 +86,7 @@ namespace com {
         names_t _names;
         
         /// channel data for each joint
-        joint_channels_t _channels;
+        clip_channels_t _channels;
     };
     
 }

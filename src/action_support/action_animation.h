@@ -13,8 +13,8 @@ namespace act {
     /// state, calculate/blend animations and apply to the scene node
     class action_animation : public action {
     public:
-        typedef com::animation_clip::joint_channel joint_channel;
-        typedef std::vector<joint_channel*> channels_t;
+        typedef com::animation_clip::clip_channel clip_channel;
+        typedef std::vector<clip_channel*> channels_t;
         typedef timer::time_t time_t;
         
     public:
