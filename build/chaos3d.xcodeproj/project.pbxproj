@@ -98,7 +98,6 @@
 		886CC16418F662BB006A3AF5 /* event.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 880F615A18D96468003BCE3D /* event.cpp */; };
 		886CC16518F662BB006A3AF5 /* vertex_layout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882762121872D50D00B1291B /* vertex_layout.cpp */; };
 		886CC16618F662BB006A3AF5 /* world_box2d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8804F8CC18A75DC50055322F /* world_box2d.cpp */; };
-		886CC16718F662BB006A3AF5 /* texture_asset.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8879CE6918BA067D00BCBFA6 /* texture_asset.cpp */; };
 		886CC16818F662BB006A3AF5 /* gl_vertex_buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8812C2BA18644221001C4D0B /* gl_vertex_buffer.cpp */; };
 		886CC16918F662BB006A3AF5 /* gl_vertex_layout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 882762221873FA7100B1291B /* gl_vertex_layout.cpp */; };
 		886CC16B18F662BB006A3AF5 /* aabb.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 883246A0183233F10022EA4A /* aabb.cpp */; };
@@ -117,7 +116,6 @@
 		8879CE4E18B6F76100BCBFA6 /* asset_manager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8879CE4C18B6F76100BCBFA6 /* asset_manager.cpp */; };
 		8879CE5B18B7698F00BCBFA6 /* locator_asset_bundle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8879CE5918B7698F00BCBFA6 /* locator_asset_bundle.cpp */; };
 		8879CE5E18B9D13300BCBFA6 /* png_loader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8879CE5D18B9D13300BCBFA6 /* png_loader.cpp */; };
-		8879CE6A18BA067D00BCBFA6 /* texture_asset.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8879CE6918BA067D00BCBFA6 /* texture_asset.cpp */; };
 		8879CE8918BAB5A400BCBFA6 /* json_loader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8879CE8718BAB5A400BCBFA6 /* json_loader.cpp */; };
 		8879CE8B18BAB61100BCBFA6 /* texture_atlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8879CE8A18BAB61100BCBFA6 /* texture_atlas.cpp */; };
 		8879CE9018BABCDE00BCBFA6 /* scene2d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8879CE8E18BABCDE00BCBFA6 /* scene2d.cpp */; };
@@ -156,6 +154,8 @@
 		F9589EC319D01628004BDB1D /* luachaos3d.h in Headers */ = {isa = PBXBuildFile; fileRef = F9589EC119D01628004BDB1D /* luachaos3d.h */; };
 		F95AF4C71A476E7200F768A5 /* asset_collection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F95AF4C61A476E7200F768A5 /* asset_collection.cpp */; };
 		F95AF4C81A476E7200F768A5 /* asset_collection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F95AF4C61A476E7200F768A5 /* asset_collection.cpp */; };
+		F95AF4CB1A4965F600F768A5 /* animation_clip.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F95AF4C91A4965F600F768A5 /* animation_clip.cpp */; };
+		F95AF4CC1A4965F600F768A5 /* animation_clip.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F95AF4C91A4965F600F768A5 /* animation_clip.cpp */; };
 		F962470C19ED054300FBBB0A /* cAppLauncher.mm in Sources */ = {isa = PBXBuildFile; fileRef = F962470B19ED054300FBBB0A /* cAppLauncher.mm */; };
 		F962473B19ED221E00FBBB0A /* lua_module.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F962473919ED221E00FBBB0A /* lua_module.cpp */; };
 		F962473C19ED221E00FBBB0A /* lua_module.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F962473919ED221E00FBBB0A /* lua_module.cpp */; };
@@ -174,8 +174,6 @@
 		F96744731A1353FC00C0B1E3 /* action.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F96744701A1353FC00C0B1E3 /* action.cpp */; };
 		F967447B1A19C7D100C0B1E3 /* animation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F96744791A19C7D100C0B1E3 /* animation.cpp */; };
 		F967447C1A19C7D100C0B1E3 /* animation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F96744791A19C7D100C0B1E3 /* animation.cpp */; };
-		F967447F1A19D2EC00C0B1E3 /* skeleton_transform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F967447D1A19D2EC00C0B1E3 /* skeleton_transform.cpp */; };
-		F96744801A19D2EC00C0B1E3 /* skeleton_transform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F967447D1A19D2EC00C0B1E3 /* skeleton_transform.cpp */; };
 		F96744841A19F78900C0B1E3 /* action_animation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F96744821A19F78900C0B1E3 /* action_animation.cpp */; };
 		F96744851A19F78900C0B1E3 /* action_animation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F96744821A19F78900C0B1E3 /* action_animation.cpp */; };
 		F9AF0F8719B5B4950047C431 /* data_stream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F9AF0F8619B5B4950047C431 /* data_stream.cpp */; };
@@ -755,7 +753,6 @@
 		8879CE6618B9F44E00BCBFA6 /* asset_handle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = asset_handle.h; path = asset/asset_handle.h; sourceTree = "<group>"; };
 		8879CE6718BA013B00BCBFA6 /* render_device_capacity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = render_device_capacity.h; sourceTree = "<group>"; };
 		8879CE6818BA067D00BCBFA6 /* texture_asset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = texture_asset.h; sourceTree = "<group>"; };
-		8879CE6918BA067D00BCBFA6 /* texture_asset.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = texture_asset.cpp; sourceTree = "<group>"; };
 		8879CE7A18BA951A00BCBFA6 /* document.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = document.h; sourceTree = "<group>"; };
 		8879CE7B18BA951A00BCBFA6 /* filestream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = filestream.h; sourceTree = "<group>"; };
 		8879CE7D18BA951A00BCBFA6 /* pow10.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pow10.h; sourceTree = "<group>"; };
@@ -1236,6 +1233,8 @@
 		F95AF4C21A46B3B400F768A5 /* asset_loader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = asset_loader.h; path = asset/asset_loader.h; sourceTree = "<group>"; };
 		F95AF4C51A476DBD00F768A5 /* asset_collection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = asset_collection.h; path = asset/asset_collection.h; sourceTree = "<group>"; };
 		F95AF4C61A476E7200F768A5 /* asset_collection.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = asset_collection.cpp; path = asset/asset_collection.cpp; sourceTree = "<group>"; };
+		F95AF4C91A4965F600F768A5 /* animation_clip.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = animation_clip.cpp; sourceTree = "<group>"; };
+		F95AF4CA1A4965F600F768A5 /* animation_clip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = animation_clip.h; sourceTree = "<group>"; };
 		F962470A19ED054300FBBB0A /* cAppLauncher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cAppLauncher.h; sourceTree = "<group>"; };
 		F962470B19ED054300FBBB0A /* cAppLauncher.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = cAppLauncher.mm; sourceTree = "<group>"; };
 		F962473919ED221E00FBBB0A /* lua_module.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = lua_module.cpp; path = platform/lua_module.cpp; sourceTree = "<group>"; };
@@ -1253,8 +1252,6 @@
 		F96744711A1353FC00C0B1E3 /* action.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = action.h; sourceTree = "<group>"; };
 		F96744791A19C7D100C0B1E3 /* animation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = animation.cpp; sourceTree = "<group>"; };
 		F967447A1A19C7D100C0B1E3 /* animation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = animation.h; sourceTree = "<group>"; };
-		F967447D1A19D2EC00C0B1E3 /* skeleton_transform.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = skeleton_transform.cpp; sourceTree = "<group>"; };
-		F967447E1A19D2EC00C0B1E3 /* skeleton_transform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = skeleton_transform.h; sourceTree = "<group>"; };
 		F96744821A19F78900C0B1E3 /* action_animation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = action_animation.cpp; sourceTree = "<group>"; };
 		F96744831A19F78900C0B1E3 /* action_animation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = action_animation.h; sourceTree = "<group>"; };
 		F98A04A8198AC046000FE65D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -2873,7 +2870,6 @@
 				F95759171A4412CA00BF39B7 /* material_asset.h */,
 				8879CE5D18B9D13300BCBFA6 /* png_loader.cpp */,
 				8879CE5C18B9D13300BCBFA6 /* png_loader.h */,
-				8879CE6918BA067D00BCBFA6 /* texture_asset.cpp */,
 				8879CE6818BA067D00BCBFA6 /* texture_asset.h */,
 			);
 			path = asset_support;
@@ -3974,10 +3970,10 @@
 		F96744781A19C7D100C0B1E3 /* anim */ = {
 			isa = PBXGroup;
 			children = (
+				F95AF4C91A4965F600F768A5 /* animation_clip.cpp */,
+				F95AF4CA1A4965F600F768A5 /* animation_clip.h */,
 				F96744791A19C7D100C0B1E3 /* animation.cpp */,
 				F967447A1A19C7D100C0B1E3 /* animation.h */,
-				F967447D1A19D2EC00C0B1E3 /* skeleton_transform.cpp */,
-				F967447E1A19D2EC00C0B1E3 /* skeleton_transform.h */,
 			);
 			path = anim;
 			sourceTree = "<group>";
@@ -4532,7 +4528,6 @@
 				F96744851A19F78900C0B1E3 /* action_animation.cpp in Sources */,
 				F9AF0F8819B5B4950047C431 /* data_stream.cpp in Sources */,
 				886CC13118F662BB006A3AF5 /* camera.cpp in Sources */,
-				F96744801A19D2EC00C0B1E3 /* skeleton_transform.cpp in Sources */,
 				8870F3F01919DE0F0038B012 /* device.mm in Sources */,
 				886CC13218F662BB006A3AF5 /* render_target.cpp in Sources */,
 				88C0049718FA380C0012EC1D /* render_device_mac.mm in Sources */,
@@ -4543,6 +4538,7 @@
 				886CC13718F662BB006A3AF5 /* re.cpp in Sources */,
 				886CC13818F662BB006A3AF5 /* file_stream.cpp in Sources */,
 				886CC13918F662BB006A3AF5 /* sprite.cpp in Sources */,
+				F95AF4CC1A4965F600F768A5 /* animation_clip.cpp in Sources */,
 				886CC13A18F662BB006A3AF5 /* timer.cpp in Sources */,
 				886CC13B18F662BB006A3AF5 /* sprite.cpp in Sources */,
 				886CC13C18F662BB006A3AF5 /* import_scope.cpp in Sources */,
@@ -4599,7 +4595,6 @@
 				886CC16418F662BB006A3AF5 /* event.cpp in Sources */,
 				886CC16518F662BB006A3AF5 /* vertex_layout.cpp in Sources */,
 				886CC16618F662BB006A3AF5 /* world_box2d.cpp in Sources */,
-				886CC16718F662BB006A3AF5 /* texture_asset.cpp in Sources */,
 				886CC16818F662BB006A3AF5 /* gl_vertex_buffer.cpp in Sources */,
 				886CC16918F662BB006A3AF5 /* gl_vertex_layout.cpp in Sources */,
 				886CC16B18F662BB006A3AF5 /* aabb.cpp in Sources */,
@@ -4618,7 +4613,6 @@
 				F96744841A19F78900C0B1E3 /* action_animation.cpp in Sources */,
 				8879CEA418C0A10F00BCBFA6 /* application.cpp in Sources */,
 				880BA3271895D261002542E2 /* camera.cpp in Sources */,
-				F967447F1A19D2EC00C0B1E3 /* skeleton_transform.cpp in Sources */,
 				883246CF183CC04C0022EA4A /* render_target.cpp in Sources */,
 				880BA3251895131E002542E2 /* camera_mgr.cpp in Sources */,
 				8812C289185DA722001C4D0B /* memory_stream.cpp in Sources */,
@@ -4632,6 +4626,7 @@
 				8811358118D426FA0069F351 /* sprite.cpp in Sources */,
 				F9AF0F8719B5B4950047C431 /* data_stream.cpp in Sources */,
 				8870F3EC1919C5640038B012 /* cViewController.mm in Sources */,
+				F95AF4CB1A4965F600F768A5 /* animation_clip.cpp in Sources */,
 				887711E518CD32CE00BA5508 /* import_scope.cpp in Sources */,
 				F967446D1A10B92100C0B1E3 /* convert.cpp in Sources */,
 				8882E4A518A382A20044CFE4 /* event_dispatcher.cpp in Sources */,
@@ -4683,7 +4678,6 @@
 				F96744641A0E067800C0B1E3 /* action.cpp in Sources */,
 				882762141872D50D00B1291B /* vertex_layout.cpp in Sources */,
 				8804F8CE18A75DC50055322F /* world_box2d.cpp in Sources */,
-				8879CE6A18BA067D00BCBFA6 /* texture_asset.cpp in Sources */,
 				8812C2BD18644221001C4D0B /* gl_vertex_buffer.cpp in Sources */,
 				882762241873FA7100B1291B /* gl_vertex_layout.cpp in Sources */,
 				8812C2B418619E33001C4D0B /* device.mm in Sources */,

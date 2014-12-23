@@ -4,7 +4,7 @@
 #include "go/component.h"
 #include "action/action.h"
 #include "io/data_stream.h"
-#include "com/anim/skeleton_transform.h"
+#include "com/anim/animation_clip.h"
 #include "com/sprite2d/texture_atlas.h"
 #include <unordered_map>
 #include <map>

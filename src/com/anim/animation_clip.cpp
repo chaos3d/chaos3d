@@ -1,4 +1,4 @@
-#include "com/anim/skeleton_transform.h"
+#include "com/anim/animation_clip.h"
 #include "common/log.h"
 #include "sg/transform.h"
 #include "io/data_stream.h"
