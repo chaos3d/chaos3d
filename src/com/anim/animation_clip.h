@@ -42,8 +42,9 @@ namespace com {
         typedef animation_keyframe<vector3f> scale_channel_t;
         typedef animation_keyframe<quaternionf> rotate_channel_t;
         
-        typedef sprite2d::quad_sprite::animated_frame_key sprite_key_t;
-        typedef animation_keyframe<sprite_key_t> sprite2d_channel_t;
+        typedef sprite2d::quad_sprite::animated_frame_key sprite_key_t; // TODO: more sprite animated values
+        typedef sprite2d::quad_sprite::animated_atlas_key atlas_key_t;
+        typedef animation_keyframe<atlas_key_t> sprite2d_channel_t;
 
         struct clip_channel {
             // this shall belong to the clip, no external reference

@@ -11,6 +11,7 @@ namespace sprite2d {
     class quad_sprite : public sprite {
     public:
         typedef std::array<vector2f, 4> sprite_v_t;
+        // TODO: combine the animated key?
         struct animated_frame_key {
             enum { FRAME = 1, BOUND = 2, MAT = 4 };
             sprite_v_t frame;    // texture uv

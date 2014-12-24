@@ -19,7 +19,9 @@ animation_clip::animation_clip(json_value_t const& anim) {
         LOG_WARN("animation is not a JSON object, loading ignored");
         return;
     }
-    
+
+    // http://esotericsoftware.com/spine-json-format
+
     // TODO: other slots/events?
     auto& bones = anim["bones"];
     if (bones.IsObject()) {

@@ -160,7 +160,10 @@ protected:
     animation_keyframe(Loader const&);
 
     // helper constructor for existing Lua binding. TODO: remove this
-    animation_keyframe(int wrap, std::vector<key_frame_t> const& keyframes)
+    animation_keyframe(int wrap, //! the wrap type
+                       std::vector<key_frame_t> const& keyframes, //! key frame, old style
+                       time_t dur = 0 //! the duration to normalize, (the dividend)
+                       )
     : _wrap(wrap) {
         _frame_infos.reserve(keyframes.size());
         _keyframes.reserve(keyframes.size());
@@ -169,18 +172,20 @@ protected:
             _frame_infos.push_back({it.timestamp});
             _keyframes.push_back(it.key);
         }
-        normalize();
+        normalize(dur);
     }
     
-    animation_keyframe(int wrap, frame_infos_t const& infos, key_frames_t const& frames)
+    animation_keyframe(int wrap,
+                       frame_infos_t const& infos, key_frames_t const& frames,
+                       time_t dur = 0)
     : _wrap(wrap), _keyframes(frames), _frame_infos(infos) {
-        normalize();
+        normalize(dur);
     }
     
     animation_keyframe() = default;
     
     // sort the time bounds and scale it to [0,1]
-    void normalize() {
+    void normalize(time_t dur) {
         if (_keyframes.size() == 0)
             return;
         
@@ -207,16 +212,19 @@ protected:
             }
         }
         
-        auto last = _frame_infos.back().offset;
-        if (last < FLT_EPSILON && _frame_infos.size() == 1) {
+        auto last = dur == 0 ? _frame_infos.back().offset : dur;
+        if (last > FLT_EPSILON) {
+            for (auto& it : _frame_infos) {
+                it.offset /= last;
+            }
+        }
+
+        // if the last frame is not at the end (i.e. only one frame or a different dividend)
+        // add a pivot to make sure the last frame is always at 1
+        if (std::abs(_frame_infos.back().offset - 1.f) > FLT_EPSILON) {
             _frame_infos.push_back(_frame_infos.back());
             _frame_infos.back().offset = 1;
-            _keyframes.push_back(_keyframes.back());
-            return;
-        }
-        
-        for (auto& it : _frame_infos) {
-            it.offset /= last;
+            _keyframes.push_back(_keyframes.back()); // FIXME: use constant interpolation?
         }
     }
     
